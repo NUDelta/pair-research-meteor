@@ -1,0 +1,11 @@
+<template name="matchResults">
+	<div>
+  		{{#each match}}
+  			{{#if matched}}
+  				<div><span class='name'>{{personOne}}</span> is matched with <span class='name'>{{personTwo}}</span></div>
+  			{{else}}
+  				<div><span class='name'>{{personOne}}</span> did not match.</div>
+  			{{/if}} 
+  		{{/each}}
+  	</div>
+ </template>
