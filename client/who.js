@@ -14,7 +14,7 @@
 {"username":"eharburg","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/emily-250x250.jpg", "name": "Emily Harburg"},
 {"username":"ehunter","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/10/elizabeth.jpg", "name": "Elizabeth Hunter"},
 {"username":"dlewis","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/dan-250x250.jpg", "name": "Daniel Rees Lewis"},
-{"username":"gsaiyed","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/gulnaz-250x250.jpg", "name": "Gulnaz Saiyed"},
+{"username":"gsaiyed","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/gulnaz-250x250.jpg", "name": "Gulu Saiyed"},
 {"username":"jhibschman","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/josh.png", "name": "Josh Hibschman"},
 {"username":"scambo","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2015/02/scott.jpg", "name": "Scott Cambo"},
 {"username":"ykim","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/yongsung.jpg", "name": "Yongsung Kim"},
