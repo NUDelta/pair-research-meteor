@@ -106,7 +106,7 @@ function getDefaultImage(){
 
     Template.who.events({
       'input #fullname': function(e) {
-        console.log("who input changed")
+        console.log("name input changed")
         var value = e.currentTarget.value;
 
         var existingPerson = Pool.findOne({name: value})
