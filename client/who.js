@@ -1,4 +1,8 @@
-var people = [
+
+
+  if (Meteor.isClient) {
+
+ var people = [
 {"username":"stellathedog","image": "https://dl.dropboxusercontent.com/s/6mg35kb7e13gbik/stella.jpg", "name": "Stella"},
 {"username":"lgerber","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/liz-250x250.jpg", "name": "Liz Gerber"},
 {"username":"measterday","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/matt-250x250.jpg", "name": "Matt Easterday"},
@@ -44,15 +48,18 @@ var people = [
 {"username":"ssami","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/10/sofia.png", "name": "Sofia Sami"},
 {"username":"ssalgado","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/sergio-250x250.jpg", "name": "Sergio Salgado"},
 {"username":"bharris","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/brantley-250x250.jpg", "name": "Brantley Harris"},
-{"username":"arench","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/andy-250x250.jpg", "name": "Andy Rench"}
+{"username":"arench","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/andy-250x250.jpg", "name": "Andy Rench"},
+{"username":"axrench","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/andy-250x250.jpg", "name": "Andy Rench"}
+
 ];
+
+var peopleNames = people.map(function(x) {
+          return x.name;
+        });
 
 function getDefaultImage(){
   return "http://images.clipartpanda.com/sad-girl-stick-figure-image.png"
 }
-
-
-  if (Meteor.isClient) {
 
 
 
@@ -69,9 +76,7 @@ function getDefaultImage(){
 
       // set up the autocomplete
       $('#fullname').autocomplete({
-        source: people.map(function(x) {
-          return x.name;
-        }),
+        source: peopleNames,
         select: function(e, ui) {
           var value = e.target.value;
 
