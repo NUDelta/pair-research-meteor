@@ -59,11 +59,13 @@ function getDefaultImage(){
 
     Template.who.rendered = function() {
 
-      if (Session.get("fullname_id")) {
+      if (Session.get("fullname_id")) {        
         var person = Pool.findOne(Session.get("fullname_id"))
           // check if we have data on you already
-        $('#fullname').value = person.name
-      } 
+           if(person) {
+           $('#fullname').value = person.name
+          }
+        } 
 
       // set up the autocomplete
       $('#fullname').autocomplete({
@@ -104,6 +106,7 @@ function getDefaultImage(){
 
     Template.who.events({
       'input #fullname': function(e) {
+        console.log("who input changed")
         var value = e.currentTarget.value;
 
         var existingPerson = Pool.findOne({name: value})

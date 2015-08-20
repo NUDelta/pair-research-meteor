@@ -22,17 +22,20 @@
         <p>{{need}}</p>
     </div>
   </div>
- 	<ul class="likert floated">
-	  <li> definitely can't help </li>
-  <li><input type="radio" name="help-{{name}}" value="-1" /></li>
-  <li><input type="radio" name="help-{{name}}" value="-0.5" /></li>
-  <li><input type="radio" name="help-{{name}}" value="0" /></li>
-  <li><input type="radio" name="help-{{name}}" value="0.5" /></li>
-  <li><input type="radio" name="help-{{name}}" value="1" /></li>
-  <li> can totally help</li>
-</ul>
+<!-- likert was here -->
+ <div class="likert">
+    <span> can't help at all</span>
+  <span><input type="radio" name="help-{{_id}}" value="-1" /></span>
+  <span><input type="radio" name="help-{{_id}}" value="-0.5" /></span>
+  <span><input type="radio" name="help-{{_id}}" value="0" /></span>
+  <span><input type="radio" name="help-{{_id}}" value="0.5" /></span>
+  <span><input type="radio" name="help-{{_id}}" value="1" /></span>
+  <span> can totally help</span>
+</div>
 <div class="clear"></div>
 
 </div>
+
+ 
 
 </template>

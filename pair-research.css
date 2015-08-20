@@ -22,13 +22,24 @@ body {
 /*    background-color: rgb(195,195,195); */
 }
 
-.likert li {
+.likert {
   float: left;
-  list-style-type: none;
-   margin-left: 20px;
-    display: inline-block;
-    position: relative;
+   display: inline-block;
+    position: relative; 
     height: auto;
+    height: 200px;
+position: relative;
+display: inline;
+font-size: 1.2em;
+margin-left: 20px;
+margin-right: 20px;
+margin-top: 14px;
+
+}
+
+input[type=radio] {
+       margin-left: 4px;
+   margin-right: 4px;
 }
 
  .clear {
@@ -131,14 +142,14 @@ textarea {
 
 }
 
-input {
+input#fullname {
      font-size: 24px;
      width: 100%;
      padding: 10px;
      border:1px solid rgb(237,159,53);
 }
 
-input:focus {
+input:focus#fullname {
 outline: none;
 }
 
@@ -174,7 +185,9 @@ outline: none;
    float: right;
 }
 
-
+p, span, div, body {
+    cursor:default;
+}
  .helpme {
     margin-bottom: 40px;
     background-color: rgb(6,55,93);
