@@ -1,6 +1,18 @@
 <template name="what">
-	<div>
-  		<h2><label for="need">What do you need help with?</label></h2>
-  		<input id="need" placeholder="something that you can get done with help in this session"/>
+	<div class="section">
+  		<h2><label for="need">what do you need help with?</label></h2>
+  		
+
+	  	<div class="helpme">
+			<div class="name name-inverse">{{name}}</div>
+				<img class='person-image' src="{{displayImage}}"/>
+ 				<div class="talk-bubble tri-right left-in">
+   					<div class="talktext">
+    				    <p><textarea id="need" placeholder="Write down something that you can get done with help in this session."></textarea></p>
+	  			    </div>
+		    	  </div>
+  		
+  		<div class="clear"></div>
+</div>
   	</div>
  </template>

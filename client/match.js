@@ -29,6 +29,8 @@ function generateGraph(pool, scores){
         }
       }
 
+      console.log("nodes", nodes)
+      console.log("edges", edgeList)
       return {"people": nodes, "edges": edgeList};     
 }
 
@@ -84,11 +86,19 @@ function processMatches(response, graph){
 
 if (Meteor.isClient) {
   Template.match.events({
+    "click #clearPool": function (e) {
+
+      if(confirm("This will clear the pair research pool and people's stated needs. Ok?"))
+      Meteor.call('clearPool', function(error, result) {
+       });
+    },
+
     "click #getMatches": function(e) {
 
       // 1. Get the pool
-      var pool = Pool.find().fetch();
-  
+      var pool = Pool.find({need: {$ne: ""}}).fetch();
+   
+
       // 2. Get the preferences
       var affinities = Affinity.find().fetch();
       var scores = {};
@@ -100,7 +110,8 @@ if (Meteor.isClient) {
           }
       }
       for(var i = 0; i < affinities.length; i++) {
-        scores[affinities[i].helper][affinities[i].helpee] = affinities[i].value
+        if(affinities[i].helper in scores && affinities[i].helpee in scores[affinities[i].helper])
+          scores[affinities[i].helper][affinities[i].helpee] = affinities[i].value
       }
 
       // 3. Generate the graph

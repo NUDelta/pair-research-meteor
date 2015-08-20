@@ -9,3 +9,6 @@ autopublish
 insecure
 mizzao:jquery-ui
 http
+momentjs:moment
+twbs:bootstrap
+jquery

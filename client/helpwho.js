@@ -17,18 +17,22 @@ if (Meteor.isClient) {
   });
 
   Template.helpwho.helpers({
+    enteredName: function() {
+    return Session.get("fullname_id")
+
+    },
     pool: function() {
-      if (Session.get("fullname_id"))
+      
         return Pool.find({
           _id: {
             $ne: Session.get("fullname_id")
+          },
+          need:  {
+            $ne: ""
           }
         });
-      else
-        return []
-    },
 
-  });
+  }});
 
   Template.helpone.helpers({
 

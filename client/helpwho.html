@@ -1,17 +1,21 @@
 <template name="helpwho">
-	<div>
- 	 <h2><label for="help">Who can you help?</label></h2>
+	<div class="section">
+ 	 <h2><label for="help">who can you help?</label></h2>
+
+   {{#if enteredName}}
  	 	{{#each pool}}		
 			{{> helpone}} 
-  		{{/each}}
+  	{{/each}}
+ {{else}}
+ Please first enter your name above.
+{{/if}}
 	</div>
  </template>
   	
 
 <template name="helpone">
-	
-<div class="helpone">
-	<div>{{name}}</div>
+	<div class="helpone">
+	<div class="name">{{name}}</div>
 	<img class='person-image' src="{{displayImage}}"/>
   <div class="talk-bubble tri-right left-in">
     <div class="talktext">
@@ -19,13 +23,13 @@
     </div>
   </div>
  	<ul class="likert floated">
-	  <li> Not at all </li>
+	  <li> definitely can't help </li>
   <li><input type="radio" name="help-{{name}}" value="-1" /></li>
   <li><input type="radio" name="help-{{name}}" value="-0.5" /></li>
   <li><input type="radio" name="help-{{name}}" value="0" /></li>
   <li><input type="radio" name="help-{{name}}" value="0.5" /></li>
   <li><input type="radio" name="help-{{name}}" value="1" /></li>
-  <li> I can totally help </li>
+  <li> can totally help</li>
 </ul>
 <div class="clear"></div>
 

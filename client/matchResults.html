@@ -1,11 +1,16 @@
 <template name="matchResults">
-	<div>
+	<div class="section">
+  		<h2>last pairing: {{lastMatchTime}}</h2>
+
+<div>
   		{{#each match}}
+
   			{{#if matched}}
-  				<div><span class='name'>{{personOne}}</span> is matched with <span class='name'>{{personTwo}}</span></div>
+  				<div><span class='name'>{{personOne}}</span> is paired with <span class='name'>{{personTwo}}</span></div>
   			{{else}}
-  				<div><span class='name'>{{personOne}}</span> did not match.</div>
+  				<div><span class='name'>{{personOne}}</span> did not pair. They'll play with <span class='name'>Stella</span>.</div>
   			{{/if}} 
   		{{/each}}
+  	</div>
   	</div>
  </template>

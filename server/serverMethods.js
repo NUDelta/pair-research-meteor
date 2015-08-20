@@ -12,6 +12,10 @@ if (Meteor.isServer) {
         upsert: true
       })
     },
+    clearPool: function(){
+      Pool.remove({})
+      Affinity.remove({})
+    },
     getMatches: function(data) {
       try {
         var result = HTTP.call("POST", "http://groups.csail.mit.edu/uid/paired-research/match.cgi", {

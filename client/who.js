@@ -1,4 +1,6 @@
-people = [{"username":"lgerber","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/liz-250x250.jpg", "name": "Liz Gerber"},
+var people = [
+{"username":"stellathedog","image": "https://dl.dropboxusercontent.com/s/6mg35kb7e13gbik/stella.jpg", "name": "Stella"},
+{"username":"lgerber","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/liz-250x250.jpg", "name": "Liz Gerber"},
 {"username":"measterday","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/matt-250x250.jpg", "name": "Matt Easterday"},
 {"username":"hzhang","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/haoqi-250x250.jpg", "name": "Haoqi Zhang"},
 {"username":"mgreenberg","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/mike-250x250.jpg", "name": "Mike Greenberg"},
@@ -42,28 +44,51 @@ people = [{"username":"lgerber","image": "http://delta.northwestern.edu/wordpres
 {"username":"ssami","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/10/sofia.png", "name": "Sofia Sami"},
 {"username":"ssalgado","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/sergio-250x250.jpg", "name": "Sergio Salgado"},
 {"username":"bharris","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/brantley-250x250.jpg", "name": "Brantley Harris"},
-{"username":"arench","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/andy-250x250.jpg", "name": "Andy Rench"}];
+{"username":"arench","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/andy-250x250.jpg", "name": "Andy Rench"}
+];
 
-
+function getDefaultImage(){
+  return "http://images.clipartpanda.com/sad-girl-stick-figure-image.png"
+}
 
 
   if (Meteor.isClient) {
 
+
+
+
     Template.who.rendered = function() {
 
+      if (Session.get("fullname_id")) {
+        var person = Pool.findOne(Session.get("fullname_id"))
+          // check if we have data on you already
+        $('#fullname').value = person.name
+      } 
+
+      // set up the autocomplete
       $('#fullname').autocomplete({
         source: people.map(function(x) {
           return x.name;
         }),
         select: function(e, ui) {
           var value = e.target.value;
+
+          var existingPerson = Pool.findOne({name: value})
+          if (existingPerson) {
+          // person alrady exists, so let's load their data
+            Session.set("fullname_id", existingPerson._id)
+            $("#need").val(existingPerson.need)
+            return;
+          }
+
           var image = people.filter(function(x) {
             return x.name == value
           })[0].image
+
           if (!Session.get("fullname_id"))
             Session.set("fullname_id", Pool.insert({
               "name": value,
-              "need": null,
+              "need": $("#need").val(),
               "image": image
             }))
           else
@@ -80,17 +105,29 @@ people = [{"username":"lgerber","image": "http://delta.northwestern.edu/wordpres
     Template.who.events({
       'input #fullname': function(e) {
         var value = e.currentTarget.value;
+
+        var existingPerson = Pool.findOne({name: value})
+        if (existingPerson) {
+          // person alrady exists, so let's load their data
+            Session.set("fullname_id", existingPerson._id)
+            $("#need").val(existingPerson.need)
+            return;
+        }
+
         if (!Session.get("fullname_id"))
           Session.set("fullname_id", Pool.insert({
             "name": value,
-            "need": null
+            "need": $("#need").val(),
+            "image": getDefaultImage()
           }))
         else
           Pool.update({
               '_id': Session.get("fullname_id"), 
             }, {
               '_id': Session.get("fullname_id"),
-              'name': value 
+              'name': value,
+              'need': $("#need").val(),
+              'image': getDefaultImage() 
             }, {upsert: true})
       }
     });
