@@ -88,49 +88,41 @@ if (Meteor.isClient) {
   Template.match.events({
     "click #clearPool": function (e) {
 
-      if(confirm("This will clear the pair research pool and people's stated needs. Ok?"))
+      if(confirm("This will clear the current pair research pool and people's stated needs. Ok?"))
       Meteor.call('clearPool', function(error, result) {
        });
     },
 
     "click #getMatches": function(e) {
-
-      // 1. Get the pool
-      var pool = Pool.find({need: {$ne: ""}}).fetch();
-   
-
-      // 2. Get the preferences
-      var affinities = Affinity.find().fetch();
-      var scores = {};
-      for(var i = 0; i < pool.length; i++){
-          scores[pool[i]._id] = {}
-          for(var j = 0; j < pool.length; j++){
-            if(i == j) continue;
-            scores[pool[i]._id][pool[j]._id] = 0 
-          }
-      }
-      for(var i = 0; i < affinities.length; i++) {
-        if(affinities[i].helper in scores && affinities[i].helpee in scores[affinities[i].helper])
-          scores[affinities[i].helper][affinities[i].helpee] = affinities[i].value
-      }
-
-      // 3. Generate the graph
-      var graph = generateGraph(pool, scores);
-
-      // 4. Send it off for matching
-      Meteor.call('getMatches', JSON.stringify(graph.edges), function(error, result) {
-        if(!error) processMatches(result, graph)
-      });
-
-      // var data = JSON.stringify([
-      //   [0.0, 1.0, 121.0],
-      //   [0.0, 2.0, 73.0],
-      //   [0.0, 3.0, 85.0],
-      //   [1.0, 2.0, 77.0],
-      //   [1.0, 3.0, 88.0],
-      //   [2.0, 3.0, 133.0]
-      // ]);
-
+	if(confirm("We will now pair people based on who they said they could help. Ok?")){
+	    
+	    // 1. Get the pool
+	    var pool = Pool.find({need: {$ne: ""}}).fetch();
+	    
+	    
+	    // 2. Get the preferences
+	    var affinities = Affinity.find().fetch();
+	    var scores = {};
+	    for(var i = 0; i < pool.length; i++){
+		scores[pool[i]._id] = {}
+		for(var j = 0; j < pool.length; j++){
+		    if(i == j) continue;
+		    scores[pool[i]._id][pool[j]._id] = 0 
+		}
+	    }
+	    for(var i = 0; i < affinities.length; i++) {
+		if(affinities[i].helper in scores && affinities[i].helpee in scores[affinities[i].helper])
+		    scores[affinities[i].helper][affinities[i].helpee] = affinities[i].value
+	    }
+	    
+	    // 3. Generate the graph
+	    var graph = generateGraph(pool, scores);
+	    
+	    // 4. Send it off for matching
+	    Meteor.call('getMatches', JSON.stringify(graph.edges), function(error, result) {
+		if(!error) processMatches(result, graph)
+	    });
+	}
     }
   });
 }

@@ -6,10 +6,16 @@
   		{{#each match}}
 
   			{{#if matched}}
-  				<div><span class='name'>{{personOne}}</span> is paired with <span class='name'>{{personTwo}}</span></div>
-  			{{else}}
-  				<div><span class='name'>{{personOne}}</span> did not pair. They'll play with <span class='name'>Stella</span>.</div>
-  			{{/if}} 
+  		<div class="singleMatch">
+		  <div><span class='name'>{{personOne}}</span> is paired with <span class='name'>{{personTwo}}</span></div>
+		  <div><img class='person-image' src="{{displayImageOne}}"/><img class='person-image' src="{{displayImageTwo}}"/></div>
+		  <div class='clear'></div>
+		</div>
+  		  {{else}}
+  		  <div><span class='name'>{{personOne}}</span> did not pair. They'll play with <span class='name'>Stella</span>.</div>
+		  <div><img class='person-image' src="{{displayImageOne}}"/><img class='person-image' src="https://dl.dropboxusercontent.com/s/6mg35kb7e13gbik/stella.jpg"/></div>
+		  <div class='clear'></div>
+  		  {{/if}} 
   		{{/each}}
   	</div>
   	</div>

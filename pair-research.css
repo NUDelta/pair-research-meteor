@@ -200,6 +200,10 @@ border-top-left-radius: 15px;
 border-bottom-left-radius: 15px;
  }
 
+.singleMatch {
+   margin-bottom: 40px;
+}
+
 .helpone {
     margin-bottom: 40px;
     background-color: rgb(94,210,239);
