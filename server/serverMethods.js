@@ -7,7 +7,8 @@ if (Meteor.isServer) {
       }, {
         "helper": context.helper,
         "helpee": context.helpee,
-        "value": context.value
+        "value": context.value,
+	"timestamp": new Date().getTime()
       }, {
         upsert: true
       })
