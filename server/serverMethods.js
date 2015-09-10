@@ -14,22 +14,24 @@ if (Meteor.isServer) {
       })
     },
     clearPool: function(){
-      Pool.remove({})
-      Affinity.remove({})
+	// TODO: should insert more history than just when the pool got cleared
+	History.insert({timestamp: new Date().getTime()})
+	Pool.remove({})
+	Affinity.remove({})
     },
-    getMatches: function(data) {
-      try {
-        var result = HTTP.call("POST", "http://groups.csail.mit.edu/uid/paired-research/match.cgi", {
-          params: {
-            "graph": data
-          }
-        });
-        return result;
+      getMatches: function(data) {
+	  try {
+              var result = HTTP.call("POST", "http://groups.csail.mit.edu/uid/paired-research/match.cgi", {
+		  params: {
+		      "graph": data
+		  }
+              });
+              return result;
       } catch (e) {
-        // Got a network error, time-out or HTTP error in the 400 or 500 range.
-        return false;
+          // Got a network error, time-out or HTTP error in the 400 or 500 range.
+          return false;
       }
-    }
+      }
   })
 
 }
