@@ -1,8 +1,0 @@
-displayImageFromName = function(name){
-    console.log(name);
-    var person = Pool.findOne({name:name})
-    console.log(person);
-    if (person && person.image) return person.image
-    else return "http://images.clipartpanda.com/sad-girl-stick-figure-image.png"
-};
-
