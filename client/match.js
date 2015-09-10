@@ -90,6 +90,7 @@ if (Meteor.isClient) {
 
       if(confirm("This will clear the current pair research pool and people's stated needs. Ok?"))
       Meteor.call('clearPool', function(error, result) {
+	  if(error) console.log(error)
        });
     },
 

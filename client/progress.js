@@ -4,7 +4,7 @@ if (Meteor.isClient) {
 	if(last && last.timestamp) {
 	    return last.timestamp / 1000;
 	}
-	else return ""
+	else return null;
     }
 
     Template.progress.helpers({
