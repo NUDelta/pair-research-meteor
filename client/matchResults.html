@@ -1,7 +1,12 @@
 <template name="matchResults">
-	<div class="section">
+	<div id="matchResults" class="section">
+	  {{#if lastMatchFromCurrentPool}}
+
+	  
+
   		<h2>last pairing: {{lastMatchTime}}</h2>
 
+		
 <div>
   		{{#each match}}
 
@@ -18,5 +23,7 @@
   		  {{/if}} 
   		{{/each}}
   	</div>
+{{/if}}
   	</div>
+
  </template>
