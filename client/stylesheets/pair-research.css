@@ -216,3 +216,30 @@ border-top-left-radius: 15px;
 border-bottom-left-radius: 15px;
 
 }
+
+.progressRing {
+    border: 3px solid #999;
+    -webkit-border-radius: 60px;
+    height: 60px;
+    background-color: lightgray;
+    width: 60px;
+    margin: 30px;
+ /*   position: absolute;
+    left:20px;
+    top:214px;
+*/
+}
+
+.pulsing {
+    border: 10px solid green;
+    background-color: white;
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}

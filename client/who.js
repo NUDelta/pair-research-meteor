@@ -2,6 +2,7 @@
 
   if (Meteor.isClient) {
 
+
  var people = [
 {"username":"stellathedog","image": "https://dl.dropboxusercontent.com/s/6mg35kb7e13gbik/stella.jpg", "name": "Stella"},
 {"username":"lgerber","image": "http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/liz-250x250.jpg", "name": "Liz Gerber"},
