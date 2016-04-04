@@ -58,8 +58,11 @@ function shuffle(a) {
 
 function processMatches(response, graph){
   
-  var matches = response.data 
+console.log("return data from server:");
+console.log(response.data);
 
+  var matches = response.data 
+    
   // extract the results into a Matching list
   var matching = [];  
   // first find all the matched pairs
@@ -118,7 +121,10 @@ if (Meteor.isClient) {
 	    
 	    // 3. Generate the graph
 	    var graph = generateGraph(pool, scores);
-	    
+
+	    console.log("pref data sent to server:")
+	    console.log(graph.edges)
+
 	    // 4. Send it off for matching
 	    Meteor.call('getMatches', JSON.stringify(graph.edges), function(error, result) {
 		if(!error) processMatches(result, graph)
