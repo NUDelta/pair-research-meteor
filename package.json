@@ -1,0 +1,22 @@
+{
+    "name": "pair-research",
+    "version": "0.0.1",
+    "description": "update me please!",
+    "author": {
+        "name": "Kevin Chen",
+        "email": "kevinjchen94@gmail.com",
+        "url": "http://kevinchen.ninja"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NUDelta/pair-research-meteor.git"
+    },
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "start": "meteor run"
+    },
+    "dependencies": {
+        "meteor-node-stubs": "~0.2.0"
+    }
+}
