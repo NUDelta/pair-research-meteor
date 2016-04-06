@@ -8,18 +8,19 @@ Meteor.startup(() => {
   const userData = [
     {
       username: 'kchen',
-      password: 'password',
+      password: 'password'
     },
     {
       username: 'hzhang',
-      password: 'password',
+      password: 'password'
     },
     {
       username: 'josh',
-      password: 'complexpassword',
+      password: 'complexpassword'
     }
   ];
 
-  userData.forEach(user => Accounts.createUser(user));
-
+  if (Meteor.users.find().count() === 0) {
+    userData.forEach(user => Accounts.createUser(user));
+  }
 });

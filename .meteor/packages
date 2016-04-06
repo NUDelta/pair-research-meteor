@@ -22,3 +22,5 @@ insecure                # Allow all DB writes from clients (for prototyping)
 aldeed:collection2
 accounts-base
 accounts-password
+kadira:flow-router
+kadira:blaze-layout
