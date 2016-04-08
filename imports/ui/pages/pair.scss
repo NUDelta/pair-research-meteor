@@ -1,0 +1,27 @@
+
+#pair.container {
+  .collection {
+    li.collection-item {
+      height: 84px;
+    }
+
+    .float-center {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &.left {
+        left: 20%;
+      }
+
+      &.right {
+        right: 20%;
+      }
+
+      input {
+        width: auto;
+      }
+    }
+
+  }
+}

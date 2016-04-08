@@ -1,7 +1,15 @@
+import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
 Schema.UserProfile = new SimpleSchema({
+  groups: {
+    type: Array
+  },
+  'groups.$': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  }
 });
 
 Schema.User = new SimpleSchema({
@@ -27,8 +35,7 @@ Schema.User = new SimpleSchema({
     type: Date
   },
   profile: {
-    type: Schema.UserProfile,
-    optional: true
+    type: Schema.UserProfile
   },
   services: {
     type: Object,
@@ -40,3 +47,5 @@ Schema.User = new SimpleSchema({
     optional: true
   }
 });
+
+Meteor.users.attachSchema(Schema.User);

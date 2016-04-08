@@ -1,13 +1,14 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Schema } from '../schema';
-import { Memberships } from '../memberships/memberships';
+
+import { Schema } from '../schema.js';
 
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
-    console.log(this.userId);
-    // add userId to membership
-    return super.insert(group, callback);
+    let groupId = super.insert(group, callback);
+    Meteor.users.update(group.creatorId, { $push: { 'profile.groups': groupId }});
+    return groupId;
   }
 
   update(selector, callback) {
@@ -26,10 +27,12 @@ Schema.Group = new SimpleSchema({
   groupName: {
     type: String
   },
-  creator: {
+  creatorId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
   }
   // creation date
   // public private
 });
+
+Groups.attachSchema(Schema.Group);

@@ -26,3 +26,5 @@ fourseven:scss
 materialize:materialize
 accounts-ui
 stevezhu:lodash
+mdg:validated-method
+nooitaf:colors

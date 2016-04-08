@@ -1,2 +1,19 @@
-<template name="Pair">
+<template name="pair">
+  <blockquote>Welcome to Pair Research, {{currentUser.username}}.</blockquote>
+
+  <div class="container" id="pair">
+    <div class="row">
+      <div class="input-field col s6">
+        <label for="need" class="active">What do you need help with?</label>
+        <input name="need" type="text" id="need" placeholder="Anything: iOS, Meteor, etc.">
+      </div>
+    </div>
+
+    <ul class="collection">
+      {{#each task in groupTasks}}
+        {{> pair_task task}}
+      {{/each}}
+    </ul>
+  </div>
 </template>
+

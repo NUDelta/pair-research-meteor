@@ -11,15 +11,15 @@ class AffinityCollection extends Mongo.Collection {
 export const Affinities = new AffinityCollection('affinities');
 
 Schema.Affinity = new SimpleSchema({
-  helper: {
+  helperId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
   },
-  helpee: {
+  helpeeId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
   },
-  group: {
+  groupId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
   },
