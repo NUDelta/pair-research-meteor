@@ -1,10 +1,8 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-// Import layout
-import '../../ui/layout/app-body';
+import '../../ui/layout/app-body.js';
 
-// Import pages
-import '../../ui/pages/pair';
+import '../../ui/pages/pair.js';
 
 FlowRouter.route('/', {
   name: 'App.home',

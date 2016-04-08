@@ -1,0 +1,13 @@
+nav.nav-wrapper {
+  padding: 0 40px 0 40px;
+
+  // Overriding Accounts-UI
+  #login-dropdown-list {
+    left: auto;
+    right: -1px;
+  }
+
+  #login-buttons .login-close-text {
+    float: right;
+  }
+}
