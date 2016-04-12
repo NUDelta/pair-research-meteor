@@ -4,6 +4,7 @@ import { Affinities } from './affinities.js';
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
 
+
 export const updateAffinity = new ValidatedMethod({
   name: 'affinity.update',
   validate: Schema.Affinity.validator(),
@@ -22,3 +23,4 @@ export const updateAffinity = new ValidatedMethod({
     });
   }
 });
+

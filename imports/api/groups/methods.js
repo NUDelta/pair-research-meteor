@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
+import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
+import { Pairings } from '../pairings/pairings.js';
 import { log } from '../logs.js';
 
 export const findGroupMembers = new ValidatedMethod({
@@ -38,5 +40,20 @@ export const addToGroup = new ValidatedMethod({
       task: '',
       groupId: groupId
     });
+  }
+});
+
+export const clearGroupPool = new ValidatedMethod({
+  name: 'groups.clearPool',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  run({ groupId }) {
+    Affinities.remove({ groupId: groupId });
+    Tasks.remove({ groupId: groupId });
+    Pairings.remove({ groupId: groupId });
   }
 });

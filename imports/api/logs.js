@@ -2,15 +2,15 @@ import 'meteor/nooitaf:colors';
 
 export const log = {
   debug(message) {
-    console.log(`[debug]: ${ message }`.blue);
+    console.log(`[debug]: ${ JSON.stringify(message) }`.blue);
   },
 
   info(message) {
-    console.log(`[info]: ${ message }`.green);
+    console.log(`[info]: ${ JSON.stringify(message) }`.green);
   },
 
   warning(message) {
-    console.log(`[warn]: ${ message }`.yellow);
+    console.log(`[warn]: ${ JSON.stringify(message) }`.yellow);
   }
 
 };

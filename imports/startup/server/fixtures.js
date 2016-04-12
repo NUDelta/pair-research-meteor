@@ -2,10 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Affinities } from '../../api/affinities/affinities.js';
-import { Groups } from '../../api/groups/groups';
+import { Groups } from '../../api/groups/groups.js';
+import { Pairings } from '../../api/pairings/pairings.js';
 import { Tasks } from '../../api/tasks/tasks.js';
-import '../../api/users/users';
 import { log } from './../../api/logs.js';
+import '../../api/users/users.js';
 
 import { addToGroup } from '../../api/groups/methods.js';
 
@@ -50,13 +51,52 @@ Meteor.startup(() => {
     userData.forEach(user => Accounts.createUser(user));
     Meteor.users.find().forEach(user => addToGroup.call({ groupId: groupId, userId: user._id }));
 
+    Tasks.update({ userId: adminId }, { $set: { task: 'everything' }});
     Tasks.update({ name: 'hzhang' }, { $set: { task: 'Help with Stella' }});
+    Tasks.update({ name: 'josh' }, { $set: { task: 'Nothing' }});
 
-    Affinities.insert({
-      helperId: adminId,
-      helpeeId: Meteor.users.findOne({ username: 'hzhang' })._id,
-      groupId: groupId,
-      value: 4
-    });
+    const haoqiId = Meteor.users.findOne({ username: 'hzhang' })._id;
+    const joshId = Meteor.users.findOne({ username: 'josh' })._id;
+
+    const affinities = [
+      {
+        helperId: adminId,
+        helpeeId: haoqiId,
+        groupId: groupId,
+        value: 4
+      },
+      {
+        helperId: adminId,
+        helpeeId: joshId,
+        groupId: groupId,
+        value: 5
+      },
+      {
+        helperId: haoqiId,
+        helpeeId: adminId,
+        groupId: groupId,
+        value: 4
+      },
+      {
+        helperId: haoqiId,
+        helpeeId: joshId,
+        groupId: groupId,
+        value: 2
+      },
+      {
+        helperId: joshId,
+        helpeeId: adminId,
+        groupId: groupId,
+        value: 5
+      },
+      {
+        helperId: joshId,
+        helpeeId: haoqiId,
+        groupId: groupId,
+        value: 2
+      }
+    ];
+
+    affinities.forEach(affinity => Affinities.insert(affinity));
   }
 });

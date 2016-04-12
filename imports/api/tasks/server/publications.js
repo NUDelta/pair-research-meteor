@@ -5,7 +5,6 @@ import { Tasks } from '../tasks.js';
 Meteor.publish('tasks.inGroup', function(groupId) {
   return Tasks.find({
     groupId: groupId,
-    userId: { $ne: this.userId },
     task: { $exists: 1 }
   });
   //if (!this.userId) {

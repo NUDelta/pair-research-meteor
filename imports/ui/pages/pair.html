@@ -5,15 +5,28 @@
     <div class="row">
       <div class="input-field col s6">
         <label for="need" class="active">What do you need help with?</label>
-        <input name="need" type="text" id="need" placeholder="Anything: iOS, Meteor, etc.">
+        <input name="need" type="text" id="need" placeholder="Anything: iOS, Meteor, etc."
+               value="{{ currentTask.task }}">
+        </div>
+      <div class="right">
+        <a id="reset" class="waves-effect waves-light amber btn">Reset Pool</a>
+        <a id="makePairs" class="waves-effect waves-light btn">Make Pairs</a>
       </div>
     </div>
 
     <ul class="collection">
       {{#each task in groupTasks}}
-        {{> pair_task task}}
+        {{> pair_task (pairTaskArgs task)}}
       {{/each}}
     </ul>
+
+    <div class="row">
+      {{userCount}} users have entered {{affinityCount}} affinities.
+    </div>
+
+    <div class="row">
+      {{> pair_results}}
+    </div>
   </div>
 </template>
 

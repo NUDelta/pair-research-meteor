@@ -6,6 +6,9 @@ import { log } from '../logs.js';
 export const updateTask = new ValidatedMethod({
   name: 'tasks.update',
   validate: new SimpleSchema({
+    name: {
+      type: String,
+    },
     userId: {
       type: String,
       regEx: SimpleSchema.RegEx.Id
@@ -18,8 +21,9 @@ export const updateTask = new ValidatedMethod({
       type: String
     }
   }).validator(),
-  run({ userId, groupId, task }) {
-    Tasks.update({
+  run({ name, userId, groupId, task }) {
+    Tasks.upsert({
+      name: name,
       userId: userId,
       groupId: groupId
     }, {
