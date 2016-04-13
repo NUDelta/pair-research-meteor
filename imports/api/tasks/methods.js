@@ -7,7 +7,7 @@ export const updateTask = new ValidatedMethod({
   name: 'tasks.update',
   validate: new SimpleSchema({
     name: {
-      type: String,
+      type: String
     },
     userId: {
       type: String,

@@ -1,12 +1,18 @@
 <template name="pair_results">
   {{#if group.activePairing}}
     We have pairings! <br/>
-    {{#each pairing in pairings}}
-      {{#if pairing.secondUserName}}
-        {{pairing.firstUserName}} with {{pairing.secondUserName}}<br/>
-      {{else}}
-        {{pairing.firstUserName}} was not matched. He/she will be playing with Stella.<br/>
-      {{/if}}
-    {{/each}}
+    <ul class="collection">
+      {{#each pairing in pairings}}
+        <li class="collection-item avatar">
+          <div class="float-center">
+            {{#if pairing.secondUserName}}
+              {{pairing.firstUserName}} with {{pairing.secondUserName}}<br/>
+            {{else}}
+              {{pairing.firstUserName}} was not matched. He/she will be playing with Stella.<br/>
+            {{/if}}
+          </div>
+        </li>
+      {{/each}}
+    </ul>
   {{/if}}
 </template>

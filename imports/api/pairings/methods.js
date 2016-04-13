@@ -60,13 +60,17 @@ export const makePairings = new ValidatedMethod({
       const data = JSON.stringify(edges);
       const cmd = `echo '${ data }' | python ${ PAIR_SCRIPT }`;
       const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
+      log.info(`script results: ${ JSON.stringify(partners) }`);
 
       // TODO: consider offloading parts of this to the client?
-      log.info(`script results: ${ JSON.stringify(partners) }`);
+
+      const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
       const pairings = _.compact(_.concat(
           _.shuffle(
             _.map(partners, (partner, index) => {
-              if (partner !== -1 ) {
+              if (partner !== -1 && unpairedUsers[index] && unpairedUsers[partner]) {
+                unpairedUsers[index] = false;
+                unpairedUsers[partner] = false;
                 const pair = _.shuffle([ users[index], users[partner] ]);
                 return {
                   firstUserId: pair[0][0],
