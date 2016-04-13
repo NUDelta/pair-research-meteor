@@ -21,7 +21,7 @@ Meteor.startup(() => {
   Groups.remove({});
   Tasks.remove({});
   Affinities.remove({});
-
+  Pairings.remove({});
 
   if (Meteor.users.find().count() === 0) {
     Accounts.createUser(admin);

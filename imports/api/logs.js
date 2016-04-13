@@ -2,17 +2,24 @@ import 'meteor/nooitaf:colors';
 
 export const log = {
   debug(message) {
-    console.log(`[debug]: ${ JSON.stringify(message) }`.blue);
+    console.log(`[debug]: ${ process(message) }`.blue);
   },
 
   info(message) {
-    console.log(`[info]: ${ JSON.stringify(message) }`.green);
+    console.log(`[info]: ${ process(message) }`.green);
   },
 
   warning(message) {
-    console.log(`[warn]: ${ JSON.stringify(message) }`.yellow);
+    console.log(`[warn]: ${ process(message) }`.yellow);
   }
-
 };
+
+function process(message) {
+  if (typeof message == 'string') {
+    return message;
+  } else {
+    return JSON.stringify(message);
+  }
+}
 
 

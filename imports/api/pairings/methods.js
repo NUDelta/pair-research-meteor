@@ -22,7 +22,9 @@ export const makePairings = new ValidatedMethod({
   run({ groupId }) {
 
     // Form n^2 pool data
-    const userPool = Tasks.find({ groupId: groupId }).fetch().map(task => task.userId);
+    const users = Tasks.find({ groupId: groupId }).fetch().map(task => [ task.userId, task.name ]);
+    const userPool = _.map(users, user => user[0]);
+
     const scores = {};
     userPool.forEach((userId) => {
       scores[userId] = {};
@@ -54,13 +56,41 @@ export const makePairings = new ValidatedMethod({
     });
 
     if (!this.isSimulation) {
-      //const data = '[(0, 1, 93), (0, 2, -20), (0, 3, 2), (1, 2, -13), (1, 3, 10), (2, 3, 80)]';
+      log.info(`running Python script at ${ PAIR_SCRIPT }`);
       const data = JSON.stringify(edges);
-      log.info(data);
       const cmd = `echo '${ data }' | python ${ PAIR_SCRIPT }`;
-      const execSync = Meteor.wrapAsync(exec);
+      const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
 
-      return execSync(cmd);
+      // TODO: consider offloading parts of this to the client?
+      log.info(`script results: ${ JSON.stringify(partners) }`);
+      const pairings = _.compact(_.concat(
+          _.shuffle(
+            _.map(partners, (partner, index) => {
+              if (partner !== -1 ) {
+                const pair = _.shuffle([ users[index], users[partner] ]);
+                return {
+                  firstUserId: pair[0][0],
+                  firstUserName: pair[0][1],
+                  secondUserId: pair[1][0],
+                  secondUserName: pair[1][1]
+                };
+              }
+            })),
+          _.shuffle(
+            _.map(partners, (partner, index) => {
+              if (partner === -1) {
+                return {
+                  firstUserId: users[index][0],
+                  firstUserName: users[index][1]
+                };
+              }
+          }))
+        ));
+      log.info(pairings);
+      return Pairings.insert({
+        groupId: groupId,
+        pairings: pairings
+      });
     } else {
       return 1;
     }

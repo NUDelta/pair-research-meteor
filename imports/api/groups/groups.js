@@ -30,6 +30,11 @@ Schema.Group = new SimpleSchema({
   creatorId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
+  },
+  activePairing: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
   }
   // creation date
   // public private

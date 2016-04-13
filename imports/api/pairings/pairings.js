@@ -1,26 +1,37 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { Groups } from '../groups/groups.js';
 import { Schema } from '../schema.js';
 
 class PairingCollection extends Mongo.Collection {
   insert(pairing, callback) {
-    return super.insert(pairing, callback)
+    const _id = super.insert(pairing, callback);
+    Groups.update(pairing.groupId, { $set: { activePairing: _id }});
+    return _id;
   }
 }
 
 export const Pairings = new PairingCollection('pairings');
 
-Schema.SinglePairing = new SimpleSchema({
-  firstUserId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  secondUserId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  }
-});
+ Schema.SinglePairing = new SimpleSchema({
+   firstUserId: {
+     type: String,
+     regEx: SimpleSchema.RegEx.Id
+   },
+   firstUserName: {
+     type: String
+   },
+   secondUserId: {
+     type: String,
+     regEx: SimpleSchema.RegEx.Id,
+     optional: true
+   },
+   secondUserName: {
+     type: String,
+     optional: true
+   }
+ });
 
 Schema.Pairing = new SimpleSchema({
   groupId: {
@@ -32,8 +43,5 @@ Schema.Pairing = new SimpleSchema({
   },
   'pairings.$': {
     type: Schema.SinglePairing
-  },
-  active: {
-    type: Boolean
   }
 });

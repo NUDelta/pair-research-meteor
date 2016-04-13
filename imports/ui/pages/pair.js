@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import { Groups } from '../../api/groups/groups.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { Affinities } from '../../api/affinities/affinities.js';
 import { log } from '../../api/logs.js';
@@ -26,8 +27,10 @@ import '../partials/pair_results.js';
 Template.pair.onCreated(function() {
   let groupId = Meteor.user().profile.groups[0];
 
+  this.subscribe('groups.byId', groupId);
   this.subscribe('tasks.inGroup', groupId);
   this.subscribe('affinities.inGroup', groupId);
+
 
   this.state = new ReactiveDict();
   this.state.setDefault({
@@ -55,6 +58,15 @@ Template.pair.helpers({
         helperId: Meteor.userId(),
         helpeeId: task.userId
       })
+    };
+  },
+  pairResultCreated() {
+    const group = Groups.findOne();
+    return group && group.activePairing;
+  },
+  pairResultArgs() {
+    return {
+      group: Groups.findOne()
     };
   }
 });

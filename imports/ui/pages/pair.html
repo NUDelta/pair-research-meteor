@@ -25,8 +25,9 @@
     </div>
 
     <div class="row">
-      {{> pair_results}}
+      {{#if pairResultCreated}}
+        {{> pair_results pairResultArgs}}
+      {{/if}}
     </div>
   </div>
 </template>
-

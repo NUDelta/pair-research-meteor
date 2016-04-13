@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
+import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
 import { Pairings } from '../pairings/pairings.js';
@@ -54,6 +55,6 @@ export const clearGroupPool = new ValidatedMethod({
   run({ groupId }) {
     Affinities.remove({ groupId: groupId });
     Tasks.remove({ groupId: groupId });
-    Pairings.remove({ groupId: groupId });
+    Groups.update(groupId, { $unset: { activePairing: '' }});
   }
 });
