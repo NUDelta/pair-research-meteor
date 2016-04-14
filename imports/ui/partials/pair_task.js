@@ -12,8 +12,8 @@ Template.pair_task.events({
   'change input[type=range]'(event, instance) {
     updateAffinity.call({
       helperId: Meteor.userId(),
-      helpeeId: instance.data.userId,
-      groupId: instance.data.groupId,
+      helpeeId: instance.data.task.userId,
+      groupId: instance.data.task.groupId,
       value: parseInt(event.target.value)
     });
   }

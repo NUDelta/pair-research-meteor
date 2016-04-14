@@ -64,6 +64,7 @@ export const makePairings = new ValidatedMethod({
 
       // TODO: consider offloading parts of this to the client?
 
+      // Avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
       const pairings = _.compact(_.concat(
           _.shuffle(
