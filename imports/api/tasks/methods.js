@@ -22,12 +22,27 @@ export const updateTask = new ValidatedMethod({
     }
   }).validator(),
   run({ name, userId, groupId, task }) {
-    Tasks.upsert({
-      name: name,
-      userId: userId,
-      groupId: groupId
-    }, {
-      $set: { task: task }
-    });
+    const record = Tasks.findOne({ userId: userId, groupId: groupId });
+    if (record) {
+      return Tasks.update(record._id, { $set: { task: task }});
+    } else {
+      return Tasks.insert({
+        name: name,
+        userId: userId,
+        groupId: groupId,
+        task: task
+      });
+    }
+
+    // TODO: upsert doesn't work?
+    //Tasks.upsert({
+    //  name: name,
+    //  userId: userId,
+    //  groupId: groupId
+    //}, {
+    //  $set: {
+    //    task: task
+    //  }
+    //});
   }
 });

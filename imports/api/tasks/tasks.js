@@ -6,6 +6,10 @@ class TaskCollection extends Mongo.Collection {
   insert(task, callback) {
     return super.insert(task, callback);
   }
+
+  update(selector, modifier) {
+    return super.update(selector, modifier);
+  }
 }
 
 export const Tasks = new TaskCollection('tasks');
