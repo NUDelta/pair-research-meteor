@@ -33,14 +33,18 @@ export const addToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId, userId }) {
-    let user = Meteor.users.findOne(userId);
+    const user = Meteor.users.findOne(userId);
+    const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
+    if (!taskRecord) {
+      Tasks.insert({
+        name: user.username,
+        userId: userId,
+        task: '',
+        groupId: groupId
+      });
+    }
+
     Meteor.users.update(userId, { $addToSet: { 'profile.groups': groupId }});
-    Tasks.insert({
-      name: user.username,
-      userId: userId,
-      task: '',
-      groupId: groupId
-    });
   }
 });
 
