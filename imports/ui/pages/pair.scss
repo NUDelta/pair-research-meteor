@@ -4,7 +4,7 @@
     li.collection-item {
       height: 84px;
 
-      p {
+      .right p {
         display: inline-block;
       }
     }
@@ -15,11 +15,11 @@
       transform: translateY(-50%);
 
       &.left {
-        left: 20%;
+        max-width: 50%;
       }
 
       &.right {
-        right: 20%;
+        right: 5%
       }
 
       input {

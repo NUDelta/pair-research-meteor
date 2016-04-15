@@ -31,10 +31,25 @@ Template.pair.onCreated(function() {
   this.subscribe('tasks.inGroup', groupId);
   this.subscribe('affinities.inGroup', groupId);
 
-
   this.state = new ReactiveDict();
   this.state.setDefault({
     groupId: groupId
+  });
+
+});
+
+Template.pair.onRendered(function() {
+  Groups.find().observeChanges({
+    changed(id, fields) {
+      if (id && fields.activePairing) {
+        // Scroll to pair results
+        setTimeout(() => {
+          $('body, html').animate({
+            scrollTop: $('#pair_results').offset().top
+          }, 1000);
+        }, 500);
+      }
+    }
   });
 });
 

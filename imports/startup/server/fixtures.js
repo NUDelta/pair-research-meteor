@@ -40,22 +40,43 @@ Meteor.startup(() => {
 
     const userData = [
       {
-        username: 'hzhang',
+        username: 'haoqi',
         password: 'password'
       },
       {
         username: 'josh',
-        password: 'complexpassword'
+        password: 'password'
+      },
+      {
+        username: 'yongsung',
+        password: 'password'
+      },
+      {
+        username: 'ryan',
+        password: 'password'
+      },
+      {
+        username: 'shannnon',
+        password: 'password'
+      },
+      {
+        username: 'sarah',
+        password: 'password'
       }
     ];
     userData.forEach(user => Accounts.createUser(user));
     Meteor.users.find().forEach(user => addToGroup.call({ groupId: groupId, userId: user._id }));
 
     Tasks.update({ userId: adminId }, { $set: { task: 'everything' }});
-    Tasks.update({ name: 'hzhang' }, { $set: { task: 'Help with Stella' }});
-    Tasks.update({ name: 'josh' }, { $set: { task: 'Nothing' }});
 
-    const haoqiId = Meteor.users.findOne({ username: 'hzhang' })._id;
+    Tasks.update({ name: 'haoqi' }, { $set: { task: 'Help with Stella' }});
+    Tasks.update({ name: 'josh' }, { $set: { task: 'Nothing' }});
+    Tasks.update({ name: 'yongsung' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
+    Tasks.update({ name: 'ryan' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
+    Tasks.update({ name: 'shannon' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
+    Tasks.update({ name: 'sarah' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
+
+    const haoqiId = Meteor.users.findOne({ username: 'haoqi' })._id;
     const joshId = Meteor.users.findOne({ username: 'josh' })._id;
 
     const affinities = [
