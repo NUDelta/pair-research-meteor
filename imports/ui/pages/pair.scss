@@ -3,6 +3,10 @@
   .collection {
     li.collection-item {
       height: 84px;
+
+      p {
+        display: inline-block;
+      }
     }
 
     .float-center {
