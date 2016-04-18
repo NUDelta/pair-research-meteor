@@ -6,3 +6,4 @@ if (Meteor.isDevelopment) {
   Pairings = require('../imports/api/pairings/pairings.js').Pairings;
   Tasks = require('../imports/api/tasks/tasks.js').Tasks;
 }
+

@@ -2,7 +2,6 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'meteor/stevezhu:lodash';
 import { exec } from 'child_process';
 
-
 import { Pairings } from './pairings.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
