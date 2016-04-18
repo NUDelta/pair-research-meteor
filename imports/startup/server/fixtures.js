@@ -12,6 +12,10 @@ import { addToGroup } from '../../api/groups/methods.js';
 
 Meteor.startup(() => {
 
+  if (!Meteor.isDevelopment) {
+    return;
+  }
+
   const admin = {
     username: 'kchen',
     password: 'password'
