@@ -25,15 +25,13 @@ import '../partials/pair_task.js';
 import '../partials/pair_results.js';
 
 Template.pair.onCreated(function() {
-  let groupId = Meteor.user().profile.groups[0];
-
-  this.subscribe('groups.byId', groupId);
-  this.subscribe('tasks.inGroup', groupId);
-  this.subscribe('affinities.inGroup', groupId);
+  this.subscribe('groups.byId', this.data.groupId);
+  this.subscribe('tasks.inGroup', this.data.groupId);
+  this.subscribe('affinities.inGroup', this.data.groupId);
 
   this.state = new ReactiveDict();
   this.state.setDefault({
-    groupId: groupId
+    groupId: this.data.groupId
   });
 
 });

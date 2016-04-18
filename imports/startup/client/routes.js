@@ -7,7 +7,7 @@ import '../../ui/pages/not-authorized.js';
 import '../../ui/pages/pair.js';
 import '../../ui/pages/create.js';
 
-FlowRouter.route('/pair', {
+FlowRouter.route('/pair/:groupId', {
   name: 'App.pair',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'pair' });

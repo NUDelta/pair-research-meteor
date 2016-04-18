@@ -62,3 +62,15 @@ export const clearGroupPool = new ValidatedMethod({
     Groups.update(groupId, { $unset: { activePairing: '' }});
   }
 });
+
+export const createRandomGroup = new ValidatedMethod({
+  name: 'groups.createRandom',
+  validate: null,
+  run() {
+    const randomGroupName = Math.random().toString(36).slice(2);
+    return Groups.insert({
+      groupName: randomGroupName,
+      creatorId: this.userId
+    });
+  }
+});

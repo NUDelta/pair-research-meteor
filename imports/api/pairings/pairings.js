@@ -14,24 +14,24 @@ class PairingCollection extends Mongo.Collection {
 
 export const Pairings = new PairingCollection('pairings');
 
- Schema.SinglePairing = new SimpleSchema({
-   firstUserId: {
-     type: String,
-     regEx: SimpleSchema.RegEx.Id
-   },
-   firstUserName: {
-     type: String
-   },
-   secondUserId: {
-     type: String,
-     regEx: SimpleSchema.RegEx.Id,
-     optional: true
-   },
-   secondUserName: {
-     type: String,
-     optional: true
-   }
- });
+Schema.SinglePairing = new SimpleSchema({
+  firstUserId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  firstUserName: {
+    type: String
+  },
+  secondUserId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
+  secondUserName: {
+    type: String,
+    optional: true
+  }
+});
 
 Schema.Pairing = new SimpleSchema({
   groupId: {
@@ -43,5 +43,18 @@ Schema.Pairing = new SimpleSchema({
   },
   'pairings.$': {
     type: Schema.SinglePairing
+  }
+});
+
+Pairings.helpers({
+  partner(userId) {
+    const pairing = _.find(this.pairings, (pairing) => {
+      return pairing.firstUserId == userId || pairing.secondUserId == userId;
+    });
+    if (pairing.firstUserId == userId) {
+      return { userId: pairing.secondUserId, name: pairing.secondUserName };
+    } else {
+      return { userId: pairing.firstUserId, name: pairing.firstUserName };
+    }
   }
 });

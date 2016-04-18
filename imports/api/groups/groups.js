@@ -41,3 +41,9 @@ Schema.Group = new SimpleSchema({
 });
 
 Groups.attachSchema(Schema.Group);
+
+Groups.allow({
+  insert(userId, doc) {
+    return doc.creatorId == userId;
+  }
+});
