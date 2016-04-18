@@ -2,12 +2,14 @@ import './pair.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Groups } from '../../api/groups/groups.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { Affinities } from '../../api/affinities/affinities.js';
 import { log } from '../../api/logs.js';
+import { DEV_OPTIONS } from '../../startup/config.js';
 
 import {
   updateTask,
@@ -18,6 +20,7 @@ import {
 } from '../../api/pairings/methods.js';
 
 import {
+  addToGroup,
   clearGroupPool
 } from '../../api/groups/methods.js';
 
@@ -25,13 +28,22 @@ import '../partials/pair_task.js';
 import '../partials/pair_results.js';
 
 Template.pair.onCreated(function() {
-  this.subscribe('groups.byId', this.data.groupId);
-  this.subscribe('tasks.inGroup', this.data.groupId);
-  this.subscribe('affinities.inGroup', this.data.groupId);
+  const groupId = FlowRouter.getParam('groupId');
+
+  if (DEV_OPTIONS.AUTOJOIN) {
+    addToGroup.call({
+      groupId: groupId,
+      userId: Meteor.userId()
+    });
+  }
+
+  this.subscribe('groups.byId', groupId);
+  this.subscribe('tasks.inGroup', groupId);
+  this.subscribe('affinities.inGroup', groupId);
 
   this.state = new ReactiveDict();
   this.state.setDefault({
-    groupId: this.data.groupId
+    groupId: groupId
   });
 
 });

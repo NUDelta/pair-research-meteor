@@ -23,6 +23,7 @@ class GroupCollection extends Mongo.Collection {
 
 export const Groups = new GroupCollection('groups');
 
+// TODO: Redo Group membership, since clearly anyone can add themselves to a group?
 Schema.Group = new SimpleSchema({
   groupName: {
     type: String
