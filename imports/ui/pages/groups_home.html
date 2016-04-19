@@ -1,0 +1,26 @@
+<template name="groups_home">
+  <div class="container">
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <h3 class="header">Groups</h3>
+        You're in these!
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <ul class="collection">
+          {{#each group in groups}}
+            <li class="collection-item">
+              <div>
+                {{ group.groupName }}
+                <a class="secondary-content">
+                  <i class="material-icons">settings</i>
+                </a>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>

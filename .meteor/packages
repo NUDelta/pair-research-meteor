@@ -23,9 +23,9 @@ accounts-password
 kadira:flow-router
 kadira:blaze-layout
 fourseven:scss
-materialize:materialize
 accounts-ui
 stevezhu:lodash
 mdg:validated-method
 nooitaf:colors
 dburles:collection-helpers
+poetic:materialize-scss
