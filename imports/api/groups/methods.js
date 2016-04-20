@@ -4,8 +4,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
-import { Pairings } from '../pairings/pairings.js';
-import { log } from '../logs.js';
+import { Schema } from '../schema.js';
 
 export const findGroupMembers = new ValidatedMethod({
   name: 'groups.findMembers',
@@ -22,16 +21,7 @@ export const findGroupMembers = new ValidatedMethod({
 
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
-  validate: new SimpleSchema({
-    groupId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    },
-    userId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    }
-  }).validator(),
+  validate: Schema.GroupUserQuery.validator(),
   run({ groupId, userId }) {
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
@@ -44,7 +34,23 @@ export const addToGroup = new ValidatedMethod({
       });
     }
 
-    Meteor.users.update(userId, { $addToSet: { groups: groupId }});
+    return Meteor.users.update(userId, { $addToSet: { groups: groupId }});
+  }
+});
+
+export const removeFromGroup = new ValidatedMethod({
+  name: 'groups.remove',
+  validate: Schema.GroupUserQuery.validator(),
+  run({ groupId, userId }) {
+    Affinities.remove({
+      groupId: groupId,
+      $or: [
+        { helperId: userId },
+        { helpeeId: userId }
+      ]
+    });
+    Tasks.remove({ groupId: groupId, userId: userId });
+    return Meteor.users.update(userId, { $pull : { groups: groupId }});
   }
 });
 

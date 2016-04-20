@@ -12,7 +12,7 @@
           {{#each group in groups}}
             <li class="collection-item">
               <div>
-                {{ group.groupName }}
+                <a href="/pair/{{ group._id }}">{{ group.groupName }}</a>
                 <a href="/groups/{{ group._id }}" class="secondary-content">
                   <i class="material-icons">settings</i>
                 </a>

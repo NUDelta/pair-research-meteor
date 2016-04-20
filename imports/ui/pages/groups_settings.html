@@ -9,12 +9,11 @@
       <div class="col s6 offset-s3">
         <ul class="collection">
           {{#each member in members}}
-            <li class="collection-item">
-              {{ member.username }}
-            </li>
+            {{> group_settings_member (memberArgs member)}}
           {{/each}}
         </ul>
       </div>
     </div>
   </div>
 </template>
+

@@ -48,3 +48,14 @@ Groups.allow({
     return doc.creatorId == userId;
   }
 });
+
+Schema.GroupUserQuery = new SimpleSchema({
+  groupId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  userId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  }
+});
