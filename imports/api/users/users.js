@@ -3,12 +3,10 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
 Schema.UserProfile = new SimpleSchema({
-  groups: {
-    type: Array
-  },
-  'groups.$': {
+  // placeholder, doesn't do anything yet
+  picture: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id
+    optional: true
   }
 });
 
@@ -34,8 +32,16 @@ Schema.User = new SimpleSchema({
   createdAt: {
     type: Date
   },
+  groups: {
+    type: Array
+  },
+  'groups.$': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
   profile: {
-    type: Schema.UserProfile
+    type: Schema.UserProfile,
+    optional: true
   },
   services: {
     type: Object,

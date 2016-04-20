@@ -35,7 +35,7 @@ Meteor.startup(() => {
     log.info('No data currently in database. Populating...');
 
     const adminId = Meteor.users.findOne({ username: admin.username })._id;
-    Meteor.users.update(adminId, { $set: { 'profile.groups': [] }});
+    Meteor.users.update(adminId, { $set: { groups: [] }});
 
     const groupId = Groups.insert({
       groupName: 'dtr',

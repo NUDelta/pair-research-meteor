@@ -8,7 +8,7 @@ Meteor.publish('groups.user', function() {
   } else {
     const user = Meteor.users.findOne(this.userId);
     return Groups.find({
-      _id: { $in: user.profile.groups }
+      _id: { $in: user.groups }
     });
   }
 });
@@ -21,7 +21,7 @@ Meteor.publish('groups.byId', function(groupId) {
     return Groups.find({
       $and: [
         {
-          _id: { $in: user.profile.groups }
+          _id: { $in: user.groups }
         },
         {
           _id: groupId

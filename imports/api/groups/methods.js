@@ -16,7 +16,7 @@ export const findGroupMembers = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId }) {
-    return Meteor.users.find({ $in: { 'profile.groups': groupId }});
+    return Meteor.users.find({ groups: groupId });
   }
 });
 
@@ -44,7 +44,7 @@ export const addToGroup = new ValidatedMethod({
       });
     }
 
-    Meteor.users.update(userId, { $addToSet: { 'profile.groups': groupId }});
+    Meteor.users.update(userId, { $addToSet: { groups: groupId }});
   }
 });
 

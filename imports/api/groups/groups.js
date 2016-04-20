@@ -7,7 +7,7 @@ import { Schema } from '../schema.js';
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
     let groupId = super.insert(group, callback);
-    Meteor.users.update(group.creatorId, { $push: { 'profile.groups': groupId }});
+    Meteor.users.update(group.creatorId, { $push: { groups: groupId }});
     return groupId;
   }
 

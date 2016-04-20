@@ -29,6 +29,7 @@ import '../partials/pair_results.js';
 
 Template.pair.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
+  // TODO: handle cases where groupId is not a real group
 
   if (DEV_OPTIONS.AUTOJOIN) {
     addToGroup.call({

@@ -5,7 +5,7 @@ Meteor.publish('users.inGroup', function(groupId) {
     this.ready();
   } else {
     return Meteor.users.find({
-      'profile.groups': groupId
+      groups: groupId
     }, {
       fields: { username: 1 }
     });
