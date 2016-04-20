@@ -1,22 +1,16 @@
-<template name="groups_home">
+<template name="groups_settings">
   <div class="container">
     <div class="row">
       <div class="col s6 offset-s3">
         <h3 class="header">Groups</h3>
-        You're in these!
       </div>
     </div>
     <div class="row">
       <div class="col s6 offset-s3">
         <ul class="collection">
-          {{#each group in groups}}
+          {{#each member in members}}
             <li class="collection-item">
-              <div>
-                {{ group.groupName }}
-                <a href="/groups/{{ group._id }}" class="secondary-content">
-                  <i class="material-icons">settings</i>
-                </a>
-              </div>
+              {{ member.username }}
             </li>
           {{/each}}
         </ul>

@@ -60,7 +60,7 @@ Meteor.startup(() => {
         password: 'password'
       },
       {
-        username: 'shannnon',
+        username: 'shannon',
         password: 'password'
       },
       {
