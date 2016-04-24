@@ -49,6 +49,7 @@ Groups.allow({
   }
 });
 
+// TODO: add schemas that are commonly used in methods
 Schema.GroupUserQuery = new SimpleSchema({
   groupId: {
     type: String,
