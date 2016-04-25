@@ -49,6 +49,19 @@ Template.pair.onCreated(function() {
     task: ''
   });
 
+  this.staticState = {};
+
+  this.setSpinnerTimeout = () => {
+    $('.preloader-wrapper').show();
+    let interval = this.staticState.spinner;
+    if (interval) {
+      clearTimeout(interval);
+    }
+    interval = setTimeout(() => {
+      $('.preloader-wrapper').hide();
+    }, 4000);
+    this.staticState.spinner = interval;
+  }
 });
 
 Template.pair.onRendered(function() {
@@ -74,9 +87,13 @@ Template.pair.helpers({
     return Tasks.find({ userId: { $ne: Meteor.userId() }});
   },
   userCount() {
+    const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return Tasks.find().count();
   },
   affinityCount() {
+    const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return Affinities.find().count();
   },
   pairEnterTaskArgs() {
