@@ -24,6 +24,7 @@ import {
   clearGroupPool
 } from '../../api/groups/methods.js';
 
+import '../partials/pair_enter_task.js';
 import '../partials/pair_task.js';
 import '../partials/pair_results.js';
 
@@ -65,6 +66,12 @@ Template.pair.onRendered(function() {
 });
 
 Template.pair.helpers({
+  groupId() {
+    const instance = Template.instance();
+    return {
+      groupId: instance.state.get('groupId')
+    };
+  },
   currentTask() {
     return Tasks.findOne({ userId: Meteor.userId() });
   },
@@ -98,15 +105,6 @@ Template.pair.helpers({
 });
 
 Template.pair.events({
-  'change #need'(event, instance) {
-    updateTask.call({
-      name: Meteor.user().username,
-      userId: Meteor.userId(),
-      groupId: instance.state.get('groupId'),
-      task: event.target.value
-    });
-  },
-
   'click #reset'(event, instance) {
     clearGroupPool.call({ groupId: instance.state.get('groupId') });
   },
