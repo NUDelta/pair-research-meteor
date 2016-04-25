@@ -12,7 +12,7 @@ import { log } from '../../api/logs.js';
 import { DEV_OPTIONS } from '../../startup/config.js';
 
 import {
-  updateTask,
+  removeTask,
 } from '../../api/tasks/methods.js';
 
 import {
@@ -45,7 +45,8 @@ Template.pair.onCreated(function() {
 
   this.state = new ReactiveDict();
   this.state.setDefault({
-    groupId: groupId
+    groupId: groupId,
+    task: ''
   });
 
 });
@@ -66,12 +67,6 @@ Template.pair.onRendered(function() {
 });
 
 Template.pair.helpers({
-  groupId() {
-    const instance = Template.instance();
-    return {
-      groupId: instance.state.get('groupId')
-    };
-  },
   currentTask() {
     return Tasks.findOne({ userId: Meteor.userId() });
   },
@@ -83,6 +78,13 @@ Template.pair.helpers({
   },
   affinityCount() {
     return Affinities.find().count();
+  },
+  pairEnterTaskArgs() {
+    const instance = Template.instance();
+    return {
+      groupId: instance.state.get('groupId'),
+      task: instance.state.get('task')
+    };
   },
   pairTaskArgs(task) {
     return {
@@ -105,6 +107,11 @@ Template.pair.helpers({
 });
 
 Template.pair.events({
+  'click #clearTask'(event, instance) {
+    instance.state.set('task', Tasks.findOne({ userId: Meteor.userId() }));
+    removeTask.call({ groupId: instance.state.get('groupId'), userId: Meteor.userId() });
+  },
+  
   'click #reset'(event, instance) {
     clearGroupPool.call({ groupId: instance.state.get('groupId') });
   },

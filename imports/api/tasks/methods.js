@@ -1,6 +1,7 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Tasks } from './tasks.js';
+import { Schema } from '../schema.js';
 import { log } from '../logs.js';
 
 export const updateTask = new ValidatedMethod({
@@ -44,5 +45,13 @@ export const updateTask = new ValidatedMethod({
     //    task: task
     //  }
     //});
+  }
+});
+
+export const removeTask = new ValidatedMethod({
+  name: 'tasks.remove',
+  validate: Schema.GroupUserQuery.validator(),
+  run({ userId, groupId }) {
+    Tasks.remove({ groupId: groupId, userId: userId });
   }
 });
