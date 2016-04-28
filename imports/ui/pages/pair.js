@@ -116,6 +116,8 @@ Template.pair.helpers({
     };
   },
   pairTaskArgs(task) {
+    const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return {
       task: task,
       affinity: Affinities.findOne({
