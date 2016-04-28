@@ -6,3 +6,5 @@ export const DEV_OPTIONS = {
 };
 
 export const PAIR_SCRIPT = 'assets/app/scripts/pair_research.py';
+
+export const ADMIN_ID = 'AX8FFZHzPa8eF8bBE';
