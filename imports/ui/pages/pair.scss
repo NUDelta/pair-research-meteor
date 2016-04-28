@@ -34,4 +34,9 @@
       margin-right: 5px;
     }
   }
+
+  // Keeps page height constant
+  .spinner-wrapper {
+    height: 100px;
+  }
 }

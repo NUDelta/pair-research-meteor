@@ -32,6 +32,7 @@
         {{#if pairResultCreated}}
           {{> pair_results pairResultArgs}}
         {{else}}
+        <div class="spinner-wrapper">
           <div class="preloader-wrapper big active">
             <div class="spinner-layer spinner-blue">
               <div class="circle-clipper left">
@@ -73,6 +74,7 @@
             </div>
             </div>
           </div>
+        </div>
         {{/if}}
       </div>
     {{else}}

@@ -39,9 +39,19 @@ Template.pair.onCreated(function() {
     });
   }
 
-  this.subscribe('groups.byId', groupId);
+  const groupHandle = this.subscribe('groups.byId', groupId);
   this.subscribe('tasks.inGroup', groupId);
   this.subscribe('affinities.inGroup', groupId);
+
+  this.autorun(() => {
+    if (groupHandle.ready()) {
+      const group = Groups.findOne(groupId);
+      // TODO: There's a bit of a delay before this is processed. Continue to use loading?
+      if (!group) {
+        FlowRouter.go('/');
+      }
+    }
+  });
 
   this.state = new ReactiveDict();
   this.state.setDefault({
@@ -58,10 +68,11 @@ Template.pair.onCreated(function() {
       clearTimeout(interval);
     }
     interval = setTimeout(() => {
-      $('.preloader-wrapper').hide();
-    }, 4000);
+      $('.preloader-wrapper').fadeOut(500);
+    }, 3000);
     this.staticState.spinner = interval;
-  }
+  };
+
 });
 
 Template.pair.onRendered(function() {
@@ -69,6 +80,7 @@ Template.pair.onRendered(function() {
     changed(id, fields) {
       if (id && fields.activePairing) {
         // Scroll to pair results
+        // setTimeout so UI elements have a chance to render
         setTimeout(() => {
           $('body, html').animate({
             scrollTop: $('#pair_results').offset().top
@@ -130,16 +142,14 @@ Template.pair.events({
   },
 
   'click #reset'(event, instance) {
-    clearGroupPool.call({ groupId: instance.state.get('groupId') });
+    if (confirm('Are you sure you want to clear this pair research pool?')) {
+      clearGroupPool.call({ groupId: instance.state.get('groupId') });
+    }
   },
 
   'click #makePairs'(event, instance) {
-    makePairings.call({ groupId: instance.state.get('groupId') }, (err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(res);
-      }
-    });
+    if (confirm('Ready to make pairs?')) {
+      makePairings.call({ groupId: instance.state.get('groupId') });
+    }
   }
 });

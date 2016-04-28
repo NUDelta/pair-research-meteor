@@ -1,0 +1,4 @@
+// Hides scroll bar on Chrome, since it affects page layout
+::-webkit-scrollbar {
+  display: none;
+}

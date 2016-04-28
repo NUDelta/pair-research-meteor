@@ -8,7 +8,7 @@ import { Tasks } from '../tasks/tasks.js';
 import { Schema } from '../schema.js';
 import { log } from '../logs';
 
-import { PAIR_SCRIPT } from '../../startup/config.js';
+import { DEV_OPTIONS, PAIR_SCRIPT } from '../../startup/config.js';
 
 export const makePairings = new ValidatedMethod({
   name: 'pairing.makePairings',
@@ -19,6 +19,10 @@ export const makePairings = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId }) {
+    if (Meteor.isDevelopment && !this.isSimulation) {
+      log.debug(`Sleeping for ${ DEV_OPTIONS.LATENCY } ms...`);
+      Meteor._sleepForMs(DEV_OPTIONS.LATENCY);
+    }
 
     // Form n^2 pool data
     const users = Tasks.find({ groupId: groupId }).fetch().map(task => [ task.userId, task.name ]);
