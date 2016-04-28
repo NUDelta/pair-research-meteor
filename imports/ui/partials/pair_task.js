@@ -9,13 +9,24 @@ import {
 } from '../../api/affinities/methods.js';
 
 Template.pair_task.events({
-  'change input[type=range]'(event, instance) {
+  'change input[type=radio]'(event, instance) {
     updateAffinity.call({
       helperId: Meteor.userId(),
       helpeeId: instance.data.task.userId,
       groupId: instance.data.task.groupId,
-      value: parseInt(event.target.value)
+      value: parseFloat(event.target.value)
     });
+  }
+});
+
+Template.pair_task.helpers({
+  isSelected(value) {
+    const data = Template.currentData();
+    if (data.affinity && data.affinity.value === value) {
+      return 'checked';
+    } else {
+      return '';
+    }
   }
 });
 

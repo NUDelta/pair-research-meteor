@@ -128,7 +128,7 @@ Template.pair.events({
     instance.state.set('task', Tasks.findOne({ userId: Meteor.userId() }));
     removeTask.call({ groupId: instance.state.get('groupId'), userId: Meteor.userId() });
   },
-  
+
   'click #reset'(event, instance) {
     clearGroupPool.call({ groupId: instance.state.get('groupId') });
   },

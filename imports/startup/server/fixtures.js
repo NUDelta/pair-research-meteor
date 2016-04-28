@@ -74,51 +74,58 @@ Meteor.startup(() => {
     Tasks.update({ userId: adminId }, { $set: { task: 'everything' }});
 
     Tasks.update({ name: 'haoqi' }, { $set: { task: 'Help with Stella' }});
-    Tasks.update({ name: 'josh' }, { $set: { task: 'Nothing' }});
-    Tasks.update({ name: 'yongsung' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
-    Tasks.update({ name: 'ryan' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
-    Tasks.update({ name: 'shannon' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
-    Tasks.update({ name: 'sarah' }, { $set: { task: 'I am a very wordy person who needs help with a lot alot alot o things, so I will see how long this line can go without making the UI look awful' }});
+    Tasks.update({ name: 'josh' }, { $set: { task: 'I need to learn how to feed the baby' }});
+    Tasks.update({ name: 'yongsung' }, { $set: { task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful' }});
+    Tasks.update({ name: 'ryan' }, { $set: { task: 'Push notifications are broken again' }});
+    Tasks.update({ name: 'shannon' }, { $set: { task: 'By the end with this sprint, I will have completed a very tangible goal.' }});
+    Tasks.update({ name: 'sarah' }, { $set: { task: 'need 2 to get out of bed and am hungry' }});
 
     const haoqiId = Meteor.users.findOne({ username: 'haoqi' })._id;
     const joshId = Meteor.users.findOne({ username: 'josh' })._id;
+    const ykId = Meteor.users.findOne({ username: 'yongsung' })._id;
 
     const affinities = [
       {
         helperId: adminId,
         helpeeId: haoqiId,
         groupId: groupId,
-        value: 4
+        value: 0.66
       },
       {
         helperId: adminId,
         helpeeId: joshId,
         groupId: groupId,
-        value: 5
+        value: 1
       },
       {
         helperId: haoqiId,
         helpeeId: adminId,
         groupId: groupId,
-        value: 4
+        value: 0.66
       },
       {
         helperId: haoqiId,
         helpeeId: joshId,
         groupId: groupId,
-        value: 2
+        value: 0
       },
       {
         helperId: joshId,
         helpeeId: adminId,
         groupId: groupId,
-        value: 5
+        value: 0.33
       },
       {
         helperId: joshId,
         helpeeId: haoqiId,
         groupId: groupId,
-        value: 2
+        value: 0
+      },
+      {
+        helperId: adminId,
+        helpeeId: ykId,
+        groupId: groupId,
+        value: -1
       }
     ];
 

@@ -24,7 +24,10 @@ Schema.Affinity = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id
   },
   value: {
-    type: Number
+    type: Number,
+    min: -1,
+    max: 1,
+    decimal: true
   }
 });
 
