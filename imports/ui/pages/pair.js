@@ -17,6 +17,7 @@ import {
 
 import {
   makePairings,
+  PAIRING_IN_PROGRESS
 } from '../../api/pairings/methods.js';
 
 import {
@@ -76,16 +77,22 @@ Template.pair.onCreated(function() {
 });
 
 Template.pair.onRendered(function() {
+  const instance = this;
+  
   Groups.find().observeChanges({
     changed(id, fields) {
       if (id && fields.activePairing) {
-        // Scroll to pair results
-        // setTimeout so UI elements have a chance to render
-        setTimeout(() => {
-          $('body, html').animate({
-            scrollTop: $('#pair_results').offset().top
-          }, 1000);
-        }, 500);
+        if (fields.activePairing == PAIRING_IN_PROGRESS) {
+          instance.setSpinnerTimeout();
+        } else {
+          // Scroll to pair results
+          // setTimeout so UI elements have a chance to render
+          setTimeout(() => {
+            $('body, html').animate({
+              scrollTop: $('#pair_results').offset().top
+            }, 1000);
+          }, 500);
+        }
       }
     }
   });
@@ -128,7 +135,7 @@ Template.pair.helpers({
   },
   pairResultCreated() {
     const group = Groups.findOne();
-    return group && group.activePairing;
+    return group && group.activePairing && group.activePairing != PAIRING_IN_PROGRESS;
   },
   pairResultArgs() {
     return {

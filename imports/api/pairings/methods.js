@@ -5,10 +5,13 @@ import { exec } from 'child_process';
 import { Pairings } from './pairings.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
+import { Groups } from '../groups/groups.js';
 import { Schema } from '../schema.js';
 import { log } from '../logs';
 
 import { DEV_OPTIONS, PAIR_SCRIPT } from '../../startup/config.js';
+
+export const PAIRING_IN_PROGRESS = '22222222222222222';
 
 export const makePairings = new ValidatedMethod({
   name: 'pairing.makePairings',
@@ -19,6 +22,8 @@ export const makePairings = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId }) {
+    Groups.update(groupId, { $set: { activePairing: PAIRING_IN_PROGRESS }});
+
     if (Meteor.isDevelopment && !this.isSimulation) {
       log.debug(`Sleeping for ${ DEV_OPTIONS.LATENCY } ms...`);
       Meteor._sleepForMs(DEV_OPTIONS.LATENCY);
