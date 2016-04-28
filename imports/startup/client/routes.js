@@ -1,5 +1,7 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import '../../ui/blaze-helpers.js';
+
 import '../../ui/layout/layout.js';
 import '../../ui/layout/layout-authorized.js';
 

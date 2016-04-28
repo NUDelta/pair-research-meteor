@@ -50,12 +50,16 @@
 
       <div class="row">
         <div class="col s12">
-          <span class="input-label-text">How much can you help each of these people? (1: not at all, 5: totally)</span>
-          <ul class="collection">
-            {{#each task in groupTasks}}
-              {{> pair_task (pairTaskArgs task)}}
-            {{/each}}
-          </ul>
+          {{#if $gt userCount 1}}
+            <span class="input-label-text">How much can you help each of these people? (1: not at all, 5: totally)</span>
+            <ul class="collection">
+              {{#each task in groupTasks}}
+                {{> pair_task (pairTaskArgs task)}}
+              {{/each}}
+            </ul>
+          {{else}}
+            <p>Hang tight, waiting on others to enter the pair research pool...</p>
+          {{/if}}
         </div>
       </div>
 
