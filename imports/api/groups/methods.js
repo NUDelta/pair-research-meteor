@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { Accounts } from 'meteor/accounts-base';
 
 import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
@@ -19,6 +20,31 @@ export const findGroupMembers = new ValidatedMethod({
   }
 });
 
+export const inviteToGroup = new ValidatedMethod({
+  name: 'groups.invite',
+  validate: new SimpleSchema({
+    email: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  run({ email, groupId }) {
+    const user = Meteor.users.findOne({ emails: { $elemMatch: { address: email } } });
+    if (user) {
+      addToGroup.call({ groupId: groupId, userId: user._id });
+    } else if (!this.isSimulation) {
+      const newUserId = Accounts.createUser({ email: email, username: email }); // TODO: change this
+      addToGroup.call({ groupId: groupId, userId: newUserId });
+      Accounts.sendEnrollmentEmail(newUserId, email); // TODO: setup enrollment and email
+    }
+  }
+});
+
+// TODO: Deprecate? Confirmation process?
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: Schema.GroupUserQuery.validator(),

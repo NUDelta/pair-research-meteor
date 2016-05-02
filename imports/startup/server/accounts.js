@@ -1,5 +1,7 @@
 import { Accounts } from 'meteor/accounts-base';
 
+import { Groups } from '../../api/groups/groups.js';
+
 Accounts.onCreateUser((options, user) => {
   options.profile = options.profile || {};
 
@@ -8,3 +10,13 @@ Accounts.onCreateUser((options, user) => {
   return user;
 });
 
+Accounts.emailTemplates.siteName = 'Pair Research';
+Accounts.emailTemplates.from = 'Pair Research <no-reply@pair.meteorapp.com';
+
+Accounts.emailTemplates.enrollAccount.subject = (user) => {
+  const invitedGroup = Groups.findOne(user.groups[0]);
+  return `You're invited to join ${ invitedGroup.groupName } for Pair Research`;
+};
+Accounts.emailTemplates.enrollAccount.text = (user, url) => {
+  return `To join this pair research pool, just click the link below:\n\n${ url }`;
+};

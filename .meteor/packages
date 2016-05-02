@@ -29,3 +29,4 @@ mdg:validated-method
 nooitaf:colors
 dburles:collection-helpers
 poetic:materialize-scss
+practicalmeteor:mocha

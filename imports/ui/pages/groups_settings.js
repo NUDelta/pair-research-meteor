@@ -5,6 +5,8 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import { inviteToGroup } from '../../api/groups/methods.js';
+
 import '../partials/groups_settings_member.js';
 
 Template.groups_settings.onCreated(function() {
@@ -29,3 +31,14 @@ Template.groups_settings.helpers({
     }
   }
 });
+
+Template.groups_settings.events({
+  'submit form'(event, instance) {
+    event.preventDefault();
+    inviteToGroup.call({
+      groupId: instance.state.get('groupId'),
+      email: event.currentTarget.addMember.value
+    });
+  }
+});
+
