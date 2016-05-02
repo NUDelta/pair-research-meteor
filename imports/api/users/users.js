@@ -2,6 +2,23 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
+export const Roles = {
+  Admin: 'admin',
+  Member: 'member',
+  Pending: 'pending'
+};
+
+Schema.UserGroupMembership = new SimpleSchema({
+  groupId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  role: {
+    type: String,
+    allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ]
+  }
+});
+
 Schema.UserProfile = new SimpleSchema({
   // placeholder, doesn't do anything yet
   picture: {
@@ -36,7 +53,7 @@ Schema.User = new SimpleSchema({
     type: Array
   },
   'groups.$': {
-    type: String,
+    type: Schema.UserGroupMembership,
     regEx: SimpleSchema.RegEx.Id
   },
   profile: {
@@ -55,3 +72,8 @@ Schema.User = new SimpleSchema({
 });
 
 Meteor.users.attachSchema(Schema.User);
+
+Meteor.users.findUserGroups = (userId) => {
+  const user = Meteor.users.findOne(userId);
+  return _.map(user.groups, group => group.groupId);
+};

@@ -7,7 +7,11 @@ Meteor.publish('users.inGroup', function(groupId) {
     this.ready();
   } else {
     return Meteor.users.find({
-      groups: groupId
+      groups: {
+        $elemMatch: {
+          groupId: groupId
+        }
+      }
     }, {
       fields: { username: 1 }
     });

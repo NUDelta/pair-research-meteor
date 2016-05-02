@@ -14,7 +14,7 @@ Accounts.emailTemplates.siteName = 'Pair Research';
 Accounts.emailTemplates.from = 'Pair Research <no-reply@pair.meteorapp.com';
 
 Accounts.emailTemplates.enrollAccount.subject = (user) => {
-  const invitedGroup = Groups.findOne(user.groups[0]);
+  const invitedGroup = Groups.findOne(user.groups[0].groupId);
   return `You're invited to join ${ invitedGroup.groupName } for Pair Research`;
 };
 Accounts.emailTemplates.enrollAccount.text = (user, url) => {

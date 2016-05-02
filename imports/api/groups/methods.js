@@ -5,6 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
+import { Roles } from '../users/users.js';
 import { Schema } from '../schema.js';
 
 export const findGroupMembers = new ValidatedMethod({
@@ -16,7 +17,7 @@ export const findGroupMembers = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId }) {
-    return Meteor.users.find({ groups: groupId });
+    return Meteor.users.find({ groups: { $elemMatch: { groupId: groupId } } });
   }
 });
 
@@ -35,7 +36,7 @@ export const inviteToGroup = new ValidatedMethod({
   run({ email, groupId }) {
     const user = Meteor.users.findOne({ emails: { $elemMatch: { address: email } } });
     if (user) {
-      addToGroup.call({ groupId: groupId, userId: user._id });
+      addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
     } else if (!this.isSimulation) {
       const newUserId = Accounts.createUser({ email: email, username: email }); // TODO: change this
       addToGroup.call({ groupId: groupId, userId: newUserId });
@@ -48,9 +49,14 @@ export const inviteToGroup = new ValidatedMethod({
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: Schema.GroupUserQuery.validator(),
-  run({ groupId, userId }) {
+  run({ groupId, userId, role = Roles.Member }) {
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
+    const membership = {
+      groupId: groupId,
+      role: role
+    };
+
     if (!taskRecord) {
       Tasks.insert({
         name: user.username,
@@ -60,7 +66,7 @@ export const addToGroup = new ValidatedMethod({
       });
     }
 
-    return Meteor.users.update(userId, { $addToSet: { groups: groupId }});
+    return Meteor.users.update(userId, { $addToSet: { groups: membership }});
   }
 });
 
@@ -76,7 +82,7 @@ export const removeFromGroup = new ValidatedMethod({
       ]
     });
     Tasks.remove({ groupId: groupId, userId: userId });
-    return Meteor.users.update(userId, { $pull : { groups: groupId }});
+    return Meteor.users.update(userId, { $pull : { groups: { groupId: groupId }}});
   }
 });
 
