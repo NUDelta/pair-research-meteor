@@ -21,6 +21,8 @@ Template.groups_settings.onCreated(function() {
 
 Template.groups_settings.helpers({
   members() {
+    // TODO: worry about filter options / sorting options
+    // for now, just leave
     return Meteor.users.find();
   },
   memberArgs(member) {

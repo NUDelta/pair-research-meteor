@@ -3,9 +3,9 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
 export const Roles = {
-  Admin: 'admin',
-  Member: 'member',
-  Pending: 'pending'
+  Admin: 100,
+  Member: 10,
+  Pending: 1
 };
 
 Schema.UserGroupMembership = new SimpleSchema({
@@ -14,7 +14,7 @@ Schema.UserGroupMembership = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id
   },
   role: {
-    type: String,
+    type: Number,
     allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ]
   }
 });

@@ -1,6 +1,9 @@
 <template name="group_settings_member">
-  <li class="collection-item">
+  <li class="collection-item {{pendingClass}}">
     {{ member.username }}
+    {{#if pending}}
+      (pending)
+    {{/if}}
     <a href="" class="secondary-content">
       <i class="material-icons">delete</i>
     </a>

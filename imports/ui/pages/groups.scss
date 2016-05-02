@@ -1,0 +1,5 @@
+.groups {
+  li.collection-item.pending {
+    @extend .grey-text;
+  }
+}

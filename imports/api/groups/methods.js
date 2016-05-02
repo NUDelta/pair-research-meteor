@@ -39,7 +39,7 @@ export const inviteToGroup = new ValidatedMethod({
       addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
     } else if (!this.isSimulation) {
       const newUserId = Accounts.createUser({ email: email, username: email }); // TODO: change this
-      addToGroup.call({ groupId: groupId, userId: newUserId });
+      addToGroup.call({ groupId: groupId, userId: newUserId, role: Roles.Pending });
       Accounts.sendEnrollmentEmail(newUserId, email); // TODO: setup enrollment and email
     }
   }
@@ -48,7 +48,21 @@ export const inviteToGroup = new ValidatedMethod({
 // TODO: Deprecate? Confirmation process?
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
-  validate: Schema.GroupUserQuery.validator(),
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    userId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    role: {
+      type: Number,
+      allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ],
+      optional: true
+    }
+  }).validator(),
   run({ groupId, userId, role = Roles.Member }) {
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });

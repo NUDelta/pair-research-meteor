@@ -13,7 +13,7 @@ Meteor.publish('users.inGroup', function(groupId) {
         }
       }
     }, {
-      fields: { username: 1 }
+      fields: { username: 1, groups: 1 } // TODO: exposing all groups is not desirable
     });
   }
 });

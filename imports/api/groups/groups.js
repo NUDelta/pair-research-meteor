@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import { Roles } from '../users/users.js';
 import { Schema } from '../schema.js';
 
 class GroupCollection extends Mongo.Collection {
@@ -9,7 +10,7 @@ class GroupCollection extends Mongo.Collection {
     const groupId = super.insert(group, callback);
     const membership = {
       groupId: groupId,
-      role: 'admin'
+      role: Roles.Admin
     };
     Meteor.users.update(group.creatorId, { $push: { groups: membership }});
     return groupId;
@@ -27,7 +28,6 @@ class GroupCollection extends Mongo.Collection {
 
 export const Groups = new GroupCollection('groups');
 
-// TODO: Redo Group membership, since clearly anyone can add themselves to a group?
 Schema.Group = new SimpleSchema({
   groupName: {
     type: String
@@ -53,7 +53,6 @@ Groups.allow({
   }
 });
 
-// TODO: add schemas that are commonly used in methods
 Schema.GroupUserQuery = new SimpleSchema({
   groupId: {
     type: String,
