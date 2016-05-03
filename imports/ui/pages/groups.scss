@@ -2,4 +2,7 @@
   li.collection-item.pending {
     @extend .grey-text;
   }
+  li.collection-item.admin {
+    @extend .cyan-text;
+  }
 }

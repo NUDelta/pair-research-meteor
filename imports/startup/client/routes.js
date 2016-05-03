@@ -9,6 +9,7 @@ import '../../ui/pages/pair.js';
 import '../../ui/pages/create.js';
 import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
+import '../../ui/pages/groups_create.js';
 
 FlowRouter.route('/', {
   name: 'App.home',
@@ -35,5 +36,12 @@ FlowRouter.route('/groups/:groupId', {
   name: 'App.groups.group',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'groups_settings' });
+  }
+});
+
+FlowRouter.route('/create', {
+  name: 'App.groups.create',
+  action() {
+    BlazeLayout.render('layout_authorized', { main: 'groups_create' });
   }
 });

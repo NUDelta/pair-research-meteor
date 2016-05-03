@@ -23,6 +23,7 @@ Template.groups_settings.helpers({
   members() {
     // TODO: worry about filter options / sorting options
     // for now, just leave
+    // currentUser is always here
     return Meteor.users.find();
   },
   memberArgs(member) {

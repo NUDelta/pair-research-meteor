@@ -34,6 +34,7 @@ Meteor.startup(() => {
   if (Meteor.users.find().count() === 1) {
     log.info('No data currently in database. Populating...');
 
+    // Mock DTR group pairing pool
     const adminId = Meteor.users.findOne({ username: admin.username })._id;
     Meteor.users.update(adminId, { $set: { groups: [] }});
 
@@ -45,40 +46,41 @@ Meteor.startup(() => {
     const userData = [
       {
         username: 'haoqi',
-        password: 'password'
+        password: 'password',
+        task: 'help with Stella'
       },
       {
         username: 'josh',
-        password: 'password'
+        password: 'password',
+        task: 'I need to learn how to feed the baby'
       },
       {
         username: 'yongsung',
-        password: 'password'
+        password: 'password',
+        task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful'
       },
       {
         username: 'ryan',
-        password: 'password'
+        password: 'password',
+        task: 'Push notifications are broken again'
+        
       },
       {
         username: 'shannon',
-        password: 'password'
+        password: 'password',
+        task: 'By the end with this sprint, I will have completed a very tangible goal.'
       },
       {
         username: 'sarah',
-        password: 'password'
+        password: 'password',
+        task: 'need 2 to get out of bed and am hungry'
       }
     ];
-    userData.forEach(user => Accounts.createUser(user));
-    Meteor.users.find().forEach(user => addToGroup.call({ groupId: groupId, userId: user._id }));
-
-    Tasks.update({ userId: adminId }, { $set: { task: 'everything' }});
-
-    Tasks.update({ name: 'haoqi' }, { $set: { task: 'Help with Stella' }});
-    Tasks.update({ name: 'josh' }, { $set: { task: 'I need to learn how to feed the baby' }});
-    Tasks.update({ name: 'yongsung' }, { $set: { task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful' }});
-    Tasks.update({ name: 'ryan' }, { $set: { task: 'Push notifications are broken again' }});
-    Tasks.update({ name: 'shannon' }, { $set: { task: 'By the end with this sprint, I will have completed a very tangible goal.' }});
-    Tasks.update({ name: 'sarah' }, { $set: { task: 'need 2 to get out of bed and am hungry' }});
+    userData.forEach((user) => {
+      const userId = Accounts.createUser(user);
+      addToGroup.call({ groupId: groupId, userId: userId });
+      Tasks.update({ userId: userId }, { $set: { task: user.task }});
+    });
 
     const haoqiId = Meteor.users.findOne({ username: 'haoqi' })._id;
     const joshId = Meteor.users.findOne({ username: 'josh' })._id;
@@ -128,7 +130,19 @@ Meteor.startup(() => {
         value: -1
       }
     ];
-
     affinities.forEach(affinity => Affinities.insert(affinity));
+
+    // Mocking other groups / users
+    const otherUserId = Accounts.createUser({ username: 'outsider', password: 'password' });
+    const otherGroupId = Groups.insert({
+      groupName: 'otherGroup',
+      creatorId: otherUserId
+    });
+    addToGroup.call({ groupId: otherGroupId, userId: adminId });
+
+    const noAccessGroup = Groups.insert({
+      groupName: 'noAccessGroup',
+      creatorId: otherUserId
+    });
   }
 });
