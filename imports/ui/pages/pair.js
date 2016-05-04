@@ -21,7 +21,6 @@ import {
 } from '../../api/pairings/methods.js';
 
 import {
-  addToGroup,
   clearGroupPool
 } from '../../api/groups/methods.js';
 
@@ -31,28 +30,9 @@ import '../partials/pair_results.js';
 
 Template.pair.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
-  // TODO: handle cases where groupId is not a real group
-
-  if (DEV_OPTIONS.AUTOJOIN) {
-    addToGroup.call({
-      groupId: groupId,
-      userId: Meteor.userId()
-    });
-  }
-
   const groupHandle = this.subscribe('groups.byId', groupId);
   this.subscribe('tasks.inGroup', groupId);
   this.subscribe('affinities.inGroup', groupId);
-
-  this.autorun(() => {
-    if (groupHandle.ready()) {
-      const group = Groups.findOne(groupId);
-      // TODO: There's a bit of a delay before this is processed. Continue to use loading?
-      if (!group) {
-        FlowRouter.go('/');
-      }
-    }
-  });
 
   this.state = new ReactiveDict();
   this.state.setDefault({
@@ -60,8 +40,21 @@ Template.pair.onCreated(function() {
     task: ''
   });
 
-  this.staticState = {};
+  this.autorun(() => {
+    if (groupHandle.ready()) {
+      // TODO: There's a bit of a delay before this is processed. Continue to use loading?
+      // TODO: people can see all groups with autojoin settings turned on. I think this is fine for
+      // now, but for future...
+      const group = Groups.findOne(groupId);
+      if (!group) {
+        FlowRouter.go('/');
+      } else {
+        this.state.set('group', group);
+      }
+    }
+  });
 
+  this.staticState = {};
   this.setSpinnerTimeout = () => {
     $('.preloader-wrapper').show();
     let interval = this.staticState.spinner;
@@ -73,12 +66,11 @@ Template.pair.onCreated(function() {
     }, 3000);
     this.staticState.spinner = interval;
   };
-
 });
 
 Template.pair.onRendered(function() {
   const instance = this;
-  
+
   Groups.find().observeChanges({
     changed(id, fields) {
       if (id && fields.activePairing) {

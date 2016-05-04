@@ -30,7 +30,8 @@ export const makePairings = new ValidatedMethod({
     }
 
     // Form n^2 pool data
-    const users = Tasks.find({ groupId: groupId }).fetch().map(task => [ task.userId, task.name ]);
+    const users = Tasks.find({ groupId: groupId, task: { $exists: true} }) .fetch()
+      .map(task => [ task.userId, task.name ]);
     const userPool = _.map(users, user => user[0]);
 
     const scores = {};
@@ -43,7 +44,7 @@ export const makePairings = new ValidatedMethod({
       });
     });
 
-    Affinities.find().forEach((affinity) => {
+    Affinities.find({ groupId: groupId }).forEach((affinity) => {
       if (_.has(scores, affinity.helperId) &&
           _.has(scores[affinity.helperId], affinity.helpeeId)) {
         scores[affinity.helperId][affinity.helpeeId] = affinity.value;
