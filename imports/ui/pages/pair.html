@@ -1,5 +1,6 @@
 <template name="pair">
-  <blockquote>Welcome to Pair Research, {{currentUser.username}}.</blockquote>
+  <!--{{#if Template.subscriptionsReady}}-->
+  <blockquote>Welcome to {{group.groupName}}, {{currentUser.username}}.</blockquote>
 
   <div class="container" id="pair">
     {{#if currentTask}}
@@ -122,4 +123,5 @@
       {{> pair_enter_task pairEnterTaskArgs}}
     {{/if}}
   </div>
+  <!--{{/if}}-->
 </template>

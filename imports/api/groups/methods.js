@@ -21,6 +21,28 @@ export const findGroupMembers = new ValidatedMethod({
   }
 });
 
+export const createGroup = new ValidatedMethod({
+  name: 'groups.create',
+  validate: new SimpleSchema({
+    groupName: {
+      type: String
+    },
+    creatorId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    members: {
+      type: [String],
+      regEx: SimpleSchema.RegEx.Email
+    }
+  }).validator(),
+  run({ groupName, creatorId, members }) {
+    const groupId = Groups.insert({ groupName: groupName, creatorId: creatorId });
+    members.forEach(member => inviteToGroup.call({ groupId: groupId, email: member }));
+    return groupId;
+  }
+});
+
 export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({

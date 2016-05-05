@@ -91,6 +91,10 @@ Template.pair.onRendered(function() {
 });
 
 Template.pair.helpers({
+  group() {
+    const instance = Template.instance();
+    return instance.state.get('group');
+  },
   currentTask() {
     return Tasks.findOne({ userId: Meteor.userId() });
   },
