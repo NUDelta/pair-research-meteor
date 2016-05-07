@@ -2,6 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
+// TODO: replace with privately loaded admin id?
+export const DEMO_GROUP_CREATOR = '22222222222222222';
+
 export const Roles = {
   Admin: 100,
   Member: 10,

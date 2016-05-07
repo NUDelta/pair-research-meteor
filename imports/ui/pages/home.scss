@@ -1,0 +1,42 @@
+#home {
+  margin-top: 0;
+
+  .banner {
+    @extend .amber, .darken-2;
+    width: 100%;
+    height: 450px;
+    position: relative;
+
+    .header {
+      @extend .white-text;
+      margin-top: 0;
+      position: absolute;
+    }
+
+    h1 {
+      top: 40%;
+      left: 35%;
+      transform: translateY(-50%);
+    }
+
+    h3 {
+      top: 60%;
+      left: 50%;
+      transform: translateY(-50%);
+      font-weight: 300;
+    }
+
+    .actions {
+      display: block;
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+
+      a.btn-large {
+        width: 220px;
+      }
+    }
+  }
+
+}

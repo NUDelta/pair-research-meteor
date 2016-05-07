@@ -5,8 +5,8 @@ import '../../ui/blaze-helpers.js';
 import '../../ui/layout/layout.js';
 import '../../ui/layout/layout-authorized.js';
 
+import '../../ui/pages/home.js';
 import '../../ui/pages/pair.js';
-import '../../ui/pages/create.js';
 import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
@@ -14,7 +14,7 @@ import '../../ui/pages/groups_create.js';
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('layout_authorized', { main: 'create' });
+    BlazeLayout.render('layout', { main: 'home' });
   }
 });
 
@@ -43,5 +43,19 @@ FlowRouter.route('/create', {
   name: 'App.groups.create',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'groups_create' });
+  }
+});
+
+FlowRouter.route('/demo', {
+  name: 'App.demo',
+  action() {
+    BlazeLayout.render('layout', { main: 'demo_create' });
+  }
+});
+
+FlowRouter.route('/demo/:groupId', {
+  name: 'App.demo.pair',
+  action() {
+    BlazeLayout.render('layout', { main: 'demo_pair' });
   }
 });

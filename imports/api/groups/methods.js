@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
-import { Roles } from '../users/users.js';
+import { DEMO_GROUP_CREATOR, Roles } from '../users/users.js';
 import { Schema } from '../schema.js';
 
 export const findGroupMembers = new ValidatedMethod({
@@ -145,6 +145,18 @@ export const createRandomGroup = new ValidatedMethod({
     return Groups.insert({
       groupName: randomGroupName,
       creatorId: this.userId
+    });
+  }
+});
+
+export const createDemoGroup = new ValidatedMethod({
+  name: 'groups.createDemo',
+  validate: null,
+  run() {
+    const randomGroupName = Math.random().toString(36).slice(2);
+    return Groups.insert({
+      groupName: randomGroupName,
+      creatorId: DEMO_GROUP_CREATOR
     });
   }
 });
