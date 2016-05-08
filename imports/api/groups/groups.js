@@ -7,13 +7,7 @@ import { Schema } from '../schema.js';
 
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
-    const groupId = super.insert(group, callback);
-    const membership = {
-      groupId: groupId,
-      role: Roles.Admin
-    };
-    Meteor.users.update(group.creatorId, { $push: { groups: membership }});
-    return groupId;
+    return super.insert(group, callback);
   }
 
   update(selector, callback) {
@@ -29,6 +23,11 @@ class GroupCollection extends Mongo.Collection {
 export const Groups = new GroupCollection('groups');
 
 Schema.Group = new SimpleSchema({
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
   groupName: {
     type: String
   },

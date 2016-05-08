@@ -6,7 +6,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Groups } from '../../api/groups/groups.js';
-import { createGroup } from '../../api/groups/methods.js';
+import { createGroupWithMembers } from '../../api/groups/methods.js';
 
 Template.groups_create.onCreated(function() {
   this.state = new ReactiveDict();
@@ -48,7 +48,7 @@ Template.groups_create.events({
       members: instance.state.get('members')
     };
 
-    createGroup.call(group, (err, groupId) => {
+    createGroupWithMembers.call(group, (err, groupId) => {
       if (err) {
         alert(err)
       } else {

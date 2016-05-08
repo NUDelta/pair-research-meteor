@@ -48,10 +48,10 @@ export const updateTask = new ValidatedMethod({
   }
 });
 
-export const removeTask = new ValidatedMethod({
+export const clearTask = new ValidatedMethod({
   name: 'tasks.remove',
   validate: Schema.GroupUserQuery.validator(),
   run({ userId, groupId }) {
-    Tasks.remove({ groupId: groupId, userId: userId });
+    Tasks.update({ groupId: groupId, userId: userId }, { $unset: { task: 0 } });
   }
 });

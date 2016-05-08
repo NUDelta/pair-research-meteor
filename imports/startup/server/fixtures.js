@@ -8,7 +8,7 @@ import { Tasks } from '../../api/tasks/tasks.js';
 import { log } from './../../api/logs.js';
 import '../../api/users/users.js';
 
-import { addToGroup } from '../../api/groups/methods.js';
+import { createGroup, addToGroup } from '../../api/groups/methods.js';
 
 Meteor.startup(() => {
 
@@ -38,10 +38,11 @@ Meteor.startup(() => {
     const adminId = Meteor.users.findOne({ username: admin.username })._id;
     Meteor.users.update(adminId, { $set: { groups: [] }});
 
-    const groupId = Groups.insert({
+    const groupId = createGroup.call({
       groupName: 'dtr',
       creatorId: adminId
     });
+    Tasks.update({ userId: adminId }, { $set: { task: 'everything '} });
 
     const userData = [
       {
@@ -134,13 +135,13 @@ Meteor.startup(() => {
 
     // Mocking other groups / users
     const otherUserId = Accounts.createUser({ username: 'outsider', password: 'password' });
-    const otherGroupId = Groups.insert({
+    const otherGroupId = createGroup.call({
       groupName: 'otherGroup',
       creatorId: otherUserId
     });
     addToGroup.call({ groupId: otherGroupId, userId: adminId });
 
-    const noAccessGroup = Groups.insert({
+    const noAccessGroup = createGroup.call({
       groupName: 'noAccessGroup',
       creatorId: otherUserId
     });

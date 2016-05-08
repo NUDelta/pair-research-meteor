@@ -11,3 +11,9 @@ ReactiveDict.prototype.remove = function(key, index) {
   array.splice(index, 1);
   this.set(key, array);
 };
+
+ReactiveDict.prototype.setKey = function(key, objKey, objVal) {
+  const obj = this.get(key);
+  obj[objKey] = objVal;
+  this.set(key, obj);
+};

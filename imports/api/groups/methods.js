@@ -21,8 +21,8 @@ export const findGroupMembers = new ValidatedMethod({
   }
 });
 
-export const createGroup = new ValidatedMethod({
-  name: 'groups.create',
+export const createGroupWithMembers = new ValidatedMethod({
+  name: 'groups.create.withMembers',
   validate: new SimpleSchema({
     groupName: {
       type: String
@@ -37,8 +37,26 @@ export const createGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ groupName, creatorId, members }) {
-    const groupId = Groups.insert({ groupName: groupName, creatorId: creatorId });
+    const groupId = createGroup.call({ groupName: groupName, creatorId: creatorId });
     members.forEach(member => inviteToGroup.call({ groupId: groupId, email: member }));
+    return groupId;
+  }
+});
+
+export const createGroup = new ValidatedMethod({
+  name: 'groups.create',
+  validate: new SimpleSchema({
+    groupName: {
+      type: String
+    },
+    creatorId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  run({ groupName, creatorId }) {
+    const groupId = Groups.insert({ groupName: groupName, creatorId: creatorId });
+    addToGroup.call({ groupId: groupId, userId: creatorId, role: Roles.Admin });
     return groupId;
   }
 });
@@ -67,7 +85,6 @@ export const inviteToGroup = new ValidatedMethod({
   }
 });
 
-// TODO: Deprecate? Confirmation process?
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: new SimpleSchema({
@@ -92,7 +109,6 @@ export const addToGroup = new ValidatedMethod({
       groupId: groupId,
       role: role
     };
-
     if (!taskRecord) {
       Tasks.insert({
         name: user.username,
@@ -101,7 +117,6 @@ export const addToGroup = new ValidatedMethod({
         groupId: groupId
       });
     }
-
     return Meteor.users.update(userId, { $addToSet: { groups: membership }});
   }
 });
@@ -142,7 +157,7 @@ export const createRandomGroup = new ValidatedMethod({
   validate: null,
   run() {
     const randomGroupName = Math.random().toString(36).slice(2);
-    return Groups.insert({
+    return createGroup.call({
       groupName: randomGroupName,
       creatorId: this.userId
     });
@@ -154,7 +169,7 @@ export const createDemoGroup = new ValidatedMethod({
   validate: null,
   run() {
     const randomGroupName = Math.random().toString(36).slice(2);
-    return Groups.insert({
+    return createGroup.call({
       groupName: randomGroupName,
       creatorId: DEMO_GROUP_CREATOR
     });

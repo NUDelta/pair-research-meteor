@@ -74,6 +74,16 @@ Schema.User = new SimpleSchema({
   }
 });
 
+Schema.SimpleUser = new SimpleSchema({
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  name: {
+    type: String
+  }
+});
+
 Meteor.users.attachSchema(Schema.User);
 
 Meteor.users.findUserGroups = (userId) => {
