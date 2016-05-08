@@ -10,11 +10,12 @@ import '../../ui/pages/pair.js';
 import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
+import '../../ui/pages/demo_pair.js';
 
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('layout', { main: 'home' });
+    BlazeLayout.render('home');
   }
 });
 

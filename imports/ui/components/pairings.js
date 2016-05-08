@@ -23,8 +23,12 @@ import {
   clearGroupPool
 } from '../../api/groups/methods.js';
 
-import '../partials/pair_task.js';
-import '../partials/pair_results.js';
+import {
+  clearAffinities
+} from '../../api/affinities/methods.js';
+
+import '../partials/pairings_task.js';
+import '../partials/pairings_results.js';
 
 Template.pairings.onCreated(function() {
   this.state = new ReactiveDict();
@@ -114,7 +118,8 @@ Template.pairings.helpers({
       affinity: Affinities.findOne({
         helperId: instance.state.get('userId'),
         helpeeId: task.userId
-      })
+      }),
+      userId: instance.state.get('userId')
     };
   },
   pairResultCreated() {
@@ -131,7 +136,9 @@ Template.pairings.helpers({
 Template.pairings.events({
   'click #clearTask'(event, instance) {
     const userId = instance.state.get('userId');
-    clearTask.call({ groupId: instance.state.get('groupId'), userId: userId });
+    const groupId = instance.state.get('groupId');
+    clearTask.call({ groupId: groupId, userId: userId });
+    clearAffinities.call({ groupId: groupId, userId: userId });
   },
 
   'click #reset'(event, instance) {

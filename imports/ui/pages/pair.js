@@ -22,7 +22,7 @@ Template.pair.onCreated(function() {
   });
 
   this.autorun(() => {
-    if (groupHandle.ready() && taskHandle.ready()) {
+    if (groupHandle.ready()) {
        // TODO: There's a bit of a delay before this is processed. Continue to use loading?
        // TODO: people can see all groups with autojoin settings turned on. I think this is fine for
       // now, but for future...

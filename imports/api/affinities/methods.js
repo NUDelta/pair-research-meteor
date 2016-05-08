@@ -37,3 +37,21 @@ export const updateAffinity = new ValidatedMethod({
   }
 });
 
+export const clearAffinities = new ValidatedMethod({
+  name: 'affinity.clear',
+  validate: Schema.GroupUserQuery.validator(),
+  run({ groupId, userId }) {
+    return Affinities.remove({
+      groupId: groupId,
+      $or: [
+        {
+          helperId: userId
+        },
+        {
+          helpeeId: userId
+        }
+      ]
+    });
+  }
+});
+

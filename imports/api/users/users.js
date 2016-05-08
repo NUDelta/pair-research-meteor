@@ -3,7 +3,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Schema } from '../schema.js';
 
 // TODO: replace with privately loaded admin id?
-export const DEMO_GROUP_CREATOR = '22222222222222222';
+export const DEMO_GROUP_CREATOR = '33333333333333333';
 
 export const Roles = {
   Admin: 100,

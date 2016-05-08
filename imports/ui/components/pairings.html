@@ -1,117 +1,119 @@
 <template name="pairings">
-  <div class="row">
-    <div class="input-field col s6">
-      <label class="active">What do you need help with?</label>
-      <input name="need" type="text" id="need" value="{{currentTask.task}}" disabled>
+  <div class="pairings">
+    <div class="row">
+      <div class="input-field col s6">
+        <label class="active">What do you need help with?</label>
+        <input name="need" type="text" id="need" value="{{currentTask.task}}" disabled>
+      </div>
+      <div class="right">
+        <a id="clearTask" class="waves-effect waves-light orange accent-2 btn">Clear Task</a>
+        <a id="reset" class="waves-effect waves-light red btn">Reset Pool</a>
+        <a id="makePairs" class="waves-effect waves-light btn">Make Pairs</a>
+      </div>
     </div>
-    <div class="right">
-      <a id="clearTask" class="waves-effect waves-light orange accent-2 btn">Clear Task</a>
-      <a id="reset" class="waves-effect waves-light red btn">Reset Pool</a>
-      <a id="makePairs" class="waves-effect waves-light btn">Make Pairs</a>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col s12">
-      <span class="input-label-text">This is how you appear to others.</span>
-      <ul class="collection">
-        <li class="collection-item avatar row">
-          <div class="float-center left">
-            <!--<img src="" alt="">-->
-            <span class="title">{{currentTask.task}}</span>
-            <p>{{currentUser.username}}</p>
-          </div>
-          <div class="float-center right">
-            <p class="range-field">
-              <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-1" type="radio" disabled>
-              <label for="{{currentTask._id}}-1">1</label>
-
-              <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-2" type="radio" disabled>
-              <label for="{{currentTask._id}}-2">2</label>
-
-              <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-3" type="radio" disabled>
-              <label for="{{currentTask._id}}-3">3</label>
-
-              <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-4" type="radio" disabled>
-              <label for="{{currentTask._id}}-4">4</label>
-
-              <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-5" type="radio" disabled>
-              <label for="{{currentTask._id}}-5">5</label>
-            </p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12">
-      {{#if $gt userCount 1}}
-        <span class="input-label-text">How much can you help each of these people? (1: not at all, 5: totally)</span>
+    <div class="row">
+      <div class="col s12">
+        <span class="input-label-text">This is how you appear to others.</span>
         <ul class="collection">
-          {{#each task in groupTasks}}
-            {{> pair_task (pairTaskArgs task)}}
-          {{/each}}
+          <li class="collection-item avatar row">
+            <div class="float-center left">
+              <!--<img src="" alt="">-->
+              <span class="title">{{currentTask.task}}</span>
+              <p>{{user.name}}</p>
+            </div>
+            <div class="float-center right">
+              <p class="range-field">
+                <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-1" type="radio" disabled>
+                <label for="{{currentTask._id}}-1">1</label>
+
+                <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-2" type="radio" disabled>
+                <label for="{{currentTask._id}}-2">2</label>
+
+                <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-3" type="radio" disabled>
+                <label for="{{currentTask._id}}-3">3</label>
+
+                <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-4" type="radio" disabled>
+                <label for="{{currentTask._id}}-4">4</label>
+
+                <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-5" type="radio" disabled>
+                <label for="{{currentTask._id}}-5">5</label>
+              </p>
+            </div>
+          </li>
         </ul>
-      {{else}}
-        <p>Hang tight, waiting on others to enter the pair research pool...</p>
-      {{/if}}
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    {{userCount}} users have entered {{affinityCount}} affinities.
-  </div>
+    <div class="row">
+      <div class="col s12">
+        {{#if $gt userCount 1}}
+          <span class="input-label-text">How much can you help each of these people? (1: not at all, 5: totally)</span>
+          <ul class="collection">
+            {{#each task in groupTasks}}
+              {{> pairings_task (pairTaskArgs task)}}
+            {{/each}}
+          </ul>
+        {{else}}
+          <p>Hang tight, waiting on others to enter the pair research pool...</p>
+        {{/if}}
+      </div>
+    </div>
 
-  <div class="row" id="pair_results">
-    <div class="col s12">
-      {{#if pairResultCreated}}
-        {{> pair_results pairResultArgs}}
-      {{else}}
-        <div class="spinner-wrapper">
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue">
-              <div class="circle-clipper left">
+    <div class="row">
+      {{userCount}} users have entered {{affinityCount}} affinities.
+    </div>
+
+    <div class="row" id="pair_results">
+      <div class="col s12">
+        {{#if pairResultCreated}}
+          {{> pairings_results pairResultArgs}}
+        {{else}}
+          <div class="spinner-wrapper">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
                 <div class="circle"></div>
-              </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-            </div>
-
-            <div class="spinner-layer spinner-red">
-              <div class="circle-clipper left">
+              </div><div class="circle-clipper right">
                 <div class="circle"></div>
-              </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-            </div>
+              </div>
+              </div>
 
-            <div class="spinner-layer spinner-yellow">
-              <div class="circle-clipper left">
+              <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
                 <div class="circle"></div>
-              </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-            </div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+              </div>
 
-            <div class="spinner-layer spinner-green">
-              <div class="circle-clipper left">
+              <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
                 <div class="circle"></div>
-              </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+              </div>
+
+              <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+              </div>
             </div>
           </div>
-        </div>
-      {{/if}}
+        {{/if}}
+      </div>
     </div>
   </div>
 </template>

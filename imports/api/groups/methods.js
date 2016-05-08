@@ -6,7 +6,9 @@ import { Groups } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
 import { DEMO_GROUP_CREATOR, Roles } from '../users/users.js';
+
 import { Schema } from '../schema.js';
+import { log } from '../logs.js';
 
 export const findGroupMembers = new ValidatedMethod({
   name: 'groups.findMembers',
@@ -168,10 +170,8 @@ export const createDemoGroup = new ValidatedMethod({
   name: 'groups.createDemo',
   validate: null,
   run() {
+    // TODO: replace with random lol
     const randomGroupName = Math.random().toString(36).slice(2);
-    return createGroup.call({
-      groupName: randomGroupName,
-      creatorId: DEMO_GROUP_CREATOR
-    });
+    return Groups.insert({ groupName: randomGroupName, creatorId: DEMO_GROUP_CREATOR });
   }
 });
