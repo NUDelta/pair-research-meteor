@@ -26,6 +26,10 @@
       font-weight: 300;
     }
 
+    .link {
+      @extend .teal-text;
+    }
+
     .actions {
       display: block;
       position: absolute;
