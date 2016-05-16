@@ -5,7 +5,6 @@ import { Template } from 'meteor/templating';
 
 import { createDemoGroup } from '../../api/groups/methods.js';
 
-
 Template.home.events({
   'click #demo-pool'(event, instance) {
     event.preventDefault();

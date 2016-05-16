@@ -5,24 +5,19 @@ import { Affinities } from '../../api/affinities/affinities.js';
 import { Groups } from '../../api/groups/groups.js';
 import { Pairings } from '../../api/pairings/pairings.js';
 import { Tasks } from '../../api/tasks/tasks.js';
-import { log } from './../../api/logs.js';
 
+import { log } from './../../api/logs.js';
 import { DEV_OPTIONS } from '../config.js';
 
 import { createGroup, addToGroup } from '../../api/groups/methods.js';
 
 Meteor.startup(() => {
-
-  if (!Meteor.isDevelopment) {
-    return;
-  }
-
   const admin = {
     username: 'kchen',
     password: 'password'
   };
 
-  if (DEV_OPTIONS.CLEAN_DB) {
+  if (Meteor.isDevelopment && DEV_OPTIONS.CLEAN_DB) {
     log.info(`Clearing database...`);
     Meteor.users.remove({ username: { $ne: admin.username }});
     Groups.remove({});
@@ -149,5 +144,7 @@ Meteor.startup(() => {
       groupName: 'noAccessGroup',
       creatorId: otherUserId
     });
+
+    Accounts.createUser({ username: 'nogroup', password: 'password' });
   }
 });

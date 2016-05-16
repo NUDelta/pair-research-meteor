@@ -7,6 +7,11 @@
     height: 450px;
     position: relative;
 
+    .row, .col {
+      position: relative;
+      height: 100%;
+    }
+
     .header {
       @extend .white-text;
       margin-top: 0;
@@ -15,7 +20,7 @@
 
     h1 {
       top: 40%;
-      left: 35%;
+      left: 25%;
       transform: translateY(-50%);
     }
 
@@ -33,7 +38,7 @@
     .actions {
       display: block;
       position: absolute;
-      top: 85%;
+      top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
 

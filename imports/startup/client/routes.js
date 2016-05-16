@@ -15,7 +15,12 @@ import '../../ui/pages/demo_pair.js';
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('home');
+    if (Meteor.userId()) {
+      // TODO: or render?
+      FlowRouter.redirect('/groups');
+    } else {
+      BlazeLayout.render('home');
+    }
   }
 });
 
