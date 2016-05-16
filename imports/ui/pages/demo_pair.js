@@ -15,10 +15,13 @@ import '../components/pairings.js';
 
 Template.demo_pair.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
+  const userId = Random.id();
   const groupHandle = this.subscribe('groups.demo.byId', groupId);
+  this.subscribe('tasks.fromUserInGroup', groupId, userId);
 
   this.state = new ReactiveDict();
   this.state.set('groupId', groupId);
+  this.state.set('userId', Random.id());
 
   this.autorun(() => {
     if (groupHandle.ready()) {
@@ -63,10 +66,6 @@ Template.demo_pair.events({
 
     const name = event.target.username.value;
     const task = event.target.need.value;
-    
-    if (!instance.state.get('userId')) {
-      instance.state.set('userId', Random.id());      
-    }
     
     instance.state.set('name', name);
     instance.state.set('task', task);

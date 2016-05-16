@@ -9,14 +9,10 @@ Meteor.publish('tasks.inGroup', function(groupId) {
   });
 });
 
-Meteor.publish('tasks.fromUserInGroup', function(groupId) {
-  if (!this.userId) {
-    this.ready();
-  } else {
-    return Tasks.find({
-      groupId: groupId,
-      userId: this.userId,
-      task: { $exists: 1 }
-    });
-  }
+Meteor.publish('tasks.fromUserInGroup', function(groupId, userId) {
+  return Tasks.find({
+    groupId: groupId,
+    userId: userId,
+    task: { $exists: 1 }
+  });
 });
