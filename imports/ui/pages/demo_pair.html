@@ -6,13 +6,11 @@
       {{> pairings pairingArgs}}
     {{else}}
       <form>
-        <div class="right">
-          <button type="submit" id="enter" class="waves-effect waves-light btn">Enter Pool</button>
-        </div>
         <div class="row">
           <div class="input-field col s6">
             <label for="need" class="active">What's your name?</label>
-            <input name="username" type="text" id="username" required>
+            <input name="username" type="text" id="username" required
+                   placeholder="Or nickname. Or identifier. Or whatever.">
           </div>
         </div>
         <div class="row">
@@ -22,6 +20,7 @@
                    placeholder="Write some objective that you can finish in this time period.">
           </div>
         </div>
+        <button type="submit" id="enter" class="waves-effect waves-light btn">Enter Pool</button>
       </form>
     {{/if}}
   </div>

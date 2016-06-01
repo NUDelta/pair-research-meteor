@@ -6,7 +6,8 @@ import { Groups } from '../../api/groups/groups.js';
 import { Pairings } from '../../api/pairings/pairings.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { log } from './../../api/logs.js';
-import '../../api/users/users.js';
+
+import { DEV_OPTIONS } from '../config.js';
 
 import { createGroup, addToGroup } from '../../api/groups/methods.js';
 
@@ -21,11 +22,14 @@ Meteor.startup(() => {
     password: 'password'
   };
 
-  Meteor.users.remove({ username: { $ne: admin.username }});
-  Groups.remove({});
-  Tasks.remove({});
-  Affinities.remove({});
-  Pairings.remove({});
+  if (DEV_OPTIONS.CLEAN_DB) {
+    log.info(`Clearing database...`);
+    Meteor.users.remove({ username: { $ne: admin.username }});
+    Groups.remove({});
+    Tasks.remove({});
+    Affinities.remove({});
+    Pairings.remove({});
+  }
 
   if (Meteor.users.find().count() === 0) {
     Accounts.createUser(admin);

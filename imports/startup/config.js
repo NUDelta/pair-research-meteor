@@ -1,7 +1,7 @@
 
 export const DEV_OPTIONS = {
-  CLEAN_DB: true,
-  AUTOJOIN: true,
+  CLEAN_DB: 0,
+  AUTOJOIN: 1,
   LATENCY: 2000
 };
 

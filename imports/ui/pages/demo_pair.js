@@ -21,7 +21,7 @@ Template.demo_pair.onCreated(function() {
 
   this.state = new ReactiveDict();
   this.state.set('groupId', groupId);
-  this.state.set('userId', Random.id());
+  this.state.set('userId', userId);
 
   this.autorun(() => {
     if (groupHandle.ready()) {
@@ -41,20 +41,22 @@ Template.demo_pair.onCreated(function() {
 
 Template.demo_pair.helpers({
   currentTask() {
+    // rerenders on all Task changes
+    // do a static shift?
+    // template-level subscriptions isolated?
+    // static shift won't work well actually since inner form doesn't have context
     const instance = Template.instance();
-    const userId = instance.state.get('userId');
-    if (userId) {
-      const task = Tasks.findOne({ userId: userId });
-      return task && task.task;
-    }
+    const task = Tasks.findOne({ userId: instance.state.get('userId') });
+    return task && task.task;
   },
   pairingArgs() {
     const instance = Template.instance();
+    const task = Tasks.findOne({ userId: instance.state.get('userId') });
     return {
       group: instance.state.get('group'),
       user: {
         _id: instance.state.get('userId'),
-        name: instance.state.get('name')
+        name: task.name
       }
     };
   }

@@ -25,7 +25,7 @@ export const updateTask = new ValidatedMethod({
   run({ name, userId, groupId, task }) {
     const record = Tasks.findOne({ userId: userId, groupId: groupId });
     if (record) {
-      return Tasks.update(record._id, { $set: { task: task }});
+      return Tasks.update(record._id, { $set: { name: name, task: task }});
     } else {
       return Tasks.insert({
         name: name,
