@@ -26,9 +26,14 @@
 
     h3 {
       top: 60%;
-      left: 50%;
+      left: 40%;
       transform: translateY(-50%);
       font-weight: 300;
+
+      img {
+        vertical-align: bottom;
+        height: 48px
+      }
     }
 
     .link {
