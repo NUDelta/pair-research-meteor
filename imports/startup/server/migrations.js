@@ -1,9 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 
-// 5/8/2015
-// for user groups schema changes
+import { Groups } from '../../api/groups/groups.js';
 
-// Meteor.users.find().forEach((user) => {
-//   const groups = user.groups;
-//
-// });
+// 6/03/2016 nuking group info
+
+Groups.remove({});
+Meteor.users.update({},
+  {
+    $set: {
+      'profile.groups': []
+    }
+  }
+);
