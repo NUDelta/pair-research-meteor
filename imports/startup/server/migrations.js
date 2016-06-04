@@ -8,7 +8,7 @@ Groups.remove({});
 Meteor.users.update({},
   {
     $set: {
-      'profile.groups': []
+      groups: []
     }
   }
 );
