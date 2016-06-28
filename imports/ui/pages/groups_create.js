@@ -2,37 +2,62 @@ import './groups_create.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { Groups } from '../../api/groups/groups.js';
+import { Groups, DefaultRoles } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';
 
 Template.groups_create.onCreated(function() {
   this.state = new ReactiveDict();
+  // TODO: generalize this for new users too
   this.state.setDefault({
-    members: []
+    members: [],
+    roles: DefaultRoles
   });
+  this.addMember = () => {
+    const email = document.getElementById('member');
+    const $email = $(email);
+    if (email.checkValidity()) {
+      $email.removeClass('invalid');
+      const member = {
+        email: email.value,
+        role: DefaultRoles[0].title
+      };
+      this.state.push('members', member);
+      email.value = '';
+
+      Tracker.afterFlush(() => {
+        $('select').material_select();
+      });
+    } else {
+      $email.addClass('invalid');
+    }
+  };
 });
 
 Template.groups_create.helpers({
   members() {
     const instance = Template.instance();
     return instance.state.get('members');
+  },
+  roles() {
+    const instance = Template.instance();
+    return instance.state.get('roles');
   }
 });
 
 Template.groups_create.events({
   'keypress input[name=member]'(event, instance) {
-    if (event.which === 13 && event.target.checkValidity()) {
+    if (event.which === 13) {
       event.preventDefault();
       event.stopPropagation();
-
-      // TODO: validation
-      const member = event.currentTarget.value;
-      instance.state.push('members', member);
-      event.currentTarget.value = '';
+      instance.addMember();
     }
+  },
+  'click #addMember'(event, instance) {
+    instance.addMember();
   },
   'click .secondary-content'(event, instance) {
     event.preventDefault();
@@ -42,9 +67,16 @@ Template.groups_create.events({
   'submit #group'(event, instance) {
     event.preventDefault();
 
+    // TODO: tweak this for new users too
+    // TODO: this is not yet tested
     const group = {
       groupName: event.target.name.value,
+      description: event.target.description.value,
       creatorId: Meteor.userId(),
+      creatorName: Meteor.user().profile.fullName,
+      publicJoin: event.target.publicJoin.checked,
+      allowGuests: event.target.allowGuests.checked,
+      roles: instance.state.get('roles'),
       members: instance.state.get('members')
     };
 

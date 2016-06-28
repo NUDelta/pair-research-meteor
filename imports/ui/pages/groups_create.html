@@ -1,30 +1,69 @@
 <template name="groups_create">
-  <div class="container">
+  <div class="container" id="groups_create">
     <div class="row">
       <div class="col s8 offset-s2">
         <h3 class="amber-text text-darken-2">Create a Pair Research Pool</h3>
         <form id="group">
           <h5 class="teal-text">Basics</h5>
           <div class="input-field">
-            <label>Group Name</label>
-            <input type="text" name="name" required>
+            <label for="name">Group Name</label>
+            <input id="name" type="text" name="name" required>
           </div>
 
           <div class="input-field">
-            <label>Group Description</label>
-            <input type="text" name="description" required>
+            <label for="description">Group Description</label>
+            <input id="description" name="description" required>
           </div>
+
+          <p>
+            <input type="checkbox" id="publicJoin" name="publicJoin">
+            <label for="publicJoin">Allow anyone to find, view, and join group</label>
+          </p>
+          <p>
+            <input type="checkbox" id="allowGuests" name="allowGuests">
+            <label for="allowGuests">Allow guests to join pool</label>
+          </p>
+
+          <h5 class="teal-text">Roles</h5>
+          <p class="info">
+            Tweaking these will come soon. This gives different participants different titles and
+            will eventually support preferred pairings between different groups.
+          </p>
+          <ul class="collection">
+            {{#each role in roles}}
+              <li class="collection-item">
+                {{ role.title }}
+              </li>
+            {{/each}}
+          </ul>
 
           <h5 class="teal-text">Members</h5>
-          <div class="input-field">
-            <label>Add member by email</label>
-            <input type="email" name="member">
+          <p class="info">
+            Each of these members will be sent an email to join this pair research group.
+          </p>
+          <div class="input-field valign-wrapper">
+            <label for="member" data-error="must be an email">Add member by email</label>
+            <input id="member" type="email" name="member">
+            <button id="addMember" type="button" class="waves-effect waves-light btn valign">Add</button>
           </div>
           <ul class="collection">
+            <li class="collection-item">
+              <div class="disabled">
+                {{ currentUser.email }}
+              </div>
+            </li>
             {{#each member in members}}
               <li class="collection-item">
                 <div>
-                  {{member}}
+                  <div class="input-field">
+                    {{member.email}}
+                    <!-- this doesn't render properly...figure it out -->
+                    <!--<select name="{{@index}}_role">-->
+                      <!--{{#each role in roles}}-->
+                        <!--<option value="{{role.title}}" selected="{{$eq member.role role.title}}"></option>-->
+                      <!--{{/each}}-->
+                    <!--</select>-->
+                  </div>
                   <a href='#' class="secondary-content" data-index="{{@index}}">
                     <i class="material-icons">delete</i>
                   </a>
@@ -32,7 +71,6 @@
               </li>
             {{/each}}
           </ul>
-
           <button id="create-group" class="waves-effect waves-light amber btn">Create</button>
         </form>
       </div>

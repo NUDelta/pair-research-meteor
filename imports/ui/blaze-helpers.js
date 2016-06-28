@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+Template.registerHelper('$eq', (a, b) => a == b);
+
 Template.registerHelper('$nt', a => !a);
 
 Template.registerHelper('$gt', (a, b) => {

@@ -98,3 +98,9 @@ Meteor.users.findUserGroups = (userId) => {
   const user = Meteor.users.findOne(userId);
   return _.map(user.groups, group => group.groupId);
 };
+
+Meteor.users.helpers({
+  email() {
+    return this.emails.length > 0 && this.emails[0].address
+  }
+});

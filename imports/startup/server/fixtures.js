@@ -21,7 +21,7 @@ Meteor.startup(() => {
     }
   };
   
-  admin._id = Accounts.findUserByEmail(admin.email);
+  admin._id = Accounts.findUserByEmail(admin.email) && Accounts.findUserByEmail(admin.email)._id;
   if (Meteor.isDevelopment && DEV_OPTIONS.CLEAN_DB) {
     log.info(`Clearing database...`);
     Meteor.users.remove({ _id: { $ne: admin._id }});

@@ -1,0 +1,17 @@
+#groups_create {
+  h5 {
+    margin-top: 1em;
+  }
+
+  .info {
+    @extend .grey-text;
+  }
+
+  #member {
+    width: 80%;
+  }
+
+  .input-field.valign-wrapper {
+    justify-content: space-between;
+  }
+}
