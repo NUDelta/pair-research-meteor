@@ -2,6 +2,7 @@ import './pairings.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
@@ -78,13 +79,11 @@ Template.pairings.onRendered(function() {
         if (fields.activePairing == PAIRING_IN_PROGRESS) {
           instance.setSpinnerTimeout();
         } else {
-          // Scroll to pair results
-          // setTimeout so UI elements have a chance to render
-          setTimeout(() => {
+          Tracker.afterFlush(() => {
             $('body, html').animate({
               scrollTop: $('#pair_results').offset().top
             }, 1000);
-          }, 500);
+          });
         }
       }
     }
