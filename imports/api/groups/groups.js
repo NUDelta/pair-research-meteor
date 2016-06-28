@@ -22,6 +22,30 @@ class GroupCollection extends Mongo.Collection {
 
 export const Groups = new GroupCollection('groups');
 
+Schema.GroupRole = new SimpleSchema({
+  title: {
+    type: String
+  },
+  weight: {
+    type: Number
+  }
+});
+
+export const DefaultRoles = [
+  {
+    title: 'Admin',
+    weight: Roles.Admin
+  },
+  {
+    title: 'Member',
+    weight: Roles.Member
+  },
+  {
+    title: 'Pending',
+    weight: Roles.Pending
+  }
+];
+
 Schema.Group = new SimpleSchema({
   _id: {
     type: String,
@@ -31,17 +55,39 @@ Schema.Group = new SimpleSchema({
   groupName: {
     type: String
   },
+  description: {
+    type: String
+  },
   creatorId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
+  },
+  creatorName: {
+    type: String
+  },
+  creationDate: {
+    type: Date
   },
   activePairing: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     optional: true
+  },
+  // TODO: implement user roles
+  roles: {
+    type: Array,
+    optional: true,
+    defaultValue: DefaultRoles
+  },
+  'roles.$': {
+    type: Schema.GroupRole
+  },
+  publicJoin: {
+    type: Boolean
+  },
+  allowGuests: {
+    type: Boolean
   }
-  // creation date
-  // public private
 });
 
 Groups.attachSchema(Schema.Group);

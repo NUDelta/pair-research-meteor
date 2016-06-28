@@ -51,13 +51,31 @@ export const createGroup = new ValidatedMethod({
     groupName: {
       type: String
     },
+    description: {
+      type: String
+    },
     creatorId: {
       type: String,
       regEx: SimpleSchema.RegEx.Id
+    },
+    roles: {
+      type: Array,
+      optional: true
+    },
+    'roles.$': {
+      type: Schema.GroupRole
+    },
+    publicJoin: {
+      type: Boolean
+    },
+    allowGuests: {
+      type: Boolean
     }
   }).validator(),
-  run({ groupName, creatorId }) {
-    const groupId = Groups.insert({ groupName: groupName, creatorId: creatorId });
+  run({ groupName, description, creatorId, roles, publicJoin, allowGuests }) {
+    const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
+    const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
+        creationDate: new Date() });
     addToGroup.call({ groupId: groupId, userId: creatorId, role: Roles.Admin });
     return groupId;
   }
@@ -76,7 +94,7 @@ export const inviteToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ email, groupId }) {
-    const user = Meteor.users.findOne({ emails: { $elemMatch: { address: email } } });
+    const user = Accounts.findUserByEmail(email);
     if (user) {
       addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
     } else if (!this.isSimulation) {
@@ -113,7 +131,7 @@ export const addToGroup = new ValidatedMethod({
     };
     if (!taskRecord) {
       Tasks.insert({
-        name: user.username,
+        name: user.profile.fullName,
         userId: userId,
         task: '',
         groupId: groupId

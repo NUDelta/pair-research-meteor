@@ -1,5 +1,12 @@
 <template name="home">
   <div id="home" class="grey lighten-4">
+    <nav class="nav-wrapper">
+      <ul class="right">
+        <li>
+          {{> loginButtons}}
+        </li>
+      </ul>
+    </nav>
     <div class="banner">
       <div class="row">
         <div class="col s6">
@@ -14,7 +21,6 @@
         <div class="col s6">
           <div class="actions">
             <form>
-
             </form>
             <!--<a href="/create" class="waves-effect waves-light btn-large">Create an account</a>-->
             <a href="/demo" id="demo-pool" class="waves-effect waves-light btn-large">Go to Demo Pool</a>

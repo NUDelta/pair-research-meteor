@@ -60,6 +60,17 @@ export const makePairings = new ValidatedMethod({
             Math.floor(Math.random() * 20 + // random pertubation
                 1 + 99 * (scores[userId][_userId] + scores[_userId][userId]) / 2)
           ]);
+
+          // TODO: penalty code
+          // // add a bonus for each week that people haven't been recently pair. (The intention is to penalize recent pairs, but we pose it
+          // // as a bonus instead because the weights on the graph have to be positive.)  Bonus exponentially decays.
+          // previouslyPairedInWeek = pool.people[i].partners[pool.people[j].email];
+          // if (!previouslyPairedInWeek) previouslyPairedInWeek = []; // so that we can still iterate through the loop below
+          // for (var k = 1; k <= 3; ++k) { // go back 1, 2, and 3 weeks
+          //   if (!previouslyPairedInWeek[k]) { // if k is outside the range of the array, the value will be undefined, so this condition will match
+          //     w += 80 * Math.pow(0.5, k); // +40 if not paired last week, up to +70 if not paired in any of the last three weeks
+          //   }
+          // }
         }
       });
     });

@@ -1,38 +1,41 @@
 <template name="groups_create">
   <div class="container">
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s8 offset-s2">
         <h3 class="amber-text text-darken-2">Create a Pair Research Pool</h3>
+        <form id="group">
+          <h5 class="teal-text">Basics</h5>
+          <div class="input-field">
+            <label>Group Name</label>
+            <input type="text" name="name" required>
+          </div>
+
+          <div class="input-field">
+            <label>Group Description</label>
+            <input type="text" name="description" required>
+          </div>
+
+          <h5 class="teal-text">Members</h5>
+          <div class="input-field">
+            <label>Add member by email</label>
+            <input type="email" name="member">
+          </div>
+          <ul class="collection">
+            {{#each member in members}}
+              <li class="collection-item">
+                <div>
+                  {{member}}
+                  <a href='#' class="secondary-content" data-index="{{@index}}">
+                    <i class="material-icons">delete</i>
+                  </a>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+
+          <button id="create-group" class="waves-effect waves-light amber btn">Create</button>
+        </form>
       </div>
-    </div>
-    <div class="row">
-      <form id="group" class="col s6 offset-s3">
-        <h5 class="teal-text">Basics</h5>
-        <div class="input-field">
-          <label>Name</label>
-          <input type="text" name="name" required>
-        </div>
-
-        <h5 class="teal-text">Members</h5>
-        <div class="input-field">
-          <label>Add member by email</label>
-          <input type="email" name="member">
-        </div>
-        <ul class="collection">
-          {{#each member in members}}
-            <li class="collection-item">
-              <div>
-                {{member}}
-                <a href='#' class="secondary-content" data-index="{{@index}}">
-                  <i class="material-icons">delete</i>
-                </a>
-              </div>
-            </li>
-          {{/each}}
-        </ul>
-
-        <button id="create-group" class="waves-effect waves-light amber btn">Create</button>
-      </form>
     </div>
   </div>
 </template>

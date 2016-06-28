@@ -1,6 +1,13 @@
 #home {
   margin-top: 0;
 
+  nav {
+    position: fixed;
+    z-index: 2;
+    background: none;
+    box-shadow: none;
+  }
+
   .banner {
     @extend .amber, .darken-2;
     width: 100%;

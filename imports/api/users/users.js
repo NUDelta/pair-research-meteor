@@ -24,20 +24,28 @@ Schema.UserGroupMembership = new SimpleSchema({
 
 Schema.UserProfile = new SimpleSchema({
   // placeholder, doesn't do anything yet
+  fullName: {
+    type: String
+  },
+  screenName: {
+    type: String,
+    optional: true
+  },
   picture: {
     type: String,
+    regEx: SimpleSchema.RegEx.Url,
     optional: true
   }
 });
 
 Schema.User = new SimpleSchema({
+  // TODO: do things with username later
   username: {
     type: String,
     optional: true
   },
   emails: {
-    type: Array,
-    optional: true
+    type: Array
   },
   'emails.$': {
     type: Object
