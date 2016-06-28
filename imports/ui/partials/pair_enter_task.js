@@ -24,7 +24,7 @@ Template.pair_enter_task.events({
       });
     }
     updateTask.call({
-      name: Meteor.user().username,
+      name: Meteor.user().profile.fullName,
       userId: Meteor.userId(),
       groupId: instance.state.get('groupId'),
       task: event.target.need.value

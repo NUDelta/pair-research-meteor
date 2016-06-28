@@ -1,6 +1,6 @@
 <template name="group_settings_member">
   <li class="collection-item {{pendingClass}} {{adminClass}}">
-    {{ member.username }}
+    {{ member.profile.fullName }}
     {{#if pending}}
       (pending)
     {{/if}}

@@ -47,7 +47,7 @@ Template.pair.helpers({
       group: instance.state.get('group'),
       user: {
         _id: Meteor.userId(),
-        name: Meteor.user().username
+        name: Meteor.user().profile.fullName
       }
     };
   },
