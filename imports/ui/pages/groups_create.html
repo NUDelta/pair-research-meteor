@@ -7,12 +7,12 @@
           <h5 class="teal-text">Basics</h5>
           <div class="input-field">
             <label for="name">Group Name</label>
-            <input id="name" type="text" name="name" required>
+            <input id="name" name="name" type="text" required>
           </div>
 
           <div class="input-field">
             <label for="description">Group Description</label>
-            <input id="description" name="description" required>
+            <input id="description" name="description" type="text" required>
           </div>
 
           <p>
@@ -26,7 +26,7 @@
 
           <h5 class="teal-text">Roles</h5>
           <p class="info">
-            Tweaking these will come soon. This gives different participants different titles and
+            Customizing these will come soon. This gives different participants different titles and
             will eventually support preferred pairings between different groups.
           </p>
           <ul class="collection">
@@ -55,15 +55,14 @@
             {{#each member in members}}
               <li class="collection-item">
                 <div>
-                  <div class="input-field">
+                  <span class="title">
                     {{member.email}}
-                    <!-- this doesn't render properly...figure it out -->
-                    <!--<select name="{{@index}}_role">-->
-                      <!--{{#each role in roles}}-->
-                        <!--<option value="{{role.title}}" selected="{{$eq member.role role.title}}"></option>-->
-                      <!--{{/each}}-->
-                    <!--</select>-->
-                  </div>
+                  </span>
+                  <select name="{{@index}}_role">
+                    {{#each role in roles}}
+                      <option value="{{role.title}}" selected="{{$eq member.role role.title}}">{{role.title}}</option>
+                    {{/each}}
+                  </select>
                   <a href='#' class="secondary-content" data-index="{{@index}}">
                     <i class="material-icons">delete</i>
                   </a>

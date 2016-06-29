@@ -23,25 +23,39 @@ export const findGroupMembers = new ValidatedMethod({
   }
 });
 
-export const createGroupWithMembers = new ValidatedMethod({
-  name: 'groups.create.withMembers',
+export const addToGroup = new ValidatedMethod({
+  name: 'groups.add',
   validate: new SimpleSchema({
-    groupName: {
-      type: String
-    },
-    creatorId: {
+    groupId: {
       type: String,
       regEx: SimpleSchema.RegEx.Id
     },
-    members: {
-      type: [String],
-      regEx: SimpleSchema.RegEx.Email
+    userId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    role: {
+      type: Number,
+      allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ],
+      optional: true
     }
   }).validator(),
-  run({ groupName, creatorId, members }) {
-    const groupId = createGroup.call({ groupName: groupName, creatorId: creatorId });
-    members.forEach(member => inviteToGroup.call({ groupId: groupId, email: member }));
-    return groupId;
+  run({ groupId, userId, role = Roles.Member }) {
+    const user = Meteor.users.findOne(userId);
+    const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
+    const membership = {
+      groupId: groupId,
+      role: role
+    };
+    if (!taskRecord) {
+      Tasks.insert({
+        name: user.profile.fullName,
+        userId: userId,
+        task: '',
+        groupId: groupId
+      });
+    }
+    return Meteor.users.update(userId, { $addToSet: { groups: membership }});
   }
 });
 
@@ -81,6 +95,62 @@ export const createGroup = new ValidatedMethod({
   }
 });
 
+// TODO: probably move this to group or users
+Schema.Member = new SimpleSchema({
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  role: {
+    type: Schema.GroupRole
+  }
+});
+
+export const createGroupWithMembers = new ValidatedMethod({
+  name: 'groups.create.withMembers',
+  validate: new SimpleSchema({
+    groupName: {
+      type: String
+    },
+    description: {
+      type: String
+    },
+    creatorId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    creatorName: {
+      type: String
+    },
+    roles: {
+      type: Array,
+      optional: true
+    },
+    'roles.$': {
+      type: Schema.GroupRole
+    },
+    publicJoin: {
+      type: Boolean
+    },
+    allowGuests: {
+      type: Boolean
+    },
+    members: {
+      type: Array,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    'members.$': {
+      type: Schema.Member
+    }
+  }).validator(),
+  run({ groupName, description, creatorId, roles, publicJoin, allowGuests, members }) {
+    const groupId = createGroup.call({ groupName, description, creatorId, roles, publicJoin, allowGuests });
+    // TODO: do things with included member role later
+    members.forEach(member => inviteToGroup.call({ groupId: groupId, email: member.email }));
+    return groupId;
+  }
+});
+
 export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({
@@ -94,50 +164,17 @@ export const inviteToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ email, groupId }) {
-    const user = Accounts.findUserByEmail(email);
-    if (user) {
-      addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
-    } else if (!this.isSimulation) {
-      const newUserId = Accounts.createUser({ email: email, username: email }); // TODO: change this
-      addToGroup.call({ groupId: groupId, userId: newUserId, role: Roles.Pending });
-      Accounts.sendEnrollmentEmail(newUserId, email); // TODO: setup enrollment and email
+    if (!this.isSimulation) {
+      const user = Accounts.findUserByEmail(email);
+      if (user) {
+        addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
+      } else {
+        // TODO: this needs changing!!
+        const newUserId = Accounts.createUser({ email: email, profile: { fullName: 'testUser' } });
+        addToGroup.call({ groupId: groupId, userId: newUserId, role: Roles.Pending });
+        Accounts.sendEnrollmentEmail(newUserId, email); // TODO: setup enrollment and email
+      }
     }
-  }
-});
-
-export const addToGroup = new ValidatedMethod({
-  name: 'groups.add',
-  validate: new SimpleSchema({
-    groupId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    },
-    userId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    },
-    role: {
-      type: Number,
-      allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ],
-      optional: true
-    }
-  }).validator(),
-  run({ groupId, userId, role = Roles.Member }) {
-    const user = Meteor.users.findOne(userId);
-    const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
-    const membership = {
-      groupId: groupId,
-      role: role
-    };
-    if (!taskRecord) {
-      Tasks.insert({
-        name: user.profile.fullName,
-        userId: userId,
-        task: '',
-        groupId: groupId
-      });
-    }
-    return Meteor.users.update(userId, { $addToSet: { groups: membership }});
   }
 });
 

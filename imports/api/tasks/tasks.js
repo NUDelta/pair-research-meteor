@@ -34,6 +34,7 @@ Schema.Task = new SimpleSchema({
 
 Tasks.attachSchema(Schema.Task);
 
+// TODO: remove this?
 Tasks.allow({
   insert(userId, doc) {
     return true;

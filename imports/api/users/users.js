@@ -16,6 +16,7 @@ Schema.UserGroupMembership = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id
   },
+  // TODO: generalize this w/title and so on
   role: {
     type: Number,
     allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ]
