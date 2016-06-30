@@ -1,0 +1,29 @@
+<template name="login">
+  <div class="container" id="login">
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <form class="card">
+          <h5 class="amber-text text-darken-2">Sign in to Pair Research</h5>
+          <div class="input-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" class="validate" required>
+          </div>
+
+          <div class="input-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" class="validate" required>
+          </div>
+          <button class="pair-form-button">Sign in</button>
+        </form>
+        <div class="card">
+          <div class="card-content">
+            <p>
+              New to Pair Research? <a href="/signup">Sign up here.</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
