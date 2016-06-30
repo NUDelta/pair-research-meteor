@@ -3,27 +3,64 @@
     <div class="row">
       <div class="col s8 offset-s2">
         <h3 class="amber-text text-darken-2">Join Pair Research</h3>
-        <h5 class="caption">You'll be able to see the group you're joining, find a group, or create a new group right after this.</h5>
-        <form>
-          <h5 class="teal-text">About You</h5>
-          <div class="input-field">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" name="fullName" type="text" class="validate" required>
-          </div>
+        {{#if $eq step 1}}
+          <div id="step1" class="step">
+            <h5 class="caption">You'll be able to see the group you're joining, find a group, or create a new group right after this.</h5>
+            <form>
+              <h5 class="teal-text">About You</h5>
+              <div class="input-field">
+                <label for="fullName">Full Name</label>
+                <input id="fullName" name="fullName" type="text" class="validate" required>
+              </div>
 
-          <div class="input-field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" class="validate" required>
-          </div>
+              <div class="input-field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" class="validate" required>
+              </div>
 
-          <div class="input-field">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" class="validate" required>
+              <div class="input-field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" class="validate" required>
+              </div>
+              <button class="pair-form-button">Sign up</button>
+            </form>
           </div>
-
-          <button class="waves-effect waves-light amber darken-2 btn">Sign up</button>
-        </form>
+        {{/if}}
+        {{#if $eq step 2}}
+          <div id="step2" class="step">
+            <h5 class="caption">Select what groups you're joining.</h5>
+            <ul class="collection">
+              {{#if $eq joining.count 0}}
+                <li class="collection-item">
+                  <div class="disabled">
+                    You haven't selected any groups yet...
+                  </div>
+                </li>
+              {{else}}
+                {{#each group in joining}}
+                  <li class="collection-item">
+                    <div>
+                      {{ group.groupName }}
+                    </div>
+                  </li>
+                {{/each}}
+              {{/if}}
+            </ul>
+            <form class="pair-form">
+              <h5 class="teal-text">Search</h5>
+              <div class="input-field">
+                <input id="search" type="search" placeholder="Coming soon!" disabled>
+                <label for="search">
+                  <i class="material-icons">search</i>
+                </label>
+                <i class="material-icons">close</i>
+              </div>
+              <button class="pair-form-button">Continue</button>
+            </form>
+          </div>
+        {{/if}}
       </div>
     </div>
   </div>
 </template>
+

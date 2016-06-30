@@ -17,3 +17,13 @@ ReactiveDict.prototype.setKey = function(key, objKey, objVal) {
   obj[objKey] = objVal;
   this.set(key, obj);
 };
+
+ReactiveDict.prototype.increment = function(key) {
+  const obj = this.get(key);
+  this.set(key, obj + 1);
+};
+
+ReactiveDict.prototype.decrement = function(key) {
+  const obj = this.get(key);
+  this.set(key, obj - 1);
+};

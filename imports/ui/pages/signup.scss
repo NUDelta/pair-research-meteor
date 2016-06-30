@@ -1,4 +1,12 @@
 #signup {
+  .col.s8.offset-s2 {
+    position: relative;
+  }
+  .step {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
   form {
     margin-top: 2em;
     width: 80%;
