@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/css?family=Lato:400,100,300,700,900);
+
 body {
   font-family: Lato, sans-serif;
 }
@@ -13,4 +15,8 @@ body {
 
 .disabled {
   @extend .grey-text, .text-lighten-1;
+}
+
+.caption {
+  font-weight: 300;
 }

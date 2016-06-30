@@ -95,6 +95,10 @@ Schema.SimpleUser = new SimpleSchema({
 
 Meteor.users.attachSchema(Schema.User);
 
+Meteor.users.deny({
+  update() { return true; }
+});
+
 Meteor.users.findUserGroups = (userId) => {
   const user = Meteor.users.findOne(userId);
   return _.map(user.groups, group => group.groupId);

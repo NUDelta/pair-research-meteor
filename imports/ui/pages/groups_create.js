@@ -80,7 +80,6 @@ Template.groups_create.events({
     const group = {
       groupName: event.target.name.value,
       description: event.target.description.value,
-      creatorId: Meteor.userId(),
       creatorName: Meteor.user().profile.fullName,
       publicJoin: event.target.publicJoin.checked,
       allowGuests: event.target.allowGuests.checked,

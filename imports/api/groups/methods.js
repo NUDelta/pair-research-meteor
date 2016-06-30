@@ -59,6 +59,7 @@ export const addToGroup = new ValidatedMethod({
   }
 });
 
+// TODO: this should probably be private?
 export const createGroup = new ValidatedMethod({
   name: 'groups.create',
   validate: new SimpleSchema({
@@ -115,10 +116,6 @@ export const createGroupWithMembers = new ValidatedMethod({
     description: {
       type: String
     },
-    creatorId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    },
     creatorName: {
       type: String
     },
@@ -143,10 +140,10 @@ export const createGroupWithMembers = new ValidatedMethod({
       type: Schema.Member
     }
   }).validator(),
-  run({ groupName, description, creatorId, roles, publicJoin, allowGuests, members }) {
-    const groupId = createGroup.call({ groupName, description, creatorId, roles, publicJoin, allowGuests });
+  run({ groupName, description, roles, publicJoin, allowGuests, members }) {
+    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roles, publicJoin, allowGuests });
     // TODO: do things with included member role later
-    members.forEach(member => inviteToGroup.call({ groupId: groupId, email: member.email }));
+    members.forEach(member => inviteToGroup.call({ groupId, member }));
     return groupId;
   }
 });
@@ -154,25 +151,24 @@ export const createGroupWithMembers = new ValidatedMethod({
 export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({
-    email: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Email
+    member: {
+      type: Schema.Member
     },
     groupId: {
       type: String,
       regEx: SimpleSchema.RegEx.Id
     }
   }).validator(),
-  run({ email, groupId }) {
+  run({ member, groupId }) {
     if (!this.isSimulation) {
-      const user = Accounts.findUserByEmail(email);
+      const user = Accounts.findUserByEmail(member.email);
       if (user) {
         addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
       } else {
         // TODO: this needs changing!!
-        const newUserId = Accounts.createUser({ email: email, profile: { fullName: 'testUser' } });
-        addToGroup.call({ groupId: groupId, userId: newUserId, role: Roles.Pending });
-        Accounts.sendEnrollmentEmail(newUserId, email); // TODO: setup enrollment and email
+        const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: 'testUser' } });
+        addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role.weight });
+        Accounts.sendEnrollmentEmail(newUserId, member.email); // TODO: setup enrollment and email
       }
     }
   }

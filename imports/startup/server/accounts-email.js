@@ -1,14 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
-
 import { Groups } from '../../api/groups/groups.js';
-
-Accounts.onCreateUser((options, user) => {
-  options.profile = options.profile || {};
-
-  user.profile = options.profile;
-  user.groups = [];
-  return user;
-});
 
 Accounts.emailTemplates.siteName = 'Pair Research';
 Accounts.emailTemplates.from = 'Pair Research <no-reply@pair.meteorapp.com';

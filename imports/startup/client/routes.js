@@ -7,6 +7,7 @@ import '../../ui/layout/layout-authorized.js';
 
 import '../../ui/pages/home.js';
 import '../../ui/pages/pair.js';
+import '../../ui/pages/signup.js';
 import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
@@ -28,6 +29,13 @@ FlowRouter.route('/pair/:groupId', {
   name: 'App.pair',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'pair' });
+  }
+});
+
+FlowRouter.route('/signup', {
+  name: 'App.signup',
+  action() {
+    BlazeLayout.render('layout', { main: 'signup' });
   }
 });
 
