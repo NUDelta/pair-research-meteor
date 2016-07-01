@@ -3,10 +3,10 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Accounts } from 'meteor/accounts-base';
 
-import { Groups } from './groups.js';
+import { Groups, DefaultRoles } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
-import { DEMO_GROUP_CREATOR, Roles } from '../users/users.js';
+import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
@@ -36,27 +36,25 @@ export const addToGroup = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Id
     },
     role: {
-      type: Number,
-      allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ],
+      type: Schema.GroupRole,
       optional: true
     }
   }).validator(),
-  run({ groupId, userId, role = Roles.Member }) {
+  run({ groupId, userId, role = DefaultRoles.Member }) {
+    const group = Groups.findOne(groupId);
     const user = Meteor.users.findOne(userId);
-    const taskRecord = Tasks.findOne({ userId: userId, groupId: groupId });
-    const membership = {
-      groupId: groupId,
-      role: role
-    };
+    const taskRecord = Tasks.findOne({ userId, groupId });
+    const userMembership = { groupId, role, groupName: group.groupName };
+    const groupMembership = { _id: userId, role };
     if (!taskRecord) {
       Tasks.insert({
         name: user.profile.fullName,
-        userId: userId,
-        task: '',
-        groupId: groupId
+        userId, groupId,
+        task: ''
       });
     }
-    return Meteor.users.update(userId, { $addToSet: { groups: membership }});
+    Groups.update(groupId, { $addToSet: { members: groupMembership }});
+    return Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
   }
 });
 
@@ -92,19 +90,8 @@ export const createGroup = new ValidatedMethod({
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
         creationDate: new Date() });
-    addToGroup.call({ groupId: groupId, userId: creatorId, role: Roles.Admin });
+    addToGroup.call({ groupId: groupId, userId: creatorId, role: DefaultRoles.Admin });
     return groupId;
-  }
-});
-
-// TODO: probably move this to group or users
-Schema.Member = new SimpleSchema({
-  email: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email
-  },
-  role: {
-    type: Schema.GroupRole
   }
 });
 
@@ -164,11 +151,11 @@ export const inviteToGroup = new ValidatedMethod({
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
-        addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
+        addToGroup.call({ groupId: groupId, userId: user._id, role: DefaultRoles.Pending });
       } else {
         // TODO: this needs changing? (namely the fullName part
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: 'pending' } });
-        addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role.weight });
+        addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }

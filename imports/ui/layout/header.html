@@ -5,7 +5,9 @@
       <li>
         <a href="/groups">
           Groups
-          <span class="new badge">{{pendingGroups}}</span>
+          {{#if pendingGroups}}
+            <span class="new badge">{{pendingGroups}}</span>
+          {{/if}}
         </a>
       </li>
       <li>

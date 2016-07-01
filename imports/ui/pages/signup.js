@@ -92,6 +92,7 @@ Template.signup.events({
   },
   'submit #step2 form'(event, instance) {
     event.preventDefault();
+    // TODO: confirm / upgrade membership
     FlowRouter.go('/groups');
   }
 });

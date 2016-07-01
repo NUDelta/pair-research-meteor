@@ -3,14 +3,15 @@ import './groups_home.html';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Groups } from '../../api/groups/groups.js';
-
 Template.groups_home.onCreated(function() {
-  this.subscribe('groups.user');
+  this.subscribe('user.groups');
 });
 
 Template.groups_home.helpers({
   groups() {
-    return Groups.find();
+    return _.filter(Meteor.user().groups, group => group.role.weight !== 1);
+  },
+  pendingGroups() {
+    return _.filter(Meteor.user().groups, group => group.role.weight === 1);
   }
 });

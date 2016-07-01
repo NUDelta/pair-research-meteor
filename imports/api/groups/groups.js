@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'meteor/stevezhu:lodash';
 
-import { Roles } from '../users/users.js';
 import { Schema } from '../schema.js';
 
 class GroupCollection extends Mongo.Collection {
@@ -31,20 +31,56 @@ Schema.GroupRole = new SimpleSchema({
   }
 });
 
-export const DefaultRoles = [
-  {
-    title: 'Admin',
-    weight: Roles.Admin
-  },
-  {
-    title: 'Member',
-    weight: Roles.Member
-  },
-  {
-    title: 'Pending',
-    weight: Roles.Pending
+SimpleSchema.messages({
+  either: '[label] or its partner field must be included'
+});
+
+Schema.ValidateEither = (context, partner) => {
+  let tokens = context.key.split('.');
+  tokens[tokens.length - 1] = partner;
+  const field = tokens.join('.');
+  if (!context.field(field).isSet && !context.value) {
+    return 'either';
   }
-];
+};
+
+// maybe add more fields?
+Schema.Member = new SimpleSchema({
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+    custom() {
+      return Schema.ValidateEither(this, 'email');
+    }
+  },
+  email: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email,
+    optional: true,
+    custom() {
+      return Schema.ValidateEither(this, '_id');
+    }
+  },
+  role: {
+    type: Schema.GroupRole
+  }
+});
+
+export const DefaultRoles = {
+  Admin: {
+    title: 'Admin',
+    weight: 100
+  },
+  Member: {
+    title: 'Member',
+    weight: 10
+  },
+  Pending: {
+    title: 'Pending',
+    weight: 1
+  }
+};
 
 Schema.Group = new SimpleSchema({
   _id: {
@@ -77,10 +113,18 @@ Schema.Group = new SimpleSchema({
   roles: {
     type: Array,
     optional: true,
-    defaultValue: DefaultRoles
+    defaultValue: _.values(DefaultRoles)
   },
   'roles.$': {
     type: Schema.GroupRole
+  },
+  members: {
+    type: Array,
+    optional: true,
+    defaultValue: []
+  },
+  'members.$': {
+    type: Schema.Member
   },
   publicJoin: {
     type: Boolean

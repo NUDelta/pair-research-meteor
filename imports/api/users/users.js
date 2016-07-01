@@ -5,26 +5,20 @@ import { Schema } from '../schema.js';
 // TODO: replace with privately loaded admin id?
 export const DEMO_GROUP_CREATOR = '33333333333333333';
 
-export const Roles = {
-  Admin: 100,
-  Member: 10,
-  Pending: 1
-};
-
 Schema.UserGroupMembership = new SimpleSchema({
   groupId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
   },
-  // TODO: generalize this w/title and so on
+  groupName: {
+    type: String
+  },
   role: {
-    type: Number,
-    allowedValues: [ Roles.Admin, Roles.Member, Roles.Pending ]
+    type: Schema.GroupRole
   }
 });
 
 Schema.UserProfile = new SimpleSchema({
-  // placeholder, doesn't do anything yet
   fullName: {
     type: String
   },

@@ -4,8 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { Roles } from '../../api/users/users.js';
-
 import {
   removeFromGroup
 } from '../../api/groups/methods.js';
