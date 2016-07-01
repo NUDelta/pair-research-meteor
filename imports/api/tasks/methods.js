@@ -1,4 +1,5 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Tasks } from './tasks.js';
 import { Schema } from '../schema.js';

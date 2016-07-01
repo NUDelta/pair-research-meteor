@@ -1,4 +1,5 @@
 import '../../api/users/accounts.js';
+import '../../api/users/methods.js';
 import '../../api/users/server/publications.js';
 import '../../api/groups/server/publications.js';
 import '../../api/groups/methods.js';

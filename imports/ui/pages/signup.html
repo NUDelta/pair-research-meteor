@@ -14,8 +14,9 @@
               </div>
 
               <div class="input-field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" class="validate" required>
+                <label for="email" class="{{user.class}}">Email</label>
+                <input id="email" name="email" type="email" class="validate" required
+                       value="{{user.email}}" {{user.disabled}}>
               </div>
 
               <div class="input-field">
@@ -28,16 +29,16 @@
         {{/if}}
         {{#if $eq step 2}}
           <div id="step2" class="step">
-            <h5 class="caption">Select what groups you're joining.</h5>
+            <h5 class="caption">You're going to be joining these groups.</h5>
             <ul class="collection">
-              {{#if $eq joining.count 0}}
+              {{#if $eq groups.count 0}}
                 <li class="collection-item">
                   <div class="disabled">
-                    You haven't selected any groups yet. <a href="/create">Create your own?</a>
+                    Nothing here yet. Search for one below or <a href="/create">create your own!</a>
                   </div>
                 </li>
               {{else}}
-                {{#each group in joining}}
+                {{#each group in groups}}
                   <li class="collection-item">
                     <div>
                       {{ group.groupName }}

@@ -9,7 +9,11 @@ import { Tasks } from '../../api/tasks/tasks.js';
 import { log } from './../../api/logs.js';
 import { DEV_OPTIONS } from '../config.js';
 
-import { createGroup, addToGroup } from '../../api/groups/methods.js';
+import {
+  createGroup,
+  addToGroup,
+  inviteToGroup,
+} from '../../api/groups/methods.js';
 
 Meteor.startup(() => {
   const admin = {
@@ -183,7 +187,7 @@ Meteor.startup(() => {
       allowGuests: false
     });
     addToGroup.call({ groupId: otherGroupId, userId: admin._id });
-    
+
     const noAccessGroup = createGroup.call({
       groupName: 'noAccessGroup',
       description: 'This is a private group that Kevin does not have access to.',
@@ -192,5 +196,30 @@ Meteor.startup(() => {
       allowGuests: false
     });
     Accounts.createUser(miscUsers[1]);
+
+    const invitedGroup = createGroup.call({
+      groupName: 'invitedGroup',
+      description: 'Kevin just got an invite to this group',
+      creatorId: otherUserId,
+      publicJoin: false,
+      allowGuests: false
+    });
+    const invitees = [
+      {
+        email: 'kc@kc.com',
+        role: {
+          title: 'Admin',
+          weight: 100
+        }
+      },
+      {
+        email: 'newguy@gmail.com',
+        role: {
+          title: 'Admin',
+          weight: 100
+        }
+      }
+    ];
+    invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));
   }
 });

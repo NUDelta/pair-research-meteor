@@ -1,4 +1,5 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 import { exec } from 'child_process';
 

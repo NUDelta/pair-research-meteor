@@ -2,20 +2,23 @@ import './signup.html';
 
 import { Mongo } from 'meteor/mongo';
 import { Template } from 'meteor/templating';
-import { Tracker } from 'meteor/tracker';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import { Groups } from '../../api/groups/groups.js';
+import { setFullName } from '../../api/users/methods.js';
 import { Schema } from '../../api/schema.js';
 
 Template.signup.onCreated(function() {
+  this.subscribe('groups.user');
+
   this.state = new ReactiveDict();
   this.state.setDefault({
-    step: 1
+    step: 1,
+    email: FlowRouter.getQueryParam('email'),
+    token: FlowRouter.getQueryParam('token')
   });
-  this.joining = new Mongo.Collection(null);
-  this.joining.attachSchema(Schema.Group);
 });
 
 Template.signup.onRendered(function() {
@@ -40,9 +43,17 @@ Template.signup.helpers({
     const instance = Template.instance();
     return instance.state.get('step');
   },
-  joining() {
+  groups() {
+    return Groups.find();
+  },
+  user() {
     const instance = Template.instance();
-    return instance.joining.find();
+    const user = { email: instance.state.get('email') };
+    if (user.email) {
+      user.disabled = 'disabled';
+      user.class = 'active';
+    }
+    return user;
   }
 });
 
@@ -58,17 +69,29 @@ Template.signup.events({
       }
     };
 
-    Accounts.createUser(user, (err) => {
-      if (err) {
-        alert(err);
-      } else {
-        instance.state.increment('step');
-      }
-    });
+    const token = instance.state.get('token');
+    if (token) {
+      Accounts.resetPassword(token, user.password, (err) => {
+        if (err) {
+          alert(err);
+        } else {
+          setFullName.call({ fullName: user.profile.fullName });
+          instance.state.increment('step');
+        }
+      });
+    } else {
+      Accounts.createUser(user, (err) => {
+        if (err) {
+          alert(err);
+        } else {
+          instance.state.increment('step');
+        }
+      });
+    }
   },
   'submit #step2 form'(event, instance) {
     event.preventDefault();
-    instance.state.decrement('step');
+    FlowRouter.go('/groups');
   }
 });
 
