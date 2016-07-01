@@ -22,7 +22,8 @@ Template.signup.onCreated(function() {
 });
 
 Template.signup.onRendered(function() {
-  // TODO: make animations better! they suck
+  // TODO: make animations better! they suck a bit
+  // this code could probably be generalized
   const animateIn = 'animated fast rollIn';
   const animateOut = 'animated fast rollOut';
   $('.col.s8.offset-s2').get(0)._uihooks = {

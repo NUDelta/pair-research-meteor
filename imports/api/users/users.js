@@ -40,7 +40,6 @@ Schema.UserProfile = new SimpleSchema({
 });
 
 Schema.User = new SimpleSchema({
-  // TODO: do things with username later
   username: {
     type: String,
     optional: true

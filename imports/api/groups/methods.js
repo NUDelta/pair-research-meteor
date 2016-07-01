@@ -166,10 +166,10 @@ export const inviteToGroup = new ValidatedMethod({
       if (user) {
         addToGroup.call({ groupId: groupId, userId: user._id, role: Roles.Pending });
       } else {
-        // TODO: this needs changing!!
-        const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: 'testUser' } });
+        // TODO: this needs changing? (namely the fullName part
+        const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: 'pending' } });
         addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role.weight });
-        Accounts.sendEnrollmentEmail(newUserId, member.email); // TODO: setup enrollment and email
+        Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }
   }

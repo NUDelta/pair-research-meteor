@@ -12,7 +12,6 @@ import { createGroupWithMembers } from '../../api/groups/methods.js';
 
 Template.groups_create.onCreated(function() {
   this.state = new ReactiveDict();
-  // TODO: generalize this for new users too
   this.state.setDefault({
     members: [],
     roles: DefaultRoles
@@ -26,7 +25,7 @@ Template.groups_create.onCreated(function() {
       // TODO: replace with selected role from above
       const member = {
         email: email.value,
-        role: DefaultRoles[0].title
+        role: DefaultRoles[1].title
       };
       this.state.push('members', member);
       email.value = '';
@@ -75,8 +74,6 @@ Template.groups_create.events({
       member.role = _.find(roles, role => role.title == member.role);
       return member
     });
-    // TODO: tweak this for new users too
-    // TODO: this is not yet tested
     const group = {
       groupName: event.target.name.value,
       description: event.target.description.value,

@@ -33,16 +33,3 @@ Schema.Task = new SimpleSchema({
 });
 
 Tasks.attachSchema(Schema.Task);
-
-// TODO: remove this?
-Tasks.allow({
-  insert(userId, doc) {
-    return true;
-  },
-  update(userId, doc, fieldNames, modifier) {
-    return true;
-  },
-  remove(userId, doc) {
-    return true;
-  }
-});

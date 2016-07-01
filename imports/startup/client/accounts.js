@@ -7,6 +7,7 @@ import { findEmailFromToken } from '../../api/users/methods.js';
 Accounts.onEnrollmentLink((token, done) => {
   if (Meteor.userId()) {
     // TODO: handle this: e.g. force logout or ask if they want to merge accounts
+    // FIXME: this doesn't fire at all right now
     alert('Please log out first!');
     done();
   } else {
@@ -19,7 +20,6 @@ Accounts.onEnrollmentLink((token, done) => {
       } else {
         FlowRouter.go('/signup', {}, { token, email });
       }
-      done();
     });
   }
 });

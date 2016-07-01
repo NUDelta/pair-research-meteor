@@ -2,6 +2,14 @@ import { Meteor } from 'meteor/meteor';
 
 import { ADMIN_ID } from '../../../startup/config.js'
 
+Meteor.publish('user.groups', function() {
+  if (!this.userId) {
+    this.ready();
+  } else {
+    return Meteor.users.find(this.userId, { fields: { groups: 1 }});
+  }
+});
+
 Meteor.publish('users.inGroup', function(groupId) {
   if (!this.userId) {
     this.ready();

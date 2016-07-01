@@ -17,6 +17,7 @@ import {
 
 Meteor.startup(() => {
   const admin = {
+    username: 'kc',
     email: 'kc@kc.com',
     password: 'password',
     profile: {
@@ -208,15 +209,15 @@ Meteor.startup(() => {
       {
         email: 'kc@kc.com',
         role: {
-          title: 'Admin',
-          weight: 100
+          title: 'Pending',
+          weight: 1
         }
       },
       {
         email: 'newguy@gmail.com',
         role: {
-          title: 'Admin',
-          weight: 100
+          title: 'Pending',
+          weight: 1
         }
       }
     ];

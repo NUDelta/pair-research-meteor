@@ -83,8 +83,6 @@ export const makePairings = new ValidatedMethod({
       const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
       log.info(`script results: ${ JSON.stringify(partners) }`);
 
-      // TODO: consider offloading parts of this to the client?
-
       // Avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
       const pairings = _.compact(_.concat(
