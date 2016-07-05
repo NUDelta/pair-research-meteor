@@ -3,6 +3,7 @@ import './header.html';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/stevezhu:lodash';
 
 Template.header.onCreated(function() {
@@ -24,5 +25,17 @@ Template.header.helpers({
     const instance = Template.instance();
     const groups = instance.state.get('groups');
     return _.filter(groups, membership => membership.role.weight === 1).length;
+  }
+});
+
+Template.header.events({
+  'click a[href=#signout]'(event, instance) {
+    Meteor.logout((err) => {
+      if (err) {
+        alert(err);
+      } else {
+        FlowRouter.go('/');
+      }
+    });
   }
 });
