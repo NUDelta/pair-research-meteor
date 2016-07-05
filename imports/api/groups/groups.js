@@ -10,11 +10,20 @@ class GroupCollection extends Mongo.Collection {
     return super.insert(group, callback);
   }
 
-  update(selector, callback) {
-    return super.update(selector, callback);
-  }
-
   remove(selector, callback) {
+    const group = this.findOne(selector);
+    const memberIds = _.map(group.members, member => member._id);
+    Meteor.users.update({
+      _id: { $in: memberIds }
+    }, {
+      $pull: {
+        groups: {
+          groupId: group._id
+        }
+      }
+    }, {
+      multi: true
+    });
     // destroy all memberships
     return super.remove(selector, callback);
   }
@@ -46,7 +55,7 @@ Schema.ValidateEither = (context, partner) => {
 
 // maybe add more fields?
 Schema.Member = new SimpleSchema({
-  _id: {
+  userId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     optional: true,
@@ -59,7 +68,7 @@ Schema.Member = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Email,
     optional: true,
     custom() {
-      return Schema.ValidateEither(this, '_id');
+      return Schema.ValidateEither(this, 'userId');
     }
   },
   role: {

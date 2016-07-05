@@ -2,16 +2,39 @@ import './groups_home.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+
+import '../partials/groups_home_invite.js';
 
 Template.groups_home.onCreated(function() {
-  this.subscribe('user.groups');
+  const userHandle = this.subscribe('user.groups');
+
+  this.state = new ReactiveDict();
+  this.state.setDefault({
+    groups: []
+  });
+
+  this.autorun(() => {
+    if (userHandle.ready()) {
+      this.state.set('groups', Meteor.user().groups);
+    }
+  });
+
 });
 
 Template.groups_home.helpers({
   groups() {
-    return _.filter(Meteor.user().groups, group => group.role.weight !== 1);
+    const instance = Template.instance();
+    return _.filter(instance.state.get('groups'), group => group.role.weight !== 1);
   },
   pendingGroups() {
-    return _.filter(Meteor.user().groups, group => group.role.weight === 1);
+    const instance = Template.instance();
+    return _.filter(instance.state.get('groups'), group => group.role.weight === 1);
+  },
+  inviteArgs(group) {
+    return {
+      group: group
+    };
   }
 });
+

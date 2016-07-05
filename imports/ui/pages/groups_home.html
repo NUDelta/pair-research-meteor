@@ -14,14 +14,7 @@
           <h5>You're invited to these!</h5>
           <ul class="collection">
             {{#each group in pendingGroups}}
-              <li class="collection-item">
-                <div>
-                  <a href="/pair/{{ group._id }}">{{ group.groupName }}</a>
-                  <a href="/groups/{{ group._id }}" class="secondary-content">
-                    <i class="material-icons">settings</i>
-                  </a>
-                </div>
-              </li>
+              {{> groups_home_invite (inviteArgs group)}}
             {{/each}}
           </ul>
         </div>

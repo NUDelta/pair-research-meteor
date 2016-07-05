@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Accounts } from 'meteor/accounts-base';
+import { _ } from 'meteor/stevezhu:lodash';
 
 import { Groups, DefaultRoles } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
@@ -41,11 +42,13 @@ export const addToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId, userId, role = DefaultRoles.Member }) {
+    // TODO: consider moving some of this to users?
+    // TODO: validate users making changes
     const group = Groups.findOne(groupId);
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId, groupId });
     const userMembership = { groupId, role, groupName: group.groupName };
-    const groupMembership = { _id: userId, role };
+    const groupMembership = { userId: userId, role };
     if (!taskRecord) {
       Tasks.insert({
         name: user.profile.fullName,
@@ -55,6 +58,45 @@ export const addToGroup = new ValidatedMethod({
     }
     Groups.update(groupId, { $addToSet: { members: groupMembership }});
     return Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
+  }
+});
+
+export const updateMembership = new ValidatedMethod({
+  name: 'groups.change.member',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    userId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    role: {
+      type: Schema.GroupRole
+    }
+  }).validator(),
+  run({ groupId, userId, role }) {
+    if (!this.isSimulation) {
+      const group = Groups.findOne(groupId);
+      const user = Meteor.users.findOne(userId);
+
+      const groupMembershipIndex = _.findIndex(group.members, member => member._id == userId);
+      const userMembershipIndex = _.findIndex(user.groups, group => group.groupId == groupId);
+
+      if (groupMembershipIndex === -1 || userMembershipIndex === -1) {
+        throw new Meteor.Error('no-matching-membership', 'The user isn\'t in the specified group.');
+      }
+      if (!_.some(group.roles, role)) {
+        throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
+      }
+
+      group.members[groupMembershipIndex].role = role;
+      user.groups[userMembershipIndex].role = role;
+
+      Groups.update(group._id, { $set: { members: group.members } });
+      Meteor.users.update(user._id, { $set: { groups: user.groups } });
+    }
   }
 });
 
@@ -174,7 +216,8 @@ export const removeFromGroup = new ValidatedMethod({
       ]
     });
     Tasks.remove({ groupId: groupId, userId: userId });
-    return Meteor.users.update(userId, { $pull : { groups: { groupId: groupId }}});
+    Meteor.users.update(userId, { $pull : { groups: { groupId: groupId } } });
+    return Groups.update(groupId, { $pull: { members: { userId: userId } } });
   }
 });
 

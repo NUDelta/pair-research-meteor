@@ -10,11 +10,13 @@ import { _ } from 'meteor/stevezhu:lodash';
 import { DefaultRoles } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';
 
+const roles = _.values(DefaultRoles);
+
 Template.groups_create.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
     members: [],
-    roles: DefaultRoles
+    roles: roles
   });
   this.addMember = () => {
     const email = document.getElementById('member');
@@ -25,7 +27,7 @@ Template.groups_create.onCreated(function() {
       // TODO: replace with selected role from above
       const member = {
         email: email.value,
-        role: DefaultRoles[1].title
+        role: roles[1].title
       };
       this.state.push('members', member);
       email.value = '';
