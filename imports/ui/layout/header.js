@@ -13,7 +13,7 @@ Template.header.onCreated(function() {
     groups: []
   });
   this.autorun(() => {
-    if (userHandle.ready()) {
+    if (userHandle.ready() && Meteor.userId()) {
       this.state.set('groups', Meteor.user().groups);
     }
   });

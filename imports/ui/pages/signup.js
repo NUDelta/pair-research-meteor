@@ -6,11 +6,13 @@ import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { Groups } from '../../api/groups/groups.js';
+import { Groups, DefaultRoles } from '../../api/groups/groups.js';
+import { updateMembership } from '../../api/groups/methods.js';
 import { setFullName } from '../../api/users/methods.js';
 import { Schema } from '../../api/schema.js';
 
 Template.signup.onCreated(function() {
+  // TODO: filter publication fields
   this.subscribe('groups.user');
 
   this.state = new ReactiveDict();
@@ -92,7 +94,20 @@ Template.signup.events({
   },
   'submit #step2 form'(event, instance) {
     event.preventDefault();
-    // TODO: confirm / upgrade membership
+    // TODO: only for things in the list right now
+    // wouldn't work for created or anything added to that list
+
+    Groups.find().forEach((group) => {
+      updateMembership.call({
+        groupId: group._id,
+        userId: Meteor.userId(),
+        role: DefaultRoles.Member
+      }, (err) => {
+        if (err) {
+          alert(err);
+        }
+      });
+    });
     FlowRouter.go('/groups');
   }
 });

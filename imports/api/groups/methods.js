@@ -77,11 +77,12 @@ export const updateMembership = new ValidatedMethod({
     }
   }).validator(),
   run({ groupId, userId, role }) {
+    // TODO: some validation for security here
     if (!this.isSimulation) {
       const group = Groups.findOne(groupId);
       const user = Meteor.users.findOne(userId);
 
-      const groupMembershipIndex = _.findIndex(group.members, member => member._id == userId);
+      const groupMembershipIndex = _.findIndex(group.members, member => member.userId == userId);
       const userMembershipIndex = _.findIndex(user.groups, group => group.groupId == groupId);
 
       if (groupMembershipIndex === -1 || userMembershipIndex === -1) {
