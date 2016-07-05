@@ -49,6 +49,7 @@ Template.pairings.onCreated(function() {
     this.subscribe('groups.byId', groupId);
     this.subscribe('tasks.inGroup', groupId);
     this.subscribe('affinities.inGroup', groupId);
+    this.subscribe('users.inGroup', groupId);
 
     this.state.setDefault({
       groupId: groupId,
@@ -56,19 +57,6 @@ Template.pairings.onCreated(function() {
       editing: false
     });
   });
-
-  this.staticState = {};
-  this.setSpinnerTimeout = () => {
-    $('.preloader-wrapper').show();
-    let interval = this.staticState.spinner;
-    if (interval) {
-      clearTimeout(interval);
-    }
-    interval = setTimeout(() => {
-      $('.preloader-wrapper').fadeOut(500);
-    }, 3000);
-    this.staticState.spinner = interval;
-  };
 });
 
 Template.pairings.onRendered(function() {
@@ -76,9 +64,7 @@ Template.pairings.onRendered(function() {
   Groups.find().observeChanges({
     changed(id, fields) {
       if (id && fields.activePairing) {
-        if (fields.activePairing == PAIRING_IN_PROGRESS) {
-          instance.setSpinnerTimeout();
-        } else {
+        if (fields.activePairing != PAIRING_IN_PROGRESS) {
           Tracker.afterFlush(() => {
             $('body, html').animate({
               scrollTop: $('#pair_results').offset().top
@@ -103,19 +89,20 @@ Template.pairings.helpers({
     const instance = Template.instance();
     return Tasks.find({ userId: { $ne: instance.state.get('userId') }});
   },
+  allTasks() {
+    const instance = Template.instance();
+    return Tasks.find();
+  },
   userCount() {
     const instance = Template.instance();
-    instance.setSpinnerTimeout();
     return Tasks.find().count();
   },
   affinityCount() {
     const instance = Template.instance();
-    instance.setSpinnerTimeout();
     return Affinities.find().count();
   },
   pairTaskArgs(task) {
     const instance = Template.instance();
-    instance.setSpinnerTimeout();
     return {
       task: task,
       affinity: Affinities.findOne({
@@ -133,6 +120,15 @@ Template.pairings.helpers({
     return {
       group: Groups.findOne()
     };
+  },
+  percentage(userId) {
+    const totalCount = Tasks.find().count() - 1;
+    const currentCount = Affinities.find({ helperId: userId }).count();
+    return currentCount / totalCount * 100;
+  },
+  avatar(userId) {
+    const user = Meteor.users.findOne(userId);
+    return user && user.profile.avatar;
   }
 });
 

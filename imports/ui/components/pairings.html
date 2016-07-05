@@ -84,49 +84,11 @@
         {{#if pairResultCreated}}
           {{> pairings_results pairResultArgs}}
         {{else}}
-          <div class="spinner-wrapper">
-            <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-              </div>
-
-              <div class="spinner-layer spinner-red">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-              </div>
-
-              <div class="spinner-layer spinner-yellow">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-              </div>
-
-              <div class="spinner-layer spinner-green">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-              </div>
+          {{#each task in allTasks}}
+            <div style="top: {{$x @index 15}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+              <img src="{{avatar task.userId}}" class="circle">
             </div>
-          </div>
+          {{/each}}
         {{/if}}
       </div>
     </div>

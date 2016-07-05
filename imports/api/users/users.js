@@ -26,7 +26,7 @@ Schema.UserProfile = new SimpleSchema({
     type: String,
     optional: true
   },
-  picture: {
+  avatar: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
     optional: true

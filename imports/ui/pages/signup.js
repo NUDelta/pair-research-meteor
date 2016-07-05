@@ -19,7 +19,8 @@ Template.signup.onCreated(function() {
   this.state.setDefault({
     step: 1,
     email: FlowRouter.getQueryParam('email'),
-    token: FlowRouter.getQueryParam('token')
+    token: FlowRouter.getQueryParam('token'),
+    avatar: 'http://orig02.deviantart.net/cd44/f/2016/152/2/d/placeholder_3_by_sketchymouse-da4ny84.png'
   });
 });
 
@@ -57,10 +58,17 @@ Template.signup.helpers({
       user.class = 'active';
     }
     return user;
+  },
+  avatar() {
+    const instance = Template.instance();
+    return instance.state.get('avatar');
   }
 });
 
 Template.signup.events({
+  'change input[type=url]'(event, instance) {
+    instance.state.set('avatar', event.target.value);
+  },
   'submit #step1 form'(event, instance) {
     event.preventDefault();
     
@@ -68,7 +76,8 @@ Template.signup.events({
       email: event.target.email.value,
       password: event.target.password.value,
       profile: {
-        fullName: event.target.fullName.value
+        fullName: event.target.fullName.value,
+        avatar: event.target.avatar.value
       }
     };
 

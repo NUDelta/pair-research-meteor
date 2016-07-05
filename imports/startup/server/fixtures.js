@@ -22,7 +22,8 @@ Meteor.startup(() => {
     password: 'password',
     profile: {
       fullName: 'Kevin Chen',
-      screenName: 'kchen'
+      screenName: 'kchen',
+      avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2015/02/kevin1-square.jpg'
     }
   };
   
@@ -60,7 +61,8 @@ Meteor.startup(() => {
         email: 'hq@northwestern.edu',
         password: 'password',
         profile: {
-          fullName: 'Haoqi Zhang'
+          fullName: 'Haoqi Zhang',
+          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/haoqi-250x250.jpg'
         },
         task: 'help with Stella'
       },
@@ -68,7 +70,8 @@ Meteor.startup(() => {
         email: 'jh@u.northwestern.edu',
         password: 'password',
         profile: {
-          fullName: 'Josh Hibschmann'
+          fullName: 'Josh Hibschmann',
+          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/josh.png'
         },
         task: 'I need to learn how to feed the baby'
       },
@@ -76,7 +79,8 @@ Meteor.startup(() => {
         email: 'yk@u.northwestern.edu',
         password: 'password',
         profile: {
-          fullName: 'Yongsung Kim'
+          fullName: 'Yongsung Kim',
+          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/yongsung.jpg'
         },
         task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful'
       },
@@ -84,7 +88,8 @@ Meteor.startup(() => {
         email: 'ryanmadden2017@u.northwestern.edu',
         password: 'password',
         profile: {
-          fullName: 'Ryan Madden'
+          fullName: 'Ryan Madden',
+          avatar: 'https://dl.dropboxusercontent.com/s/axu36bro60lzno2/7409814.jpeg'
         },
         task: 'Push notifications are broken again'
         
@@ -93,7 +98,8 @@ Meteor.startup(() => {
         email: 'shannonnachreiner2012@u.northwestern.edu',
         password: 'password',
         profile: {
-          fullName: 'Shannon Nachreiner'
+          fullName: 'Shannon Nachreiner',
+          avatar: 'https://dl.dropboxusercontent.com/s/77bhlenils7y1hc/aBJUQXT.jpg'
         },
         task: 'By the end with this sprint, I will have completed a very tangible goal.'
       },
@@ -101,7 +107,8 @@ Meteor.startup(() => {
         email: 'sarah@sarahlim.com',
         password: 'password',
         profile: {
-          fullName: 'Sarah Lim'
+          fullName: 'Sarah Lim',
+          avatar: 'https://dl.dropbox.com/s/gosrrsatr3m7iql/File%20Nov%2023%2C%204%2034%2032%20PM.jpeg'
         },
         task: 'need 2 to get out of bed and am hungry'
       }
