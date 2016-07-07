@@ -24,3 +24,52 @@
   }
 }
 
+// materialize overrides
+
+// dropdown
+.member-select {
+  overflow: visible;
+
+  li {
+    position: relative;
+  }
+
+  .name {
+    display: inline-block;
+    width: 200px;
+  }
+  .select-wrapper {
+    display: inline-block;
+    margin: auto;
+    position: relative;
+
+    .caret {
+      display: none;
+    }
+
+    input.select-dropdown {
+      margin: 0 0 0 0;
+      text-align: center;
+      width: auto;
+      display: inline;
+      border: none;
+      text-transform: uppercase;
+      @extend .teal-text;
+    }
+
+    .dropdown-content.select-dropdown {
+      margin: 0 0 0 0;
+
+      li {
+        text-align: center;
+      }
+    }
+  }
+
+  .secondary-content {
+    position: absolute;
+    top: 21px;
+    right: 16px;
+    float: right;
+  }
+}

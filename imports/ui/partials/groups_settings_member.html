@@ -1,14 +1,21 @@
 <template name="group_settings_member">
-  <li class="collection-item {{pendingClass}} {{adminClass}}">
-    {{ member.profile.fullName }}
-    {{#if pending}}
-      (pending)
-    {{/if}}
-    {{#if admin}}
-      <i class="material-icons">stars</i>
-    {{/if}}
+  <li class="collection-item {{pending.class}} {{admin.class}} member-select">
+    <span class="name">
+      {{member.fullName}}
+      {{#if pending.isPending}}
+        (pending)
+      {{/if}}
+      {{#if admin.isAdmin}}
+        <i class="material-icons">stars</i>
+      {{/if}}
+    </span>
+    <select name="{{member.fullName}}_role">
+      {{#each role in roles}}
+        <option value="{{role.weight}}" selected="{{$eq member.role.weight role.weight}}">{{role.title}}</option>
+      {{/each}}
+    </select>
     <a href="" class="secondary-content">
-      <i class="material-icons delete">delete</i>
+      <i class="material-icons delete">close</i>
     </a>
   </li>
 </template>

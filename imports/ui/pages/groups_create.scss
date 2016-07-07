@@ -14,48 +14,4 @@
   .input-field.valign-wrapper {
     justify-content: space-between;
   }
-
-  ul.collection {
-    overflow: visible;
-  }
-
-  li.collection-item {
-    position: relative;
-  }
-
-  .secondary-content {
-    position: absolute;
-    top: 21px;
-    right: 16px;
-    float: right;
-  }
-
-  // overwriting styles for dropdown
-  .select-wrapper {
-    display: inline;
-
-    .caret {
-      display: none;
-    }
-
-    $role-margin: 2em;
-
-    input.select-dropdown {
-      margin: 0 0 0 $role-margin;
-      text-align: center;
-      width: auto;
-      display: inline;
-      border: none;
-      text-transform: uppercase;
-      @extend .teal-text;
-    }
-
-    .dropdown-content.select-dropdown {
-      margin: 0 0 0 $role-margin;
-
-      li {
-        text-align: center;
-      }
-    }
-  }
 }

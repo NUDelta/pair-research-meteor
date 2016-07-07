@@ -1,0 +1,37 @@
+#groups_settings {
+  padding-left: 240px;
+
+  ul.side-nav {
+    position: absolute;
+    top: 64px;
+    height: calc(100% - 64px);
+    overflow: hidden;
+  }
+
+  ul.collection {
+    margin-top: 1em;
+  }
+
+  section {
+    // TODO: not sure if this is the right thing lol
+    height: calc(100vh - 64px);
+    overflow: hidden;
+    margin-bottom: 0;
+
+    .col {
+      height: 100%;
+      overflow: auto;
+    }
+
+    h3.header {
+      margin-bottom: 1em;
+    }
+  }
+
+  #groups_settings_info {
+    button {
+      margin-top: 1em;
+    }
+  }
+
+}

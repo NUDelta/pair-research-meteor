@@ -3,6 +3,15 @@ import { Meteor } from 'meteor/meteor';
 import { Groups } from '../groups.js';
 import { DEMO_GROUP_CREATOR } from '../../users/users.js';
 
+Meteor.publish('group.byId', function(groupId) {
+  const group = Groups.findOne(groupId);
+  if (!group || !this.userId || !group.containsMember(this.userId)) {
+    this.ready();
+  } else  {
+    return Groups.find(groupId);
+  }
+});
+
 Meteor.publish('groups.user', function() {
   if (!this.userId) {
     this.ready();
@@ -36,3 +45,4 @@ Meteor.publish('groups.demo.byId', function(groupId) {
     creatorId: DEMO_GROUP_CREATOR
   });
 });
+

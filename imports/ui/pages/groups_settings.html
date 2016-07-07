@@ -1,26 +1,82 @@
 <template name="groups_settings">
-  <div class="container groups">
-    <div class="row">
-      <div class="col s6 offset-s3">
-        <h3 class="header">Groups</h3>
-      </div>
-    </div>
-    <form class="row">
-      <div class="input-field col s6 offset-s3">
-        <input name="addMember" id="addMember" type="email">
-        <label for="addMember">Invite user (email) to group</label>
-        <button type="submit" id="enter" class="waves-effect-waves-light btn">Invite</button>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col s6 offset-s3">
-        <ul class="collection">
-          {{#each member in members}}
-            {{> group_settings_member (memberArgs member)}}
-          {{/each}}
-        </ul>
-      </div>
-    </div>
+  <div class="container groups" id="groups_settings">
+    <ul class="side-nav fixed">
+      <li>
+        <a href="#groups" class="bold">Group Settings</a>
+      </li>
+      <li>
+        <a href="#info" class="waves-effect">
+          Info
+        </a>
+      </li>
+      <li>
+        <a href="#roles" class="waves-effect">
+          Roles
+        </a>
+      </li>
+      <li>
+        <a href="#members" class="waves-effect">
+          Members
+        </a>
+      </li>
+    </ul>
+    {{#if (isActive 'info')}}
+      <section class="row" id="groups_settings_info">
+        <div class="col s10">
+          <h3 class="header">{{group.groupName}} &mdash; Info</h3>
+          <form id="groups_settings_members_info">
+            <!-- TODO: this shares a lot with groups_create,  do something about that? -->
+            <div class="input-field">
+              <label for="name" class="active">Group Name</label>
+              <input id="name" name="name" type="text" class="validate" required value="{{group.groupName}}">
+            </div>
+
+            <div class="input-field">
+              <label for="description" class="active">Group Description</label>
+              <input id="description" name="description" type="text" class="validate" required value="{{group.description}}">
+            </div>
+
+            <p>
+              <input type="checkbox" id="publicJoin" name="publicJoin" {{isChecked 'publicJoin'}}>
+              <label for="publicJoin">Allow anyone to find, view, and join group</label>
+            </p>
+            <p>
+              <input type="checkbox" id="allowGuests" name="allowGuests" {{isChecked 'allowGuests'}}>
+              <label for="allowGuests">Allow guests to join pool</label>
+            </p>
+
+            <button class="pair-form-button">Update</button>
+          </form>
+        </div>
+      </section>
+    {{/if}}
+    {{#if (isActive 'roles')}}
+      <section class="row" id="groups_settings_roles">
+        <div class="col s10">
+          <h3 class="header">{{group.groupName}} &mdash; Roles</h3>
+          <h5 class="caption">Coming soon!</h5>
+        </div>
+      </section>
+    {{/if}}
+    {{#if (isActive 'members')}}
+      <section class="row" id="groups_settings_members">
+        <div class="col s10">
+          <h3 class="header">{{group.groupName}} &mdash; Members</h3>
+          <form id="groups_settings_members_invite">
+            <div class="input-field">
+              <input name="addMember" id="addMember" type="email">
+              <label for="addMember">Invite user (email) to group</label>
+              <button type="submit" id="enter" class="waves-effect-waves-light btn">Invite</button>
+            </div>
+          </form>
+          <ul class="collection member-select">
+            {{#each member in members}}
+              {{> group_settings_member (memberArgs member)}}
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+    {{/if}}
   </div>
 </template>
 

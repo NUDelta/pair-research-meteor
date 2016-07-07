@@ -1,3 +1,3 @@
 import './layout.html';
 
-import './header_simple.js';
+import './header-simple.js';

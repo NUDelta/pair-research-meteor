@@ -31,6 +31,17 @@ class GroupCollection extends Mongo.Collection {
 
 export const Groups = new GroupCollection('groups');
 
+Schema.GroupUserQuery = new SimpleSchema({
+  groupId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  userId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  }
+});
+
 Schema.GroupRole = new SimpleSchema({
   title: {
     type: String
@@ -55,6 +66,9 @@ Schema.ValidateEither = (context, partner) => {
 
 // maybe add more fields?
 Schema.Member = new SimpleSchema({
+  fullName: {
+    type: String
+  },
   userId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
@@ -151,13 +165,9 @@ Groups.allow({
   }
 });
 
-Schema.GroupUserQuery = new SimpleSchema({
-  groupId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  userId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
+Groups.helpers({
+  // TODO: should be for either userid or email
+  containsMember(userId) {
+    return _.some(this.members, { userId: userId });
   }
 });

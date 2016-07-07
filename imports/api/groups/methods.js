@@ -48,7 +48,7 @@ export const addToGroup = new ValidatedMethod({
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId, groupId });
     const userMembership = { groupId, role, groupName: group.groupName };
-    const groupMembership = { userId: userId, role };
+    const groupMembership = { fullName: user.profile.fullName, userId: userId, role };
     if (!taskRecord) {
       Tasks.insert({
         name: user.profile.fullName,
@@ -57,7 +57,7 @@ export const addToGroup = new ValidatedMethod({
       });
     }
     Groups.update(groupId, { $addToSet: { members: groupMembership }});
-    return Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
+    Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
   }
 });
 
@@ -98,6 +98,36 @@ export const updateMembership = new ValidatedMethod({
       Groups.update(group._id, { $set: { members: group.members } });
       Meteor.users.update(user._id, { $set: { groups: user.groups } });
     }
+  }
+});
+
+export const updateGroupInfo =  new ValidatedMethod({
+  name: 'groups.info.update',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    groupName: {
+      type: String
+    },
+    description: {
+      type: String
+    },
+    publicJoin: {
+      type: Boolean
+    },
+    allowGuests: {
+      type: Boolean
+    }
+  }).validator(),
+  run({ groupId, groupName, description, publicJoin, allowGuests }) {
+    // TODO: validate who's doing this!
+    return Groups.update(groupId, {
+      $set: {
+        groupName, description, publicJoin, allowGuests
+      }
+    });
   }
 });
 
@@ -183,7 +213,14 @@ export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({
     member: {
-      type: Schema.Member
+      type: Object
+    },
+    'member.email': {
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    'member.role': {
+      type: Schema.GroupRole
     },
     groupId: {
       type: String,
@@ -197,7 +234,7 @@ export const inviteToGroup = new ValidatedMethod({
         addToGroup.call({ groupId: groupId, userId: user._id, role: DefaultRoles.Pending });
       } else {
         // TODO: this needs changing? (namely the fullName part
-        const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: 'pending' } });
+        const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
         addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
