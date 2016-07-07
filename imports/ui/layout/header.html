@@ -1,4 +1,12 @@
 <template name="header">
+  <ul id="user_dropdown" class="dropdown-content">
+    <li>
+      <a href="/user/settings">Settings</a>
+    </li>
+    <li>
+      <a href="#signout">Sign out</a>
+    </li>
+  </ul>
   <nav class="nav-wrapper amber darken-2">
     <a href="/" class="brand-logo">Pair Research</a>
     <ul class="right">
@@ -12,9 +20,8 @@
         </a>
       </li>
       <li>
-        <!--{{> loginButtons}}-->
-        <a href="#signout">
-          Sign out
+        <a href="#" class="dropdown-button" data-activates="user_dropdown" data-beloworigin="true">
+          {{currentUser.profile.fullName}}<i class="material-icons right">arrow_drop_down</i>
         </a>
       </li>
       {{else}}

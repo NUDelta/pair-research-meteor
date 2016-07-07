@@ -2,6 +2,7 @@ import './header.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/stevezhu:lodash';
@@ -16,6 +17,12 @@ Template.header.onCreated(function() {
   this.autorun(() => {
     if (userHandle.ready() && Meteor.userId()) {
       this.state.set('groups', Meteor.user().groups);
+    }
+
+    if (Meteor.userId()) {
+      Tracker.afterFlush(() => {
+        $('.dropdown-button').dropdown();
+      });
     }
   });
 });

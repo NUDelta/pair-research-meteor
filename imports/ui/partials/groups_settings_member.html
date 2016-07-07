@@ -5,10 +5,8 @@
       {{#if pending.isPending}}
         (pending)
       {{/if}}
-      {{#if admin.isAdmin}}
-        <i class="material-icons">stars</i>
-      {{/if}}
     </span>
+    <!-- TODO: this doesnt work yet -->
     <select name="{{member.fullName}}_role">
       {{#each role in roles}}
         <option value="{{role.weight}}" selected="{{$eq member.role.weight role.weight}}">{{role.title}}</option>

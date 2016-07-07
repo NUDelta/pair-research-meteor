@@ -34,4 +34,15 @@
     }
   }
 
+  #groups_settings_members {
+    form {
+      .input-field {
+        display: inline-block;
+        width: calc(100% - 120px);
+      }
+      button {
+        display: inline-block;
+      }
+    }
+  }
 }
