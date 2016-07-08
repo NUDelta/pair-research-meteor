@@ -14,4 +14,31 @@
   .input-field.valign-wrapper {
     justify-content: space-between;
   }
+
+  .roles {
+    $roles-font: 18px;
+
+    vertical-align: middle;
+    line-height: $roles-font;
+
+    .role-left {
+      .material-icons {
+        @extend .teal-text, .text-lighten-2;
+      }
+    }
+    .role-right {
+      float: right;
+      margin-right: 3em;
+    }
+
+    .material-icons {
+      vertical-align: middle;
+      line-height: $roles-font;
+      cursor: pointer;
+    }
+
+    .disabled {
+      cursor: pointer;
+    }
+  }
 }

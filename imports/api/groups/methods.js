@@ -177,9 +177,6 @@ export const createGroupWithMembers = new ValidatedMethod({
     description: {
       type: String
     },
-    creatorName: {
-      type: String
-    },
     roles: {
       type: Array,
       optional: true
@@ -198,7 +195,14 @@ export const createGroupWithMembers = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Email
     },
     'members.$': {
-      type: Schema.Member
+      type: Object
+    },
+    'members.$.email': {
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    'members.$.role': {
+      type: Schema.GroupRole
     }
   }).validator(),
   run({ groupName, description, roles, publicJoin, allowGuests, members }) {
@@ -292,6 +296,15 @@ export const createDemoGroup = new ValidatedMethod({
   run() {
     // TODO: replace with random lol
     const randomGroupName = Math.random().toString(36).slice(2);
-    return Groups.insert({ groupName: randomGroupName, creatorId: DEMO_GROUP_CREATOR });
+    return Groups.insert({ 
+      groupName: randomGroupName,
+      description: 'A demo pair research group',
+      creatorId: DEMO_GROUP_CREATOR,
+      creatorName: 'Demo Admin',
+      creationDate: new Date(),
+      roles: _.values(DefaultRoles),
+      publicJoin: true,
+      allowGuests: true
+    });
   }
 });

@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+Template.registerHelper('$id', a => a.replace(' ', '_'));
+
 Template.registerHelper('$x', (a, b) => a * b);
 
 Template.registerHelper('$and', (a, b) => a && b);

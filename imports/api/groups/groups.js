@@ -67,7 +67,8 @@ Schema.ValidateEither = (context, partner) => {
 // maybe add more fields?
 Schema.Member = new SimpleSchema({
   fullName: {
-    type: String
+    type: String,
+    label: 'Member full name'
   },
   userId: {
     type: String,
@@ -169,5 +170,9 @@ Groups.helpers({
   // TODO: should be for either userid or email
   containsMember(userId) {
     return _.some(this.members, { userId: userId });
+  },
+  groupAdmin(userId) {
+    const member = _.find(this.members, member => member.userId == userId);
+    return member.role.weight === DefaultRoles.Admin.weight;
   }
 });

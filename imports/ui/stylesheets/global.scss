@@ -73,3 +73,16 @@
     float: right;
   }
 }
+
+// override input
+input[type=text].browser {
+  border: 1px solid rgb(224, 224, 224);
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+input[type=text].browser:focus {
+  border: 1px solid rgb(224, 224, 224);
+  box-shadow: none;
+}
