@@ -10,14 +10,14 @@ import { _ } from 'meteor/stevezhu:lodash';
 import { DefaultRoles } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';
 
-const roles = [ DefaultRoles.Admin, DefaultRoles.Member ];
+const defaultRoles = [ DefaultRoles.Admin, DefaultRoles.Member ];
 
 Template.groups_create.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
     members: [],
-    roles: roles,
-    editing: _.map(roles, () => false)
+    roles: defaultRoles,
+    editing: _.map(defaultRoles, () => false)
   });
 
   this.updateSelect = () => {
@@ -46,6 +46,12 @@ Template.groups_create.onCreated(function() {
     } else {
       $email.addClass('invalid');
     }
+  };
+
+  this.setMemberRole = (index, roleTitle) => {
+    let members = this.state.get('members');
+    members[index].role = roleTitle;
+    this.state.set('members', members);
   };
 
   this.setRoleTitle = (index, title) => {
@@ -159,6 +165,13 @@ Template.groups_create.events({
       }
     }
   },
+  'change select'(event, instance) {
+    const index = $(event.target).data('index');
+    const roleTitle = event.target.value;
+    console.log(roleTitle);
+    instance.setMemberRole(index, roleTitle);
+  },
+  
   'submit #group'(event, instance) {
     event.preventDefault();
 

@@ -79,7 +79,7 @@
                 <span class="title name">
                   {{member.email}}
                 </span>
-                <select name="{{@index}}_role">
+                <select name="{{@index}}_role" data-index="{{@index}}">
                   {{#each role in roles}}
                     <option value="{{role.title}}" selected="{{$eq member.role role.title}}">{{role.title}}</option>
                   {{/each}}

@@ -9,7 +9,7 @@
     <!-- TODO: this doesnt work yet -->
     <select name="{{member.fullName}}_role">
       {{#each role in roles}}
-        <option value="{{role.weight}}" selected="{{$eq member.role.weight role.weight}}">{{role.title}}</option>
+        <option value="{{role.title}}" selected="{{$eq member.role.title role.title}}">{{role.title}}</option>
       {{/each}}
     </select>
     <a href="" class="secondary-content">

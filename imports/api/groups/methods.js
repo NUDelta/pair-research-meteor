@@ -163,6 +163,7 @@ export const createGroup = new ValidatedMethod({
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
         creationDate: new Date() });
+    // TODO: this needs patching for the new pair roles
     addToGroup.call({ groupId: groupId, userId: creatorId, role: DefaultRoles.Admin });
     return groupId;
   }
@@ -235,11 +236,13 @@ export const inviteToGroup = new ValidatedMethod({
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
+        // TODO: this doesn't do anything right now
         addToGroup.call({ groupId: groupId, userId: user._id, role: DefaultRoles.Pending });
       } else {
-        // TODO: this needs changing? (namely the fullName part
+        // TODO: this needs changing! doesn't mean anything
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
-        addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role });
+        // addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role });
+        addToGroup.call({ groupId: groupId, userId: newUserId, role: DefaultRoles.Pending });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }
