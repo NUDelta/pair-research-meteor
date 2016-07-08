@@ -42,6 +42,10 @@ Template.pairings.onCreated(function() {
       },
       user: {
         type: Schema.SimpleUser
+      },
+      race: {
+        type: Boolean,
+        label: 'loading indicator type'
       }
     }).validate(data);
 
@@ -56,6 +60,21 @@ Template.pairings.onCreated(function() {
       userId: data.user._id,
       editing: false
     });
+
+    this.staticState = {};
+    this.setSpinnerTimeout = () => {
+      if (!this.data.race) {
+        $('.preloader-wrapper').show();
+        let interval = this.staticState.spinner;
+        if (interval) {
+          clearTimeout(interval);
+        }
+        interval = setTimeout(() => {
+          $('.preloader-wrapper').fadeOut(500);
+        }, 3000);
+        this.staticState.spinner = interval;
+      }
+    };
   });
 });
 
@@ -64,7 +83,9 @@ Template.pairings.onRendered(function() {
   Groups.find().observeChanges({
     changed(id, fields) {
       if (id && fields.activePairing) {
-        if (fields.activePairing != PAIRING_IN_PROGRESS) {
+        if (fields.activePairing == PAIRING_IN_PROGRESS) {
+          instance.setSpinnerTimeout();
+        } else {
           Tracker.afterFlush(() => {
             $('body, html').animate({
               scrollTop: $('#pair_results').offset().top
@@ -95,14 +116,17 @@ Template.pairings.helpers({
   },
   userCount() {
     const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return Tasks.find().count();
   },
   affinityCount() {
     const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return Affinities.find().count();
   },
   pairTaskArgs(task) {
     const instance = Template.instance();
+    instance.setSpinnerTimeout();
     return {
       task: task,
       affinity: Affinities.findOne({

@@ -57,7 +57,8 @@ Template.demo_pair.helpers({
       user: {
         _id: instance.state.get('userId'),
         name: task.name
-      }
+      },
+      race: false
     };
   }
 });

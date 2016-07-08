@@ -48,7 +48,8 @@ Template.pair.helpers({
       user: {
         _id: Meteor.userId(),
         name: Meteor.user().profile.fullName
-      }
+      },
+      race: true
     };
   },
   pairEnterTaskArgs() {
