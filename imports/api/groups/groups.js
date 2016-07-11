@@ -189,6 +189,9 @@ Groups.helpers({
   getMembership(userId) {
     return _.find(this.members, member => member.userId == userId);
   },
+  getMembershipIndex(userId) {
+    return _.findIndex(this.members, member => member.userId == userId);
+  },
   getRoleFromTitle(title) {
     return _.find(this.roles, role => role.title == title);
   },

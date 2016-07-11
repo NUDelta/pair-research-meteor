@@ -169,7 +169,6 @@ Template.groups_create.events({
   'change select'(event, instance) {
     const index = $(event.target).data('index');
     const roleTitle = event.target.value;
-    console.log(roleTitle);
     instance.setMemberRole(index, roleTitle);
   },
   

@@ -1,4 +1,6 @@
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+
 import { Groups } from '../../api/groups/groups.js';
 
 Accounts.emailTemplates.siteName = 'Pair Research';
