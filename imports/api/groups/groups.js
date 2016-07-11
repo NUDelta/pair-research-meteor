@@ -11,20 +11,21 @@ class GroupCollection extends Mongo.Collection {
   }
 
   remove(selector, callback) {
-    const group = this.findOne(selector);
-    const memberIds = _.map(group.members, member => member._id);
-    Meteor.users.update({
-      _id: { $in: memberIds }
-    }, {
-      $pull: {
-        groups: {
-          groupId: group._id
-        }
-      }
-    }, {
-      multi: true
-    });
     // destroy all memberships
+    this.find(selector).forEach((group) => {
+      const memberIds = _.map(group.members, member => member._id);
+      Meteor.users.update({
+        _id: { $in: memberIds }
+      }, {
+        $pull: {
+          groups: {
+            groupId: group._id
+          }
+        }
+      }, {
+        multi: true
+      });
+    });
     return super.remove(selector, callback);
   }
 }
@@ -42,6 +43,10 @@ Schema.GroupUserQuery = new SimpleSchema({
   }
 });
 
+// Unsure of this is the best solution but current implementation:
+//  - title is a moniker. It should be unique, but won't be used for
+//    anything except preferred pairing
+//  - weight handles if admin, pending, or member
 Schema.GroupRole = new SimpleSchema({
   title: {
     type: String
@@ -91,18 +96,24 @@ Schema.Member = new SimpleSchema({
   }
 });
 
+export const RoleWeight = {
+  Admin: 100,
+  Member: 10,
+  Pending: 1
+};
+
 export const DefaultRoles = {
   Admin: {
     title: 'Admin',
-    weight: 100
+    weight: RoleWeight.Admin
   },
   Member: {
     title: 'Member',
-    weight: 10
+    weight: RoleWeight.Member
   },
   Pending: {
     title: 'Pending',
-    weight: 1
+    weight: RoleWeight.Pending
   }
 };
 
@@ -168,11 +179,27 @@ Groups.allow({
 
 Groups.helpers({
   // TODO: should be for either userid or email
+  getMembership(userId) {
+    return _.find(this.members, member => member.userId == userId);
+  },
+  getRoleFromTitle(title) {
+    return _.find(this.roles, role => role.title == title);
+  },
   containsMember(userId) {
     return _.some(this.members, { userId: userId });
   },
-  groupAdmin(userId) {
+  containsRole(role) {
+    check(role, Schema.GroupRole);
+    console.log(this.roles);
+    console.log(role);
+    return _.some(this.roles, groupRole => groupRole.weight === role.weight && groupRole.title == role.title);
+  },
+  isGroupAdmin(userId) {
     const member = _.find(this.members, member => member.userId == userId);
-    return member.role.weight === DefaultRoles.Admin.weight;
+    return member.role.weight === RoleWeight.Admin;
+  },
+  isPending(userId) {
+    const member = _.find(this.members, member => member.userId == userId);
+    return member.role.weight === RoleWeight.Pending;
   }
 });

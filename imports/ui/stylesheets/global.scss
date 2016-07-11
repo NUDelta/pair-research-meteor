@@ -43,6 +43,10 @@
     margin: auto;
     position: relative;
 
+    input[type=text] {
+      text-overflow: ellipsis;
+    }
+
     .caret {
       display: none;
     }

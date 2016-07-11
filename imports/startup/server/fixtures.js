@@ -1,8 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { _ } from 'meteor/stevezhu:lodash';
 
 import { Affinities } from '../../api/affinities/affinities.js';
-import { Groups } from '../../api/groups/groups.js';
+import {
+  Groups,
+  DefaultRoles,
+  RoleWeight
+} from '../../api/groups/groups.js';
 import { Pairings } from '../../api/pairings/pairings.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 
@@ -47,11 +52,27 @@ Meteor.startup(() => {
     // Mock DTR group pairing pool
     Meteor.users.update(admin._id, { $set: { groups: [] }});
 
+    const roles = {
+      Professor: {
+        title: 'Professor',
+        weight: RoleWeight.Admin
+      },
+      Graduate: {
+        title: 'Graduate Student',
+        weight: RoleWeight.Admin
+      },
+      Undergrad: {
+        title: 'Undergraduate Student',
+        weight: RoleWeight.Member
+      }
+    };
+
     const groupId = createGroup.call({
       groupName: 'dtr',
       description: 'Northwestern Design, Technology, and Research class geared toward undergrads working on research. Visit us at http://dtr.northwestern.edu/',
       creatorId: admin._id,
       publicJoin: false,
+      roles: _.values(roles),
       allowGuests: true
     });
     Tasks.update({ userId: admin._id }, { $set: { task: 'everything '} });
@@ -64,7 +85,8 @@ Meteor.startup(() => {
           fullName: 'Haoqi Zhang',
           avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/haoqi-250x250.jpg'
         },
-        task: 'help with Stella'
+        task: 'help with Stella',
+        role: roles.Professor
       },
       {
         email: 'jh@u.northwestern.edu',
@@ -73,7 +95,8 @@ Meteor.startup(() => {
           fullName: 'Josh Hibschmann',
           avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/josh.png'
         },
-        task: 'I need to learn how to feed the baby'
+        task: 'I need to learn how to feed the baby',
+        role: roles.Graduate
       },
       {
         email: 'yk@u.northwestern.edu',
@@ -82,7 +105,8 @@ Meteor.startup(() => {
           fullName: 'Yongsung Kim',
           avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/yongsung.jpg'
         },
-        task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful'
+        task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful',
+        role: roles.Graduate
       },
       {
         email: 'ryanmadden2017@u.northwestern.edu',
@@ -91,8 +115,8 @@ Meteor.startup(() => {
           fullName: 'Ryan Madden',
           avatar: 'https://dl.dropboxusercontent.com/s/axu36bro60lzno2/7409814.jpeg'
         },
-        task: 'Push notifications are broken again'
-        
+        task: 'Push notifications are broken again',
+        role: roles.Undergrad
       },
       {
         email: 'shannonnachreiner2012@u.northwestern.edu',
@@ -101,7 +125,8 @@ Meteor.startup(() => {
           fullName: 'Shannon Nachreiner',
           avatar: 'https://dl.dropboxusercontent.com/s/77bhlenils7y1hc/aBJUQXT.jpg'
         },
-        task: 'By the end with this sprint, I will have completed a very tangible goal.'
+        task: 'By the end with this sprint, I will have completed a very tangible goal.',
+        role: roles.Undergrad
       },
       {
         email: 'sarah@sarahlim.com',
@@ -110,12 +135,13 @@ Meteor.startup(() => {
           fullName: 'Sarah Lim',
           avatar: 'https://dl.dropbox.com/s/gosrrsatr3m7iql/File%20Nov%2023%2C%204%2034%2032%20PM.jpeg'
         },
-        task: 'need 2 to get out of bed and am hungry'
+        task: 'need 2 to get out of bed and am hungry',
+        role: roles.Undergrad
       }
     ];
     userData.forEach((user) => {
       const userId = Accounts.createUser(user);
-      addToGroup.call({ groupId: groupId, userId: userId });
+      addToGroup.call({ groupId: groupId, userId: userId, role: user.role });
       Tasks.update({ userId: userId }, { $set: { task: user.task }});
     });
 
@@ -194,7 +220,7 @@ Meteor.startup(() => {
       publicJoin: false,
       allowGuests: false
     });
-    addToGroup.call({ groupId: otherGroupId, userId: admin._id });
+    addToGroup.call({ groupId: otherGroupId, userId: admin._id, role: DefaultRoles.Member });
 
     const noAccessGroup = createGroup.call({
       groupName: 'noAccessGroup',
@@ -216,15 +242,15 @@ Meteor.startup(() => {
       {
         email: 'kc@kc.com',
         role: {
-          title: 'Pending',
-          weight: 1
+          title: DefaultRoles.Admin.title,
+          weight: RoleWeight.Pending
         }
       },
       {
         email: 'newguy@gmail.com',
         role: {
-          title: 'Pending',
-          weight: 1
+          title: DefaultRoles.Member.title,
+          weight: RoleWeight.Pending
         }
       }
     ];

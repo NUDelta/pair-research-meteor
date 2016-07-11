@@ -55,6 +55,7 @@ Template.groups_create.onCreated(function() {
   };
 
   this.setRoleTitle = (index, title) => {
+    // TODO: check for duplicates
     let roles = this.state.get('roles');
     roles[index].title = title;
     this.state.set('roles', roles);

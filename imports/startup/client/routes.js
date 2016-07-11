@@ -13,6 +13,13 @@ import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
 import '../../ui/pages/demo_pair.js';
+import '../../ui/pages/under-construction.js';
+
+FlowRouter.notFound = {
+  action() {
+    BlazeLayout.render('layout', { main: 'under_construction' });
+  }
+};
 
 FlowRouter.route('/', {
   name: 'App.home',
@@ -43,7 +50,11 @@ FlowRouter.route('/login', {
 FlowRouter.route('/signup', {
   name: 'App.signup',
   action() {
-    BlazeLayout.render('layout', { main: 'signup' });
+    if (Meteor.userId()) {
+      FlowRouter.redirect('/');
+    } else {
+      BlazeLayout.render('layout', { main: 'signup' });
+    }
   }
 });
 

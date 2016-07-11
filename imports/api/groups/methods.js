@@ -4,26 +4,17 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { Groups, DefaultRoles } from './groups.js';
+import {
+  Groups,
+  DefaultRoles,
+  RoleWeight
+} from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
 import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
-
-export const findGroupMembers = new ValidatedMethod({
-  name: 'groups.findMembers',
-  validate: new SimpleSchema({
-    groupId: {
-      type: String,
-      regEx: SimpleSchema.RegEx.Id
-    }
-  }).validator(),
-  run({ groupId }) {
-    return Meteor.users.find({ groups: { $elemMatch: { groupId: groupId } } });
-  }
-});
 
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
@@ -37,14 +28,17 @@ export const addToGroup = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Id
     },
     role: {
-      type: Schema.GroupRole,
-      optional: true
+      type: Schema.GroupRole
     }
   }).validator(),
-  run({ groupId, userId, role = DefaultRoles.Member }) {
+  run({ groupId, userId, role }) {
     // TODO: consider moving some of this to users?
     // TODO: validate users making changes
     const group = Groups.findOne(groupId);
+    // TODO: this needs to go back in hmm...
+    // if (!group.containsRole(role)) {
+    //   throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
+    // }
     const user = Meteor.users.findOne(userId);
     const taskRecord = Tasks.findOne({ userId, groupId });
     const userMembership = { groupId, role, groupName: group.groupName };
@@ -62,7 +56,7 @@ export const addToGroup = new ValidatedMethod({
 });
 
 export const updateMembership = new ValidatedMethod({
-  name: 'groups.change.member',
+  name: 'groups.member.update',
   validate: new SimpleSchema({
     groupId: {
       type: String,
@@ -101,6 +95,32 @@ export const updateMembership = new ValidatedMethod({
   }
 });
 
+export const acceptInvite = new ValidatedMethod({
+  name: 'groups.member.accept',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  run({ groupId }) {
+    if (!this.isSimulation) {
+      const group = Groups.findOne(groupId);
+      const membership = group.getMembership(this.userId);
+      if (!membership) {
+        throw new Meteor.Error('no-invite', 'You\'re not invited to this group.');
+      }
+      const title = membership.role.title;
+      const role = group.getRoleFromTitle(title);
+      if (!role) {
+        // TODO: fix me!!!
+        throw new Meteor.Error('invalid-role', 'The role that you were invited for doesn\'t exist anymore. Please contact the group admin and have them reinvite you.');
+      }
+      updateMembership.call({ groupId, role, userId: this.userId });
+    }
+  }
+});
+
 export const updateGroupInfo =  new ValidatedMethod({
   name: 'groups.info.update',
   validate: new SimpleSchema({
@@ -126,6 +146,30 @@ export const updateGroupInfo =  new ValidatedMethod({
     return Groups.update(groupId, {
       $set: {
         groupName, description, publicJoin, allowGuests
+      }
+    });
+  }
+});
+
+export const updateGroupRoles = new ValidatedMethod({
+  name: 'groups.roles.update',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    },
+    roles: {
+      type: Array
+    },
+    'roles.$': {
+      type: Schema.GroupRole
+    }
+  }).validator(),
+  run({ groupId, roles }) {
+    // TODO: update corresponding user fields + member fields
+    return Groups.update(groupId, {
+      $set: {
+        roles
       }
     });
   }
@@ -163,7 +207,6 @@ export const createGroup = new ValidatedMethod({
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
         creationDate: new Date() });
-    // TODO: this needs patching for the new pair roles
     addToGroup.call({ groupId: groupId, userId: creatorId, role: DefaultRoles.Admin });
     return groupId;
   }
@@ -233,16 +276,16 @@ export const inviteToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ member, groupId }) {
+    const pendingRole = _.clone(member.role);
+    pendingRole.weight = RoleWeight.Pending;
+
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
-        // TODO: this doesn't do anything right now
-        addToGroup.call({ groupId: groupId, userId: user._id, role: DefaultRoles.Pending });
+        addToGroup.call({ groupId: groupId, userId: user._id, role: pendingRole });
       } else {
-        // TODO: this needs changing! doesn't mean anything
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
-        // addToGroup.call({ groupId: groupId, userId: newUserId, role: member.role });
-        addToGroup.call({ groupId: groupId, userId: newUserId, role: DefaultRoles.Pending });
+        addToGroup.call({ groupId: groupId, userId: newUserId, role: pendingRole });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }
