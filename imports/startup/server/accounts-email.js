@@ -4,7 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Groups } from '../../api/groups/groups.js';
 
 Accounts.emailTemplates.siteName = 'Pair Research';
-Accounts.emailTemplates.from = 'Pair Research <no-reply@pair.meteorapp.com';
+Accounts.emailTemplates.from = 'Pair Research <nudelta2015@gmail.com>';
 
 Accounts.emailTemplates.enrollAccount.subject = (user) => {
   const invitedGroup = Groups.findOne(user.groups[0].groupId);
