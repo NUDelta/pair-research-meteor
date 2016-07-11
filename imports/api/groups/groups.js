@@ -4,6 +4,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import { Schema } from '../schema.js';
+import { Tasks } from '../tasks/tasks.js';
+import { Affinities } from '../affinities/affinities.js';
 
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
@@ -25,7 +27,12 @@ class GroupCollection extends Mongo.Collection {
       }, {
         multi: true
       });
+
+      Tasks.remove({ groupId: group._id });
+      Affinities.remove({ groupId: group._id });
     });
+
+
     return super.remove(selector, callback);
   }
 }

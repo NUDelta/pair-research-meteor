@@ -21,6 +21,11 @@ import {
 } from '../../api/groups/methods.js';
 
 Meteor.startup(() => {
+
+  if (Meteor.isProduction) {
+    return;
+  }
+
   const admin = {
     username: 'kc',
     email: 'kc@kc.com',
