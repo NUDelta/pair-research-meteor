@@ -17,12 +17,6 @@ Template.pair_enter_task.onCreated(function() {
 Template.pair_enter_task.events({
   'submit form'(event, instance) {
     event.preventDefault();
-    if (DEV_OPTIONS.AUTOJOIN) {
-      addToGroup.call({
-        groupId: instance.state.get('groupId'),
-        userId: Meteor.userId()
-      });
-    }
     updateTask.call({
       name: Meteor.user().profile.fullName,
       userId: Meteor.userId(),

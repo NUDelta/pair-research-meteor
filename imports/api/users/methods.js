@@ -3,6 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
+import { Schema } from '../schema.js';
 import { Groups } from '../groups/groups.js';
 
 export const findEmailFromToken = new ValidatedMethod({
@@ -24,14 +25,23 @@ export const findEmailFromToken = new ValidatedMethod({
   }
 });
 
-export const setFullName = new ValidatedMethod({
+export const setProfile = new ValidatedMethod({
   name: 'users.update.name',
   validate: new SimpleSchema({
-    fullName: {
-      type: String
+    profile: {
+      type: Object
+    },
+    'profile.fullName': {
+      type: String,
+      optional: true
+    },
+    'profile.avatar': {
+      type: String,
+      regEx: SimpleSchema.RegEx.Url,
+      optional: true
     }
   }).validator(),
-  run({ fullName }) {
+  run({ profile }) {
     // TODO: might want structural changes...
     const user =  Meteor.users.findOne(this.userId);
     const groupIds = _.map(user.groups, group => group.groupId);
@@ -41,9 +51,9 @@ export const setFullName = new ValidatedMethod({
       }
     }).forEach((group) => {
       const index = group.getMembershipIndex(this.userId);
-      group.members[index].fullName = fullName;
+      group.members[index].fullName = profile.fullName;
       Groups.update(group._id, { $set: { members: group.members } });
     });
-    return Meteor.users.update(this.userId, { $set: { 'profile.fullName': fullName} });
+    return Meteor.users.update(this.userId, { $set: { profile } });
   }
 });

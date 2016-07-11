@@ -6,9 +6,9 @@ import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { Groups, DefaultRoles } from '../../api/groups/groups.js';
+import { Groups } from '../../api/groups/groups.js';
 import { acceptInvite } from '../../api/groups/methods.js';
-import { setFullName } from '../../api/users/methods.js';
+import { setProfile } from '../../api/users/methods.js';
 import { Schema } from '../../api/schema.js';
 
 Template.signup.onCreated(function() {
@@ -87,8 +87,13 @@ Template.signup.events({
         if (err) {
           alert(err);
         } else {
-          setFullName.call({ fullName: user.profile.fullName });
-          instance.state.increment('step');
+          setProfile.call({ profile: user.profile }, (err) => {
+            if (err) {
+              alert(err);
+            } else {
+              instance.state.increment('step');
+            }
+          });
         }
       });
     } else {

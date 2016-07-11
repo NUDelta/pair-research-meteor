@@ -59,11 +59,9 @@ Schema.User = new SimpleSchema({
   },
   'groups.$': {
     type: Schema.UserGroupMembership,
-    regEx: SimpleSchema.RegEx.Id
   },
   profile: {
-    type: Schema.UserProfile,
-    optional: true
+    type: Schema.UserProfile
   },
   services: {
     type: Object,
