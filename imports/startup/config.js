@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 
 export const DEV_OPTIONS = {
-  CLEAN_DB: 1,
-  AUTOJOIN: 1,
-  LATENCY: 2000
+  CLEAN_DB: 0,
+  AUTOJOIN: 0,
+  LATENCY: 0
 };
 
 
