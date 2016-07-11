@@ -190,8 +190,6 @@ Groups.helpers({
   },
   containsRole(role) {
     check(role, Schema.GroupRole);
-    console.log(this.roles);
-    console.log(role);
     return _.some(this.roles, groupRole => groupRole.weight === role.weight && groupRole.title == role.title);
   },
   isGroupAdmin(userId) {

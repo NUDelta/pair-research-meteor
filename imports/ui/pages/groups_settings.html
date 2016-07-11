@@ -54,7 +54,16 @@
       <section class="row" id="groups_settings_roles">
         <div class="col s10">
           <h3 class="header">{{group.groupName}} &mdash; Roles</h3>
-          <h5 class="caption">Coming soon!</h5>
+          <p class="info">
+            Editing this will be coming soon.
+          </p>
+          <ul class="collection">
+            {{#each role in group.roles}}
+              <li class="collection-item">
+                {{role.title}}
+              </li>
+            {{/each}}
+          </ul>
         </div>
       </section>
     {{/if}}
@@ -62,6 +71,9 @@
       <section class="row" id="groups_settings_members">
         <div class="col s10">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
+          <p class="info">
+            Changing roles doesn't work right now.
+          </p>
           <form id="groups_settings_members_invite">
             <div class="input-field">
               <input name="addMember" id="addMember" type="email">

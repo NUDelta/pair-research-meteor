@@ -7,7 +7,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { DefaultRoles } from '../../api/groups/groups.js';
+import { DefaultRoles, RoleWeight } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';
 
 const defaultRoles = [ DefaultRoles.Admin, DefaultRoles.Member ];
@@ -98,7 +98,7 @@ Template.groups_create.helpers({
   isAdmin(index) {
     const instance = Template.instance();
     const roles = instance.state.get('roles');
-    if (roles[index].weight === DefaultRoles.Admin.weight) {
+    if (roles[index].weight === RoleWeight.Admin) {
       return 'checked';
     } else {
       return '';
@@ -134,7 +134,7 @@ Template.groups_create.events({
 
   // editing roles
   'click .roles .disabled'(event, instance) {
-    instance.state.push('roles', { title: 'New', weight: DefaultRoles.Member.weight });
+    instance.state.push('roles', { title: 'New', weight: RoleWeight.Member });
   },
   'change .roles [type=checkbox]'(event, instance) {
     const index = $(event.target).data('index');

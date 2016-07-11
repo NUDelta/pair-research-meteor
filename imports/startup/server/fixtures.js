@@ -241,17 +241,15 @@ Meteor.startup(() => {
     const invitees = [
       {
         email: 'kc@kc.com',
-        role: {
-          title: DefaultRoles.Admin.title,
-          weight: RoleWeight.Pending
-        }
+        role: DefaultRoles.Admin
+      },
+      {
+        email: 'newadmin@gmail.com',
+        role: DefaultRoles.Admin
       },
       {
         email: 'newguy@gmail.com',
-        role: {
-          title: DefaultRoles.Member.title,
-          weight: RoleWeight.Pending
-        }
+        role: DefaultRoles.Member
       }
     ];
     invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));

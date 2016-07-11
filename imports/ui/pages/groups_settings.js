@@ -98,7 +98,7 @@ Template.groups_settings.events({
       groupId: instance.state.get('groupId'),
       member: {
         email: event.currentTarget.addMember.value,
-        role: DefaultRoles.Pending
+        role: DefaultRoles.Member // FIX ME
       }
     });
   }

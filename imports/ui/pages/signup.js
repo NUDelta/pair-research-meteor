@@ -7,7 +7,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Groups, DefaultRoles } from '../../api/groups/groups.js';
-import { updateMembership } from '../../api/groups/methods.js';
+import { acceptInvite } from '../../api/groups/methods.js';
 import { setFullName } from '../../api/users/methods.js';
 import { Schema } from '../../api/schema.js';
 
@@ -107,10 +107,8 @@ Template.signup.events({
     // wouldn't work for created or anything added to that list
 
     Groups.find().forEach((group) => {
-      updateMembership.call({
-        groupId: group._id,
-        userId: Meteor.userId(),
-        role: DefaultRoles.Member
+      acceptInvite.call({
+        groupId: group._id
       }, (err) => {
         if (err) {
           alert(err);

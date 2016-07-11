@@ -20,3 +20,7 @@ body {
 .caption {
   font-weight: 300;
 }
+
+.info {
+  @extend .grey-text;
+}
