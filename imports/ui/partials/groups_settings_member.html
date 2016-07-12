@@ -7,9 +7,11 @@
       {{/if}}
     </span>
     <!-- TODO: this doesnt work yet -->
-    <select name="{{member.fullName}}_role">
+    <select name="{{member.fullName}}_role" data-user="{{member.userId}}">
       {{#each role in roles}}
-        <option value="{{role.title}}" selected="{{$eq member.role.title role.title}}">{{role.title}}</option>
+        <option value="{{role.title}}" data-weight="{{role.weight}}" selected="{{$eq member.role.title role.title}}">
+          {{role.title}}
+        </option>
       {{/each}}
     </select>
     <a href="" class="secondary-content">

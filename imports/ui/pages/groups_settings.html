@@ -71,21 +71,19 @@
       <section class="row" id="groups_settings_members">
         <div class="col s10">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
-          <p class="info">
-            Changing roles doesn't work right now.
-          </p>
           <form id="groups_settings_members_invite">
             <div class="input-field">
               <input name="addMember" id="addMember" type="email">
               <label for="addMember">Invite user (email) to group</label>
             </div>
-            <button type="submit" id="enter" class="waves-effect-waves-light btn">Invite</button>
+            <button type="submit" id="enter" class="waves-effect waves-light btn">Invite</button>
           </form>
           <ul class="collection member-select">
             {{#each member in members}}
               {{> group_settings_member (memberArgs member)}}
             {{/each}}
           </ul>
+          <button type="button" id="save-roles" class="pair-form-button">Save Role Changes</button>
         </div>
       </section>
     {{/if}}

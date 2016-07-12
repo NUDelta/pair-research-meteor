@@ -35,11 +35,16 @@ export const addToGroup = new ValidatedMethod({
     // TODO: consider moving some of this to users?
     // TODO: validate users making changes
     const group = Groups.findOne(groupId);
+    const user = Meteor.users.findOne(userId);
+
     // TODO: this needs to go back in hmm...
     // if (!group.containsRole(role)) {
     //   throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
     // }
-    const user = Meteor.users.findOne(userId);
+    if (group.containsMember(user._id)) {
+      throw new Meteor.Error('invalid-user', 'The specified user can\'t be invited, since he/she is already in the group.');
+    }
+
     const taskRecord = Tasks.findOne({ userId, groupId });
     const userMembership = { groupId, role, groupName: group.groupName };
     const groupMembership = { fullName: user.profile.fullName, userId: userId, role };
@@ -80,7 +85,7 @@ export const updateMembership = new ValidatedMethod({
       const userMembershipIndex = _.findIndex(user.groups, group => group.groupId == groupId);
 
       if (groupMembershipIndex === -1 || userMembershipIndex === -1) {
-        throw new Meteor.Error('no-matching-membership', 'The user isn\'t in the specified group.');
+        throw new Meteor.Error('invalid-user', 'The user isn\'t in the specified group.');
       }
       if (!_.some(group.roles, role)) {
         throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
@@ -207,7 +212,16 @@ export const createGroup = new ValidatedMethod({
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
         creationDate: new Date() });
-    addToGroup.call({ groupId: groupId, userId: creatorId, role: DefaultRoles.Admin });
+    if (roles) {
+      // HACK: need some ability to select own role
+      const role = {
+        title: roles[0].title,
+        weight: RoleWeight.Admin
+      };
+      addToGroup.call({ groupId, userId: creatorId, role });
+    } else {
+      addToGroup.call({ groupId, userId: creatorId, role: DefaultRoles.Admin });
+    }
     return groupId;
   }
 });

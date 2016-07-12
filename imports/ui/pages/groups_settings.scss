@@ -35,10 +35,14 @@
   }
 
   #groups_settings_members {
+    .col.s10 {
+      padding-bottom: 3em;
+    }
     form {
       .input-field {
         display: inline-block;
         width: calc(100% - 120px);
+        margin-top: 0;
       }
       button {
         display: inline-block;

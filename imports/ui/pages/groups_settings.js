@@ -4,11 +4,13 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { _ } from 'meteor/stevezhu:lodash';
 
-import { Groups, DefaultRoles } from '../../api/groups/groups.js';
+import { Groups } from '../../api/groups/groups.js';
 import {
   inviteToGroup,
-  updateGroupInfo
+  updateGroupInfo,
+  updateMembership
 } from '../../api/groups/methods.js';
 
 import '../partials/groups_settings_member.js';
@@ -22,7 +24,8 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'info'
+    section: 'info',
+    roleChanges: {}
   });
 
   this.autorun(() => {
@@ -94,13 +97,45 @@ Template.groups_settings.events({
   },
   'submit #groups_settings_members_invite'(event, instance) {
     event.preventDefault();
+    const roles = instance.state.get('group').roles;
     inviteToGroup.call({
       groupId: instance.state.get('groupId'),
       member: {
         email: event.currentTarget.addMember.value,
-        role: DefaultRoles.Member // FIX ME
+        role: roles[0] // HACK: need to be able to specify role
       }
     });
+  },
+  'change .member-select select'(event, instance) {
+    const $target = $(event.target);
+    const $selected = $target.find('option:selected');
+    const newRole = {
+      title: $selected.val(),
+      weight: $selected.data('weight')
+    };
+    instance.state.setKey('roleChanges', $target.data('user'), newRole);
+  },
+  'click #save-roles'(event, instance) {
+    let success = true;
+    let error;
+    const roleChanges = instance.state.get('roleChanges');
+    console.log(roleChanges);
+    _.forOwn(roleChanges, (role, userId) => {
+      updateMembership.call({ role, userId, groupId: instance.state.get('groupId') }, (err) => {
+        if (err) {
+          success = false;
+          error = err;
+        }
+      });
+    });
+
+    // TODO: improve this error handling / confirmation
+    if (!success) {
+      alert(error);
+    } else {
+      alert('Update successful!');
+    }
   }
+
 });
 
