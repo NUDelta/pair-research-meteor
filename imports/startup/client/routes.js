@@ -24,8 +24,8 @@ FlowRouter.notFound = {
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    if (Meteor.userId()) {
-      // TODO: or render?
+    // TODO: this isn't recommended
+    if (Meteor.userId() || Meteor.loggingIn()) {
       FlowRouter.redirect('/groups');
     } else {
       BlazeLayout.render('home');
@@ -50,7 +50,7 @@ FlowRouter.route('/login', {
 FlowRouter.route('/signup', {
   name: 'App.signup',
   action() {
-    if (Meteor.userId()) {
+    if (Meteor.userId() || Meteor.loggingIn()) {
       FlowRouter.redirect('/');
     } else {
       BlazeLayout.render('layout', { main: 'signup' });
