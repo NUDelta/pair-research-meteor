@@ -1,26 +1,53 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'meteor/stevezhu:lodash';
 
+import { Affinities } from '../affinities/affinities.js';
+import { AffinitiesHistory } from '../affinities-history/affinities-history.js';
 import { Groups } from '../groups/groups.js';
-import { Pairs } from '../pairs/pairs.js';
+import { PairsHistory } from '../pairs-history/pairs-history.js';
+
 import { Schema } from '../schema.js';
+import { log } from '../logs.js';
 
 class PairingCollection extends Mongo.Collection {
   insert(pairing, callback) {
     pairing.timestamp = new Date();
     const _id = super.insert(pairing, callback);
+    
+    Groups.update(pairing.groupId, { $set: { activePairing: _id }});
+    this.saveHistory(_id, pairing);
+    return _id;
+  }
+  
+  saveHistory(id, pairing) {
     pairing.pairings.forEach((pair) => {
-      Pairs.insert({
+      PairsHistory.insert({
         groupId: pairing.groupId,
-        pairingId: _id,
+        pairingId: id,
         firstUserId: pair.firstUserId,
         firstUserName: pair.firstUserName,
         secondUserId: pair.secondUserId,
         secondUserName: pair.secondUserName
       });
     });
-    Groups.update(pairing.groupId, { $set: { activePairing: _id }});
-    return _id;
+
+    const userIds = _.compact(_.concat(
+      _.map(pairing.pairings, pair => pair.firstUserId),
+      _.map(pairing.pairings, pair => pair.secondUserId)
+    ));
+
+    log.debug(userIds);
+
+    Affinities.find({
+      groupId: pairing.groupId,
+      helperId: { $in: userIds },
+      helpeeId: { $in: userIds }
+    }).forEach((affinity) => {
+      affinity.pairingId = id;
+      delete affinity._id;
+      AffinitiesHistory.insert(affinity);
+    });
   }
 }
 

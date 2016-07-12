@@ -5,13 +5,13 @@ import { Schema } from '../schema.js';
 
 // For now, expecting this collection to be purely for analytic purposes.
 
-class PairsCollection extends Mongo.Collection {
+class PairsHistoryCollection extends Mongo.Collection {
 
 }
 
-export const Pairs = new PairsCollection('pairs');
+export const PairsHistory = new PairsHistoryCollection('pairs_history');
 
-Schema.Pair = new SimpleSchema({
+Schema.PairHistory = new SimpleSchema({
   groupId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
@@ -38,4 +38,4 @@ Schema.Pair = new SimpleSchema({
   }
 });
 
-Pairs.attachSchema(Schema.Pair);
+PairsHistory.attachSchema(Schema.PairHistory);

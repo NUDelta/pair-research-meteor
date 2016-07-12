@@ -10,6 +10,8 @@ import {
 } from '../../api/groups/groups.js';
 import { Pairings } from '../../api/pairings/pairings.js';
 import { Tasks } from '../../api/tasks/tasks.js';
+import { PairsHistory } from '../../api/pairs-history/pairs-history.js';
+import { AffinitiesHistory } from '../../api/affinities-history/affinities-history.js';
 
 import { log } from './../../api/logs.js';
 import { DEV_OPTIONS } from '../config.js';
@@ -45,6 +47,8 @@ Meteor.startup(() => {
     Tasks.remove({});
     Affinities.remove({});
     Pairings.remove({});
+    PairsHistory.remove({});
+    AffinitiesHistory.remove({});
   }
 
   if (Meteor.users.find().count() === 0) {
