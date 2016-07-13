@@ -11,12 +11,12 @@ import {
 Template.groups_home_invite.events({
   'click a[href=#accept]'(event, instance) {
     acceptInvite.call({
-      groupId: instance.data.group.groupId
+      groupId: instance.data.group._id,
     });
   },
   'click a[href=#reject]'(event, instance) {
     removeFromGroup.call({
-      groupId: instance.data.group.groupId,
+      groupId: instance.data.group._id,
       userId: Meteor.userId()
     });
   }

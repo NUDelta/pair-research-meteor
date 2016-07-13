@@ -3,20 +3,33 @@ import './groups_home.html';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { _ } from 'meteor/stevezhu:lodash';
+
+import { Groups, RoleWeight } from '../../api/groups/groups.js';
 
 import '../partials/groups_home_invite.js';
 
 Template.groups_home.onCreated(function() {
   const userHandle = this.subscribe('user.groups');
+  this.subscribe('groups.user');
 
   this.state = new ReactiveDict();
   this.state.setDefault({
-    groups: []
+    groups: [],
+    pendingGroups: []
   });
 
   this.autorun(() => {
     if (userHandle.ready()) {
-      this.state.set('groups', Meteor.user().groups);
+      const allGroups = Meteor.user().groups;
+      this.state.set('groups', _.map(
+        _.filter(allGroups, group => group.role.weight !== RoleWeight.Pending),
+        group => group.groupId
+      ));
+      this.state.set('pendingGroups', _.map(
+        _.filter(allGroups, group => group.role.weight === RoleWeight.Pending),
+        group => group.groupId
+      ));
     }
   });
 
@@ -25,11 +38,15 @@ Template.groups_home.onCreated(function() {
 Template.groups_home.helpers({
   groups() {
     const instance = Template.instance();
-    return _.filter(instance.state.get('groups'), group => group.role.weight !== 1);
+    return Groups.find({
+      _id: { $in: instance.state.get('groups') }
+    });
   },
   pendingGroups() {
     const instance = Template.instance();
-    return _.filter(instance.state.get('groups'), group => group.role.weight === 1);
+    return Groups.find({
+      _id: { $in: instance.state.get('pendingGroups') }
+    });
   },
   inviteArgs(group) {
     return {

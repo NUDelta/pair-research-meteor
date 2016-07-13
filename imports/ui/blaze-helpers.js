@@ -17,3 +17,5 @@ Template.registerHelper('$gt', (a, b) => {
 Template.registerHelper('$stringify', (obj) => {
   return JSON.stringify(obj);
 });
+
+Template.registerHelper('$len', arr => arr.length);

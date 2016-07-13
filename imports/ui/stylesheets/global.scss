@@ -90,3 +90,28 @@ input[type=text].browser:focus {
   border: 1px solid rgb(224, 224, 224);
   box-shadow: none;
 }
+
+// mimics avatar, but without the image padding
+li.collection-item.multi-line {
+  position: relative;
+
+  .title {
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0;
+    @extend .grey-text;
+  }
+
+  .secondary-content {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+  .tertiary-content {
+    @extend.secondary-content;
+    right: 48px;
+  }
+}
+
