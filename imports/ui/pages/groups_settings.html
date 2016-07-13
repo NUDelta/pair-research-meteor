@@ -22,7 +22,7 @@
     </ul>
     {{#if (isActive 'info')}}
       <section class="row" id="groups_settings_info">
-        <div class="col s10">
+        <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Info</h3>
           <form id="groups_settings_members_info">
             <!-- TODO: this shares a lot with groups_create,  do something about that? -->
@@ -52,7 +52,7 @@
     {{/if}}
     {{#if (isActive 'roles')}}
       <section class="row" id="groups_settings_roles">
-        <div class="col s10">
+        <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Roles</h3>
           <p class="info">
             Editing this will be coming soon.
@@ -69,7 +69,7 @@
     {{/if}}
     {{#if (isActive 'members')}}
       <section class="row" id="groups_settings_members">
-        <div class="col s10">
+        <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
           <form id="groups_settings_members_invite">
             <div class="input-field">
