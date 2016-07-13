@@ -18,13 +18,14 @@ import '../partials/groups_settings_member.js';
 Template.groups_settings.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
   const groupHandle = this.subscribe('group.byId', groupId);
+  this.subscribe('users.inGroup', groupId);
 
   this.state = new ReactiveDict();
   this.state.setDefault({
     groupId: groupId,
     group: {},
     members: [],
-    section: 'info',
+    section: 'members',
     roleChanges: {}
   });
 
@@ -52,17 +53,17 @@ Template.groups_settings.helpers({
     }
   },
   members() {
-    // TODO: worry about filter options / sorting options
-    // for now, just leave
-    // currentUser is always here
     const instance = Template.instance();
     return instance.state.get('members');
   },
   memberArgs(member) {
     const instance = Template.instance();
     const group = instance.state.get('group');
+    const user = Meteor.users.findOne(member.userId);
+
     return {
       member: member,
+      avatar: user && user.profile.avatar,
       groupId: instance.state.get('groupId'),
       roles: group && group.roles
     };

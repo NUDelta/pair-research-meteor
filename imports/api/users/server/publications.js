@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/stevezhu:lodash';
 
+import { Groups } from '../../groups/groups.js';
 import { ADMIN_ID } from '../../../startup/config.js'
 
 Meteor.publish('user.groups', function() {
@@ -14,16 +16,13 @@ Meteor.publish('users.inGroup', function(groupId) {
   if (!this.userId) {
     this.ready();
   } else {
-    return Meteor.users.find({
-      groups: {
-        $elemMatch: {
-          groupId: groupId
-        }
-      }
-    }, {
-      fields: { profile: 1, groups: 1 } // TODO: exposing all groups is not desirable
-    });
-    // TODO: change this to a publication by retrieving user ids from group
+    const group = Groups.findOne(groupId);
+    if (!group) {
+      this.ready();
+    } else {
+      const memberIds = _.map(group.members, member => member.userId);
+      return Meteor.users.find({ _id: { $in: memberIds } }, { fields: { profile: 1 } });
+    }
   }
 });
 

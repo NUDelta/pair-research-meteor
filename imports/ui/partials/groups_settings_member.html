@@ -1,6 +1,7 @@
 <template name="group_settings_member">
-  <li class="collection-item {{pending.class}} {{admin.class}} member-select">
-    <span class="name">
+  <li class="collection-item {{pending.class}} {{admin.class}} member-select avatar">
+    <img src="{{avatar}}" alt="{{member.fullName}}" class="circle">
+    <span class="name title">
       {{member.fullName}}
       {{#if pending.isPending}}
         (pending)
