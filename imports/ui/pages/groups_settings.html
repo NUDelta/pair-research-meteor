@@ -4,18 +4,18 @@
       <li>
         <a href="#groups" class="bold">Group Settings</a>
       </li>
-      <li>
-        <a href="#info" class="waves-effect">
+      <li class="{{$if (isActive 'info') 'active'}}">
+        <a href="#info" class="waves-effect waves-teal">
           Info
         </a>
       </li>
-      <li>
-        <a href="#roles" class="waves-effect">
+      <li class="{{$if (isActive 'roles') 'active'}}">
+        <a href="#roles" class="waves-effect waves-teal">
           Roles
         </a>
       </li>
-      <li>
-        <a href="#members" class="waves-effect">
+      <li class="{{$if (isActive 'members') 'active'}}">
+        <a href="#members" class="waves-effect waves-teal">
           Members
         </a>
       </li>

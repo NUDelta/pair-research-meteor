@@ -14,8 +14,16 @@ Template.registerHelper('$gt', (a, b) => {
   return a > b;
 });
 
+Template.registerHelper('$if', (a, b) => {
+  if (a) {
+    return b;
+  }
+});
+
 Template.registerHelper('$stringify', (obj) => {
   return JSON.stringify(obj);
 });
 
 Template.registerHelper('$len', arr => arr.length);
+
+
