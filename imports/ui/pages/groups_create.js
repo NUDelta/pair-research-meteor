@@ -26,25 +26,43 @@ Template.groups_create.onCreated(function() {
     });
   };
 
-  this.addMember = () => {
+  const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  this.addMembers = () => {
     const email = document.getElementById('member');
-    const $email = $(email);
-    const exists = _.some(this.state.get('members'), member => member.email == email.value);
+
+    const emails = _.compact(_.map(email.value.split(','), email => email.replace(/ /g, '')));
+    const invalid = _.filter(emails, email => !re.test(email));
+    const valid = _.filter(emails, email => re.test(email));
+    if (invalid.length) {
+      alert(`[${ invalid }] is/are not email addresses and will not be added.`);
+    }
+    let duplicates = [];
+    valid.forEach((email) => {
+      const res = this.addMember(email);
+      if (res) {
+        duplicates.push(res);
+      }
+    });
+    if (duplicates.length) {
+      alert(`[${ duplicates }] is/are duplicates and not added.`);
+    }
+    email.value = '';
+  };
+
+  this.addMember = (email) => {
+    const exists = _.some(this.state.get('members'), member => member.email == email);
     const roles = this.state.get('roles');
 
-    if (email.checkValidity() && !exists) {
-      $email.removeClass('invalid');
+    if (!exists) {
       // TODO: replace with selected role from above
       const member = {
-        email: email.value,
+        email: email,
         role: roles[1].title
       };
       this.state.push('members', member);
-      email.value = '';
-
       this.updateSelect();
     } else {
-      $email.addClass('invalid');
+      return email;
     }
   };
 
@@ -120,11 +138,11 @@ Template.groups_create.events({
     if (event.which === 13) {
       event.preventDefault();
       event.stopPropagation();
-      instance.addMember();
+      instance.addMembers();
     }
   },
   'click #addMember'(event, instance) {
-    instance.addMember();
+    instance.addMembers();
   },
   'click .secondary-content'(event, instance) {
     event.preventDefault();
