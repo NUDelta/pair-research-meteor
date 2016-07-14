@@ -115,3 +115,10 @@ li.collection-item.multi-line {
   }
 }
 
+.collapsible {
+  .collapsible-body {
+    li.active {
+      @extend .teal;
+    }
+  }
+}

@@ -10,6 +10,10 @@
     height: calc(100% - 64px);
     overflow: hidden;
 
+    li .title {
+      @extend .bold;
+      padding: 0 30px;
+    }
   }
 
   ul.collection {
@@ -21,10 +25,6 @@
     height: 100%;
     overflow: auto;
     margin-bottom: 0;
-
-    .content {
-      height: 100%;
-    }
 
     h3.header {
       margin-bottom: 1em;
