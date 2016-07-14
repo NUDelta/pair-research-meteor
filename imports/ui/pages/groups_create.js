@@ -134,21 +134,6 @@ Template.groups_create.events({
       event.preventDefault();
     }
   },
-  'keypress input[name=member]'(event, instance) {
-    if (event.which === 13) {
-      event.preventDefault();
-      event.stopPropagation();
-      instance.addMembers();
-    }
-  },
-  'click #addMember'(event, instance) {
-    instance.addMembers();
-  },
-  'click .secondary-content'(event, instance) {
-    event.preventDefault();
-    const index = $(event.currentTarget).data('index');
-    instance.state.remove('members', index);
-  },
 
   // editing roles
   'click .roles .disabled'(event, instance) {
@@ -163,7 +148,7 @@ Template.groups_create.events({
     const index = $(event.currentTarget).data('index');
     instance.removeRole(index);
   },
-  'click .roles .role-left .material-icons'(event, instance) {
+  'click .roles .role-left [data-index]:not(input)'(event, instance) {
     const $target = $(event.target);
     const index = $target.data('index');
     if (instance.isEditing(index)) {
@@ -184,12 +169,31 @@ Template.groups_create.events({
       }
     }
   },
+
+  // editing members
+  'keypress input[name=member]'(event, instance) {
+    if (event.which === 13) {
+      event.preventDefault();
+      event.stopPropagation();
+      instance.addMembers();
+    }
+  },
+  'click #addMember'(event, instance) {
+    instance.addMembers();
+  },
+  'click .secondary-content'(event, instance) {
+    event.preventDefault();
+    const index = $(event.currentTarget).data('index');
+    instance.state.remove('members', index);
+  },
+
   'change select'(event, instance) {
     const index = $(event.target).data('index');
     const roleTitle = event.target.value;
     instance.setMemberRole(index, roleTitle);
   },
-  
+
+  // submission
   'submit #group'(event, instance) {
     event.preventDefault();
 
