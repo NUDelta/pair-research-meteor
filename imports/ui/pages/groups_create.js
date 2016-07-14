@@ -137,7 +137,12 @@ Template.groups_create.events({
 
   // editing roles
   'click .roles .disabled'(event, instance) {
-    instance.state.push('roles', { title: 'New', weight: RoleWeight.Member });
+    const roles = instance.state.get('roles');
+    instance.state.push('roles', { title: '', weight: RoleWeight.Member });
+    instance.toggleRoleEditing(roles.length);
+    Tracker.afterFlush(() => {
+      $(`input[name=${ roles.length }-role-name]`).focus();
+    });
   },
   'change .roles [type=checkbox]'(event, instance) {
     const index = $(event.target).data('index');

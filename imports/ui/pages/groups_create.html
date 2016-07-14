@@ -36,7 +36,8 @@
                 <span class="role-left">
                   {{#if (isEditing @index)}}
                     <i data-index="{{@index}}" class="material-icons">done</i>
-                    <input data-index="{{@index}}" name="{{@index}}-role-name" type="text" class="browser" value="{{role.title}}">
+                    <input data-index="{{@index}}" name="{{@index}}-role-name" type="text" class="browser" value="{{role.title}}"
+                        placeholder="Role title">
                   {{else}}
                     <i data-index="{{@index}}" class="material-icons">edit</i>
                     <span data-index="{{@index}}">{{ role.title }}</span>
