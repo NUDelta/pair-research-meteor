@@ -3,7 +3,6 @@
   display: none;
 }
 
-
 .pair-form {
   .input-field {
     overflow: hidden;
@@ -24,8 +23,15 @@
   }
 }
 
-// materialize overrides
+.input-field.valign-wrapper {
+  justify-content: space-between;
 
+  input {
+    width: 80%;
+  }
+}
+
+// materialize overrides
 // dropdown
 .member-select {
   overflow: visible;

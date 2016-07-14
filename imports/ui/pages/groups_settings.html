@@ -86,11 +86,11 @@
         <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
           <form id="groups_settings_members_invite">
-            <div class="input-field">
-              <input name="addMember" id="addMember" type="email">
+            <div class="input-field valign-wrapper">
               <label for="addMember">Invite user (email) to group</label>
+              <input name="addMember" id="addMember" type="email">
+              <button type="submit" id="enter" class="waves-effect waves-light btn valign">Invite</button>
             </div>
-            <button type="submit" id="enter" class="waves-effect waves-light btn">Invite</button>
           </form>
           <ul class="collection member-select">
             {{#each member in members}}

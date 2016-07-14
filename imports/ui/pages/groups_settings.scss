@@ -41,16 +41,6 @@
     .col.s10 {
       padding-bottom: 3em;
     }
-    form {
-      .input-field {
-        display: inline-block;
-        width: calc(100% - 120px);
-        margin-top: 0;
-      }
-      button {
-        display: inline-block;
-      }
-    }
     // override materialize
     .collection-item {
       min-height: 0;
