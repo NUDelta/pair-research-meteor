@@ -24,11 +24,13 @@
                 <input id="password" name="password" type="password" class="validate" required>
               </div>
 
-              <div class="input-field">
-                <label for="avatar">Link to a square image</label>
-                <input id="avatar" name="avatar" type="url" class="validate" required>
+              <div class="avatar-input">
+                <img src="{{avatar}}">
+                <div class="input-field">
+                  <label for="avatar">Link to a square image</label>
+                  <input id="avatar" name="avatar" type="url" class="validate" required>
+                </div>
               </div>
-              <img src="{{avatar}}">
 
               <button class="pair-form-button">Sign up</button>
             </form>
@@ -62,7 +64,8 @@
                 </label>
                 <i class="material-icons">close</i>
               </div>
-              <button class="pair-form-button">Continue</button>
+              <button class="pair-form-button" {{$if ($eq groups.count 0) 'disabled'}}>Continue</button>
+              <button class="secondary-form-button">Create New Group</button>
             </form>
           </div>
         {{/if}}

@@ -2,6 +2,7 @@ import './groups_home.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
 
@@ -22,14 +23,18 @@ Template.groups_home.onCreated(function() {
   this.autorun(() => {
     if (userHandle.ready()) {
       const allGroups = Meteor.user().groups;
-      this.state.set('groups', _.map(
-        _.filter(allGroups, group => group.role.weight !== RoleWeight.Pending),
-        group => group.groupId
-      ));
-      this.state.set('pendingGroups', _.map(
-        _.filter(allGroups, group => group.role.weight === RoleWeight.Pending),
-        group => group.groupId
-      ));
+      if (allGroups.length === 0) {
+        FlowRouter.go('/signup');
+      } else {
+        this.state.set('groups', _.map(
+          _.filter(allGroups, group => group.role.weight !== RoleWeight.Pending),
+          group => group.groupId
+        ));
+        this.state.set('pendingGroups', _.map(
+          _.filter(allGroups, group => group.role.weight === RoleWeight.Pending),
+          group => group.groupId
+        ));
+      }
     }
   });
 

@@ -43,18 +43,18 @@ FlowRouter.route('/pair/:groupId', {
 FlowRouter.route('/login', {
   name: 'App.login',
   action() {
-    BlazeLayout.render('login');
+    if (Meteor.userId() || Meteor.loggingIn()) {
+      FlowRouter.redirect('/');
+    } else {
+      BlazeLayout.render('login');
+    }
   }
 });
 
 FlowRouter.route('/signup', {
   name: 'App.signup',
   action() {
-    if (Meteor.userId() || Meteor.loggingIn()) {
-      FlowRouter.redirect('/');
-    } else {
-      BlazeLayout.render('layout', { main: 'signup' });
-    }
+    BlazeLayout.render('layout', { main: 'signup' });
   }
 });
 

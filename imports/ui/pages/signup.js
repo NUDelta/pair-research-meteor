@@ -22,6 +22,10 @@ Template.signup.onCreated(function() {
     token: FlowRouter.getQueryParam('token'),
     avatar: 'http://orig02.deviantart.net/cd44/f/2016/152/2/d/placeholder_3_by_sketchymouse-da4ny84.png'
   });
+
+  if (Meteor.userId() || Meteor.loggingIn()) {
+    this.state.set('step', 2);
+  }
 });
 
 Template.signup.onRendered(function() {

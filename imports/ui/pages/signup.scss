@@ -8,17 +8,38 @@
     right: 0;
   }
   form {
+    position: relative;
     margin-top: 2em;
-    width: 80%;
+    margin-bottom: 2em;
 
     button {
       margin-top: 2em;
+    }
+
+    .input-field {
+      width: calc(100% - 225px);
+    }
+
+    .avatar-input {
+      position: absolute;
+      top: 2.5rem;
+      right: 0;
+
+      .input-field {
+        width: 100%;
+      }
     }
 
     img {
       width: 150px;
       height: 150px;
       display: block;
+    }
+  }
+
+  .pair-form {
+    button {
+      margin-right: 1em;
     }
   }
 }

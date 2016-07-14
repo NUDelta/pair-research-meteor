@@ -220,7 +220,7 @@ Template.groups_create.events({
       if (err) {
         alert(err)
       } else {
-        FlowRouter.go('/pair/:groupId', { groupId: groupId });
+        FlowRouter.go('/groups', { groupId: groupId });
       }
     });
   }

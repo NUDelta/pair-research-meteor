@@ -26,9 +26,11 @@
 
           <h5 class="teal-text">Roles</h5>
           <p class="info">
-            You can give your group members different titles and roles with different administrative
-            permissions here. In the future, you will also be able to add or take away preference for
-            pairings between two roles in your group.
+            You can give your group members different titles here. In the future, you will also be able to add or take
+            away preference for pairings between two roles in your group.
+          </p>
+          <p class="info">
+            We recommend singular tense, not plural.
           </p>
           <ul class="collection roles">
             {{#each role in roles}}
@@ -62,18 +64,21 @@
 
           <h5 class="teal-text">Members</h5>
           <p class="info">
-            Each of these members will be sent an email to join this pair research group. Multiple emails delimited by
-            commas will automatically be parsed out and separately added.
+            These will be you group members. Already registered email addresses will be sent a notification on this website.
+            New email addresses will be sent an email to create an account and join this pair research group.
+          </p>
+          <p class="info">
+            You can enter multiple emails delimited by commas.
           </p>
           <div class="input-field valign-wrapper">
-            <label for="member">Add member(s) by email</label>
+            <label for="member">Email address(es)</label>
             <input id="member" type="text" name="member">
             <button id="addMember" type="button" class="waves-effect waves-light btn valign">Add</button>
           </div>
           <ul class="collection member-select">
             <li class="collection-item">
               <div class="disabled">
-                {{ currentUser.email }}
+                {{ currentUser.email }} (you)
               </div>
             </li>
             {{#each member in members}}
