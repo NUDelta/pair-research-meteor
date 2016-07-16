@@ -14,6 +14,7 @@ import {
 } from '../../api/groups/methods.js';
 
 import '../partials/groups_settings_member.js';
+import '../partials/group_settings_pairing_history.js';
 
 Template.groups_settings.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
@@ -25,7 +26,7 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'info',
+    section: 'pairing_history',
     roleChanges: {}
   });
 
@@ -71,6 +72,12 @@ Template.groups_settings.helpers({
   isActive(section) {
     const instance = Template.instance();
     return instance.state.get('section') == section;
+  },
+  sectionArgs() {
+    const instance = Template.instance();
+    return {
+      group: instance.state.get('group')
+    };
   }
 });
 

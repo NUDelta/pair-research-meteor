@@ -86,7 +86,7 @@
         {{else}}
           {{#if race}}
             {{#each task in allTasks}}
-              <div style="top: {{$x @index 15}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+              <div style="top: {{$times @index 15}}px; left: {{percentage task.userId}}%" class="avatar-progress">
                 <img src="{{$avatar task.userId task.name}}" class="circle">
               </div>
             {{/each}}

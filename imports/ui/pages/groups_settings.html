@@ -16,8 +16,13 @@
           Members
         </a>
       </li>
+      <li class="{{$if (isActive 'pairing_history') 'active'}}">
+        <a href="#pairing_history" class="waves-effect">
+          Pairing History
+        </a>
+      </li>
     </ul>
-    {{#if (isActive 'info')}}
+    {{#if (isActive 'group_info')}}
       <section class="row" id="groups_settings_info">
         <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Info</h3>
@@ -47,7 +52,7 @@
         </div>
       </section>
     {{/if}}
-    {{#if (isActive 'roles')}}
+    {{#if (isActive 'group_roles')}}
       <section class="row" id="groups_settings_roles">
         <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Roles</h3>
@@ -64,7 +69,7 @@
         </div>
       </section>
     {{/if}}
-    {{#if (isActive 'members')}}
+    {{#if (isActive 'group_members')}}
       <section class="row" id="groups_settings_members">
         <div class="col s8 offset-s2">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
@@ -83,6 +88,9 @@
           <button type="button" id="save-roles" class="pair-form-button">Save Role Changes</button>
         </div>
       </section>
+    {{/if}}
+    {{#if (isActive 'pairing_history')}}
+      {{> group_settings_pairing_history sectionArgs}}
     {{/if}}
   </div>
 </template>

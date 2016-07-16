@@ -264,5 +264,44 @@ Meteor.startup(() => {
       }
     ];
     invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));
+
+    // Generate some pairing history
+    const basicUserInfo = _.concat(
+      _.map(userData, (user) => {
+        return {
+          userId: Accounts.findUserByEmail(user.email)._id,
+          userName: user.profile.fullName
+        }
+      }),
+      {
+        userId: admin._id,
+        userName: admin.profile.fullName
+      }
+    );
+
+    _.times(50, (index) => {
+      const timestamp = moment().add(index, 'w').format();
+      Pairings.insert({ pairings: generateRandomPairing(basicUserInfo), groupId, timestamp });
+    });
   }
 });
+
+function generateRandomPairing(users) {
+  const shuffle = _.shuffle(users);
+  let pairing = [];
+  for(let i = 0; i + 1 < shuffle.length; i += 2) {
+    pairing.push({
+      firstUserId: shuffle[i].userId,
+      firstUserName: shuffle[i].userName,
+      secondUserId: shuffle[i + 1].userId,
+      secondUserName: shuffle[i + 1].userName
+    });
+  }
+  if (shuffle.length % 2 !== 0) {
+    pairing.push({
+      firstUserId: shuffle[shuffle.length - 1].userId,
+      firstUserName: shuffle[shuffle.length - 1].userName
+    });
+  }
+  return pairing;
+}

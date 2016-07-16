@@ -35,6 +35,9 @@ Schema.PairHistory = new SimpleSchema({
   secondUserName: {
     type: String,
     optional: true
+  },
+  timestamp: {
+    type: Date
   }
 });
 

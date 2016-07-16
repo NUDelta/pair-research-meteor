@@ -12,7 +12,9 @@ import { log } from '../logs.js';
 
 class PairingCollection extends Mongo.Collection {
   insert(pairing, callback) {
-    pairing.timestamp = new Date();
+    if (Meteor.isDevelopment && !pairing.timestamp) {
+      pairing.timestamp = new Date();
+    }
     const _id = super.insert(pairing, callback);
     
     Groups.update(pairing.groupId, { $set: { activePairing: _id }});
@@ -28,7 +30,8 @@ class PairingCollection extends Mongo.Collection {
         firstUserId: pair.firstUserId,
         firstUserName: pair.firstUserName,
         secondUserId: pair.secondUserId,
-        secondUserName: pair.secondUserName
+        secondUserName: pair.secondUserName,
+        timestamp: pairing.timestamp
       });
     });
 
