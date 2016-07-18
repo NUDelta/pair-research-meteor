@@ -25,7 +25,7 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'members',
+    section: 'info',
     roleChanges: {}
   });
 

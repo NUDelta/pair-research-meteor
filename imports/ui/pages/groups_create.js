@@ -20,10 +20,26 @@ Template.groups_create.onCreated(function() {
     editing: _.map(defaultRoles, () => false)
   });
 
+  this.baseRole = () => {
+    // TODO: this will probably be rather temporary thing
+    const roles = this.state.get('roles');
+    return roles[1].title || roles[0].title || 'No Role'
+  };
+
   this.updateSelect = () => {
     Tracker.afterFlush(() => {
       $('select').material_select();
     });
+  };
+
+  this.updateMemberRoles = (oldTitle, newTitle) => {
+    const members = this.state.get('members');
+    this.state.set('members', _.map(members, (member) => {
+      if (member.role == oldTitle) {
+        member.role = newTitle;
+      }
+      return member
+    }));
   };
 
   const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -50,14 +66,14 @@ Template.groups_create.onCreated(function() {
   };
 
   this.addMember = (email) => {
-    const exists = _.some(this.state.get('members'), member => member.email == email);
+    const exists = _.some(this.state.get('members'), member => member.email == email) || Meteor.user().email() == email;
     const roles = this.state.get('roles');
 
     if (!exists) {
       // TODO: replace with selected role from above
       const member = {
         email: email,
-        role: roles[1].title
+        role: this.baseRole()
       };
       this.state.push('members', member);
       this.updateSelect();
@@ -75,9 +91,12 @@ Template.groups_create.onCreated(function() {
   this.setRoleTitle = (index, title) => {
     // TODO: check for duplicates
     let roles = this.state.get('roles');
+    const oldTitle = roles[index].title;
     roles[index].title = title;
+
     this.state.set('roles', roles);
     this.updateSelect();
+    this.updateMemberRoles(oldTitle, title);
   };
 
   this.setRoleWeight = (index, weight) => {
@@ -88,9 +107,12 @@ Template.groups_create.onCreated(function() {
 
   this.removeRole = (index) => {
     let roles = this.state.get('roles');
+    const oldTitle = roles[index].title;
     roles.splice(index, 1);
+
     this.state.set('roles', roles);
     this.updateSelect();
+    this.updateMemberRoles(oldTitle, this.baseRole());
   };
 
   this.toggleRoleEditing = (index) => {
@@ -186,7 +208,7 @@ Template.groups_create.events({
   'click #addMember'(event, instance) {
     instance.addMembers();
   },
-  'click .secondary-content'(event, instance) {
+  'click .member-select .secondary-content'(event, instance) {
     event.preventDefault();
     const index = $(event.currentTarget).data('index');
     instance.state.remove('members', index);
@@ -218,7 +240,7 @@ Template.groups_create.events({
 
     createGroupWithMembers.call(group, (err, groupId) => {
       if (err) {
-        alert(err)
+        alert(err);
       } else {
         FlowRouter.go('/groups', { groupId: groupId });
       }

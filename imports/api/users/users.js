@@ -97,6 +97,9 @@ Meteor.users.findUserGroups = (userId) => {
 
 Meteor.users.helpers({
   email() {
+    // TODO: I don't expect this to turn out troublesome ever, but should keep in mind
+    // if people ever have multiple emails (e.g. from being invited when they already
+    // have an account under a different email
     return this.emails.length > 0 && this.emails[0].address
   }
 });
