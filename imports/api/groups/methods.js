@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+import { Email } from 'meteor/email';
+import { Accounts } from 'meteor/accounts-base';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import {
@@ -13,6 +14,7 @@ import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
 import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
+import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
 
@@ -296,7 +298,14 @@ export const inviteToGroup = new ValidatedMethod({
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
+        const group = Groups.findOne(groupId);
         addToGroup.call({ groupId: groupId, userId: user._id, role: pendingRole });
+        Email.send({
+          from: EMAIL_ADDRESS,
+          to: member.email,
+          subject: `You're invited to join ${ group.groupName } for Pair Research`,
+          html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
+        });
       } else {
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
         addToGroup.call({ groupId: groupId, userId: newUserId, role: pendingRole });

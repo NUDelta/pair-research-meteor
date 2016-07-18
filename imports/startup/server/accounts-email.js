@@ -2,9 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 import { Groups } from '../../api/groups/groups.js';
+import {
+  SITE_NAME,
+  EMAIL_ADDRESS
+} from '../../api/constants.js';
 
-Accounts.emailTemplates.siteName = 'Pair Research';
-Accounts.emailTemplates.from = 'Pair Research <nudelta2015@gmail.com>';
+Accounts.emailTemplates.siteName = SITE_NAME;
+Accounts.emailTemplates.from = EMAIL_ADDRESS;
 
 Accounts.emailTemplates.enrollAccount.subject = (user) => {
   const invitedGroup = Groups.findOne(user.groups[0].groupId);
@@ -13,3 +17,6 @@ Accounts.emailTemplates.enrollAccount.subject = (user) => {
 Accounts.emailTemplates.enrollAccount.text = (user, url) => {
   return `To join this pair research pool, just click the link below:\n\n${ url }`;
 };
+
+
+

@@ -224,7 +224,7 @@ Template.groups_create.events({
   'submit #group'(event, instance) {
     event.preventDefault();
 
-    const roles = instance.state.get('roles');
+    const roles = _.filter(instance.state.get('roles'), role => role.title && role.weight);
     const members = _.map(instance.state.get('members'), (member) => {
       member.role = _.find(roles, role => role.title == member.role);
       return member
@@ -240,7 +240,17 @@ Template.groups_create.events({
 
     createGroupWithMembers.call(group, (err, groupId) => {
       if (err) {
-        alert(err);
+        let message = '';
+        switch(err.error) {
+          case 'validation-error':
+            if (_.includes(err.reason, 'Role')) {
+              message = 'One of your roles or selected member roles is invalid.';
+              break;
+            }
+          default:
+            message = err.message;
+        }
+        alert(message);
       } else {
         FlowRouter.go('/groups', { groupId: groupId });
       }
