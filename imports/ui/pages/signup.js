@@ -13,14 +13,22 @@ import { Schema } from '../../api/schema.js';
 
 Template.signup.onCreated(function() {
   // TODO: filter publication fields
-  this.subscribe('groups.user');
-
   this.state = new ReactiveDict();
   this.state.setDefault({
     step: 1,
+    groups: [],
     email: FlowRouter.getQueryParam('email'),
     token: FlowRouter.getQueryParam('token'),
     avatar: 'http://orig02.deviantart.net/cd44/f/2016/152/2/d/placeholder_3_by_sketchymouse-da4ny84.png'
+  });
+
+  let userHandle;
+  this.autorun(() => {
+    userHandle = this.subscribe('user.groups');
+    if (userHandle.ready()) {
+      const user = Meteor.user();
+      this.state.set('groups', user && user.groups);
+    }
   });
 
   if (Meteor.userId() || Meteor.loggingIn()) {
@@ -52,7 +60,8 @@ Template.signup.helpers({
     return instance.state.get('step');
   },
   groups() {
-    return Groups.find();
+    const instance = Template.instance();
+    return instance.state.get('groups');
   },
   user() {
     const instance = Template.instance();
@@ -115,9 +124,10 @@ Template.signup.events({
     // TODO: only for things in the list right now
     // wouldn't work for created or anything added to that list
 
-    Groups.find().forEach((group) => {
+    const groups = instance.state.get('groups');
+    groups.forEach((group) => {
       acceptInvite.call({
-        groupId: group._id
+        groupId: group.groupId
       }, (err) => {
         if (err) {
           alert(err);

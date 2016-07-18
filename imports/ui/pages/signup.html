@@ -5,7 +5,10 @@
         <h3 class="amber-text text-darken-2">Join Pair Research</h3>
         {{#if $eq step 1}}
           <div id="step1" class="step">
-            <h5 class="caption">You'll be able to see the group you're joining, find a group, or create a new group right after this.</h5>
+            <h5 class="caption">
+              <!--You'll be able to see the group you're joining, find a group, or create a new group right after this.-->
+              You'll be able to see the group you're joining or create a new group and invite your team members right after this.
+            </h5>
             <form>
               <h5 class="teal-text">About You</h5>
               <div class="input-field">
@@ -50,7 +53,7 @@
                 <li class="collection-item">
                   <div class="disabled">
                     <!-- TODO: fix this interaction with create, e.g. return here? -->
-                    Nothing here yet. Search for one below or <a href="/create">create your own!</a>
+                    Nothing here yet. Want to <a href="/create">create your own?</a>
                   </div>
                 </li>
               {{/each}}
@@ -66,6 +69,10 @@
               <!--</div>-->
               <button class="pair-form-button" {{$if ($eq groups.count 0) 'disabled'}}>Continue</button>
               <a href="/create"><button class="secondary-form-button">Create New Group</button></a>
+              <p class="info">
+                If you don't see the group you're expecting to join, ask your group leader to invite you. You'll see
+                it above once they do and will be able to continue.
+              </p>
             </form>
           </div>
         {{/if}}
