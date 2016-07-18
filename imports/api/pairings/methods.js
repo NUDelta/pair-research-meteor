@@ -31,7 +31,7 @@ export const makePairings = new ValidatedMethod({
     }
 
     // Form n^2 pool data
-    const users = Tasks.find({ groupId: groupId, task: { $exists: true} }) .fetch()
+    const users = Tasks.find({ groupId: groupId, task: { $exists: true} }).fetch()
       .map(task => [ task.userId, task.name ]);
     const userPool = _.map(users, user => user[0]);
 
@@ -85,7 +85,7 @@ export const makePairings = new ValidatedMethod({
 
       // Avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
-      const pairings = _.compact(_.concat(
+      let pairings = _.compact(_.concat(
           _.shuffle(
             _.map(partners, (partner, index) => {
               if (partner !== -1 && unpairedUsers[index] && unpairedUsers[partner]) {
@@ -111,6 +111,11 @@ export const makePairings = new ValidatedMethod({
           }))
         ));
       log.info(pairings);
+      if (pairings.length === 0) {
+        pairings = _.map(users, user => {
+          return { firstUserId: user[0], firstUserName: user[1] };
+        });
+      }
       return Pairings.insert({
         groupId: groupId,
         pairings: pairings
