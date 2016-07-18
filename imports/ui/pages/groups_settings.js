@@ -38,10 +38,6 @@ Template.groups_settings.onCreated(function() {
   })
 });
 
-Template.groups_settings.onRendered(function() {
-  $('.collapsible').collapsible();
-});
-
 Template.groups_settings.helpers({
   group() {
     const instance = Template.instance();
@@ -79,7 +75,7 @@ Template.groups_settings.helpers({
 });
 
 Template.groups_settings.events({
-  'click .collapsible-body a.waves-effect'(event, instance) {
+  'click .side-nav a.waves-effect'(event, instance) {
     const section = event.target.getAttribute('href').slice(1);
     instance.state.set('section', section);
   },

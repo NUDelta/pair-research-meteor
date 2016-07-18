@@ -1,37 +1,20 @@
 <template name="groups_settings">
   <div class="container groups" id="groups_settings">
-    <ul class="side-nav fixed collapsible" data-collapsible="expandable">
-      <li>
-        <a href="#" class="collapsible-header waves-effect bold active">Group Settings</a>
-        <div class="collapsible-body">
-          <ul>
-            <li class="{{$if (isActive 'info') 'active'}}">
-              <a href="#info" class="waves-effect">
-                Info
-              </a>
-            </li>
-            <li class="{{$if (isActive 'roles') 'active'}}">
-              <a href="#roles" class="waves-effect">
-                Roles
-              </a>
-            </li>
-            <li class="{{$if (isActive 'members') 'active'}}">
-              <a href="#members" class="waves-effect">
-                Members
-              </a>
-            </li>
-          </ul>
-        </div>
+    <ul class="side-nav fixed">
+      <li class="{{$if (isActive 'info') 'active'}}">
+        <a href="#info" class="waves-effect">
+          Info
+        </a>
       </li>
-      <li>
-        <a href="#" class="collapsible-header waves-effect bold">Pairing Preferences</a>
-        <div class="collapsible-body">
-          <ul>
-            <li>
-              <a href="#" class="waves-effect">Coming soon!</a>
-            </li>
-          </ul>
-        </div>
+      <li class="{{$if (isActive 'roles') 'active'}}">
+        <a href="#roles" class="waves-effect">
+          Roles
+        </a>
+      </li>
+      <li class="{{$if (isActive 'members') 'active'}}">
+        <a href="#members" class="waves-effect">
+          Members
+        </a>
       </li>
     </ul>
     {{#if (isActive 'info')}}
