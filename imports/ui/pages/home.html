@@ -1,5 +1,5 @@
 <template name="home">
-  <div id="home" class="grey lighten-4">
+  <div id="home" class="grey lighten-5">
     <nav class="nav-wrapper">
       <ul class="right">
         <li>
@@ -14,30 +14,75 @@
           <h3 class="header">
             from
             <a class="link" href="http://delta.northwestern.edu">
-              <img src="delta.jpg" alt="">
+              <img src="/home/delta.jpg" alt="">
             </a>
           </h3>
         </div>
         <div class="col s5">
           <div class="actions">
             <!-- TODO: form here? -->
-            <a href="/signup" class="waves-effect waves-light btn-large">Sign up</a>
-            <a href="/demo" id="demo-pool" class="waves-effect waves-light btn-large">Go to Demo Pool</a>
+            <a href="/signup" class="waves-effect waves-light btn-large">Create a Group</a>
+            <a href="/demo" id="demo-pool" class="waves-effect waves-light btn-large red lighten-1">Go to Demo Pool</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-image">
+              <img src="/home/example.png" alt="">
+            </div>
+          </div>
+          <h2>
+            Pair research is a collaborative method from Delta Lab, designed to
+            help group members overcome blockers and build teams.
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s4">
+          <div class="center promo">
+            <i class="material-icons">call_merge</i>
+            <p class="promo-caption">
+              Overcome Blockers
+            </p>
+            <p class="light">
+              Match together group members with appropriate skills to help each other.
+            </p>
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="center promo">
+            <i class="material-icons">flash_on</i>
+            <p class="promo-caption">
+              Increase Productivity
+            </p>
+            <p class="light">
+              You'll work faster if you can just get past those blockers.
+            </p>
+          </div>
+        </div>
+        <div class="col s4">
+          <div class="center promo">
+            <i class="material-icons">people</i>
+            <p class="promo-caption">
+              Collaborate Effectively
+            </p>
+            <p class="light">
+              Encourage pairings and helping between different sorts of people in your group.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s8 offset-s2">
         <p class="flow-text">
-          Pair research is a collaborative method from Delta Lab, designed to
-          help group members overcome blockers and build teams.
-        </p>
-        <p class="flow-text">
-          For now, specialized pair research groups are not yet available. Click the
-          "Go to Demo Pool" button to create a temporary pool with a unique url that
-          can be shared with your team. Enter what you want to work on, rate how well
-          you can help others in your group, and then make pairs!
+          To get started, have your team leader <a href="/signup">create a group (and account)</a>. He/She will be able
+          to invite the rest of your group from there. You can also preview the pair research experience by <a
+            href="/demo">joining a demo pool</a>.
         </p>
       </div>
     </div>
