@@ -123,7 +123,10 @@ Template.groups_create.onCreated(function() {
 
   this.isEditing = (index) => {
     return this.state.get('editing')[index];
-  }
+  };
+
+  // add a test member
+  this.addMember('hello@test.com');
 });
 
 Template.groups_create.helpers({
