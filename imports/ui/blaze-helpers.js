@@ -1,4 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+
+import { generateAvatar } from '../api/util.js';
 
 Template.registerHelper('$id', a => a.replace(' ', '_'));
 
@@ -26,4 +29,13 @@ Template.registerHelper('$stringify', (obj) => {
 
 Template.registerHelper('$len', arr => arr.length);
 
+Template.registerHelper('$avatar', (userId, username) => {
+  if (userId) {
+    const user = Meteor.users.findOne(userId);
+    if (user && user.profile.avatar) {
+      return user.profile.avatar;
+    }
+  }
+  return generateAvatar(username);
+});
 

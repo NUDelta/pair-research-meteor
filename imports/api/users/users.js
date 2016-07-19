@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
 import { Schema } from '../schema.js';
+import { generateAvatar } from '../util.js';
 
 // TODO: replace with privately loaded admin id?
 export const DEMO_GROUP_CREATOR = '33333333333333333';
@@ -101,5 +103,12 @@ Meteor.users.helpers({
     // if people ever have multiple emails (e.g. from being invited when they already
     // have an account under a different email
     return this.emails.length > 0 && this.emails[0].address
+  },
+  avatar() {
+    if (this.profile.avatar) {
+      return this.profile.avatar
+    } else {
+      return generateAvatar(this.profile.fullName);
+    }
   }
 });

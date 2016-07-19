@@ -88,7 +88,8 @@ Meteor.startup(() => {
         password: 'password',
         profile: {
           fullName: 'Haoqi Zhang',
-          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/haoqi-250x250.jpg'
+          // HQ was too lazy to set his :(
+          // avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2013/11/haoqi-250x250.jpg'
         },
         task: 'help with Stella',
         role: roles.Professor
@@ -98,7 +99,8 @@ Meteor.startup(() => {
         password: 'password',
         profile: {
           fullName: 'Josh Hibschmann',
-          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/josh.png'
+          // Josh too :(
+          // avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/josh.png'
         },
         task: 'I need to learn how to feed the baby',
         role: roles.Graduate

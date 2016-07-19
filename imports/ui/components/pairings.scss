@@ -9,6 +9,12 @@
   .collection {
     li.collection-item {
       height: 84px;
+      padding-left: 84px;
+
+      img.circle {
+        @extend .absolute-center;
+        left: 28px;
+      }
 
       .left {
         .title {

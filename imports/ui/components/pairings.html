@@ -20,8 +20,8 @@
         </span>
         <ul class="collection">
           <li class="collection-item avatar row">
+            <img src="{{$avatar user._id user.name}}" alt="{{user.name}}" class="circle">
             <div class="float-center left">
-              <!--<img src="" alt="">-->
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
                 <p class="person">{{user.name}}</p>
@@ -87,7 +87,7 @@
           {{#if race}}
             {{#each task in allTasks}}
               <div style="top: {{$x @index 15}}px; left: {{percentage task.userId}}%" class="avatar-progress">
-                <img src="{{avatar task.userId}}" class="circle">
+                <img src="{{$avatar task.userId task.name}}" class="circle">
               </div>
             {{/each}}
           {{else}}

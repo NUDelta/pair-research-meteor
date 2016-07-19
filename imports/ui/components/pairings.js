@@ -10,6 +10,7 @@ import { Groups } from '../../api/groups/groups.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { Affinities } from '../../api/affinities/affinities.js';
 import { Schema } from '../../api/schema.js';
+import { generateAvatar } from '../../api/util.js';
 
 import {
   updateTask,
@@ -152,7 +153,7 @@ Template.pairings.helpers({
   },
   avatar(userId) {
     const user = Meteor.users.findOne(userId);
-    return user && user.profile.avatar;
+    return user && user.avatar();
   }
 });
 
