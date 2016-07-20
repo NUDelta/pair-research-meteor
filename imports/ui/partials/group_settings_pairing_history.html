@@ -20,7 +20,9 @@
           <li class="collection-item">
             {{$formatDate pair.timestamp 'MM/DD/YYYY hh:m'}}:
             {{#if pair.secondUserName}}
-              {{pair.firstUserName}} with {{pair.secondUserName}}
+              {{pair.firstUserName}} ({{task pair.firstUserId pair.pairingId}})
+              with
+              {{pair.secondUserName}} ({{task pair.secondUserId pair.pairingId}})
             {{else}}
               {{pair.firstUserName}} was not paired.
             {{/if}}

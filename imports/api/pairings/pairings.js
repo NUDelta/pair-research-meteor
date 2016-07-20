@@ -6,6 +6,8 @@ import { Affinities } from '../affinities/affinities.js';
 import { AffinitiesHistory } from '../affinities-history/affinities-history.js';
 import { Groups } from '../groups/groups.js';
 import { PairsHistory } from '../pairs-history/pairs-history.js';
+import { Tasks } from '../tasks/tasks.js';
+import { TasksHistory } from '../tasks-history/tasks-history.js';
 
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
@@ -50,6 +52,15 @@ class PairingCollection extends Mongo.Collection {
       affinity.pairingId = id;
       delete affinity._id;
       AffinitiesHistory.insert(affinity);
+    });
+
+    Tasks.find({
+      groupId: pairing.groupId,
+      userId: { $in: userIds }
+    }).forEach((task) => {
+      task.pairingId = id;
+      delete task._id;
+      TasksHistory.insert(task);
     });
   }
 }

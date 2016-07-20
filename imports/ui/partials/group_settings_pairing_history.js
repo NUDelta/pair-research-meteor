@@ -7,6 +7,7 @@ import { _ } from 'meteor/stevezhu:lodash';
 
 import { Pairings } from '../../api/pairings/pairings.js';
 import { PairsHistory } from '../../api/pairs-history/pairs-history.js';
+import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
 import { Schema } from '../../api/schema.js';
 
 const PAIRS_PER_PAGE = 20;
@@ -21,10 +22,12 @@ Template.group_settings_pairing_history.onCreated(function() {
   this.autorun(() => {
     const data = Template.currentData();
     // TODO: validate data here
+    // TODO: this page probably will need loading for the subscriptions to all be ready
     const groupId = data.group._id;
     if (groupId) {
       this.subscribe('pairings.all.byGroup', groupId);
-      this.subscribe('pairHistory.byGroup', groupId);
+      this.subscribe('pairsHistory.byGroup', groupId);
+      this.subscribe('tasksHistory.byGroup', groupId);
     }
     this.state.set('maxOffset', Math.floor(PairsHistory.find().count() / PAIRS_PER_PAGE) - 1);
   });
@@ -53,7 +56,11 @@ Template.group_settings_pairing_history.helpers({
   },
   offsets() {
     return _.range(0, PairsHistory.find().count(), PAIRS_PER_PAGE);
-  }
+  },
+  task(userId, pairingId) {
+    const task= TasksHistory.findOne({ userId, pairingId });
+    return task && task.name;
+  },
 });
 
 Template.group_settings_pairing_history.events({
