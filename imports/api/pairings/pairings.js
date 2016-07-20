@@ -42,8 +42,6 @@ class PairingCollection extends Mongo.Collection {
       _.map(pairing.pairings, pair => pair.secondUserId)
     ));
 
-    log.debug(userIds);
-
     Affinities.find({
       groupId: pairing.groupId,
       helperId: { $in: userIds },

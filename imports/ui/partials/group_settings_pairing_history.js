@@ -59,7 +59,7 @@ Template.group_settings_pairing_history.helpers({
   },
   task(userId, pairingId) {
     const task= TasksHistory.findOne({ userId, pairingId });
-    return task && task.name;
+    return task && task.task;
   },
 });
 

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Factory } from 'meteor/dburles:factory';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import { Affinities } from '../../api/affinities/affinities.js';
@@ -21,6 +22,9 @@ import {
   addToGroup,
   inviteToGroup,
 } from '../../api/groups/methods.js';
+
+import { getTask } from '../../data/tasks.js';
+import '../../data/factories.js';
 
 Meteor.startup(() => {
 
@@ -152,6 +156,7 @@ Meteor.startup(() => {
     ];
     userData.forEach((user) => {
       const userId = Accounts.createUser(user);
+      user.userId = userId;
       addToGroup.call({ groupId: groupId, userId: userId, role: user.role });
       Tasks.update({ userId: userId }, { $set: { task: user.task }});
     });
@@ -280,9 +285,16 @@ Meteor.startup(() => {
     );
 
     _.times(50, (index) => {
+      _.each(basicUserInfo, user => {
+        Tasks.update({ userId: user.userId, groupId }, { $set: { task: getTask() } });
+      });
+
       const timestamp = moment().add(index, 'w').format();
       Pairings.insert({ pairings: generateRandomPairing(basicUserInfo), groupId, timestamp });
     });
+
+    // restore userData from above
+    userData.forEach(user => Tasks.update({ groupId, userId: user.userId }, { $set: { task: user.task } }));
   }
 });
 

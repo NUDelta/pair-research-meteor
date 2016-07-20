@@ -4,7 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { TasksHistory } from '../tasks-history.js';
 
-Meteor.publish("tasksHistory.byGroup", function(groupId) {
+Meteor.publish('tasksHistory.byGroup', function(groupId) {
   check(groupId, Match.Where(a => SimpleSchema.RegEx.Id.test(groupId)));
   if (!this.userId) {
     return this.ready();
