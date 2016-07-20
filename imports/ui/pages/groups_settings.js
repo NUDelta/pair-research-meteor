@@ -64,7 +64,7 @@ Template.groups_settings.helpers({
 
     return {
       member: member,
-      avatar: user && user.profile.avatar,
+      avatar: user && user.avatar(),
       groupId: instance.state.get('groupId'),
       roles: group && group.roles
     };

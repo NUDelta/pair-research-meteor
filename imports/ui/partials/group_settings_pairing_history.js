@@ -48,6 +48,7 @@ Template.group_settings_pairing_history.helpers({
   },
   maxOffset() {
     const instance = Template.instance();
+    // TODO: this might not be scaleabe?
     return instance.state.get('maxOffset');
   },
   offsets() {
