@@ -1,10 +1,34 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'meteor/stevezhu:lodash';
 
+import { log } from '../logs.js';
 import { Schema } from '../schema.js';
 
+const ignoreWords = ['and','the','to','a','of','for','as','i','with','it','is','on','that','this','can','in','be','has','if'];
+const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(true)));
 class TasksHistoryCollection extends Mongo.Collection {
-
+  popularTasks(query, count) {
+    const tasks = _.map(this.find({}, { task: 1 }).fetch(), task => task.task);
+    const frequencies = {};
+    _.each(tasks, task => {
+      const words = task.split(' ');
+      _.each(words, word => {
+        if (!ignore[word]) {
+          frequencies[word] = frequencies[word] || 0;
+          frequencies[word]++;
+        }
+      });
+    });
+    return _.slice(
+      _.sortBy(
+        _.map(frequencies, (frequency, word) => {
+          return { word, frequency };
+        }),
+        wordf => wordf.frequency
+      ),
+      0, count);
+  }
 }
 
 export const TasksHistory = new TasksHistoryCollection('tasks_history');

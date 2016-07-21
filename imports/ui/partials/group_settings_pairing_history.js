@@ -21,10 +21,9 @@ Template.group_settings_pairing_history.onCreated(function() {
 
   this.autorun(() => {
     const data = Template.currentData();
-    // TODO: validate data here
-    // TODO: this page probably will need loading for the subscriptions to all be ready
-    const groupId = data.group._id;
-    if (groupId) {
+    if (!_.isEmpty(data) && !_.isEmpty(data.group)) {
+      Schema.Group.validate(data.group);
+      const groupId = data.group._id;
       this.subscribe('pairings.all.byGroup', groupId);
       this.subscribe('pairsHistory.byGroup', groupId);
       this.subscribe('tasksHistory.byGroup', groupId);

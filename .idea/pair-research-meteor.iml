@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.meteor/dev_bundle/lib/node_modules/cordova-lib/templates/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/.meteor/local" />
       <excludeFolder url="file://$MODULE_DIR$/.meteor/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/server" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

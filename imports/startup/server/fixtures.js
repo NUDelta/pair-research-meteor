@@ -88,7 +88,7 @@ Meteor.startup(() => {
       roles: _.values(roles),
       allowGuests: true
     });
-    Tasks.update({ userId: admin._id }, { $set: { task: 'everything '} });
+    Tasks.update({ userId: admin._id }, { $set: { task: 'everything' } });
 
     const userData = [
       {

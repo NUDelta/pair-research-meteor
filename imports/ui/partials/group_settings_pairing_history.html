@@ -24,7 +24,7 @@
               with
               {{pair.secondUserName}} ({{task pair.secondUserId pair.pairingId}})
             {{else}}
-              {{pair.firstUserName}} was not paired.
+              {{pair.firstUserName}} was not paired. ({{task pair.firstUserId pair.pairingId}})
             {{/if}}
           </li>
         {{/each}}

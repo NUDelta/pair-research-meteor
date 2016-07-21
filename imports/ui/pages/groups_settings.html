@@ -21,6 +21,11 @@
           Pairing History
         </a>
       </li>
+      <li class="{{$if (isActive 'pairing_statistics') 'active'}}">
+        <a href="#pairing_statistics" class="waves-effect">
+          Pairing Statistics
+        </a>
+      </li>
     </ul>
     {{#if (isActive 'group_info')}}
       <section class="row" id="groups_settings_info">
@@ -91,6 +96,9 @@
     {{/if}}
     {{#if (isActive 'pairing_history')}}
       {{> group_settings_pairing_history sectionArgs}}
+    {{/if}}
+    {{#if (isActive 'pairing_statistics')}}
+      {{> group_settings_pairing_stats sectionArgs}}
     {{/if}}
   </div>
 </template>

@@ -31,6 +31,31 @@
   }
 }
 
+.chip {
+  margin-bottom: 5px;
+
+  &.active {
+    @extend .teal, .lighten-2;
+  }
+}
+
+// promo object
+.promo {
+  width: 100%;
+  .material-icons {
+    @extend .amber-text, .text-darken-2;
+    font-size: 7rem;
+    margin: 20px 0;
+  }
+
+  .promo-caption {
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+}
+
 // materialize overrides
 // dropdown
 .member-select {
