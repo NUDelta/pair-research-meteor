@@ -18,10 +18,9 @@
       <ul class="collection">
         {{#each pair in pairings}}
           <li class="collection-item">
-            {{$formatDate pair.timestamp 'MM/DD/YYYY hh:m'}}:
+            {{$formatDate pair.timestamp 'MM/DD/YYYY hh:m'}}: <br/>
             {{#if pair.secondUserName}}
-              {{pair.firstUserName}} ({{task pair.firstUserId pair.pairingId}})
-              with
+              {{pair.firstUserName}} ({{task pair.firstUserId pair.pairingId}}) <br/>
               {{pair.secondUserName}} ({{task pair.secondUserId pair.pairingId}})
             {{else}}
               {{pair.firstUserName}} was not paired. ({{task pair.firstUserId pair.pairingId}})

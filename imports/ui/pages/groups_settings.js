@@ -27,7 +27,7 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'pairing_statistics',
+    section: 'pairing_history',
     roleChanges: {}
   });
 
