@@ -8,6 +8,17 @@ import { Schema } from '../schema.js';
 const ignoreWords = ['and','the','to','a','of','for','as','i','with','it','is','on','that','this','can','in','be','has','if'];
 const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(true)));
 class TasksHistoryCollection extends Mongo.Collection {
+  constructQuery(type, info) {
+    if (type == 'individual' && info) {
+      return { userId: info };
+    } else if (type == 'role' && info) {
+      // hmm....TODO
+    } else if (type == 'all') {
+      return {};
+    }
+  }
+
+
   popularTasks(query, count) {
     const tasks = _.map(this.find(query, { task: 1 }).fetch(), task => task.task);
     const frequencies = {};

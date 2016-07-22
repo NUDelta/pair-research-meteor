@@ -13,7 +13,8 @@ import { Schema } from '../../api/schema.js';
 Template.group_settings_pairing_stats.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
-    selected: ''
+    selectedInfo: '',
+    selectedTab: 'all'
   });
   this.autorun(() => {
     const data = Template.currentData();
@@ -25,38 +26,6 @@ Template.group_settings_pairing_stats.onCreated(function() {
       this.subscribe('tasksHistory.byGroup', groupId);
     }
   });
-
-  this.constructQuery = (type) => {
-    const value = this.state.get('selected');
-    let query = {};
-    if (type == 'user') {
-      query = { userId: value };
-    } else if (type == 'role') {
-
-    }
-    return query;
-  };
-
-  this.constructPairingQuery = (type) => {
-    const value = this.state.get('selected');
-    let query = {};
-    if (type == 'user') {
-      query = {
-        $or: [
-          { firstUserId: value },
-          { secondUserId: value }
-        ]
-      };
-    } else if (type == 'role') {
-      query = {
-        $or: [
-          { firstUserRole: value },
-          { secondUserRole: value }
-        ]
-      };
-    }
-    return query;
-  };
 });
 
 Template.group_settings_pairing_stats.onRendered(function() {
@@ -68,31 +37,34 @@ Template.group_settings_pairing_stats.helpers({
     return Pairings.find().count();
   },
   pairingCount() {
-    return PairsHistory.find({ secondUserId: { $exists: true } }).count();
-  },
-  pairingCountSelected(type) {
     const instance = Template.instance();
-    const query = instance.constructPairingQuery(type);
-    return PairsHistory.find(query).count();
-  },
-  popularTasks(type) {
-    // TODO: tweak count?
-    const instance = Template.instance();
-    const query = instance.constructQuery(type);
-    return TasksHistory.popularTasks(query, 30);
-  },
-  topPartners() {
-    const instance = Template.instance();
-    const selected = instance.state.get('selected');
-    if (selected) {
-      return PairsHistory.topPartners(selected);
+    const selectedInfo = instance.state.get('selectedInfo');
+    const selectedTab = instance.state.get('selectedTab');
+    if (selectedTab) {
+      const query = PairsHistory.constructQuery(selectedTab, selectedInfo);
+      if (query) {
+        return PairsHistory.find(query).count();
+      }
     }
   },
-  topRolePartners() {
+  popularTasks() {
+    // TODO: tweak count?
     const instance = Template.instance();
-    const selected = instance.state.get('selected');
-    if (selected) {
-      return PairsHistory.topRolePartners(selected);
+    const selectedInfo = instance.state.get('selectedInfo');
+    const selectedTab = instance.state.get('selectedTab');
+    if (selectedTab) {
+      const query = TasksHistory.constructQuery(selectedTab, selectedInfo);
+      if (query) {
+        return TasksHistory.popularTasks(query, 30);
+      }
+    }
+  },
+  topPartners(output) {
+    const instance = Template.instance();
+    const selectedInfo = instance.state.get('selectedInfo');
+    const selectedTab = instance.state.get('selectedTab');
+    if (selectedInfo && selectedTab) {
+      return PairsHistory.topPartners(selectedTab, selectedInfo, output);
     }
   }
 });
@@ -102,6 +74,10 @@ Template.group_settings_pairing_stats.events({
     const $target = $(event.target);
     $('.chip.clickable').removeClass('active');
     $target.toggleClass('active');
-    instance.state.set('selected', $target.data('id'));
+    instance.state.set('selectedInfo', $target.data('id'));
+  },
+  'click ul.tabs a'(event, instance) {
+    const $target = $(event.target);
+    instance.state.set('selectedTab', $target.attr('href').slice(1));
   }
 });

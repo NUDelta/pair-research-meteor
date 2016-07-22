@@ -7,39 +7,63 @@ import { Schema } from '../schema.js';
 // For now, expecting this collection to be purely for analytic purposes.
 
 class PairsHistoryCollection extends Mongo.Collection {
-  // @client only
-  topPartners(userId) {
-    const pairs = this.find({
-      $or: [
-        { firstUserId: userId }, { secondUserId: userId }
-      ]
-    }, { reactive: false }).fetch();
-    const partners = _.compact(_.map(pairs, pair => {
-      if (pair.firstUserId == userId) {
-        return pair.secondUserName;
-      } else {
-        return pair.firstUserName;
-      }
-    }));
-    return _.frequencyPairs(partners);
+
+  constructQuery(type, info) {
+    if (type == 'individual' && info) {
+      return {
+        $or: [
+          { firstUserId: info}, { secondUserId: info}
+        ]
+      };
+    } else if (type == 'role' && info) {
+      return {
+        $or: [
+          { firstUserRole: info}, { secondUserRole: info}
+        ]
+      };
+    } else if (type == 'all') {
+      return { secondUserId: { $exists: true } };
+    }
   }
-  // @client only (include groupId for computation on server?)
-  topRolePartners(userId) {
-    const pairs = this.find({
-      $or: [
-        { firstUserId: userId }, { secondUserId: userId }
-      ]
-    }, { reactive: false }).fetch();
 
-    const partnerRoles = _.compact(_.map(pairs, pair => {
-      if (pair.firstUserId == userId) {
-        return pair.secondUserRole;
+  constructMap(type, info, field) {
+    let compare = '';
+    if (type == 'individual') {
+      compare = 'firstUserId';
+    } else if (type == 'role') {
+      compare = 'firstUserRole';
+    }
+
+    return pair => {
+      if (pair[compare] == info) {
+        if (field == 'individual') {
+          return pair.secondUserName;
+        } else if (field == 'role') {
+          return pair.secondUserRole;
+        }
       } else {
-        return pair.firstUserRole;
+        if (field == 'individual') {
+          return pair.firstUserName;
+        } else if (field == 'role') {
+          return pair.firstUserRole;
+        }
       }
-    }));
+    };
+  }
 
-    return _.frequencyPairs(partnerRoles);
+  /**
+   * Returns frequency pairs of the top partners of a given individual or role
+   * @client-only
+   *
+   * @param type 'individual' or 'role', describes the source of comparison
+   * @param info Value to match on
+   * @param field 'individual' or 'role', describes the desired output
+   * @returns {Array}
+   */
+  topPartners(type, info, field) {
+    const pairs = this.find(this.constructQuery(type, info), { reactive: false }).fetch();
+    const partners = _.compact(_.map(pairs, this.constructMap(type, info, field)));
+    return _.frequencyPairs(partners);
   }
 }
 
