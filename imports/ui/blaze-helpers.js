@@ -47,3 +47,5 @@ Template.registerHelper('$avatar', (userId, username) => {
 Template.registerHelper('$formatDate', (date, format) => {
   return moment(date).format(format);
 });
+
+Template.registerHelper('$index', (array, index) => array[index]);

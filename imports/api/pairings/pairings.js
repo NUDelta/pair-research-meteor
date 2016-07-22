@@ -25,14 +25,18 @@ class PairingCollection extends Mongo.Collection {
   }
   
   saveHistory(id, pairing) {
+    const group = Groups.findOne(pairing.groupId);
+
     pairing.pairings.forEach((pair) => {
       PairsHistory.insert({
         groupId: pairing.groupId,
         pairingId: id,
         firstUserId: pair.firstUserId,
         firstUserName: pair.firstUserName,
+        firstUserRole: group.getRole(pair.firstUserId),
         secondUserId: pair.secondUserId,
         secondUserName: pair.secondUserName,
+        secondUserRole: group.getRole(pair.secondUserId),
         timestamp: pairing.timestamp
       });
     });

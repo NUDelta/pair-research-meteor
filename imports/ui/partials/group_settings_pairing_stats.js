@@ -30,14 +30,30 @@ Template.group_settings_pairing_stats.onCreated(function() {
     const value = this.state.get('selected');
     let query = {};
     if (type == 'user') {
+      query = { userId: value };
+    } else if (type == 'role') {
+
+    }
+    return query;
+  };
+
+  this.constructPairingQuery = (type) => {
+    const value = this.state.get('selected');
+    let query = {};
+    if (type == 'user') {
       query = {
         $or: [
           { firstUserId: value },
           { secondUserId: value }
         ]
       };
-    } else {
-
+    } else if (type == 'role') {
+      query = {
+        $or: [
+          { firstUserRole: value },
+          { secondUserRole: value }
+        ]
+      };
     }
     return query;
   };
@@ -51,15 +67,18 @@ Template.group_settings_pairing_stats.helpers({
   sessionCount() {
     return Pairings.find().count();
   },
-  pairingCountSelected(type) {
-    const instance = Template.instance();
-    const query = instance.constructQuery(type);
-    return PairsHistory.find(query).count();
-  },
   pairingCount() {
     return PairsHistory.find({ secondUserId: { $exists: true } }).count();
   },
-  popularTasks(query = {}) {
+  pairingCountSelected(type) {
+    const instance = Template.instance();
+    const query = instance.constructPairingQuery(type);
+    return PairsHistory.find(query).count();
+  },
+  popularTasks(type) {
+    // TODO: tweak count?
+    const instance = Template.instance();
+    const query = instance.constructQuery(type);
     return TasksHistory.popularTasks(query, 30);
   },
   topPartners() {
@@ -68,13 +87,20 @@ Template.group_settings_pairing_stats.helpers({
     if (selected) {
       return PairsHistory.topPartners(selected);
     }
+  },
+  topRolePartners() {
+    const instance = Template.instance();
+    const selected = instance.state.get('selected');
+    if (selected) {
+      return PairsHistory.topRolePartners(selected);
+    }
   }
 });
 
 Template.group_settings_pairing_stats.events({
-  'click #individual .chip'(event, instance) {
+  'click .chip.clickable'(event, instance) {
     const $target = $(event.target);
-    $('#individual .chip').removeClass('active');
+    $('.chip.clickable').removeClass('active');
     $target.toggleClass('active');
     instance.state.set('selected', $target.data('id'));
   }

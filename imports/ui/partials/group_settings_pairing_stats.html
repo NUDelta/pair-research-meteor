@@ -32,7 +32,33 @@
       </div>
     </div>
     <div class="col s8 offset-s2" id="role">
-      role
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Group Roles</span>
+          <div>
+            {{#each role in group.roles}}
+              <div class="chip clickable" data-id="{{role.title}}">
+                {{role.title}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Aggregate Statistics</span>
+          {{#if pairingCountSelected 'role'}}
+            <p>
+              Total number of pairing sessions: {{pairingCountSelected 'role'}} <br/>
+              Total number of pairs made: [tbd] <br/>
+            </p>
+          {{else}}
+            <p class="info">
+              Select a group role to see their aggregate statistics
+            </p>
+          {{/if}}
+        </div>
+      </div>
     </div>
     <div class="col s8 offset-s2" id="individual">
       <div class="card">
@@ -50,18 +76,64 @@
       <div class="card">
         <div class="card-content">
           <span class="card-title">Aggregate Statistics</span>
-          <p>
-            Total number of pairing sessions: {{pairingCountSelected 'user'}} <br/>
-            Total number of pairs made: [tbd] <br/>
-          </p>
+          {{#if pairingCountSelected 'user'}}
+            <p>
+              Total number of pairing sessions: {{pairingCountSelected 'user'}} <br/>
+              Total number of pairs made: [tbd] <br/>
+            </p>
+          {{else}}
+            <p class="info">
+              Select a group member to see his/her aggregate statistics
+            </p>
+          {{/if}}
         </div>
       </div>
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Most Popular Partners</span>
-          <p>
-            {{$stringify topPartners}}
-          </p>
+          <span class="card-title">Most Popular Partners (Individuals)</span>
+          <div>
+            {{#each partner in topPartners}}
+              <div class="chip">
+                {{$index partner 0}} | {{$index partner 1}}
+              </div>
+            {{else}}
+              <p class="info">
+                Select a group member to see his/her popular partners.
+              </p>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Most Popular Partners (Roles)</span>
+          <div>
+            {{#each role in topRolePartners}}
+              <div class="chip">
+                {{$index role 0}} | {{$index role 1}}
+              </div>
+            {{else}}
+              <p class="info">
+                Select a group member to see the most common type of person in the group he/she pairs with.
+              </p>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Most Requested Tasks</span>
+          <div>
+            {{#each word in (popularTasks 'user')}}
+              <div class="chip">
+                {{word.word}}
+              </div>
+            {{else}}
+              <p class="info">
+                Select a group member to see their most requested tasks.
+              </p>
+            {{/each}}
+          </div>
         </div>
       </div>
     </div>

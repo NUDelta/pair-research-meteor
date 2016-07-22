@@ -9,7 +9,7 @@ const ignoreWords = ['and','the','to','a','of','for','as','i','with','it','is','
 const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(true)));
 class TasksHistoryCollection extends Mongo.Collection {
   popularTasks(query, count) {
-    const tasks = _.map(this.find({}, { task: 1 }).fetch(), task => task.task);
+    const tasks = _.map(this.find(query, { task: 1 }).fetch(), task => task.task);
     const frequencies = {};
     _.each(tasks, task => {
       const words = task.split(' ');

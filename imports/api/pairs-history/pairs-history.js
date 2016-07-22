@@ -7,8 +7,8 @@ import { Schema } from '../schema.js';
 // For now, expecting this collection to be purely for analytic purposes.
 
 class PairsHistoryCollection extends Mongo.Collection {
+  // @client only
   topPartners(userId) {
-    // TODO: determine if reactive (make not)
     const pairs = this.find({
       $or: [
         { firstUserId: userId }, { secondUserId: userId }
@@ -21,7 +21,25 @@ class PairsHistoryCollection extends Mongo.Collection {
         return pair.firstUserName;
       }
     }));
-    return _.sortBy(_.toPairs(_.countBy(partners)), pair => -pair[1]);
+    return _.frequencyPairs(partners);
+  }
+  // @client only (include groupId for computation on server?)
+  topRolePartners(userId) {
+    const pairs = this.find({
+      $or: [
+        { firstUserId: userId }, { secondUserId: userId }
+      ]
+    }, { reactive: false }).fetch();
+
+    const partnerRoles = _.compact(_.map(pairs, pair => {
+      if (pair.firstUserId == userId) {
+        return pair.secondUserRole;
+      } else {
+        return pair.firstUserRole;
+      }
+    }));
+
+    return _.frequencyPairs(partnerRoles);
   }
 }
 
@@ -43,12 +61,19 @@ Schema.PairHistory = new SimpleSchema({
   firstUserName: {
     type: String
   },
+  firstUserRole: {
+    type: String
+  },
   secondUserId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     optional: true
   },
   secondUserName: {
+    type: String,
+    optional: true
+  },
+  secondUserRole: {
     type: String,
     optional: true
   },
