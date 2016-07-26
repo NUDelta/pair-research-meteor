@@ -9,6 +9,7 @@ import '../../ui/pages/home.js';
 import '../../ui/pages/pair.js';
 import '../../ui/pages/signup.js';
 import '../../ui/pages/login.js';
+import '../../ui/pages/user_settings.js';
 import '../../ui/pages/groups_home.js';
 import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
@@ -55,6 +56,13 @@ FlowRouter.route('/signup', {
   name: 'App.signup',
   action() {
     BlazeLayout.render('layout', { main: 'signup' });
+  }
+});
+
+FlowRouter.route('/user/settings', {
+  name: 'App.user.settings',
+  action() {
+    BlazeLayout.render('layout_authorized', { main: 'user_settings' });
   }
 });
 
