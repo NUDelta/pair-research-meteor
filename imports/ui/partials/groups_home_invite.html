@@ -2,7 +2,10 @@
   <li class="collection-item">
     <div>
       <!-- TODO: link me to group info page -->
-      <span>{{ group.groupName }}</span>
+      <span>
+        {{group.groupName}}
+        <span class="info">as {{group.getUserRole currentUser._id}}</span>
+      </span>
       <a href="#reject" class="secondary-content">
         <i class="material-icons">close</i>
       </a>

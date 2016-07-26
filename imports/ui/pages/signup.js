@@ -27,6 +27,7 @@ Template.signup.onCreated(function() {
     }
   });
 
+  // TODO: this is a bit weird...disable if in a non pending group?
   if (Meteor.userId() || Meteor.loggingIn()) {
     this.state.set('step', 2);
   }

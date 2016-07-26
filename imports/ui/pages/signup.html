@@ -6,13 +6,12 @@
         {{#if $eq step 1}}
           <div id="step1" class="step">
             <h5 class="caption">
-              <!--You'll be able to see the group you're joining, find a group, or create a new group right after this.-->
               You'll be able to see the group you're joining or create a new group and invite your team members right after this.
             </h5>
             <form>
               <h5 class="teal-text">About You</h5>
               <div class="input-field">
-                <label for="fullName">Full Name</label>
+                <label for="fullName">Full name</label>
                 <input id="fullName" name="fullName" type="text" class="validate" required>
               </div>
 
@@ -27,26 +26,28 @@
                 <input id="password" name="password" type="password" class="validate" required>
               </div>
 
-              <div class="avatar-input">
-                <img src="{{avatar}}">
-                <div class="input-field">
-                  <label for="avatar">Link to a square image (optional)</label>
-                  <input id="avatar" name="avatar" type="url" class="validate">
-                </div>
+              <div class="input-field">
+                <label for="avatar">Link to square image (optional)</label>
+                <input id="avatar" name="avatar" type="url" class="validate">
               </div>
 
-              <button class="pair-form-button">Sign up</button>
+              <div class="avatar-input">
+                <img src="{{avatar}}">
+                <button class="pair-form-button">Sign up</button>
+              </div>
+
             </form>
           </div>
         {{/if}}
         {{#if $eq step 2}}
           <div id="step2" class="step">
             <h5 class="caption">You're going to be joining these groups.</h5>
-            <ul class="collection">
+            <ul class="collection member-select">
               {{#each group in groups}}
                 <li class="collection-item">
                   <div>
                     {{ group.groupName }}
+                    <span class="info">as {{ group.role.title }}</span>
                   </div>
                 </li>
               {{else}}

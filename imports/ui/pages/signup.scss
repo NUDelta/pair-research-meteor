@@ -22,10 +22,13 @@
 
     .avatar-input {
       position: absolute;
-      top: 2.5rem;
+      bottom: 5%;
       right: 0;
 
-      .input-field {
+      img {
+        margin-bottom: 2em;
+      }
+      button {
         width: 100%;
       }
     }
