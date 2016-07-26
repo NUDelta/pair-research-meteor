@@ -7,6 +7,14 @@
     width: 80%;
   }
 
+  #create-group {
+    width: 150px;
+  }
+
+  .right {
+    margin-right: 3em;
+  }
+
   .roles {
     $roles-font: 18px;
 
@@ -18,11 +26,6 @@
         @extend .teal-text, .text-lighten-2;
       }
     }
-    .role-right {
-      float: right;
-      margin-right: 3em;
-    }
-
     .material-icons {
       vertical-align: middle;
       line-height: $roles-font;

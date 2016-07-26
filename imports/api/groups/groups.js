@@ -59,7 +59,9 @@ Schema.GroupRole = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     optional: true,
     autoValue() {
-      return Random.id();
+      if (!this.isSet) {
+        return Random.id();
+      }
     }
   },
   title: {

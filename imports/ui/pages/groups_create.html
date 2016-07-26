@@ -33,25 +33,21 @@
             We recommend singular tense, not plural.
           </p>
           <ul class="collection roles">
-            {{#each role in roles}}
+            {{#each roleTitle in roleTitles}}
               <li class="collection-item">
                 <span class="role-left">
                   {{#if (isEditing @index)}}
                     <i data-index="{{@index}}" class="material-icons">done</i>
-                    <input data-index="{{@index}}" name="{{@index}}-role-name" type="text" class="browser" value="{{role.title}}"
+                    <input data-index="{{@index}}" name="{{@index}}-role-name" type="text" class="browser" value="{{roleTitle}}"
                         placeholder="Role title">
                   {{else}}
                     <i data-index="{{@index}}" class="material-icons">edit</i>
-                    <span data-index="{{@index}}">{{ role.title }}</span>
+                    <span data-index="{{@index}}">{{roleTitle}}</span>
                   {{/if}}
                 </span>
                 <a href="#delete" data-index="{{@index}}" class="secondary-content">
                   <i class="material-icons">close</i>
                 </a>
-                <span class="role-right">
-                  <input type="checkbox" id="{{@index}}-role" data-index="{{@index}}" {{isAdmin @index}}>
-                  <label for="{{@index}}-role">Admin privileges?</label>
-                </span>
               </li>
             {{/each}}
             <li class="collection-item disabled">
@@ -61,6 +57,26 @@
               </span>
             </li>
           </ul>
+
+          <div class="input-field col s6">
+            <select name="defaultRole" required>
+              <option value="" selected disabled>Choose...</option>
+              {{#each roleTitle in roleTitles}}
+                <option value="{{roleTitle}}">{{roleTitle}}</option>
+              {{/each}}
+            </select>
+            <label>Default Member Role</label>
+          </div>
+
+          <div class="input-field col s6">
+            <select name="creatorRole" required>
+              <option value="" selected disabled>Choose...</option>
+              {{#each roleTitle in roleTitles}}
+                <option value="{{roleTitle}}">{{roleTitle}}</option>
+              {{/each}}
+            </select>
+            <label>Your Role</label>
+          </div>
 
           <h5 class="teal-text">Members</h5>
           <p class="info">
@@ -75,7 +91,7 @@
             <input id="member" type="text" name="member">
             <button id="addMember" type="button" class="waves-effect waves-light btn valign">Add</button>
           </div>
-          <ul class="collection member-select">
+          <ul class="collection members">
             <li class="collection-item">
               <div class="disabled">
                 {{ currentUser.email }} (you)
@@ -86,18 +102,17 @@
                 <span class="title name">
                   {{member.email}}
                 </span>
-                <select name="{{@index}}_role" data-index="{{@index}}">
-                  {{#each role in roles}}
-                    <option value="{{role.title}}" selected="{{$eq member.role role.title}}">{{role.title}}</option>
-                  {{/each}}
-                </select>
                 <a href='#' class="secondary-content" data-index="{{@index}}">
                   <i class="material-icons">close</i>
                 </a>
+                <span class="right">
+                  <input type="checkbox" id="{{@index}}-role" data-index="{{@index}}">
+                  <label for="{{@index}}-role">Admin privileges?</label>
+                </span>
               </li>
             {{/each}}
           </ul>
-          <button id="create-group" class="pair-form-button">Create</button>
+          <button id="create-group" name="create" class="pair-form-button">Create</button>
         </form>
       </div>
     </div>

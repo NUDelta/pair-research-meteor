@@ -54,8 +54,6 @@ export const addToGroup = new ValidatedMethod({
 
     const role = group.getRoleInfo(roleTitle);
     const taskRecord = Tasks.findOne({ userId, groupId });
-    const userMembership = { groupId, role, groupName: group.groupName, isAdmin, isPending };
-    const groupMembership = { fullName: user.profile.fullName, userId: userId, role, isAdmin, isPending };
     if (!taskRecord) {
       Tasks.insert({
         name: user.profile.fullName,
@@ -63,6 +61,8 @@ export const addToGroup = new ValidatedMethod({
         task: ''
       });
     }
+    const userMembership = { groupId, role, groupName: group.groupName, isAdmin, isPending };
+    const groupMembership = { fullName: user.profile.fullName, userId: userId, role, isAdmin, isPending };
     Groups.update(groupId, { $addToSet: { members: groupMembership }});
     Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
   }
@@ -215,6 +215,10 @@ export const createGroup = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Id
     },
+    creatorRole: {
+      type: String,
+      optional: true
+    },
     roleTitles: {
       type: Array,
       optional: true
@@ -229,13 +233,13 @@ export const createGroup = new ValidatedMethod({
       type: Boolean
     }
   }).validator(),
-  run({ groupName, description, creatorId, roleTitles, publicJoin, allowGuests }) {
+  run({ groupName, description, creatorId, creatorRole, roleTitles, publicJoin, allowGuests }) {
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, publicJoin, allowGuests,
         creationDate: new Date() });
 
     const group = Groups.findOne(groupId);
-    const roleTitle = group.roles[0].title; // TODO: HACK: allow customizing this
+    const roleTitle = creatorRole || group.roles[0].title;
     addToGroup.call({ groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
     return groupId;
   }
@@ -274,15 +278,19 @@ export const createGroupWithMembers = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Email
     },
-    'members.$.role': {
+    'members.$.roleTitle': {
       type: String
     },
     'members.$.isAdmin': {
       type: Boolean
-    }
+    },
+    creatorRole: {
+      type: String,
+      optional: true
+    },
   }).validator(),
-  run({ groupName, description, roleTitles, publicJoin, allowGuests, members }) {
-    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests });
+  run({ groupName, description, roleTitles, publicJoin, allowGuests, members, creatorRole }) {
+    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests, creatorRole });
     members.forEach(member => inviteToGroup.call({ groupId, member }));
     return groupId;
   }
