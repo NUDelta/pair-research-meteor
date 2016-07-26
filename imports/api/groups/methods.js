@@ -8,7 +8,6 @@ import { _ } from 'meteor/stevezhu:lodash';
 import {
   Groups,
   DefaultRoles,
-  RoleWeight
 } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
@@ -18,6 +17,7 @@ import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
 import { log } from '../logs.js';
 
+// make private?
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: new SimpleSchema({
@@ -29,27 +29,33 @@ export const addToGroup = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Id
     },
-    role: {
-      type: Schema.GroupRole
+    roleTitle: {
+      type: String
+    },
+    isAdmin: {
+      type: Boolean
+    },
+    isPending: {
+      type: Boolean
     }
   }).validator(),
-  run({ groupId, userId, role }) {
-    // TODO: consider moving some of this to users?
+  run({ groupId, userId, roleTitle, isAdmin, isPending }) {
     // TODO: validate users making changes
     const group = Groups.findOne(groupId);
     const user = Meteor.users.findOne(userId);
 
     // TODO: this needs to go back in hmm...
-    // if (!group.containsRole(role)) {
-    //   throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
-    // }
+    if (!group.containsRole(roleTitle)) {
+      throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
+    }
     if (group.containsMember(user._id)) {
       throw new Meteor.Error('invalid-user', 'The specified user can\'t be invited, since he/she is already in the group.');
     }
 
+    const role = group.getRoleInfo(roleTitle);
     const taskRecord = Tasks.findOne({ userId, groupId });
-    const userMembership = { groupId, role, groupName: group.groupName };
-    const groupMembership = { fullName: user.profile.fullName, userId: userId, role };
+    const userMembership = { groupId, role, groupName: group.groupName, isAdmin, isPending };
+    const groupMembership = { fullName: user.profile.fullName, userId: userId, role, isAdmin, isPending };
     if (!taskRecord) {
       Tasks.insert({
         name: user.profile.fullName,
@@ -73,28 +79,48 @@ export const updateMembership = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Id
     },
-    role: {
-      type: Schema.GroupRole
+    roleTitle: {
+      type: String,
+      optional: true
+    },
+    isAdmin: {
+      type: Boolean,
+      optional: true
+    },
+    isPending: {
+      type: Boolean,
+      optional: true
     }
   }).validator(),
-  run({ groupId, userId, role }) {
+  run({ groupId, userId, roleTitle, isAdmin = 0, isPending = 0 }) {
     // TODO: some validation for security here
     if (!this.isSimulation) {
       const group = Groups.findOne(groupId);
       const user = Meteor.users.findOne(userId);
 
       const groupMembershipIndex = group.getMembershipIndex(userId);
-      const userMembershipIndex = _.findIndex(user.groups, group => group.groupId == groupId);
+      const userMembershipIndex = user.getMembershipIndex(groupId);
 
       if (groupMembershipIndex === -1 || userMembershipIndex === -1) {
         throw new Meteor.Error('invalid-user', 'The user isn\'t in the specified group.');
       }
-      if (!_.some(group.roles, role)) {
-        throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
+      if (roleTitle) {
+        const role = group.getRoleInfo(roleTitle);
+        if (!role) {
+          throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
+        }
+        group.members[groupMembershipIndex].role = role;
+        user.groups[userMembershipIndex].role = role;
       }
-
-      group.members[groupMembershipIndex].role = role;
-      user.groups[userMembershipIndex].role = role;
+      // HACK: for preventing setting this if not passed in...hm...
+      if (isAdmin !== 0) {
+        group.members[groupMembershipIndex].isAdmin = isAdmin;
+        user.groups[userMembershipIndex].isAdmin = isAdmin;
+      }
+      if (isPending !== 0) {
+        group.members[groupMembershipIndex].isPending = isPending;
+        user.groups[userMembershipIndex].isPending = isPending;
+      }
 
       Groups.update(group._id, { $set: { members: group.members } });
       Meteor.users.update(user._id, { $set: { groups: user.groups } });
@@ -117,13 +143,7 @@ export const acceptInvite = new ValidatedMethod({
       if (!membership) {
         throw new Meteor.Error('no-invite', 'You\'re not invited to this group.');
       }
-      const title = membership.role.title;
-      const role = group.getRoleFromTitle(title);
-      if (!role) {
-        // TODO: fix me!!!
-        throw new Meteor.Error('invalid-role', 'The role that you were invited for doesn\'t exist anymore. Please contact the group admin and have them reinvite you.');
-      }
-      updateMembership.call({ groupId, role, userId: this.userId });
+      updateMembership.call({ groupId, userId: this.userId, isPending: false });
     }
   }
 });
@@ -182,7 +202,6 @@ export const updateGroupRoles = new ValidatedMethod({
   }
 });
 
-// TODO: this should probably be private?
 export const createGroup = new ValidatedMethod({
   name: 'groups.create',
   validate: new SimpleSchema({
@@ -196,12 +215,12 @@ export const createGroup = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Id
     },
-    roles: {
+    roleTitles: {
       type: Array,
       optional: true
     },
-    'roles.$': {
-      type: Schema.GroupRole
+    'roleTitles.$': {
+      type: String
     },
     publicJoin: {
       type: Boolean
@@ -210,20 +229,14 @@ export const createGroup = new ValidatedMethod({
       type: Boolean
     }
   }).validator(),
-  run({ groupName, description, creatorId, roles, publicJoin, allowGuests }) {
+  run({ groupName, description, creatorId, roleTitles, publicJoin, allowGuests }) {
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
-    const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles, publicJoin, allowGuests,
+    const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, publicJoin, allowGuests,
         creationDate: new Date() });
-    if (roles) {
-      // HACK: need some ability to select own role
-      const role = {
-        title: roles[0].title,
-        weight: RoleWeight.Admin
-      };
-      addToGroup.call({ groupId, userId: creatorId, role });
-    } else {
-      addToGroup.call({ groupId, userId: creatorId, role: DefaultRoles.Admin });
-    }
+
+    const group = Groups.findOne(groupId);
+    const roleTitle = group.roles[0].title; // TODO: HACK: allow customizing this
+    addToGroup.call({ groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
     return groupId;
   }
 });
@@ -237,12 +250,12 @@ export const createGroupWithMembers = new ValidatedMethod({
     description: {
       type: String
     },
-    roles: {
+    roleTitles: {
       type: Array,
       optional: true
     },
-    'roles.$': {
-      type: Schema.GroupRole
+    'roleTitles.$': {
+      type: String
     },
     publicJoin: {
       type: Boolean
@@ -262,12 +275,14 @@ export const createGroupWithMembers = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Email
     },
     'members.$.role': {
-      type: Schema.GroupRole
+      type: String
+    },
+    'members.$.isAdmin': {
+      type: Boolean
     }
   }).validator(),
-  run({ groupName, description, roles, publicJoin, allowGuests, members }) {
-    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roles, publicJoin, allowGuests });
-    // TODO: do things with included member role later
+  run({ groupName, description, roleTitles, publicJoin, allowGuests, members }) {
+    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests });
     members.forEach(member => inviteToGroup.call({ groupId, member }));
     return groupId;
   }
@@ -283,8 +298,11 @@ export const inviteToGroup = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Email
     },
-    'member.role': {
-      type: Schema.GroupRole
+    'member.roleTitle': {
+      type: String
+    },
+    'member.isAdmin': {
+      type: Boolean
     },
     groupId: {
       type: String,
@@ -292,14 +310,11 @@ export const inviteToGroup = new ValidatedMethod({
     }
   }).validator(),
   run({ member, groupId }) {
-    const pendingRole = _.clone(member.role);
-    pendingRole.weight = RoleWeight.Pending;
-
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
         const group = Groups.findOne(groupId);
-        addToGroup.call({ groupId: groupId, userId: user._id, role: pendingRole });
+        addToGroup.call({ groupId: groupId, userId: user._id, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
         Email.send({
           from: EMAIL_ADDRESS,
           to: member.email,
@@ -308,7 +323,7 @@ export const inviteToGroup = new ValidatedMethod({
         });
       } else {
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
-        addToGroup.call({ groupId: groupId, userId: newUserId, role: pendingRole });
+        addToGroup.call({ groupId: groupId, userId: newUserId, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }
@@ -347,23 +362,10 @@ export const clearGroupPool = new ValidatedMethod({
   }
 });
 
-export const createRandomGroup = new ValidatedMethod({
-  name: 'groups.createRandom',
-  validate: null,
-  run() {
-    const randomGroupName = Math.random().toString(36).slice(2);
-    return createGroup.call({
-      groupName: randomGroupName,
-      creatorId: this.userId
-    });
-  }
-});
-
 export const createDemoGroup = new ValidatedMethod({
   name: 'groups.createDemo',
   validate: null,
   run() {
-    // TODO: replace with random lol
     const randomGroupName = Math.random().toString(36).slice(2);
     return Groups.insert({ 
       groupName: randomGroupName,
@@ -371,7 +373,7 @@ export const createDemoGroup = new ValidatedMethod({
       creatorId: DEMO_GROUP_CREATOR,
       creatorName: 'Demo Admin',
       creationDate: new Date(),
-      roles: _.values(DefaultRoles),
+      roles: _.map(_.values(DefaultRoles), title => { return { title }; }),
       publicJoin: true,
       allowGuests: true
     });

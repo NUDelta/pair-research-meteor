@@ -10,4 +10,4 @@ import { _ } from 'meteor/stevezhu:lodash';
  */
 _.frequencyPairs = (array) => {
   return _.sortBy(_.toPairs(_.countBy(array)), pair => -pair[1]);
-}
+};

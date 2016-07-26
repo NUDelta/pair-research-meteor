@@ -10,7 +10,6 @@ import { Tasks } from '../tasks/tasks.js';
 import { TasksHistory } from '../tasks-history/tasks-history.js';
 
 import { Schema } from '../schema.js';
-import { log } from '../logs.js';
 
 class PairingCollection extends Mongo.Collection {
   insert(pairing, callback) {
@@ -33,10 +32,10 @@ class PairingCollection extends Mongo.Collection {
         pairingId: id,
         firstUserId: pair.firstUserId,
         firstUserName: pair.firstUserName,
-        firstUserRole: group.getRole(pair.firstUserId),
+        firstUserRole: group.getUserRole(pair.firstUserId),
         secondUserId: pair.secondUserId,
         secondUserName: pair.secondUserName,
-        secondUserRole: group.getRole(pair.secondUserId),
+        secondUserRole: group.getUserRole(pair.secondUserId),
         timestamp: pairing.timestamp
       });
     });

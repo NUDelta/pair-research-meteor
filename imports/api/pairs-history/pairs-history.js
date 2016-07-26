@@ -8,6 +8,7 @@ import { Schema } from '../schema.js';
 
 class PairsHistoryCollection extends Mongo.Collection {
 
+  //noinspection JSMethodCanBeStatic
   constructQuery(type, info) {
     if (type == 'individual' && info) {
       return {

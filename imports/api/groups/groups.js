@@ -1,11 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { Random } from 'meteor/random';
+import { Match } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import { Schema } from '../schema.js';
 import { Tasks } from '../tasks/tasks.js';
 import { Affinities } from '../affinities/affinities.js';
+import { log } from '../logs.js';
 
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
@@ -50,16 +53,19 @@ Schema.GroupUserQuery = new SimpleSchema({
   }
 });
 
-// Unsure of this is the best solution but current implementation:
-//  - title is a moniker. It should be unique, but won't be used for
-//    anything except preferred pairing
-//  - weight handles if admin, pending, or member
 Schema.GroupRole = new SimpleSchema({
-  title: {
-    type: String
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true,
+    autoValue() {
+      return Random.id();
+    }
   },
-  weight: {
-    type: Number
+  title: {
+    type: String,
+    label: 'Role title',
+    optional: true
   }
 });
 
@@ -99,29 +105,20 @@ Schema.Member = new SimpleSchema({
     }
   },
   role: {
-    type: Schema.GroupRole
+    type: Schema.GroupRole // turn this into an id?
+  },
+  isAdmin: {
+    type: Boolean
+  },
+  isPending: {
+    type: Boolean
   }
 });
 
-export const RoleWeight = {
-  Admin: 100,
-  Member: 10,
-  Pending: 1
-};
-
 export const DefaultRoles = {
-  Admin: {
-    title: 'Admin',
-    weight: RoleWeight.Admin
-  },
-  Member: {
-    title: 'Member',
-    weight: RoleWeight.Member
-  },
-  Pending: {
-    title: 'Pending',
-    weight: RoleWeight.Pending
-  }
+  Admin: 'Admin',
+  Member: 'Member',
+  Pending: 'Pending'
 };
 
 Schema.Group = new SimpleSchema({
@@ -151,11 +148,20 @@ Schema.Group = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     optional: true
   },
-  // TODO: implement user roles
   roles: {
     type: Array,
     optional: true,
-    defaultValue: _.values(DefaultRoles)
+    autoValue() {
+      if (this.isSet && Match.test(this.value, [String])) {
+        return _.map(this.value, roleTitle => {
+          return { title: roleTitle, _id: Random.id() }
+        });
+      } else if (!this.isUpdate) {
+        return _.map(_.values(DefaultRoles), title => {
+          return { title, _id: Random.id() }
+        });
+      }
+    }
   },
   'roles.$': {
     type: Schema.GroupRole
@@ -185,33 +191,31 @@ Groups.allow({
 });
 
 Groups.helpers({
-  // TODO: should be for either userid or email
   getMembership(userId) {
     return _.find(this.members, member => member.userId == userId);
   },
-  getRole(userId) {
+  getUserRole(userId) {
     const membership = this.getMembership(userId);
     return membership && membership.role.title;
   },
   getMembershipIndex(userId) {
     return _.findIndex(this.members, member => member.userId == userId);
   },
-  getRoleFromTitle(title) {
+  getRoleInfo(title) {
     return _.find(this.roles, role => role.title == title);
   },
   containsMember(userId) {
     return _.some(this.members, { userId: userId });
   },
-  containsRole(role) {
-    check(role, Schema.GroupRole);
-    return _.some(this.roles, groupRole => groupRole.weight === role.weight && groupRole.title == role.title);
+  containsRole(roleTitle) {
+    return _.some(this.roles, { title: roleTitle });
   },
   isGroupAdmin(userId) {
-    const member = _.find(this.members, member => member.userId == userId);
-    return member.role.weight === RoleWeight.Admin;
+    const member = this.getMembership(userId);
+    return member.isAdmin;
   },
   isPending(userId) {
-    const member = _.find(this.members, member => member.userId == userId);
-    return member.role.weight === RoleWeight.Pending;
+    const member = this.getMembership(userId);
+    return member.isPending;
   }
 });

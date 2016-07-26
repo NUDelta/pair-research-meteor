@@ -3,7 +3,6 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { Schema } from '../schema.js';
 import { Groups } from '../groups/groups.js';
 
 export const findEmailFromToken = new ValidatedMethod({
@@ -42,7 +41,6 @@ export const setProfile = new ValidatedMethod({
     }
   }).validator(),
   run({ profile }) {
-    // TODO: might want structural changes...
     const user =  Meteor.users.findOne(this.userId);
     const groupIds = _.map(user.groups, group => group.groupId);
     Groups.find({

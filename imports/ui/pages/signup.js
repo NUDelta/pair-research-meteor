@@ -1,18 +1,14 @@
 import './signup.html';
 
-import { Mongo } from 'meteor/mongo';
 import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { Groups } from '../../api/groups/groups.js';
 import { acceptInvite } from '../../api/groups/methods.js';
 import { setProfile } from '../../api/users/methods.js';
-import { Schema } from '../../api/schema.js';
 
 Template.signup.onCreated(function() {
-  // TODO: filter publication fields
   this.state = new ReactiveDict();
   this.state.setDefault({
     step: 1,

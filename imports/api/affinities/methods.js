@@ -2,7 +2,6 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Affinities } from './affinities.js';
 import { Schema } from '../schema.js';
-import { log } from '../logs.js';
 
 
 export const updateAffinity = new ValidatedMethod({

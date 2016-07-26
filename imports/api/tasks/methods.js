@@ -3,7 +3,6 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Tasks } from './tasks.js';
 import { Schema } from '../schema.js';
-import { log } from '../logs.js';
 
 export const updateTask = new ValidatedMethod({
   name: 'tasks.update',

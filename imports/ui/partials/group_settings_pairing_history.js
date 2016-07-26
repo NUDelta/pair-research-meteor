@@ -1,11 +1,9 @@
 import './group_settings_pairing_history.html';
 
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { Pairings } from '../../api/pairings/pairings.js';
 import { PairsHistory } from '../../api/pairs-history/pairs-history.js';
 import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
 import { Schema } from '../../api/schema.js';

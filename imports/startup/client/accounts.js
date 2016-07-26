@@ -15,7 +15,6 @@ Accounts.onEnrollmentLink((token, done) => {
       token: token
     }, (err, email) => {
       if (err) {
-        // TODO: handle this
         alert(err.message);
       } else {
         FlowRouter.go('/signup', {}, { token, email });

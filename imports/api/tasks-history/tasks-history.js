@@ -2,12 +2,12 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { log } from '../logs.js';
 import { Schema } from '../schema.js';
 
 const ignoreWords = ['and','the','to','a','of','for','as','i','with','it','is','on','that','this','can','in','be','has','if'];
 const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(true)));
 class TasksHistoryCollection extends Mongo.Collection {
+  //noinspection JSMethodCanBeStatic
   constructQuery(type, info) {
     if (type == 'individual' && info) {
       return { userId: info };

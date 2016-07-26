@@ -10,7 +10,6 @@ import { Groups } from '../../api/groups/groups.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { Affinities } from '../../api/affinities/affinities.js';
 import { Schema } from '../../api/schema.js';
-import { generateAvatar } from '../../api/util.js';
 
 import {
   updateTask,

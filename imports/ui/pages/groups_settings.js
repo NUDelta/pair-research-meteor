@@ -128,7 +128,8 @@ Template.groups_settings.events({
     let success = true;
     let error;
     const roleChanges = instance.state.get('roleChanges');
-    console.log(roleChanges);
+    // TODO: should batch this
+    // TODO: this is now invalid
     _.forOwn(roleChanges, (role, userId) => {
       updateMembership.call({ role, userId, groupId: instance.state.get('groupId') }, (err) => {
         if (err) {

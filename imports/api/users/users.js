@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'meteor/stevezhu:lodash';
 
 import { Schema } from '../schema.js';
 import { generateAvatar } from '../util.js';
@@ -16,7 +17,13 @@ Schema.UserGroupMembership = new SimpleSchema({
     type: String
   },
   role: {
-    type: Schema.GroupRole
+    type: Schema.GroupRole // should be id?
+  },
+  isAdmin: {
+    type: Boolean
+  },
+  isPending: {
+    type: Boolean
   }
 });
 
@@ -110,5 +117,8 @@ Meteor.users.helpers({
     } else {
       return generateAvatar(this.profile.fullName);
     }
+  },
+  getMembershipIndex(groupId) {
+    return _.findIndex(this.groups, group => group.groupId == groupId);
   }
 });

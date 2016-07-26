@@ -6,7 +6,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
 
-import { Groups, RoleWeight } from '../../api/groups/groups.js';
+import { Groups } from '../../api/groups/groups.js';
 
 import '../partials/groups_home_invite.js';
 
@@ -27,11 +27,11 @@ Template.groups_home.onCreated(function() {
         FlowRouter.go('/signup');
       } else {
         this.state.set('groups', _.map(
-          _.filter(allGroups, group => group.role.weight !== RoleWeight.Pending),
+          _.filter(allGroups, group => !group.isPending),
           group => group.groupId
         ));
         this.state.set('pendingGroups', _.map(
-          _.filter(allGroups, group => group.role.weight === RoleWeight.Pending),
+          _.filter(allGroups, group => group.isPending),
           group => group.groupId
         ));
       }
