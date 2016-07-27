@@ -49,7 +49,7 @@ export const addToGroup = new ValidatedMethod({
       throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
     }
     if (group.containsMember(user._id)) {
-      throw new Meteor.Error('invalid-user', 'The specified user can\'t be invited, since he/she is already in the group.');
+      throw new Meteor.Error('existing-user', 'The specified user can\'t be invited, since he/she is already in the group.');
     }
 
     const role = group.getRoleInfo(roleTitle);

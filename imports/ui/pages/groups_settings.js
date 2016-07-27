@@ -7,6 +7,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import { Groups } from '../../api/groups/groups.js';
+import { processEmails } from '../../api/groups/util.js';
 import {
   inviteToGroup,
   updateGroupInfo,
@@ -107,14 +108,27 @@ Template.groups_settings.events({
   },
   'submit #groups_settings_members_invite'(event, instance) {
     event.preventDefault();
-    const roles = instance.state.get('group').roles;
-    inviteToGroup.call({
-      groupId: instance.state.get('groupId'),
-      member: {
-        email: event.currentTarget.addMember.value,
-        role: roles[0] // HACK: need to be able to specify role
+    const group = instance.state.get('group');
+    const members = instance.state.get('members');
+
+    processEmails(
+      event.currentTarget.addMember.value,
+      email => false, // not really a good way to do this, so just alert below
+      email => {
+        inviteToGroup.call({
+          groupId: instance.state.get('groupId'),
+          member: { email, roleTitle: group.roles[0].title, isAdmin: false },
+        }, err => {
+          if (err && err.error == 'existing-user') {
+            // think about this, alerting for each user could be annoying
+            // would be hard to batch too...
+          } else if (err) {
+            alert(err);
+          }
+        });
       }
-    });
+    );
+    event.currentTarget.addMember.value = '';
   },
   'change .member-select select'(event, instance) {
     const $target = $(event.target);

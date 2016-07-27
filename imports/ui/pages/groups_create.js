@@ -9,6 +9,7 @@ import { _ } from 'meteor/stevezhu:lodash';
 
 import { DefaultRoles } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';
+import { processEmails } from '../../api/groups/util.js';
 
 
 Template.groups_create.onCreated(function() {
@@ -27,40 +28,17 @@ Template.groups_create.onCreated(function() {
     })
   };
 
-  const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   this.addMembers = () => {
-    const email = document.getElementById('member');
-
-    const emails = _.compact(_.map(email.value.split(','), email => email.replace(/ /g, '')));
-    const invalid = _.filter(emails, email => !re.test(email));
-    const valid = _.filter(emails, email => re.test(email));
-    if (invalid.length) {
-      alert(`[${ invalid }] is/are not email addresses and will not be added.`);
-    }
-    let duplicates = [];
-    valid.forEach((email) => {
-      const err = this.addMember(email);
-      if (err) {
-        duplicates.push(err);
+    const emails = document.getElementById('member');
+    processEmails(
+      emails.value,
+      email => _.some(this.state.get('members'), member => member.email == email) || Meteor.user().email() == email,
+      email => {
+        const member = { email, isAdmin: false };
+        this.state.push('members', member);
       }
-    });
-    if (duplicates.length) {
-      alert(`[${ duplicates }] is/are duplicates and not added.`);
-    }
-    email.value = '';
-  };
-
-  this.addMember = (email) => {
-    const exists = _.some(this.state.get('members'), member => member.email == email) || Meteor.user().email() == email;
-    if (!exists) {
-      const member = {
-        email: email,
-        isAdmin: false
-      };
-      this.state.push('members', member);
-    } else {
-      return email;
-    }
+    );
+    emails.value = '';
   };
 
   this.setRoleTitle = (index, title) => {

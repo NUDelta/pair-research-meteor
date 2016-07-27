@@ -1,9 +1,9 @@
 <template name="group_settings_member">
-  <li class="collection-item {{$if isPending 'pending' ''}} {{$if isAdmin 'admin' ''}} avatar">
+  <li class="collection-item {{$if member.isPending 'pending' ''}} {{$if member.isAdmin 'admin' ''}} avatar">
     <img src="{{avatar}}" alt="{{member.fullName}}" class="circle">
     <span class="name title">
       {{member.fullName}}
-      {{#if isPending}}
+      {{#if member.isPending}}
         (pending)
       {{/if}}
     </span>
