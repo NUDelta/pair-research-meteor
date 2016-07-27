@@ -4,13 +4,22 @@
       <!-- TODO: link me to group info page -->
       <span>
         {{group.groupName}}
-        <span class="info">as {{group.getUserRole currentUser._id}}</span>
+        <span class="info">
+          as
+          <select class="browser-default">
+            {{#each role in group.roles}}
+              <option value="{{role.title}}" selected="{{$eq (group.getUserRole currentUser._id) role.title}}">
+                {{role.title}}
+              </option>
+            {{/each}}
+          </select>
+        </span>
       </span>
+      <a href="#accept" class="tertiary-content">
+        <i class="material-icons">done</i>
+      </a>
       <a href="#reject" class="secondary-content">
         <i class="material-icons">close</i>
-      </a>
-      <a href="#accept" class="secondary-content">
-        <i class="material-icons">done</i>
       </a>
     </div>
   </li>

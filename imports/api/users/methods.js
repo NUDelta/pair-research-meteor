@@ -42,6 +42,9 @@ export const setProfile = new ValidatedMethod({
   }).validator(),
   run({ profile }) {
     const user =  Meteor.users.findOne(this.userId);
+    if (!user) {
+      throw new Meteor.Error('user-not-found', 'This user was not found.');
+    }
     const groupIds = _.map(user.groups, group => group.groupId);
     Groups.find({
       _id: {

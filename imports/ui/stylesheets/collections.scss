@@ -1,0 +1,22 @@
+ul.collection.invites {
+  li.collection-item {
+    position: relative;
+  }
+
+  select.browser-default {
+    display: inline-block;
+    width: 30%;
+  }
+
+  .secondary-content {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+
+  .tertiary-content {
+    @extend .secondary-content;
+    right: 48px;
+  }
+}

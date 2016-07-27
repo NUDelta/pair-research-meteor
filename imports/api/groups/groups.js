@@ -120,7 +120,6 @@ Schema.Member = new SimpleSchema({
 export const DefaultRoles = {
   Admin: 'Admin',
   Member: 'Member',
-  Pending: 'Pending'
 };
 
 Schema.Group = new SimpleSchema({

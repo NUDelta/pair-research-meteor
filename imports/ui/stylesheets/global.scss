@@ -155,7 +155,7 @@ li.collection-item.multi-line {
     right: 16px;
   }
   .tertiary-content {
-    @extend.secondary-content;
+    @extend .secondary-content;
     right: 48px;
   }
 }

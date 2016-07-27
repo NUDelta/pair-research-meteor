@@ -42,12 +42,21 @@
         {{#if $eq step 2}}
           <div id="step2" class="step">
             <h5 class="caption">You're going to be joining these groups.</h5>
-            <ul class="collection member-select">
+            <ul class="collection invites">
               {{#each group in groups}}
                 <li class="collection-item">
                   <div>
                     {{ group.groupName }}
-                    <span class="info">as {{ group.role.title }}</span>
+                    <span class="info">
+                      as
+                      <select class="browser-default" data-group="{{group.groupId}}">
+                        {{#each role in (roles group.groupId)}}
+                          <option value="{{role.title}}" selected="{{$eq group.role.title role.title}}">
+                            {{role.title}}
+                          </option>
+                        {{/each}}
+                      </select>
+                    </span>
                   </div>
                 </li>
               {{else}}
@@ -68,8 +77,12 @@
                 <!--</label>-->
                 <!--<i class="material-icons">close</i>-->
               <!--</div>-->
-              <button class="pair-form-button" {{$if ($eq groups.length 0) 'disabled'}}>Continue</button>
-              <a href="/create"><button class="secondary-form-button">Create New Group</button></a>
+              <button class="pair-form-button" {{$if ($eq groups.length 0) 'disabled' ''}}>
+                Continue
+              </button>
+              <a href="/create">
+                <button class="secondary-form-button">Create New Group</button>
+              </a>
               <p class="info">
                 If you don't see the group you're expecting to join, ask your group leader to invite you. You'll see
                 it above once they do and will be able to continue.

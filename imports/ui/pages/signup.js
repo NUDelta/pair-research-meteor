@@ -4,7 +4,9 @@ import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { _ } from 'meteor/stevezhu:lodash';
 
+import { Groups } from '../../api/groups/groups.js';
 import { acceptInvite } from '../../api/groups/methods.js';
 import { setProfile } from '../../api/users/methods.js';
 
@@ -15,13 +17,14 @@ Template.signup.onCreated(function() {
     groups: [],
     email: FlowRouter.getQueryParam('email'),
     token: FlowRouter.getQueryParam('token'),
-    avatar: 'http://orig02.deviantart.net/cd44/f/2016/152/2/d/placeholder_3_by_sketchymouse-da4ny84.png'
+    avatar: 'http://orig12.deviantart.net/8670/f/2016/152/b/6/placeholder_1_by_sketchymouse-da4nvhb.png'
   });
 
-  let userHandle;
+  let userHandle, groupsHandle;
   this.autorun(() => {
     userHandle = this.subscribe('user.groups');
-    if (userHandle.ready()) {
+    groupsHandle = this.subscribe('groups.user');
+    if (userHandle.ready() && groupsHandle.ready()) {
       const user = Meteor.user();
       this.state.set('groups', user && user.groups);
     }
@@ -72,6 +75,10 @@ Template.signup.helpers({
   avatar() {
     const instance = Template.instance();
     return instance.state.get('avatar');
+  },
+  roles(groupId) {
+    const group = Groups.findOne(groupId);
+    return group && group.roles;
   }
 });
 
@@ -85,10 +92,10 @@ Template.signup.events({
     const user = {
       email: event.target.email.value,
       password: event.target.password.value,
-      profile: {
+      profile: _.pickBy({ // filter out falsey values
         fullName: event.target.fullName.value,
         avatar: event.target.avatar.value
-      }
+      })
     };
 
     const token = instance.state.get('token');
@@ -99,10 +106,11 @@ Template.signup.events({
         } else {
           setProfile.call({ profile: user.profile }, (err) => {
             if (err) {
+              // TODO: fixed dead end
+              // if this triggers the token is consumed anyway
               alert(err);
-            } else {
-              instance.state.increment('step');
             }
+            instance.state.increment('step');
           });
         }
       });
@@ -118,13 +126,12 @@ Template.signup.events({
   },
   'submit #step2 form'(event, instance) {
     event.preventDefault();
-    // TODO: only for things in the list right now
-    // wouldn't work for created or anything added to that list
-
     const groups = instance.state.get('groups');
     groups.forEach((group) => {
+      const roleTitle = $(`select[data-group=${ group.groupId }]`).val();
       acceptInvite.call({
-        groupId: group.groupId
+        groupId: group.groupId,
+        roleTitle
       }, (err) => {
         if (err) {
           alert(err);

@@ -134,16 +134,19 @@ export const acceptInvite = new ValidatedMethod({
     groupId: {
       type: String,
       regEx: SimpleSchema.RegEx.Id
+    },
+    roleTitle: {
+      type: String
     }
   }).validator(),
-  run({ groupId }) {
+  run({ groupId, roleTitle }) {
     if (!this.isSimulation) {
       const group = Groups.findOne(groupId);
       const membership = group.getMembership(this.userId);
       if (!membership) {
         throw new Meteor.Error('no-invite', 'You\'re not invited to this group.');
       }
-      updateMembership.call({ groupId, userId: this.userId, isPending: false });
+      updateMembership.call({ groupId, roleTitle, userId: this.userId, isPending: false });
     }
   }
 });

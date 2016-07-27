@@ -269,6 +269,7 @@ Meteor.startup(() => {
       }
     ];
     invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));
+    inviteToGroup.call({ groupId: noAccessGroup, member: invitees[2] });
 
     // Generate some pairing history
     const basicUserInfo = _.concat(
