@@ -59,7 +59,7 @@ Schema.GroupRole = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     optional: true,
     autoValue() {
-      if (!this.isSet) {
+      if (!this.isSet && this.operator != '$pull') {
         return Random.id();
       }
     }

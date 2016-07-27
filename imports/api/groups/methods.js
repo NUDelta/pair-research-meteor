@@ -353,8 +353,8 @@ export const removeFromGroup = new ValidatedMethod({
       ]
     });
     Tasks.remove({ groupId: groupId, userId: userId });
-    Meteor.users.update(userId, { $pull : { groups: { groupId: groupId } } });
-    return Groups.update(groupId, { $pull: { members: { userId: userId } } });
+    Meteor.users.update(userId, { $pull : { groups: { groupId } } });
+    return Groups.update(groupId, { $pull: { members: { userId } } });
   }
 });
 

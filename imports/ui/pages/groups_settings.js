@@ -84,6 +84,7 @@ Template.groups_settings.helpers({
 
 Template.groups_settings.events({
   'click .side-nav a.waves-effect'(event, instance) {
+    event.preventDefault();
     const section = event.target.getAttribute('href').slice(1);
     instance.state.set('section', section);
   },
@@ -117,11 +118,7 @@ Template.groups_settings.events({
   },
   'change .member-select select'(event, instance) {
     const $target = $(event.target);
-    const $selected = $target.find('option:selected');
-    const newRole = {
-      title: $selected.val(),
-      weight: $selected.data('weight')
-    };
+    const newRole = $target.val();
     instance.state.setKey('roleChanges', $target.data('user'), newRole);
   },
   'click #save-roles'(event, instance) {
@@ -129,9 +126,8 @@ Template.groups_settings.events({
     let error;
     const roleChanges = instance.state.get('roleChanges');
     // TODO: should batch this
-    // TODO: this is now invalid
-    _.forOwn(roleChanges, (role, userId) => {
-      updateMembership.call({ role, userId, groupId: instance.state.get('groupId') }, (err) => {
+    _.forOwn(roleChanges, (roleTitle, userId) => {
+      updateMembership.call({ roleTitle, userId, groupId: instance.state.get('groupId') }, (err) => {
         if (err) {
           success = false;
           error = err;

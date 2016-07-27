@@ -1,16 +1,15 @@
 <template name="group_settings_member">
-  <li class="collection-item {{pending.class}} {{admin.class}} avatar">
+  <li class="collection-item {{$if isPending 'pending' ''}} {{$if isAdmin 'admin' ''}} avatar">
     <img src="{{avatar}}" alt="{{member.fullName}}" class="circle">
     <span class="name title">
       {{member.fullName}}
-      {{#if pending.isPending}}
+      {{#if isPending}}
         (pending)
       {{/if}}
     </span>
-    <!-- TODO: this doesnt work yet -->
     <select name="{{member.fullName}}_role" data-user="{{member.userId}}">
       {{#each role in roles}}
-        <option value="{{role.title}}" data-weight="{{role.weight}}" selected="{{$eq member.role.title role.title}}">
+        <option value="{{role.title}}" selected="{{$eq member.role.title role.title}}">
           {{role.title}}
         </option>
       {{/each}}
