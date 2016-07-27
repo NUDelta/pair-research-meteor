@@ -42,6 +42,10 @@
     .col.s10 {
       padding-bottom: 3em;
     }
+    button#enter {
+      margin-top: 10px;
+      width: 100%;
+    }
     // override materialize
     .collection-item {
       min-height: 0;

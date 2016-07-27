@@ -2,6 +2,7 @@ import './groups_settings.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/stevezhu:lodash';
@@ -38,7 +39,13 @@ Template.groups_settings.onCreated(function() {
       this.state.set('group', group);
       this.state.set('members', group.members);
     }
-  })
+  });
+
+  this.updateSelect = () => {
+    Tracker.afterFlush(() => {
+      $('select').material_select();
+    });
+  };
 });
 
 Template.groups_settings.helpers({
@@ -88,6 +95,7 @@ Template.groups_settings.events({
     event.preventDefault();
     const section = event.target.getAttribute('href').slice(1);
     instance.state.set('section', section);
+    instance.updateSelect();
   },
   'submit #groups_settings_info'(event, instance) {
     event.preventDefault();
@@ -108,16 +116,15 @@ Template.groups_settings.events({
   },
   'submit #groups_settings_members_invite'(event, instance) {
     event.preventDefault();
-    const group = instance.state.get('group');
     const members = instance.state.get('members');
-
+    const roleTitle = event.currentTarget.inviteRole.value;
     processEmails(
       event.currentTarget.addMember.value,
       email => false, // not really a good way to do this, so just alert below
       email => {
         inviteToGroup.call({
           groupId: instance.state.get('groupId'),
-          member: { email, roleTitle: group.roles[0].title, isAdmin: false },
+          member: { email, roleTitle: roleTitle, isAdmin: false },
         }, err => {
           if (err && err.error == 'existing-user') {
             // think about this, alerting for each user could be annoying
