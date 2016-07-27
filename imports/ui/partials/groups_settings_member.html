@@ -1,10 +1,13 @@
 <template name="group_settings_member">
   <li class="collection-item {{$if member.isPending 'pending' ''}} {{$if member.isAdmin 'admin' ''}} avatar">
     <img src="{{avatar}}" alt="{{member.fullName}}" class="circle">
-    <span class="name title">
+    <span class="name title" data-user="{{member.userId}}">
       {{member.fullName}}
       {{#if member.isPending}}
         (pending)
+      {{/if}}
+      {{#if member.isAdmin}}
+        <i class="material-icons">person</i>
       {{/if}}
     </span>
     <select name="{{member.fullName}}_role" data-user="{{member.userId}}">

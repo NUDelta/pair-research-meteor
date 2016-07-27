@@ -97,6 +97,9 @@
               </div>
             </div>
           </form>
+          <span class="input-label-text">
+            <i class="material-icons">person</i> denotes admins. You can click on each user's name to toggle admin privileges.
+          </span>
           <ul class="collection member-select">
             {{#each member in members}}
               {{> group_settings_member (memberArgs member)}}

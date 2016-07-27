@@ -29,8 +29,8 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'group_info',
-    roleChanges: {}
+    section: 'group_members',
+    userChanges: {}
   });
 
   this.autorun(() => {
@@ -140,15 +140,37 @@ Template.groups_settings.events({
   'change .member-select select'(event, instance) {
     const $target = $(event.target);
     const newRole = $target.val();
-    instance.state.setKey('roleChanges', $target.data('user'), newRole);
+    const userId = $target.data('user');
+
+    const allUserChanges = instance.state.get('userChanges');
+    const userChanges = allUserChanges[userId] || {};
+    userChanges.roleTitle = newRole;
+    instance.state.setKey('userChanges', userId, userChanges);
+  },
+  'click .member-select .collection-item:not(.pending) span.name'(event, instance) {
+    const $target = $(event.target);
+    const userId = $target.data('user');
+
+    const members = instance.state.get('members');
+    const index = _.findIndex(members, member => member.userId == userId);
+    const isAdmin = !members[index].isAdmin;
+
+    const allUserChanges = instance.state.get('userChanges');
+    const userChanges = allUserChanges[userId] || {};
+    userChanges.isAdmin = isAdmin;
+    instance.state.setKey('userChanges', userId, userChanges);
+
+    // update members state for ui
+    members[index].isAdmin = isAdmin;
+    instance.state.set('members', members);
   },
   'click #save-roles'(event, instance) {
     let success = true;
     let error;
-    const roleChanges = instance.state.get('roleChanges');
+    const userChanges = instance.state.get('userChanges');
     // TODO: should batch this
-    _.forOwn(roleChanges, (roleTitle, userId) => {
-      updateMembership.call({ roleTitle, userId, groupId: instance.state.get('groupId') }, (err) => {
+    _.forOwn(userChanges, (changes, userId) => {
+      updateMembership.call({ roleTitle: changes.roleTitle, userId, groupId: instance.state.get('groupId') }, (err) => {
         if (err) {
           success = false;
           error = err;
