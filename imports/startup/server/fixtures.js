@@ -232,7 +232,7 @@ Meteor.startup(() => {
       publicJoin: false,
       allowGuests: false
     });
-    addToGroup.call({ groupId: otherGroupId, userId: admin._id, roleTitle: DefaultRoles.Member, isAdmin: false,
+    addToGroup.call({ groupId: otherGroupId, userId: admin._id, roleTitle: DefaultRoles.Undergraduate, isAdmin: false,
       isPending: false });
 
     const noAccessGroup = createGroup.call({
@@ -254,17 +254,17 @@ Meteor.startup(() => {
     const invitees = [
       {
         email: 'kc@kc.com',
-        roleTitle: DefaultRoles.Admin,
+        roleTitle: DefaultRoles.Professor,
         isAdmin: true
       },
       {
         email: 'newadmin@gmail.com',
-        roleTitle: DefaultRoles.Admin,
+        roleTitle: DefaultRoles.Professor,
         isAdmin: true
       },
       {
         email: 'newguy@gmail.com',
-        roleTitle: DefaultRoles.Member,
+        roleTitle: DefaultRoles.Graduate,
         isAdmin: true
       }
     ];

@@ -118,8 +118,10 @@ Schema.Member = new SimpleSchema({
 });
 
 export const DefaultRoles = {
-  Admin: 'Admin',
-  Member: 'Member',
+  Professor: 'Professor',
+  PostDoc: 'Post Doc',
+  Graduate: 'Graduate Student',
+  Undergraduate: 'Undergraduate Student'
 };
 
 Schema.Group = new SimpleSchema({

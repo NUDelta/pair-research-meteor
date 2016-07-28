@@ -13,7 +13,8 @@ import { processEmails } from '../../api/groups/util.js';
 
 
 Template.groups_create.onCreated(function() {
-  const defaultRoles = [ DefaultRoles.Admin, DefaultRoles.Member ];
+  const defaultRoles = [ DefaultRoles.Professor, DefaultRoles.PostDoc,
+    DefaultRoles.Graduate, DefaultRoles.Undergraduate ];
 
   this.state = new ReactiveDict();
   this.state.setDefault({
