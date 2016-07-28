@@ -12,7 +12,7 @@
       padding-left: 84px;
 
       img.circle {
-        @extend .absolute-center;
+        @extend .centered-y;
         left: 28px;
       }
 
