@@ -59,6 +59,9 @@ Template.groups_create.onCreated(function() {
     let editing = this.state.get('editing');
     editing[index] = !editing[index];
     this.state.set('editing', editing);
+    Tracker.afterFlush(() => {
+      $(`input[name=${ index }-role-name]`).focus();
+    });
   };
 
   this.isEditing = (index) => {
@@ -100,6 +103,7 @@ Template.groups_create.events({
     });
   },
   'click .roles a.secondary-content'(event, instance) {
+    event.preventDefault();
     const index = $(event.currentTarget).data('index');
     instance.removeRole(index);
   },

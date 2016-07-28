@@ -52,27 +52,13 @@
               <label for="allowGuests">Allow guests to join pool</label>
             </p>
 
-            <button class="pair-form-button">Update</button>
+            <button class="pair-form-button waves-effect waves-light">Update</button>
           </form>
         </div>
       </section>
     {{/if}}
     {{#if (isActive 'group_roles')}}
-      <section class="row" id="groups_settings_roles">
-        <div class="col s8 offset-s2">
-          <h3 class="header">{{group.groupName}} &mdash; Roles</h3>
-          <p class="info">
-            Editing this will be coming soon.
-          </p>
-          <ul class="collection">
-            {{#each role in group.roles}}
-              <li class="collection-item">
-                {{role.title}}
-              </li>
-            {{/each}}
-          </ul>
-        </div>
-      </section>
+      {{> groups_settings_roles sectionArgs}}
     {{/if}}
     {{#if (isActive 'group_members')}}
       <section class="row" id="groups_settings_members">
@@ -102,18 +88,18 @@
           </span>
           <ul class="collection member-select">
             {{#each member in members}}
-              {{> group_settings_member (memberArgs member)}}
+              {{> groups_settings_member (memberArgs member)}}
             {{/each}}
           </ul>
-          <button type="button" id="save-roles" class="pair-form-button">Save Role Changes</button>
+          <button type="button" id="save-roles" class="pair-form-button waves-effect waves-light">Save Role Changes</button>
         </div>
       </section>
     {{/if}}
     {{#if (isActive 'pairing_history')}}
-      {{> group_settings_pairing_history sectionArgs}}
+      {{> groups_settings_pairing_history sectionArgs}}
     {{/if}}
     {{#if (isActive 'pairing_statistics')}}
-      {{> group_settings_pairing_stats sectionArgs}}
+      {{> groups_settings_pairing_stats sectionArgs}}
     {{/if}}
   </div>
 </template>

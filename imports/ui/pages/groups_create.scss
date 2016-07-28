@@ -15,25 +15,4 @@
     margin-right: 3em;
   }
 
-  .roles {
-    $roles-font: 18px;
-
-    vertical-align: middle;
-    line-height: $roles-font;
-
-    .role-left {
-      .material-icons {
-        @extend .teal-text, .text-lighten-2;
-      }
-    }
-    .material-icons {
-      vertical-align: middle;
-      line-height: $roles-font;
-      cursor: pointer;
-    }
-
-    .disabled {
-      cursor: pointer;
-    }
-  }
 }

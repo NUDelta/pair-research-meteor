@@ -1,4 +1,4 @@
-import './group_settings_pairing_history.html';
+import './groups_settings_pairing_history.html';
 
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -10,7 +10,7 @@ import { Schema } from '../../api/schema.js';
 
 const PAIRS_PER_PAGE = 20;
 
-Template.group_settings_pairing_history.onCreated(function() {
+Template.groups_settings_pairing_history.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
     offset: 0,
@@ -30,7 +30,7 @@ Template.group_settings_pairing_history.onCreated(function() {
   });
 });
 
-Template.group_settings_pairing_history.helpers({
+Template.groups_settings_pairing_history.helpers({
   pairings() {
     const instance = Template.instance();
     return PairsHistory.find({}, {
@@ -60,7 +60,7 @@ Template.group_settings_pairing_history.helpers({
   },
 });
 
-Template.group_settings_pairing_history.events({
+Template.groups_settings_pairing_history.events({
   'click a[href=#set-page]'(event, instance) {
     const pageNumber = $(event.target).data('index');
     instance.state.set('offset', pageNumber);

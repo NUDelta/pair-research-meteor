@@ -1,4 +1,4 @@
-import './group_settings_pairing_stats.html';
+import './groups_settings_pairing_stats.html';
 
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -8,7 +8,7 @@ import { PairsHistory } from '../../api/pairs-history/pairs-history.js';
 import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
 import { Schema } from '../../api/schema.js';
 
-Template.group_settings_pairing_stats.onCreated(function() {
+Template.groups_settings_pairing_stats.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
     selectedInfo: '',
@@ -26,11 +26,11 @@ Template.group_settings_pairing_stats.onCreated(function() {
   });
 });
 
-Template.group_settings_pairing_stats.onRendered(function() {
+Template.groups_settings_pairing_stats.onRendered(function() {
   $('ul.tabs').tabs();
 });
 
-Template.group_settings_pairing_stats.helpers({
+Template.groups_settings_pairing_stats.helpers({
   sessionCount() {
     return Pairings.find().count();
   },
@@ -67,7 +67,7 @@ Template.group_settings_pairing_stats.helpers({
   }
 });
 
-Template.group_settings_pairing_stats.events({
+Template.groups_settings_pairing_stats.events({
   'click .chip.clickable'(event, instance) {
     const $target = $(event.target);
     $('.chip.clickable').removeClass('active');
@@ -75,6 +75,7 @@ Template.group_settings_pairing_stats.events({
     instance.state.set('selectedInfo', $target.data('id'));
   },
   'click ul.tabs a'(event, instance) {
+    event.preventDefault();
     const $target = $(event.target);
     instance.state.set('selectedTab', $target.attr('href').slice(1));
   }

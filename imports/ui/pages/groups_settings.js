@@ -15,9 +15,10 @@ import {
   updateMembership
 } from '../../api/groups/methods.js';
 
+import '../partials/groups_settings_roles.js';
 import '../partials/groups_settings_member.js';
-import '../partials/group_settings_pairing_history.js';
-import '../partials/group_settings_pairing_stats.js';
+import '../partials/groups_settings_pairing_history.js';
+import '../partials/groups_settings_pairing_stats.js';
 
 Template.groups_settings.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
@@ -29,7 +30,7 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'group_members',
+    section: 'group_roles',
     userChanges: {}
   });
 
@@ -129,6 +130,7 @@ Template.groups_settings.events({
           if (err && err.error == 'existing-user') {
             // think about this, alerting for each user could be annoying
             // would be hard to batch too...
+            alert(`${ email } is already in the group.`);
           } else if (err) {
             alert(err);
           }

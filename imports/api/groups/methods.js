@@ -189,7 +189,8 @@ export const updateGroupRoles = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Id
     },
     roles: {
-      type: Array
+      type: Array,
+      minCount: 1
     },
     'roles.$': {
       type: Schema.GroupRole
@@ -197,9 +198,44 @@ export const updateGroupRoles = new ValidatedMethod({
   }).validator(),
   run({ groupId, roles }) {
     // TODO: update corresponding user fields + member fields
+    const group = Groups.findOne(groupId);
+
+    // update group membership
+    let changedMembers = [];
+    const groupMembers = _.map(group.members, member => {
+      const role = _.find(roles, role => role._id == member.role._id);
+      // unless no change was made
+      if (!(role && role.title == member.role.title)) {
+        if (role) {
+          member.role = role;
+        } else {
+          member.role = roles[0];
+        }
+        changedMembers.push(member.userId);
+      }
+      return member;
+    });
+
+    // TODO: compare this with two mass updates (e.g. pull and addToSet)
+    if (!this.isSimulation) {
+      Meteor.users.find({ _id: { $in: changedMembers } }).forEach(user => {
+        const index = user.getMembershipIndex(groupId);
+        const role = _.find(roles, role => role._id == user.groups[index].role._id);
+        if (!(role && role.title == user.groups[index].role.title)) {
+          if (role) {
+            user.groups[index].role = role;
+          } else {
+            user.groups[index].role = roles[0];
+          }
+          Meteor.users.update(user._id, { $set: { groups: user.groups } });
+        }
+      });
+    }
+
     return Groups.update(groupId, {
       $set: {
-        roles
+        roles,
+        members: groupMembers
       }
     });
   }
