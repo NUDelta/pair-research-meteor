@@ -172,7 +172,7 @@ Template.groups_settings.events({
     const userChanges = instance.state.get('userChanges');
     // TODO: should batch this
     _.forOwn(userChanges, (changes, userId) => {
-      updateMembership.call({ roleTitle: changes.roleTitle, userId, groupId: instance.state.get('groupId') }, (err) => {
+      updateMembership.call({ roleTitle: changes.roleTitle, isAdmin: changes.isAdmin, userId, groupId: instance.state.get('groupId') }, (err) => {
         if (err) {
           success = false;
           error = err;
