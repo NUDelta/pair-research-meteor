@@ -58,7 +58,7 @@ class PairingCollection extends Mongo.Collection {
         secondUserId: pair.secondUserId,
         secondUserName: pair.secondUserName,
         secondUserRole: group.getUserRole(pair.secondUserId),
-        timestamp: pairing.timestamp
+        timestamp: pairing.timestamp || new Date() // for unavailable
       });
     });
 
