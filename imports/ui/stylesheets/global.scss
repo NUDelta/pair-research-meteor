@@ -39,6 +39,21 @@
   }
 }
 
+// for login / forgot-password TODO: refactor
+.simple-cards {
+  padding-top: 3em;
+  text-align: center;
+
+  form.card {
+    margin-top: 2em;
+    padding: 2em;
+
+    button {
+      margin-top: 0.5em;
+    }
+  }
+}
+
 // promo object
 .promo {
   width: 100%;

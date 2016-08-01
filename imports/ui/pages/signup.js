@@ -9,6 +9,7 @@ import { _ } from 'meteor/stevezhu:lodash';
 import { Groups } from '../../api/groups/groups.js';
 import { acceptInvite } from '../../api/groups/methods.js';
 import { setProfile } from '../../api/users/methods.js';
+import { doneCallback } from '../../startup/client/accounts.js';
 
 Template.signup.onCreated(function() {
   this.state = new ReactiveDict();
@@ -104,6 +105,9 @@ Template.signup.events({
         if (err) {
           alert(err);
         } else {
+          if (doneCallback) {
+            doneCallback();
+          }
           setProfile.call({ profile: user.profile }, (err) => {
             if (err) {
               // TODO: fixed dead end

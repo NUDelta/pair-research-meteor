@@ -23,7 +23,6 @@ accounts-password
 kadira:flow-router
 kadira:blaze-layout
 fourseven:scss
-accounts-ui
 stevezhu:lodash
 mdg:validated-method
 nooitaf:colors

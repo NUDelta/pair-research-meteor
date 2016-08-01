@@ -4,21 +4,23 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import { findEmailFromToken } from '../../api/users/methods.js';
 
+export let doneCallback;
+
 Accounts.onEnrollmentLink((token, done) => {
-  if (Meteor.userId()) {
-    // TODO: handle this: e.g. force logout or ask if they want to merge accounts
-    // FIXME: this doesn't fire at all right now
-    alert('Please log out first!');
-    done();
-  } else {
-    findEmailFromToken.call({
-      token: token
-    }, (err, email) => {
-      if (err) {
-        alert(err.message);
-      } else {
-        FlowRouter.go('/signup', {}, { token, email });
-      }
-    });
-  }
+  findEmailFromToken.call({
+    token: token
+  }, (err, email) => {
+    if (err) {
+      alert(err.message);
+    } else {
+      doneCallback = done;
+      FlowRouter.go('/signup', {}, { token, email });
+    }
+  });
 });
+
+Accounts.onResetPasswordLink((token, done) => {
+  doneCallback = done;
+  FlowRouter.go('/change-password', {}, { token });
+});
+

@@ -1,4 +1,5 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 import '../../ui/blaze-helpers.js';
 
@@ -15,6 +16,9 @@ import '../../ui/pages/groups_settings.js';
 import '../../ui/pages/groups_create.js';
 import '../../ui/pages/demo_pair.js';
 import '../../ui/pages/under-construction.js';
+import '../../ui/pages/forgot-password.js';
+import '../../ui/pages/change-password.js';
+
 
 FlowRouter.notFound = {
   action() {
@@ -56,6 +60,28 @@ FlowRouter.route('/signup', {
   name: 'App.signup',
   action() {
     BlazeLayout.render('layout', { main: 'signup' });
+  }
+});
+
+FlowRouter.route('/forgot-password', {
+  name: 'App.forgotPassword',
+  action() {
+    BlazeLayout.render('forgot_password');
+  }
+});
+
+FlowRouter.route('/change-password', {
+  name: 'App.changePassword',
+  triggersEnter: [
+    (context, direct, stop) => {
+      if (!context.queryParams.token) {
+        BlazeLayout.render('layout', { main: 'under_construction' });
+        stop();
+      }
+    }
+  ],
+  action() {
+    BlazeLayout.render('change_password');
   }
 });
 
