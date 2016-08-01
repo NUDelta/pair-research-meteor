@@ -29,7 +29,9 @@ Template.change_password.events({
           alert(err);
         } else {
           alert('Your password has successfully been changed. Redirecting...');
-          doneCallback();
+          if (doneCallback) {
+            doneCallback();
+          }
           FlowRouter.go('/');
         }
         event.target.change.disabled = false;

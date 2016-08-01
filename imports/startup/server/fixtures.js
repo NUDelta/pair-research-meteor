@@ -269,6 +269,7 @@ Meteor.startup(() => {
       }
     ];
     invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));
+    inviteToGroup.call({ groupId: noAccessGroup, member: invitees[2] });
 
     // Generate some pairing history
     const basicUserInfo = _.concat(
@@ -289,7 +290,7 @@ Meteor.startup(() => {
         Tasks.update({ userId: user.userId, groupId }, { $set: { task: getTask() } });
       });
 
-      const timestamp = moment().add(index, 'w').format();
+      const timestamp = moment().add(-index, 'w').format();
       Pairings.insert({ pairings: generateRandomPairing(basicUserInfo), groupId, timestamp });
     });
 

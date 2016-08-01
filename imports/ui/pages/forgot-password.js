@@ -7,6 +7,7 @@ import { Accounts } from 'meteor/accounts-base';
 Template.forgot_password.events({
   'submit form'(event, instance) {
     event.preventDefault();
+    event.target.send.disabled = true;
     const email = event.target.email.value;
 
     Accounts.forgotPassword({ email }, (err) => {
@@ -16,6 +17,7 @@ Template.forgot_password.events({
         // TODO: redirect to a nice page
         alert('Email sent.');
       }
+      event.target.send.disabled = false;
     });
   }
 });

@@ -30,15 +30,19 @@ Template.groups_settings.onCreated(function() {
     groupId: groupId,
     group: {},
     members: [],
-    section: 'group_roles',
+    section: 'group_info',
     userChanges: {}
   });
 
   this.autorun(() => {
     if (groupHandle.ready()) {
       const group = Groups.findOne();
-      this.state.set('group', group);
-      this.state.set('members', group.members);
+      if (!group) {
+        FlowRouter.go('/');
+      } else {
+        this.state.set('group', group);
+        this.state.set('members', group.members);
+      }
     }
   });
 

@@ -362,12 +362,18 @@ export const inviteToGroup = new ValidatedMethod({
       if (user) {
         const group = Groups.findOne(groupId);
         addToGroup.call({ groupId: groupId, userId: user._id, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
-        Email.send({
-          from: EMAIL_ADDRESS,
-          to: member.email,
-          subject: `You're invited to join ${ group.groupName } for Pair Research`,
-          html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
-        });
+
+        if (user.isActive()) {
+          Email.send({
+            from: EMAIL_ADDRESS,
+            to: member.email,
+            subject: `You're invited to join ${ group.groupName } for Pair Research`,
+            html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
+          });
+        } else {
+          // TODO: replace this with a custom function so as to not overwrite tokens in previous emails
+          Accounts.sendEnrollmentEmail(user._id);
+        }
       } else {
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
         addToGroup.call({ groupId: groupId, userId: newUserId, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });

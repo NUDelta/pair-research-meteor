@@ -14,7 +14,11 @@ Accounts.emailTemplates.enrollAccount.subject = (user) => {
 };
 
 Accounts.emailTemplates.enrollAccount.text = (user, url) => {
-  return `To join this pair research pool, just click the link below:\n\n${ url }`;
+  return `To join this pair research pool, just click the link below:
+
+${ url }
+
+If you've received multiple invitation emails, please be sure to click the link for the most recent one.`;
 };
 
 Accounts.emailTemplates.resetPassword.subject = (user) => {

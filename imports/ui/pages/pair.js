@@ -28,7 +28,7 @@ Template.pair.onCreated(function() {
       // now, but for future...
       const group = Groups.findOne(groupId);
       if (!group) {
-        FlowRouter.go('/groups');
+        FlowRouter.go('/');
       } else {
         this.state.set('group', group);
       }

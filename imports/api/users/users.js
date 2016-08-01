@@ -120,5 +120,9 @@ Meteor.users.helpers({
   },
   getMembershipIndex(groupId) {
     return _.findIndex(this.groups, group => group.groupId == groupId);
+  },
+  isActive() {
+    // TODO: in future, this should check for VERIFIED emails
+    return !!this.services.password.bcrypt;
   }
 });

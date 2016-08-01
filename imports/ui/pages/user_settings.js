@@ -21,7 +21,7 @@ Template.user_settings.onCreated(function() {
     this.state.set('avatar', avatar);
 
     if (userHandle.ready()) {
-      this.state.set('groups', Meteor.user().groups);
+      this.state.set('groups', _.filter(Meteor.user().groups, group => !group.isPending));
     }
   });
 });

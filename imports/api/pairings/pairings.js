@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
+import { DEMO_GROUP_CREATOR } from '../users/users.js';
 import { Affinities } from '../affinities/affinities.js';
 import { AffinitiesHistory } from '../affinities-history/affinities-history.js';
 import { Groups } from '../groups/groups.js';
@@ -25,6 +26,9 @@ class PairingCollection extends Mongo.Collection {
   
   saveHistory(id, pairing) {
     const group = Groups.findOne(pairing.groupId);
+    if (group.creatorId == DEMO_GROUP_CREATOR) {
+      return;
+    }
 
     pairing.pairings.forEach((pair) => {
       PairsHistory.insert({
