@@ -213,7 +213,7 @@ Groups.helpers({
   containsRole(roleTitle) {
     return _.some(this.roles, { title: roleTitle });
   },
-  isGroupAdmin(userId) {
+  isAdmin(userId) {
     const member = this.getMembership(userId);
     return member.isAdmin;
   },

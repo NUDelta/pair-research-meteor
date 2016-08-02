@@ -4,6 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
 import { Groups } from '../groups/groups.js';
+import { Auth, AuthMixin } from '../authentication.js';
 
 export const findEmailFromToken = new ValidatedMethod({
   name: 'users.find.email.token',
@@ -40,11 +41,10 @@ export const setProfile = new ValidatedMethod({
       optional: true
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.LoggedIn],
   run({ profile }) {
     const user =  Meteor.users.findOne(this.userId);
-    if (!user) {
-      throw new Meteor.Error('user-not-found', 'This user was not found.');
-    }
     const groupIds = _.map(user.groups, group => group.groupId);
     Groups.find({
       _id: {

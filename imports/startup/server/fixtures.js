@@ -70,7 +70,7 @@ Meteor.startup(() => {
       Undergrad: 'Undergraduate Student'
     };
 
-    const groupId = createGroup.call({
+    const groupId = createGroup.runTrusted({
       groupName: 'dtr',
       description: 'Northwestern Design, Technology, and Research class geared toward undergrads working on research. Visit us at http://dtr.northwestern.edu/',
       creatorId: admin._id,
@@ -153,7 +153,7 @@ Meteor.startup(() => {
     userData.forEach((user) => {
       const userId = Accounts.createUser(user);
       user.userId = userId;
-      addToGroup.call({ groupId, userId, roleTitle: user.roleTitle, isAdmin: user.isAdmin, isPending: false });
+      addToGroup.runTrusted({ groupId, userId, roleTitle: user.roleTitle, isAdmin: user.isAdmin, isPending: false });
       Tasks.update({ userId: userId }, { $set: { task: user.task }});
     });
 
@@ -225,17 +225,17 @@ Meteor.startup(() => {
       }
     ];
     const otherUserId = Accounts.createUser(miscUsers[0]);
-    const otherGroupId = createGroup.call({
+    const otherGroupId = createGroup.runTrusted({
       groupName: 'otherGroup',
       description: 'This is a regular group in which Kevin is a regular user.',
       creatorId: otherUserId,
       publicJoin: false,
       allowGuests: false
     });
-    addToGroup.call({ groupId: otherGroupId, userId: admin._id, roleTitle: DefaultRoles.Undergraduate, isAdmin: false,
+    addToGroup.runTrusted({ groupId: otherGroupId, userId: admin._id, roleTitle: DefaultRoles.Undergraduate, isAdmin: false,
       isPending: false });
 
-    const noAccessGroup = createGroup.call({
+    const noAccessGroup = createGroup.runTrusted({
       groupName: 'noAccessGroup',
       description: 'This is a private group that Kevin does not have access to.',
       creatorId: otherUserId,
@@ -244,7 +244,7 @@ Meteor.startup(() => {
     });
     Accounts.createUser(miscUsers[1]);
 
-    const invitedGroup = createGroup.call({
+    const invitedGroup = createGroup.runTrusted({
       groupName: 'invitedGroup',
       description: 'Kevin just got an invite to this group',
       creatorId: otherUserId,
@@ -268,8 +268,8 @@ Meteor.startup(() => {
         isAdmin: true
       }
     ];
-    invitees.forEach(member => inviteToGroup.call({ groupId: invitedGroup, member: member }));
-    inviteToGroup.call({ groupId: noAccessGroup, member: invitees[2] });
+    invitees.forEach(member => inviteToGroup.runTrusted({ groupId: invitedGroup, member: member }));
+    inviteToGroup.runTrusted({ groupId: noAccessGroup, member: invitees[2] });
 
     // Generate some pairing history
     const basicUserInfo = _.concat(

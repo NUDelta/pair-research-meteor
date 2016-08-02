@@ -2,11 +2,13 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Affinities } from './affinities.js';
 import { Schema } from '../schema.js';
-
+import { Auth, AuthMixin } from '../authentication.js';
 
 export const updateAffinity = new ValidatedMethod({
   name: 'affinity.update',
   validate: Schema.Affinity.validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupSelf],
   run({ helperId, helpeeId, groupId, value }) {
     const record = Affinities.findOne({ helperId: helperId, helpeeId: helpeeId, groupId: groupId });
     if (record) {
@@ -39,6 +41,8 @@ export const updateAffinity = new ValidatedMethod({
 export const clearAffinities = new ValidatedMethod({
   name: 'affinity.clear',
   validate: Schema.GroupUserQuery.validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupSelf],
   run({ groupId, userId }) {
     return Affinities.remove({
       groupId: groupId,

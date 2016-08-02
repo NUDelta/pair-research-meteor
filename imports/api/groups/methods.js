@@ -15,6 +15,7 @@ import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
 import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
+import { Auth, AuthMixin } from '../authentication.js';
 import { log } from '../logs.js';
 
 // make private?
@@ -39,6 +40,8 @@ export const addToGroup = new ValidatedMethod({
       type: Boolean
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin],
   run({ groupId, userId, roleTitle, isAdmin, isPending }) {
     // TODO: validate users making changes
     const group = Groups.findOne(groupId);
@@ -68,6 +71,7 @@ export const addToGroup = new ValidatedMethod({
   }
 });
 
+// TODO: anyone can set adminship right now for themself...hmm...
 export const updateMembership = new ValidatedMethod({
   name: 'groups.member.update',
   validate: new SimpleSchema({
@@ -92,6 +96,8 @@ export const updateMembership = new ValidatedMethod({
       optional: true
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin, Auth.GroupSelf],
   run({ groupId, userId, roleTitle, isAdmin = 0, isPending = 0 }) {
     // TODO: some validation for security here
     if (!this.isSimulation) {
@@ -139,14 +145,13 @@ export const acceptInvite = new ValidatedMethod({
       type: String
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupSelf],
   run({ groupId, roleTitle }) {
     if (!this.isSimulation) {
       const group = Groups.findOne(groupId);
       const membership = group.getMembership(this.userId);
-      if (!membership) {
-        throw new Meteor.Error('no-invite', 'You\'re not invited to this group.');
-      }
-      updateMembership.call({ groupId, roleTitle, userId: this.userId, isPending: false });
+      updateMembership.run.call(this, { groupId, roleTitle, userId: this.userId, isPending: false });
     }
   }
 });
@@ -171,6 +176,8 @@ export const updateGroupInfo =  new ValidatedMethod({
       type: Boolean
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin],
   run({ groupId, groupName, description, publicJoin, allowGuests }) {
     // TODO: validate who's doing this!
     return Groups.update(groupId, {
@@ -196,6 +203,8 @@ export const updateGroupRoles = new ValidatedMethod({
       type: Schema.GroupRole
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin],
   run({ groupId, roles }) {
     // TODO: update corresponding user fields + member fields
     const group = Groups.findOne(groupId);
@@ -272,6 +281,8 @@ export const createGroup = new ValidatedMethod({
       type: Boolean
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.LoggedIn],
   run({ groupName, description, creatorId, creatorRole, roleTitles, publicJoin, allowGuests }) {
     const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, publicJoin, allowGuests,
@@ -279,7 +290,7 @@ export const createGroup = new ValidatedMethod({
 
     const group = Groups.findOne(groupId);
     const roleTitle = creatorRole || group.roles[0].title;
-    addToGroup.call({ groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
+    addToGroup.run.call(this, { groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
     return groupId;
   }
 });
@@ -328,13 +339,16 @@ export const createGroupWithMembers = new ValidatedMethod({
       optional: true
     },
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.LoggedIn],
   run({ groupName, description, roleTitles, publicJoin, allowGuests, members, creatorRole }) {
-    const groupId = createGroup.call({ groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests, creatorRole });
-    members.forEach(member => inviteToGroup.call({ groupId, member }));
+    const groupId = createGroup.run.call(this, { groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests, creatorRole });
+    members.forEach(member => inviteToGroup.run.call(this, { groupId, member }));
     return groupId;
   }
 });
 
+// addToGroup already checks if user in group
 export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({
@@ -356,13 +370,14 @@ export const inviteToGroup = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Id
     }
   }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin],
   run({ member, groupId }) {
     if (!this.isSimulation) {
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
         const group = Groups.findOne(groupId);
-        addToGroup.call({ groupId: groupId, userId: user._id, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
-
+        addToGroup.run.call(this, { groupId: groupId, userId: user._id, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
         if (user.isActive()) {
           Email.send({
             from: EMAIL_ADDRESS,
@@ -376,7 +391,7 @@ export const inviteToGroup = new ValidatedMethod({
         }
       } else {
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
-        addToGroup.call({ groupId: groupId, userId: newUserId, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
+        addToGroup.run.call(this, { groupId: groupId, userId: newUserId, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }
@@ -386,6 +401,8 @@ export const inviteToGroup = new ValidatedMethod({
 export const removeFromGroup = new ValidatedMethod({
   name: 'groups.remove',
   validate: Schema.GroupUserQuery.validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin, Auth.GroupSelf],
   run({ groupId, userId }) {
     Affinities.remove({
       groupId: groupId,
@@ -400,6 +417,7 @@ export const removeFromGroup = new ValidatedMethod({
   }
 });
 
+// TODO: admins only?
 export const clearGroupPool = new ValidatedMethod({
   name: 'groups.clearPool',
   validate: new SimpleSchema({
