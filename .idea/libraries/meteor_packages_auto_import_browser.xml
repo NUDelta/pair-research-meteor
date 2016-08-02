@@ -350,8 +350,10 @@
         <item url="file://$USER_HOME$/.meteor/packages/tmeasday_test-reporter-helpers/0.2.1/web.browser/test-reporter-helpers.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/retries.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/timeout.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/zimme_active-route/2.3.2/web.browser/packages/zimme_active-route.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/uncaught.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/diffs.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/arillo_flow-router-helpers/0.5.2/web.browser/client/helpers.coffee" />
         <item url="file://$USER_HOME$/.meteor/packages/spacebars-compiler/1.0.12/web.browser/react.js" />
         <item url="file://$USER_HOME$/.meteor/packages/spacebars-compiler/1.0.12/web.browser/compiler.js" />
         <item url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/helpers.js" />
@@ -734,8 +736,10 @@
       <root url="file://$USER_HOME$/.meteor/packages/tmeasday_test-reporter-helpers/0.2.1/web.browser/test-reporter-helpers.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/retries.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/timeout.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/zimme_active-route/2.3.2/web.browser/packages/zimme_active-route.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/uncaught.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/diffs.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/arillo_flow-router-helpers/0.5.2/web.browser/client/helpers.coffee" />
       <root url="file://$USER_HOME$/.meteor/packages/spacebars-compiler/1.0.12/web.browser/react.js" />
       <root url="file://$USER_HOME$/.meteor/packages/spacebars-compiler/1.0.12/web.browser/compiler.js" />
       <root url="file://$USER_HOME$/.meteor/packages/practicalmeteor_mocha/2.4.5_6/web.browser/test/integration/helpers.js" />

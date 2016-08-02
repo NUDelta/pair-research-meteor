@@ -5,6 +5,7 @@ import '../../ui/blaze-helpers.js';
 
 import '../../ui/layout/layout.js';
 import '../../ui/layout/layout-authorized.js';
+import '../../ui/layout/layout-unauthorized-only.js';
 
 import '../../ui/pages/home.js';
 import '../../ui/pages/pair.js';
@@ -19,7 +20,6 @@ import '../../ui/pages/under-construction.js';
 import '../../ui/pages/forgot-password.js';
 import '../../ui/pages/change-password.js';
 
-
 FlowRouter.notFound = {
   action() {
     BlazeLayout.render('layout', { main: 'under_construction' });
@@ -29,30 +29,14 @@ FlowRouter.notFound = {
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    // TODO: this isn't recommended
-    if (Meteor.userId() || Meteor.loggingIn()) {
-      FlowRouter.redirect('/groups');
-    } else {
-      BlazeLayout.render('home');
-    }
-  }
-});
-
-FlowRouter.route('/pair/:groupId', {
-  name: 'App.pair',
-  action() {
-    BlazeLayout.render('layout_authorized', { main: 'pair' });
+    BlazeLayout.render('layout_unauthorized_only', { main: 'home' });
   }
 });
 
 FlowRouter.route('/login', {
   name: 'App.login',
   action() {
-    if (Meteor.userId() || Meteor.loggingIn()) {
-      FlowRouter.redirect('/');
-    } else {
-      BlazeLayout.render('login');
-    }
+    BlazeLayout.render('layout_unauthorized_only', { main: 'login' });
   }
 });
 
@@ -72,14 +56,6 @@ FlowRouter.route('/forgot-password', {
 
 FlowRouter.route('/change-password', {
   name: 'App.changePassword',
-  triggersEnter: [
-    (context, direct, stop) => {
-      if (!context.queryParams.token) {
-        BlazeLayout.render('layout', { main: 'under_construction' });
-        stop();
-      }
-    }
-  ],
   action() {
     BlazeLayout.render('change_password');
   }
@@ -92,24 +68,36 @@ FlowRouter.route('/user/settings', {
   }
 });
 
-FlowRouter.route('/groups', {
+const groupRoutes = FlowRouter.group({
+  prefix: '/groups',
+  name: 'groups'
+});
+
+groupRoutes.route('/', {
   name: 'App.groups.home',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'groups_home' });
   }
 });
 
-FlowRouter.route('/groups/:groupId', {
-  name: 'App.groups.group',
+groupRoutes.route('/settings/:groupId', {
+  name: 'App.groups.settings',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'groups_settings' });
   }
 });
 
-FlowRouter.route('/create', {
+groupRoutes.route('/create', {
   name: 'App.groups.create',
   action() {
     BlazeLayout.render('layout_authorized', { main: 'groups_create' });
+  }
+});
+
+FlowRouter.route('/pair/:groupId', {
+  name: 'App.pair',
+  action() {
+    BlazeLayout.render('layout_authorized', { main: 'pair' });
   }
 });
 

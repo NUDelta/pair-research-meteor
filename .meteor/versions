@@ -6,6 +6,7 @@ aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
+arillo:flow-router-helpers@0.5.2
 autoupdate@1.2.11
 babel-compiler@6.8.5
 babel-runtime@0.1.9_1
@@ -101,3 +102,4 @@ underscore@1.0.9
 url@1.0.10
 webapp@1.2.11
 webapp-hashing@1.0.9
+zimme:active-route@2.3.2

@@ -20,22 +20,26 @@ Template.change_password.events({
     const newPassword = event.target.password.value;
     const confirmPassword = event.target.confirm.value;
 
-    if (newPassword != confirmPassword) {
-      event.target.confirm.setCustomValidity('Passwords must match.');
-      event.target.change.disabled = false;
+    if (!token) {
+      alert('Your token is missing or has expired. Please follow the link in the email we sent you.');
     } else {
-      Accounts.resetPassword(token, newPassword, (err) => {
-        if (err) {
-          alert(err);
-        } else {
-          alert('Your password has successfully been changed. Redirecting...');
-          if (doneCallback) {
-            doneCallback();
-          }
-          FlowRouter.go('/');
-        }
+      if (newPassword != confirmPassword) {
+        event.target.confirm.setCustomValidity('Passwords must match.');
         event.target.change.disabled = false;
-      });
+      } else {
+        Accounts.resetPassword(token, newPassword, (err) => {
+          if (err) {
+            alert(err);
+          } else {
+            alert('Your password has successfully been changed. Redirecting...');
+            if (doneCallback) {
+              doneCallback();
+            }
+            FlowRouter.go('/');
+          }
+          event.target.change.disabled = false;
+        });
+      }
     }
   }
 });

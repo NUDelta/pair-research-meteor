@@ -63,7 +63,7 @@
                 <li class="collection-item">
                   <div class="disabled">
                     <!-- TODO: fix this interaction with create, e.g. return here? -->
-                    Nothing here yet. Want to <a href="/create">create your own?</a>
+                    Nothing here yet. Want to <a href="{{pathFor 'App.create'}}">create your own?</a>
                   </div>
                 </li>
               {{/each}}
@@ -80,7 +80,7 @@
               <button class="pair-form-button waves-effect waves-light" {{$if ($eq groups.length 0) 'disabled' ''}}>
                 Continue
               </button>
-              <a href="/create">
+              <a href="{{pathFor 'App.create'}}">
                 <button class="waves-effect waves-light btn">Create New Group</button>
               </a>
               <p class="info">

@@ -1,18 +1,18 @@
 <template name="header">
   <ul id="user_dropdown" class="dropdown-content">
     <li>
-      <a href="/user/settings">Settings</a>
+      <a href="{{pathFor 'App.user.settings'}}">Settings</a>
     </li>
     <li>
       <a href="#signout">Sign out</a>
     </li>
   </ul>
   <nav class="nav-wrapper amber darken-2">
-    <a href="/" class="brand-logo">Pair Research</a>
+    <a href="{{pathFor 'App.home'}}" class="brand-logo">Pair Research</a>
     <ul class="right">
       {{#if currentUser}}
       <li>
-        <a href="/groups">
+        <a href="{{pathFor 'App.groups.home'}}">
           Groups
           {{#if pendingGroups}}
             <span class="new badge">{{pendingGroups}}</span>
@@ -26,7 +26,7 @@
       </li>
       {{else}}
         <li>
-          <a href="/login">
+          <a href="{{pathFor 'App.login'}}">
             Sign in
           </a>
         </li>

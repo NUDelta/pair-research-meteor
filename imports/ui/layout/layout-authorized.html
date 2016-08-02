@@ -1,9 +1,8 @@
 <template name="layout_authorized">
-  {{> header}}
-
   {{#if loggingIn}}
     {{> loading}}
   {{else}}
+    {{> header}}
     {{#if currentUser}}
       {{> Template.dynamic template=main}}
     {{else}}

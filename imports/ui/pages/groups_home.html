@@ -26,10 +26,10 @@
             <li class="collection-item multi-line">
               <span class="title">{{ group.groupName }}</span>
               <p>{{$len group.members}} members</p>
-              <a href="/groups/{{ group._id }}" class="tertiary-content">
+              <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content">
                 <i class="material-icons">settings</i>
               </a>
-              <a href="/pair/{{ group._id }}" class="secondary-content">
+              <a href="{{pathFor 'App.pair' groupId=group._id}}" class="secondary-content">
                 <i class="material-icons">launch</i>
               </a>
             </li>
@@ -41,7 +41,7 @@
       <div class="col s6 offset-s3">
         <p>
           Need to make another pool for a new group of people? <br/>
-          You can <a href="/create">create one here.</a>
+          You can <a href="{{pathFor 'App.create'}}">create one here.</a>
         </p>
       </div>
     </div>
