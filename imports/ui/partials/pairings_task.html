@@ -2,26 +2,44 @@
   <li class="collection-item avatar row">
     <img src="{{$avatar task.userId task.name}}" alt="{{task.name}}" class="circle">
     <div class="float-center left">
-      <span class="title">{{task.task}}</span>
+      <a href="#{{task.userId}}-task" class="modal-trigger">
+        <span class="title">{{task.task}}</span>
+      </a>
       <p class="person">{{task.name}}</p>
     </div>
-    <div class="float-center right">
+    <div class="float-center right hide-on-med-and-down">
       <p class="range-field">
-        <input name="{{task._id}}-affinity" id="{{task._id}}-1" type="radio" value="-1" {{isSelected -1}}>
+        <input name="{{task._id}}-affinity" id="{{task._id}}-1" type="radio" value="-1" {{isChecked -1}}>
         <label for="{{task._id}}-1">1</label>
 
-        <input name="{{task._id}}-affinity" id="{{task._id}}-2" type="radio" value="0" {{isSelected 0}}>
+        <input name="{{task._id}}-affinity" id="{{task._id}}-2" type="radio" value="0" {{isChecked 0}}>
         <label for="{{task._id}}-2">2</label>
 
-        <input name="{{task._id}}-affinity" id="{{task._id}}-3" type="radio" value="0.33" {{isSelected 0.33}}>
+        <input name="{{task._id}}-affinity" id="{{task._id}}-3" type="radio" value="0.33" {{isChecked 0.33}}>
         <label for="{{task._id}}-3">3</label>
 
-        <input name="{{task._id}}-affinity" id="{{task._id}}-4" type="radio" value="0.66" {{isSelected 0.66}}>
+        <input name="{{task._id}}-affinity" id="{{task._id}}-4" type="radio" value="0.66" {{isChecked 0.66}}>
         <label for="{{task._id}}-4">4</label>
 
-        <input name="{{task._id}}-affinity" id="{{task._id}}-5" type="radio" value="1" {{isSelected 1}}>
+        <input name="{{task._id}}-affinity" id="{{task._id}}-5" type="radio" value="1" {{isChecked 1}}>
         <label for="{{task._id}}-5">5</label>
       </p>
+    </div>
+    <div class="float-center right hide-on-med-and-up">
+      <select class="browser-default">
+        <option value="-1" {{isSelected -1}}>1</option>
+        <option value="0" {{isSelected 0}}>2</option>
+        <option value="0.33" {{isSelected 0.33}}>3</option>
+        <option value="0.66" {{isSelected 0.66}}>4</option>
+        <option value="1" {{isSelected 1}}>5</option>
+      </select>
+    </div>
+    <div id="{{task.userId}}-task" class="modal">
+      <div class="modal-content">
+        <p>
+          {{task.task}}
+        </p>
+      </div>
     </div>
   </li>
 </template>

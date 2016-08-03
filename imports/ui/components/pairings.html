@@ -1,6 +1,6 @@
 <template name="pairings">
   <div class="pairings">
-    <div class="row">
+    <div class="row controls">
       <div class="right">
         <a id="leavePool" class="waves-effect waves-light orange accent-2 btn">Leave Pool</a>
         <a id="reset" class="waves-effect waves-light red btn">Reset Pool</a>
@@ -30,7 +30,7 @@
                 <input name="username" type="text" class="person browser" value="{{user.name}}">
               {{/if}}
             </div>
-            <div class="float-center right">
+            <div class="float-center right hide-on-med-and-down">
               <p class="range-field">
                 <input name="{{currentTask._id}}-affinity" id="{{currentTask._id}}-1" type="radio" disabled>
                 <label for="{{currentTask._id}}-1">1</label>
@@ -64,6 +64,7 @@
               (1: not at all, 5: totally)
             </span>
           </div>
+          <br class="hide-on-med-and-up">
           <ul class="collection">
             {{#each task in groupTasks}}
               {{> pairings_task (pairTaskArgs task)}}
@@ -86,7 +87,7 @@
         {{else}}
           {{#if race}}
             {{#each task in allTasks}}
-              <div style="top: {{$times @index 15}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+              <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
                 <img src="{{$avatar task.userId task.name}}" class="circle">
               </div>
             {{/each}}

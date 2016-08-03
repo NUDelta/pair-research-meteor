@@ -1,14 +1,14 @@
 <template name="groups_home">
   <div class="container groups" id="groups_home">
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s12 m6 offset-m3">
         <h3 class="header">Groups</h3>
         <p class="info">These are the Pair Research groups that you are a part of.</p>
       </div>
     </div>
     {{#if $gt pendingGroups.count 0}}
       <div class="row">
-        <div class="col s6 offset-s3">
+        <div class="col s12 m6 offset-m3">
           <h5>Invites</h5>
           <ul class="collection invites">
             {{#each group in pendingGroups}}
@@ -19,7 +19,7 @@
       </div>
     {{/if}}
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s12 m6 offset-m3">
         <h5>Your Groups</h5>
         <ul class="collection">
           {{#each group in groups}}
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s12 m6 offset-m3">
         <p>
           Need to make another pool for a new group of people? <br/>
           You can <a href="{{pathFor 'App.create'}}">create one here.</a>

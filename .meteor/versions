@@ -6,6 +6,7 @@ aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
+archive:jquery-dotdotdot@1.6.15
 arillo:flow-router-helpers@0.5.2
 autoupdate@1.2.11
 babel-compiler@6.8.5

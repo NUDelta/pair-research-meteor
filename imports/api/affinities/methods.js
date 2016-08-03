@@ -7,9 +7,10 @@ import { Auth, AuthMixin } from '../authentication.js';
 export const updateAffinity = new ValidatedMethod({
   name: 'affinity.update',
   validate: Schema.Affinity.validator(),
-  mixins: [AuthMixin],
-  allow: [Auth.GroupSelf],
   run({ helperId, helpeeId, groupId, value }) {
+    if (this.userId != helperId) {
+      throw new Meteor.Error('You don\'t have permissions to make this request.');
+    }
     const record = Affinities.findOne({ helperId: helperId, helpeeId: helpeeId, groupId: groupId });
     if (record) {
       return Affinities.update(record._id, { $set: { value: value }});

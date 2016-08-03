@@ -27,11 +27,15 @@ Template.header.onCreated(function() {
   });
 });
 
+Template.header.onRendered(function() {
+  $('.button-collapse').sideNav();
+});
+
 Template.header.helpers({
   pendingGroups() {
     const instance = Template.instance();
     const groups = instance.state.get('groups');
-    return _.filter(groups, membership => membership.role.weight === 1).length;
+    return _.filter(groups, membership => membership.isPending).length;
   }
 });
 

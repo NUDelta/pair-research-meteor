@@ -10,6 +10,8 @@ Template.registerHelper('$times', (a, b) => a * b);
 
 Template.registerHelper('$plus', (a, b) => a + b);
 
+Template.registerHelper('$or', (a, b) => a || b);
+
 Template.registerHelper('$and', (a, b) => a && b);
 
 Template.registerHelper('$eq', (a, b) => a == b);

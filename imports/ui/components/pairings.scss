@@ -1,8 +1,30 @@
 
 .pairings {
+  .controls {
+    @media #{$small-and-down} {
+      .right {
+        padding: 0 10px;
+      }
+      a.btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   .user-preview {
     .person {
       display: block;
+    }
+  }
+
+  .modal {
+    top: 40% !important;
+  }
+
+  @media #{$small-and-down} {
+    .input-label-text .float-right {
+      float: left;
     }
   }
 
@@ -19,6 +41,8 @@
       .left {
         .title {
           font-size: 1.2em;
+          cursor: default;
+          @extend .grey-text, .text-darken-3;
         }
 
         .person {
@@ -30,6 +54,32 @@
       .right p {
         display: inline-block;
       }
+
+      @media #{$small-and-down} {
+        height: auto;
+        .left {
+          max-width: none;
+          width: calc(100% - 150px);
+
+          .title {
+            display: block;
+            font-size: 1em;
+            max-height: 60px;
+            width: 100%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: pre-wrap;
+          }
+          .person {
+            font-size: 0.7em;
+          }
+        }
+
+        .right {
+          width: 50px;
+        }
+      }
+
     }
 
     .float-center {
@@ -68,11 +118,20 @@
     .avatar-progress {
       position: absolute;
       transition: all 0.5s ease-in-out;
+      transform: translateX(-50%);
 
       $avatar-dimensions: 50px;
       img {
         width: $avatar-dimensions;
         height: $avatar-dimensions;
+      }
+    }
+
+    ul {
+      @media #{$small-and-down} {
+        li {
+          padding-left: 20px;
+        }
       }
     }
   }
