@@ -44,6 +44,10 @@
   padding-top: 3em;
   text-align: center;
 
+  .col {
+    @extend .s12, .l6, .offset-l3;
+  }
+
   form.card {
     margin-top: 2em;
     padding: 2em;

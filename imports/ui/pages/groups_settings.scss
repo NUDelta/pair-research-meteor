@@ -4,6 +4,10 @@
   padding-left: 240px;
   overflow: hidden;
 
+  @media #{$small-and-down} {
+    padding-left: 15px;
+  }
+
   ul.side-nav {
     position: absolute;
     top: 64px;
@@ -30,6 +34,10 @@
     h3.header {
       margin-bottom: 1em;
     }
+  }
+
+  section.row > .col {
+    @extend .s12, .m8, .offset-m2;
   }
 
   #groups_settings_info {

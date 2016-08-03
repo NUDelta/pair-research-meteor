@@ -27,9 +27,10 @@
         </a>
       </li>
     </ul>
+    <!-- component for opening side nav on small? -->
     {{#if (isActive 'group_info')}}
       <section class="row" id="groups_settings_info">
-        <div class="col s8 offset-s2">
+        <div class="col">
           <h3 class="header">{{group.groupName}} &mdash; Info</h3>
           <form id="groups_settings_members_info">
             <!-- TODO: this shares a lot with groups_create,  do something about that? -->
@@ -62,7 +63,7 @@
     {{/if}}
     {{#if (isActive 'group_members')}}
       <section class="row" id="groups_settings_members">
-        <div class="col s8 offset-s2">
+        <div class="col">
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
           <form id="groups_settings_members_invite">
             <div class="row">

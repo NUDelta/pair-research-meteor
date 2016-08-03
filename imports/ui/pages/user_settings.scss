@@ -9,10 +9,10 @@
     width: 100%;
 
     .fields {
-      width: 70%;
+      width: calc(100% - 150px);
     }
     .image {
-      width: 30%;
+      width: 200px;
       position: relative;
 
       img {
@@ -25,6 +25,18 @@
         width: 100%;
         margin-top: 1em;
       }
+    }
+
+    @media #{$small-and-down} {
+      .fields {
+        width: 100%;
+      }
+      .image {
+        display: block;
+        width: 150px;
+        height: 200px;
+      }
+      display: block;
     }
   }
 

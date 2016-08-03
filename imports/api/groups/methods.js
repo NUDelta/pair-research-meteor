@@ -146,11 +146,10 @@ export const acceptInvite = new ValidatedMethod({
     }
   }).validator(),
   mixins: [AuthMixin],
-  allow: [Auth.GroupSelf],
+  allow: [Auth.GroupMember],
   run({ groupId, roleTitle }) {
     if (!this.isSimulation) {
       const group = Groups.findOne(groupId);
-      const membership = group.getMembership(this.userId);
       updateMembership.run.call(this, { groupId, roleTitle, userId: this.userId, isPending: false });
     }
   }
