@@ -134,7 +134,7 @@ Meteor.startup(() => {
           fullName: 'Shannon Nachreiner',
           avatar: 'https://dl.dropboxusercontent.com/s/77bhlenils7y1hc/aBJUQXT.jpg'
         },
-        task: 'By the end with this sprint, I will have completed a very tangible goal.',
+        task: 'Brainstorming some research questions',
         roleTitle: roles.Undergrad,
         isAdmin: false,
       },

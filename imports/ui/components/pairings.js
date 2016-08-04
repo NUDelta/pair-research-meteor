@@ -5,11 +5,15 @@ import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { _ } from 'meteor/stevezhu:lodash';
 
 import { Groups } from '../../api/groups/groups.js';
 import { Tasks } from '../../api/tasks/tasks.js';
 import { Affinities } from '../../api/affinities/affinities.js';
 import { Schema } from '../../api/schema.js';
+import { generateCustomAvatar } from '../../api/util.js';
+
+import '../components/confetti.js';
 
 import {
   updateTask,
@@ -58,7 +62,8 @@ Template.pairings.onCreated(function() {
     this.state.setDefault({
       groupId: groupId,
       userId: data.user._id,
-      editing: false
+      editing: false,
+      raceResults: []
     });
 
     this.staticState = {};
@@ -146,9 +151,43 @@ Template.pairings.helpers({
     };
   },
   percentage(userId) {
+    const instance = Template.instance();
     const totalCount = Tasks.find().count() - 1;
     const currentCount = Affinities.find({ helperId: userId }).count();
+
+    const results = instance.state.get('raceResults');
+    if (currentCount === totalCount) {
+      if (results.length < 3) {
+        instance.state.addToSet('raceResults', userId);
+      }
+    } else {
+      const exists = _.findIndex(results, res => res == userId);
+      if (exists !== -1) {
+        instance.state.remove('raceResults', exists);
+      }
+    }
     return currentCount / totalCount * 100;
+  },
+  place(userId) {
+    // TODO: you can place yourself first if you finish and refresh
+    // @not-important
+    const instance = Template.instance();
+    const results = instance.state.get('raceResults');
+    const index = _.findIndex(results, res => res == userId) + 1;
+    return (index !== 0) && index;
+  },
+  placeLeft(percentage) {
+    return `calc(${ percentage }% - 20px)`;
+  },
+  placeAvatar(place) {
+    switch(place) {
+      case 1:
+        return generateCustomAvatar('1st', '#FFD700');
+      case 2:
+        return generateCustomAvatar('2nd', '#C0C0C0');
+      case 3:
+        return generateCustomAvatar('3rd', '#CD7F32');
+    }
   },
   avatar(userId) {
     const user = Meteor.users.findOne(userId);

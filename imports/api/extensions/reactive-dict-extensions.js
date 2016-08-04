@@ -6,6 +6,13 @@ ReactiveDict.prototype.push = function(key, obj) {
   this.set(key, array.concat(obj));
 };
 
+ReactiveDict.prototype.addToSet = function(key, obj) {
+  const array = this.get(key);
+  if (!_.includes(array, obj)) {
+    this.push(key, obj);
+  }
+};
+
 ReactiveDict.prototype.remove = function(key, index) {
   let array = this.get(key);
   array.splice(index, 1);

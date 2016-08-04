@@ -1,4 +1,7 @@
 <template name="pairings">
+  {{#if ($eq (place currentUser._id) 1)}}
+    {{> confetti}}
+  {{/if}}
   <div class="pairings">
     <div class="row controls">
       <div class="right">
@@ -87,6 +90,14 @@
         {{else}}
           {{#if race}}
             {{#each task in allTasks}}
+              {{#let placing=(place task.userId)}}
+                {{#if placing}}
+                  <div style="top: {{$minus ($times @index 25) 10}}px; left: {{placeLeft (percentage task.userId)}}"
+                       class="prize">
+                    <img src="{{placeAvatar placing}}" class="circle">
+                  </div>
+                {{/if}}
+              {{/let}}
               <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
                 <img src="{{$avatar task.userId task.name}}" class="circle">
               </div>

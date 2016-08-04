@@ -8,6 +8,8 @@ Template.registerHelper('$id', a => a.replace(' ', '_'));
 
 Template.registerHelper('$times', (a, b) => a * b);
 
+Template.registerHelper('$minus', (a, b) => a - b);
+
 Template.registerHelper('$plus', (a, b) => a + b);
 
 Template.registerHelper('$or', (a, b) => a || b);

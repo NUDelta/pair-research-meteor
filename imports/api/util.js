@@ -23,13 +23,9 @@ function getInitials(name) {
   return `${ initialsArray.shift() || '' }${ initialsArray.pop() || '' }`.toUpperCase();
 }
 
-// @client-side
-export const generateAvatar = (name, size = 100) => {
-  const letters = getInitials(name);
+function generate(text, color, size) {
   let canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
-
-  const color = hashStringColor(name);
   canvas.width = size;
   canvas.height = size;
   context.font = Math.round(size / 2) + 'px Arial';
@@ -38,10 +34,20 @@ export const generateAvatar = (name, size = 100) => {
   context.fillStyle = color;
   context.fillRect(0, 0, size, size);
   context.fillStyle = '#FFF';
-  context.fillText(letters, size / 2, size / 1.5);
+  context.fillText(text, size / 2, size / 1.5);
 
   const dataURI = canvas.toDataURL();
   canvas = null;
   return dataURI;
+}
+
+// @client-side
+export const generateAvatar = (name, size = 100) => {
+  const letters = getInitials(name);
+  const color = hashStringColor(name);
+  return generate(letters, color, size);
 };
 
+export const generateCustomAvatar = (name, color, size = 100) => {
+  return generate(name, color, size);
+};

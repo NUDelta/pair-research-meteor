@@ -127,6 +127,16 @@
       }
     }
 
+    .prize {
+      @extend .avatar-progress;
+      z-index: 5;
+      $prize-dimensions: 35px;
+      img {
+        width: $prize-dimensions;
+        height: $prize-dimensions;
+      }
+    }
+
     ul {
       @media #{$small-and-down} {
         li {
