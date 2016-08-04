@@ -13,8 +13,12 @@ Meteor.publish('user.groups', function() {
 Meteor.publish('users.inGroup', function(groupId) {
   authenticate(Auth.GroupMember, this.userId, groupId);
   const group = Groups.findOne(groupId);
-  const memberIds = _.map(group.members, member => member.userId);
-  return Meteor.users.find({ _id: { $in: memberIds } }, { fields: { profile: 1 } });
+  if (group) {
+    const memberIds = _.map(group.members, member => member.userId);
+    return Meteor.users.find({ _id: { $in: memberIds } }, { fields: { profile: 1 } });
+  } else {
+    this.ready();
+  }
 });
 
 Meteor.publish('users.admin', function() {

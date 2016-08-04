@@ -16,6 +16,7 @@ let animationComplete = true;
 let deactivationTimerHandler;
 let reactivationTimerHandler;
 let animationHandler;
+let started = false;
 
 const particleColors = {
   colorOptions: ['DodgerBlue', 'OliveDrab', 'Gold', 'pink', 'SlateBlue', 'lightblue', 'Violet', 'PaleGreen', 'SteelBlue', 'SandyBrown', 'Chocolate', 'Crimson'],
@@ -186,8 +187,25 @@ Template.confetti.onRendered(function() {
     ctx.clearRect(0, 0, W, H);
   }
 
+  function restartConfetti() {
+    clearTimers();
+    stopConfetti();
+    reactivationTimerHandler = setTimeout(function () {
+      confettiActive = true;
+      animationComplete = false;
+      initializeConfetti();
+    }, 100);
+  }
+
   setGlobals();
-  initializeConfetti();
+  if (started) {
+    restartConfetti();
+  } else {
+    initializeConfetti();
+    started = true;
+  }
+
+  setTimeout(deactivateConfetti, 5000);
 
   $(window).resize(function () {
     W = window.innerWidth;

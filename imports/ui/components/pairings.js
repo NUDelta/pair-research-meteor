@@ -157,7 +157,7 @@ Template.pairings.helpers({
 
     const results = instance.state.get('raceResults');
     if (currentCount === totalCount) {
-      if (results.length < 3) {
+      if (totalCount > 0 && results.length < 3) {
         instance.state.addToSet('raceResults', userId);
       }
     } else {
