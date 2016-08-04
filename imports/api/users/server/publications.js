@@ -3,27 +3,18 @@ import { _ } from 'meteor/stevezhu:lodash';
 
 import { Groups } from '../../groups/groups.js';
 import { ADMIN_ID } from '../../../startup/config.js'
+import { Auth, authenticate } from '../../authentication.js';
 
 Meteor.publish('user.groups', function() {
-  if (!this.userId) {
-    this.ready();
-  } else {
-    return Meteor.users.find(this.userId, { fields: { groups: 1 }});
-  }
+  authenticate(Auth.LoggedIn, this.userId);
+  return Meteor.users.find(this.userId, { fields: { groups: 1 }});
 });
 
 Meteor.publish('users.inGroup', function(groupId) {
-  if (!this.userId) {
-    this.ready();
-  } else {
-    const group = Groups.findOne(groupId);
-    if (!group) {
-      this.ready();
-    } else {
-      const memberIds = _.map(group.members, member => member.userId);
-      return Meteor.users.find({ _id: { $in: memberIds } }, { fields: { profile: 1 } });
-    }
-  }
+  authenticate(Auth.GroupMember, this.userId, groupId);
+  const group = Groups.findOne(groupId);
+  const memberIds = _.map(group.members, member => member.userId);
+  return Meteor.users.find({ _id: { $in: memberIds } }, { fields: { profile: 1 } });
 });
 
 Meteor.publish('users.admin', function() {

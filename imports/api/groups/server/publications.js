@@ -2,41 +2,18 @@ import { Meteor } from 'meteor/meteor';
 
 import { Groups } from '../groups.js';
 import { DEMO_GROUP_CREATOR } from '../../users/users.js';
+import { Auth, authenticate } from '../../authentication.js';
 
 Meteor.publish('group.byId', function(groupId) {
-  const group = Groups.findOne(groupId);
-  if (!group || !this.userId || !group.containsMember(this.userId)) {
-    this.ready();
-  } else  {
-    return Groups.find(groupId);
-  }
+  authenticate(Auth.GroupMember, this.userId, groupId);
+  return Groups.find(groupId);
 });
 
 Meteor.publish('groups.user', function() {
-  if (!this.userId) {
-    this.ready();
-  } else {
-    return Groups.find({
-      _id: { $in: Meteor.users.findUserGroups(this.userId) }
-    });
-  }
-});
-
-Meteor.publish('groups.byId', function(groupId) {
-  if (!this.userId) {
-    this.ready();
-  } else {
-    return Groups.find({
-      $and: [
-        {
-          _id: { $in: Meteor.users.findUserGroups(this.userId) }
-        },
-        {
-          _id: groupId
-        }
-      ]
-    });
-  }
+  authenticate(Auth.LoggedIn, this.userId);
+  return Groups.find({
+    _id: { $in: Meteor.users.findUserGroups(this.userId) }
+  });
 });
 
 Meteor.publish('groups.demo.byId', function(groupId) {

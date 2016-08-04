@@ -110,8 +110,9 @@ Template.signup.events({
           }
           setProfile.call({ profile: user.profile }, (err) => {
             if (err) {
-              // TODO: fixed dead end
+              // TODO: fix dead end
               // if this triggers the token is consumed anyway
+              // why could this trigger again?
               alert(err);
             }
             instance.state.increment('step');

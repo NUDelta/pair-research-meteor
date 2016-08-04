@@ -13,7 +13,7 @@ import '../partials/pair_enter_task.js';
 
 Template.pair.onCreated(function() {
   const groupId = FlowRouter.getParam('groupId');
-  const groupHandle = this.subscribe('groups.byId', groupId);
+  const groupHandle = this.subscribe('group.byId', groupId);
   const taskHandle = this.subscribe('tasks.fromUserInGroup', groupId, Meteor.userId());
 
   this.state = new ReactiveDict();

@@ -27,7 +27,7 @@ export const AuthMixin = (methodOptions) => {
     const groupId = args.groupId;
     const userId = args.userId;
 
-    if (this.isTrusted || authenticate(this.userId, userId, groupId, methodOptions.allow)) {
+    if (this.isTrusted || isAuthorized(this.userId, userId, groupId, methodOptions.allow)) {
       return runFunc.apply(this, arguments); // TODO: extract groupId from arguments?
     } else {
       // throw new AuthError(methodOptions.allow);
@@ -40,7 +40,7 @@ export const AuthMixin = (methodOptions) => {
   return methodOptions;
 };
 
-function authenticate(activeUserId, editUserId, groupId, allowed) {
+function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   const group = Groups.findOne(groupId);
   return _.some(allowed, role => {
     switch(role) {
@@ -57,6 +57,13 @@ function authenticate(activeUserId, editUserId, groupId, allowed) {
     }
   });
 }
+
+export function authenticate(allowed, userId, groupId, editUserId) {
+  if (!isAuthorized(userId, editUserId, groupId, allowed)) {
+    // throw new AuthError(methodOptions.allow);
+    throw new Meteor.Error('You don\'t have the appropriate permissions to make this request.');
+  }
+};
 
 class AuthError extends Meteor.Error {
   constructor(role) {

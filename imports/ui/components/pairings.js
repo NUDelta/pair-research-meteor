@@ -50,7 +50,7 @@ Template.pairings.onCreated(function() {
     }).validate(data);
 
     const groupId = data.group._id;
-    this.subscribe('groups.byId', groupId);
+    this.subscribe('group.byId', groupId);
     this.subscribe('tasks.inGroup', groupId);
     this.subscribe('affinities.inGroup', groupId);
     this.subscribe('users.inGroup', groupId);
