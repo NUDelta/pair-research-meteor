@@ -61,7 +61,8 @@ export const makePairings = new ValidatedMethod({
 
           // repeat penalty
           _.forEach(recentPairings, (pairing, index) => {
-            if (pairing.partner(userId).userId != _userId) {
+            const partner = pairing.partner(userId);
+            if (partner && partner.userId != _userId) {
               weight += 80 * Math.pow(0.5, index + 1);
             }
           });

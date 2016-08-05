@@ -114,10 +114,12 @@ Pairings.helpers({
     const pairing = _.find(this.pairings, (pairing) => {
       return pairing.firstUserId == userId || pairing.secondUserId == userId;
     });
-    if (pairing.firstUserId == userId) {
-      return { userId: pairing.secondUserId, name: pairing.secondUserName };
-    } else {
-      return { userId: pairing.firstUserId, name: pairing.firstUserName };
+    if (pairing) {
+      if (pairing.firstUserId == userId) {
+        return { userId: pairing.secondUserId, name: pairing.secondUserName };
+      } else {
+        return { userId: pairing.firstUserId, name: pairing.firstUserName };
+      }
     }
   }
 });
