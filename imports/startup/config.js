@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 
 export const DEV_OPTIONS = {
   CLEAN_DB: 1,
@@ -8,4 +9,4 @@ export const DEV_OPTIONS = {
 
 export const PAIR_SCRIPT = 'assets/app/scripts/pair_research.py';
 
-export const ADMIN_ID = 'AX8FFZHzPa8eF8bBE';
+export const ADMIN_ID = Meteor.settings.adminId;

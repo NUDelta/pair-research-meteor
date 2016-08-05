@@ -14,7 +14,7 @@ import { Schema } from '../schema.js';
 
 class PairingCollection extends Mongo.Collection {
   insert(pairing, callback) {
-    if (Meteor.isDevelopment && !pairing.timestamp) {
+    if (!pairing.timestamp) {
       pairing.timestamp = new Date();
     }
     const _id = super.insert(pairing, callback);
