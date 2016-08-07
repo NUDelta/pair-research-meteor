@@ -12,7 +12,7 @@ import { processEmails } from '../../api/groups/util.js';
 import {
   inviteToGroup,
   updateGroupInfo,
-  updateMembership
+  updateMembers
 } from '../../api/groups/methods.js';
 
 import '../partials/groups_settings_roles.js';
@@ -171,25 +171,17 @@ Template.groups_settings.events({
     instance.state.set('members', members);
   },
   'click #save-roles'(event, instance) {
-    let success = true;
-    let error;
-    const userChanges = instance.state.get('userChanges');
-    // TODO: should batch this
-    _.forOwn(userChanges, (changes, userId) => {
-      updateMembership.call({ roleTitle: changes.roleTitle, isAdmin: changes.isAdmin, userId, groupId: instance.state.get('groupId') }, (err) => {
-        if (err) {
-          success = false;
-          error = err;
-        }
-      });
+    const changes = _.map(instance.state.get('userChanges'), (change, userId) => {
+      change.userId = userId;
+      return change;
     });
-
-    // TODO: improve this error handling / confirmation
-    if (!success) {
-      alert(error);
-    } else {
-      alert('Update successful!');
-    }
+    updateMembers.call({ groupId: instance.state.get('groupId'), changes }, err => {
+      if (err) {
+        alert(err);
+      } else {
+        alert('Update successful!');
+      }
+    });
   }
 
 });

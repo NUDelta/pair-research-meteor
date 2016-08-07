@@ -220,5 +220,8 @@ Groups.helpers({
   isPending(userId) {
     const member = this.getMembership(userId);
     return member.isPending;
+  },
+  admins() {
+    return _.filter(this.members, member => member.isAdmin);
   }
 });

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _ } from 'meteor/stevezhu:lodash';
 
@@ -63,6 +64,22 @@ export function authenticate(allowed, userId, groupId, editUserId) {
     // throw new AuthError(methodOptions.allow);
     throw new Meteor.Error('You don\'t have the appropriate permissions to make this request.');
   }
+};
+
+export function verifyGroup(groupId) {
+  const group = Groups.findOne(groupId);
+  if (!group) {
+    throw new Meteor.Error('invalid-group', 'The specified group does not exist.');
+  }
+  return group;
+};
+
+export function verifyUser(userId) {
+  const user = Meteor.users.findOne(userId);
+  if (!user) {
+    throw new Meteor.Error('invalid-user', 'The specified user does not exist.');
+  }
+  return user;
 };
 
 class AuthError extends Meteor.Error {
