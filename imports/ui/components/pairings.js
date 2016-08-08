@@ -169,8 +169,7 @@ Template.pairings.helpers({
     return currentCount / totalCount * 100;
   },
   place(userId) {
-    // TODO: you can place yourself first if you finish and refresh
-    // @not-important
+    // race condition: see https://trello.com/c/aIYHGg29/106-race-condition
     const instance = Template.instance();
     const results = instance.state.get('raceResults');
     const index = _.findIndex(results, res => res == userId) + 1;
@@ -210,6 +209,10 @@ Template.pairings.events({
   },
 
   'click #makePairs'(event, instance) {
+    // This causes the Group Pairing listener to trigger twice: having no pair and
+    // having a new pairing, which oddly causes the bottom pairings area to disappear
+    // and reappear, which can cause confetti to fly down.
+    // See https://trello.com/c/TWLiuxC2/105-random-confetti for repro steps
     if (confirm('Ready to make pairs?')) {
       makePairings.call({ groupId: instance.state.get('groupId') });
     }

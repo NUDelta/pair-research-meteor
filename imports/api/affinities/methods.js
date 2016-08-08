@@ -11,31 +11,18 @@ export const updateAffinity = new ValidatedMethod({
     if (this.userId != helperId) {
       throw new Meteor.Error('You don\'t have permissions to make this request.');
     }
-    const record = Affinities.findOne({ helperId: helperId, helpeeId: helpeeId, groupId: groupId });
-    if (record) {
-      return Affinities.update(record._id, { $set: { value: value }});
-    } else {
-      return Affinities.insert({
-        helperId: helperId,
-        helpeeId: helpeeId,
-        groupId: groupId,
-        value: value
-      });
-    }
-
-    // TODO: why don't i work
-    //return Affinities.upsert({
-    //  helperId: helperId,
-    //  helpeeId: helpeeId,
-    //  groupId: groupId
-    //}, {
-    //  $set: {
-    //    helperId: helperId,
-    //    helpeeId: helpeeId,
-    //    groupId: groupId,
-    //    value: value
-    //  }
-    //});
+    return Affinities.upsert({
+     helperId: helperId,
+     helpeeId: helpeeId,
+     groupId: groupId
+    }, {
+     $set: {
+       helperId: helperId,
+       helpeeId: helpeeId,
+       groupId: groupId,
+       value: value
+     }
+    });
   }
 });
 
@@ -47,14 +34,7 @@ export const clearAffinities = new ValidatedMethod({
   run({ groupId, userId }) {
     return Affinities.remove({
       groupId: groupId,
-      $or: [
-        {
-          helperId: userId
-        },
-        {
-          helpeeId: userId
-        }
-      ]
+      $or: [ { helperId: userId }, { helpeeId: userId } ]
     });
   }
 });

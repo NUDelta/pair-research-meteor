@@ -26,28 +26,18 @@ export const updateTask = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupSelf],
   run({ name, userId, groupId, task }) {
-    const record = Tasks.findOne({ userId: userId, groupId: groupId });
-    if (record) {
-      return Tasks.update(record._id, { $set: { name: name, task: task }});
-    } else {
-      return Tasks.insert({
-        name: name,
-        userId: userId,
-        groupId: groupId,
-        task: task
-      });
-    }
-
-    // TODO: upsert doesn't work?
-    //Tasks.upsert({
-    //  name: name,
-    //  userId: userId,
-    //  groupId: groupId
-    //}, {
-    //  $set: {
-    //    task: task
-    //  }
-    //});
+    Tasks.upsert({
+     name: name,
+     userId: userId,
+     groupId: groupId
+    }, {
+     $set: {
+       task: task,
+       name: name,
+       userId: userId,
+       groupId: groupId
+     }
+    });
   }
 });
 
