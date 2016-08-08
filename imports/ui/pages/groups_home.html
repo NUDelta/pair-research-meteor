@@ -26,7 +26,7 @@
             <li class="collection-item multi-line">
               <span class="title">{{ group.groupName }}</span>
               <p>{{$len group.members}} members</p>
-              <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content">
+              <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content hide-on-small-and-down">
                 <i class="material-icons">settings</i>
               </a>
               <a href="{{pathFor 'App.pair' groupId=group._id}}" class="secondary-content">
