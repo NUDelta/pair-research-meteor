@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { Random } from 'meteor/random';
-import { Match } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/stevezhu:lodash';
 
@@ -225,3 +225,49 @@ Groups.helpers({
     return _.filter(this.members, member => member.isAdmin);
   }
 });
+
+export class GroupOperationHelper {
+  constructor(group, user) {
+    check(group, Schema.Group);
+    this.group = group;
+    if (user) {
+      this.setUser(user);
+    }
+  }
+  setUser(user) {
+    check(user, Schema.User);
+    this.user = user;
+    this.groupMembershipIndex = this.group.getMembershipIndex(this.user._id);
+    this.userMembershipIndex = this.user.getMembershipIndex(this.group._id);
+
+    if (this.groupMembershipIndex === -1 || this.userMembershipIndex === -1) {
+      throw new Meteor.Error('invalid-user', 'The user isn\'t in the specified group.');
+    }
+  }
+  setAdmin(isAdmin) {
+    this.group.members[this.groupMembershipIndex].isAdmin = isAdmin;
+    this.user.groups[this.userMembershipIndex].isAdmin = isAdmin;
+  }
+  setPending(isPending) {
+    this.group.members[this.groupMembershipIndex].isPending = isPending;
+    this.user.groups[this.userMembershipIndex].isPending = isPending;
+  }
+  setRole(roleTitle) {
+    const role = this.group.getRoleInfo(roleTitle);
+    if (!role) {
+      throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
+    }
+    this.group.members[this.groupMembershipIndex].role = role;
+    this.user.groups[this.userMembershipIndex].role = role;
+  }
+  pushAll() {
+    this.pushMember();
+    this.pushGroup();
+  }
+  pushMember() {
+    Meteor.users.update(this.user._id, { $set: { groups: this.user.groups } });
+  }
+  pushGroup() {
+    Groups.update(this.group._id, { $set: { members: this.group.members } });
+  }
+}

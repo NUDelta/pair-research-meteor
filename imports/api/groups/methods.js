@@ -7,6 +7,7 @@ import { _ } from 'meteor/stevezhu:lodash';
 
 import {
   Groups,
+  GroupOperationHelper,
   DefaultRoles,
 } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
@@ -15,14 +16,13 @@ import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
 import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
-import { Auth, AuthMixin } from '../authentication.js';
+import { Auth, AuthMixin, verifyGroup, verifyUser } from '../authentication.js';
 import { log } from '../logs.js';
 
 // TODO: Prob should factor out a new collection "Memberships"
 // Although users won't have a ton of groups and groups likely won't have a ton
 // of members, doing many array operations on updates is starting to be a pain...
 
-// make private?
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: new SimpleSchema({
@@ -47,11 +47,9 @@ export const addToGroup = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, userId, roleTitle, isAdmin, isPending }) {
-    // TODO: validate users making changes
-    const group = Groups.findOne(groupId);
-    const user = Meteor.users.findOne(userId);
+    const group = verifyGroup(groupId);
+    const user = verifyUser(userId);
 
-    // TODO: this needs to go back in hmm...
     if (!group.containsRole(roleTitle)) {
       throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
     }
@@ -108,13 +106,26 @@ export const updateMembers = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, changes }) {
-    console.log(changes);
-    changes.forEach(change => {
-      updateMembership.call({
-        groupId, userId: change.userId, roleTitle: change.roleTitle, isAdmin: change.isAdmin,
-        isPending: change.isPending
+    // TODO: cascading errors?
+    const group = verifyGroup(groupId);
+    if (!this.isSimulation) {
+      const operations = new GroupOperationHelper(group);
+      changes.forEach(change => {
+        const user = verifyUser(change.userId);
+        operations.setUser(user);
+        if (!_.isUndefined(change.roleTitle)) {
+          operations.setRole(change.roleTitle);
+        }
+        if (!_.isUndefined(change.isPending)) {
+          operations.setPending(change.isPending);
+        }
+        if (!_.isUndefined(change.isAdmin)) {
+          operations.setAdmin(change.isAdmin); // ok here, admins only
+        }
+        operations.pushMember();
       });
-    });
+      operations.pushGroup();
+    }
   }
 });
 
@@ -136,30 +147,19 @@ export const setAdmin = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, userId, isAdmin }) {
-    const group = Groups.findOne(groupId);
-    if (!groupId) {
-      throw new Meteor.Error('invalid-group', 'The specified group does not exist.');
-    }
-    const user = Meteor.users.findOne(userId);
-    if (!user) {
-      throw new Meteor.Error('invalid-user', 'The specified user does not exist.');
-    }
+    const group = verifyGroup(groupId);
+    const user = verifyUser(userId);
+
     if (!isAdmin && group.admins().length === 1) {
       throw new Meteor.Error('needs-one-admin', 'Your group must have at least one admin.');
     }
 
-    // TODO: refactor this
-    // copied from updateMembership
-    const groupMembershipIndex = group.getMembershipIndex(userId);
-    const userMembershipIndex = user.getMembershipIndex(groupId);
-    group.members[groupMembershipIndex].isAdmin = isAdmin;
-    user.groups[userMembershipIndex].isAdmin = isAdmin;
-    Groups.update(group._id, { $set: { members: group.members } });
-    Meteor.users.update(user._id, { $set: { groups: user.groups } });
+    const operations = new GroupOperationHelper(group, user);
+    operations.setAdmin(isAdmin);
+    operations.pushAll();
   }
 });
 
-// TODO: anyone can set adminship right now for themself...hmm...
 export const updateMembership = new ValidatedMethod({
   name: 'groups.member.update',
   validate: new SimpleSchema({
@@ -189,36 +189,20 @@ export const updateMembership = new ValidatedMethod({
   run({ groupId, userId, roleTitle, isAdmin, isPending }) {
     // TODO: some validation for security here
     if (!this.isSimulation) {
-      const group = Groups.findOne(groupId);
-      if (!group) {
-        throw new Meteor.Error('invalid-group', 'The specified group does not exist.');
-      }
-      const user = Meteor.users.findOne(userId);
-      if (!user) {
-        throw new Meteor.Error('invalid-user', 'The specified user does not exist.');
-      }
+      const group = verifyGroup(groupId);
+      const user = verifyUser(userId);
 
-      const groupMembershipIndex = group.getMembershipIndex(userId);
-      const userMembershipIndex = user.getMembershipIndex(groupId);
+      const operations = new GroupOperationHelper(group, user);
 
-      if (groupMembershipIndex === -1 || userMembershipIndex === -1) {
-        throw new Meteor.Error('invalid-user', 'The user isn\'t in the specified group.');
-      }
-      if (roleTitle) {
-        const role = group.getRoleInfo(roleTitle);
-        if (!role) {
-          throw new Meteor.Error('invalid-role', 'This role isn\'t allowed for this group.');
-        }
-        group.members[groupMembershipIndex].role = role;
-        user.groups[userMembershipIndex].role = role;
+      if (!_.isUndefined(roleTitle)) {
+        operations.setRole(roleTitle);
       }
       if (!_.isUndefined(isPending)) {
-        group.members[groupMembershipIndex].isPending = isPending;
-        user.groups[userMembershipIndex].isPending = isPending;
+        operations.setPending(isPending);
       }
-      Groups.update(group._id, { $set: { members: group.members } });
-      Meteor.users.update(user._id, { $set: { groups: user.groups } });
+      operations.pushAll();
 
+      // Do this after otherwise result will be cached
       if (!_.isUndefined(isAdmin)) {
         setAdmin.run.call(this, { groupId, userId, isAdmin });
       }
@@ -241,7 +225,6 @@ export const acceptInvite = new ValidatedMethod({
   allow: [Auth.GroupMember],
   run({ groupId, roleTitle }) {
     if (!this.isSimulation) {
-      const group = Groups.findOne(groupId);
       updateMembership.run.call(this, { groupId, roleTitle, userId: this.userId, isPending: false });
     }
   }
@@ -270,7 +253,6 @@ export const updateGroupInfo =  new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, groupName, description, publicJoin, allowGuests }) {
-    // TODO: validate who's doing this!
     return Groups.update(groupId, {
       $set: {
         groupName, description, publicJoin, allowGuests
@@ -298,7 +280,8 @@ export const updateGroupRoles = new ValidatedMethod({
   allow: [Auth.GroupAdmin],
   run({ groupId, roles }) {
     // TODO: update corresponding user fields + member fields
-    const group = Groups.findOne(groupId);
+    // TODO: update data in history?
+    const group = verifyGroup(groupId);
 
     // update group membership
     let changedMembers = [];
@@ -494,7 +477,7 @@ export const removeFromGroup = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin, Auth.GroupSelf],
   run({ groupId, userId }) {
-    const group = Groups.findOne(groupId);
+    const group = verifyGroup(groupId);
     if (group.isAdmin(userId)) {
       throw new Meteor.Error('user-is-admin',
         'The user could not be removed from the group, because he/she is an admin');
@@ -513,7 +496,6 @@ export const removeFromGroup = new ValidatedMethod({
   }
 });
 
-// TODO: admins only?
 export const clearGroupPool = new ValidatedMethod({
   name: 'groups.clearPool',
   validate: new SimpleSchema({

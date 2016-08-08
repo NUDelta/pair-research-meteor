@@ -43,6 +43,11 @@ Schema.UserProfile = new SimpleSchema({
 });
 
 Schema.User = new SimpleSchema({
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
   username: {
     type: String,
     optional: true
