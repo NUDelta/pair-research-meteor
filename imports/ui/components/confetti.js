@@ -3,6 +3,12 @@ import './confetti.html';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+/**
+ * Confetti sprinkling template. Critical to app functionality.
+ * @isTemplate true
+ * @see http://jsfiddle.net/Javalsu/vxP5q/743/embedded/result/
+ */
+
 let canvas;
 let ctx;
 let W;

@@ -19,10 +19,17 @@ import { Schema } from '../schema.js';
 import { Auth, AuthMixin, verifyGroup, verifyUser } from '../authentication.js';
 import { log } from '../logs.js';
 
-// TODO: Prob should factor out a new collection "Memberships"
-// Although users won't have a ton of groups and groups likely won't have a ton
-// of members, doing many array operations on updates is starting to be a pain...
+/*
+  TODO: Prob should factor out a new collection "Memberships"
+  Although users won't have a ton of groups and groups likely won't have a ton
+  of members, doing many array operations on updates is starting to be a pain...
+*/
 
+/**
+ * @summary Adds a user to the group.
+ * @exports
+ * @isMethod true
+ */
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: new SimpleSchema({
@@ -73,6 +80,12 @@ export const addToGroup = new ValidatedMethod({
   }
 });
 
+/**
+ * Makes updates to memberships via an array of changes per member. This function throws errors as
+ * soon as it encounters them, but all preceding changes in membership will be saved.
+ * @exports
+ * @isMethod true
+ */
 export const updateMembers = new ValidatedMethod({
   name: 'groups.member.update.multiple',
   validate: new SimpleSchema({
@@ -106,7 +119,6 @@ export const updateMembers = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, changes }) {
-    // TODO: cascading errors?
     const group = verifyGroup(groupId);
     if (!this.isSimulation) {
       const operations = new GroupOperationHelper(group);
@@ -120,7 +132,7 @@ export const updateMembers = new ValidatedMethod({
           operations.setPending(change.isPending);
         }
         if (!_.isUndefined(change.isAdmin)) {
-          operations.setAdmin(change.isAdmin); // ok here, admins only
+          operations.setAdmin(change.isAdmin);
         }
         operations.pushMember();
       });
@@ -129,6 +141,12 @@ export const updateMembers = new ValidatedMethod({
   }
 });
 
+/**
+ * Promotes or demotes admins in group. This method is separated out because it requires different
+ * permissions than changing role or upgrading from Pending.
+ * @exports
+ * @isMethod true
+ */
 export const setAdmin = new ValidatedMethod({
   name: 'groups.member.setAdmin',
   validate: new SimpleSchema({
@@ -160,6 +178,12 @@ export const setAdmin = new ValidatedMethod({
   }
 });
 
+/**
+ * Makes changes to a single member's group membership. Can be called by either the member him/herself
+ * or a group admin.
+ * @exports
+ * @isMethod true
+ */
 export const updateMembership = new ValidatedMethod({
   name: 'groups.member.update',
   validate: new SimpleSchema({
@@ -187,7 +211,6 @@ export const updateMembership = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin, Auth.GroupSelf],
   run({ groupId, userId, roleTitle, isAdmin, isPending }) {
-    // TODO: some validation for security here
     if (!this.isSimulation) {
       const group = verifyGroup(groupId);
       const user = verifyUser(userId);
@@ -202,7 +225,7 @@ export const updateMembership = new ValidatedMethod({
       }
       operations.pushAll();
 
-      // Do this after otherwise result will be cached
+      // Do this after otherwise result will be overwritten
       if (!_.isUndefined(isAdmin)) {
         setAdmin.run.call(this, { groupId, userId, isAdmin });
       }
@@ -210,6 +233,11 @@ export const updateMembership = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Upgrades to a normal membership from pending.
+ * @exports
+ * @isMethod true
+ */
 export const acceptInvite = new ValidatedMethod({
   name: 'groups.member.accept',
   validate: new SimpleSchema({
@@ -230,6 +258,11 @@ export const acceptInvite = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Updates a groups basic information and settings.
+ * @exports
+ * @isMethod true
+ */
 export const updateGroupInfo =  new ValidatedMethod({
   name: 'groups.info.update',
   validate: new SimpleSchema({
@@ -261,6 +294,15 @@ export const updateGroupInfo =  new ValidatedMethod({
   }
 });
 
+/**
+ * Updates a groups set of allowed roles. Members with a matching role id will also have their membership
+ * updated. If a role is removed, the affected members will have their role reset.
+ * @exports
+ * @isMethod true
+ * @todo Update data in history? Behavior is unclear right now.
+ * @todo Determine most efficient method of mass user membership update. (e.g. forEach user or pull
+ *       from all members and addToSet back)
+ */
 export const updateGroupRoles = new ValidatedMethod({
   name: 'groups.roles.update',
   validate: new SimpleSchema({
@@ -279,15 +321,13 @@ export const updateGroupRoles = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
   run({ groupId, roles }) {
-    // TODO: update corresponding user fields + member fields
-    // TODO: update data in history?
     const group = verifyGroup(groupId);
 
-    // update group membership
+    // Update user group membership
     let changedMembers = [];
     const groupMembers = _.map(group.members, member => {
       const role = _.find(roles, role => role._id == member.role._id);
-      // unless no change was made
+      // Unless no change was made
       if (!(role && role.title == member.role.title)) {
         if (role) {
           member.role = role;
@@ -299,7 +339,6 @@ export const updateGroupRoles = new ValidatedMethod({
       return member;
     });
 
-    // TODO: compare this with two mass updates (e.g. pull and addToSet)
     if (!this.isSimulation) {
       Meteor.users.find({ _id: { $in: changedMembers } }).forEach(user => {
         const index = user.getMembershipIndex(groupId);
@@ -324,6 +363,11 @@ export const updateGroupRoles = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Creates a group.
+ * @exports
+ * @isMethod true
+ */
 export const createGroup = new ValidatedMethod({
   name: 'groups.create',
   validate: new SimpleSchema({
@@ -369,6 +413,11 @@ export const createGroup = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Creates a group with the current user as an admin and with members.
+ * @exports
+ * @isMethod true
+ */
 export const createGroupWithMembers = new ValidatedMethod({
   name: 'groups.create.withMembers',
   validate: new SimpleSchema({
@@ -421,7 +470,14 @@ export const createGroupWithMembers = new ValidatedMethod({
   }
 });
 
-// addToGroup already checks if user in group
+/**
+ * Invites a user to the group. Sends an enrollment email if the user hasn't yet registered an account.
+ * @exports
+ * @isMethod true
+ * @todo Multiple enrollment emails override the previous email tokens. Write a custom function for
+ *       future emails that avoids this.
+ * @see https://trello.com/c/J3vSwtg7/107-repeat-enrollment-emails-overwrite-previous-email-tokens
+ */
 export const inviteToGroup = new ValidatedMethod({
   name: 'groups.invite',
   validate: new SimpleSchema({
@@ -471,6 +527,11 @@ export const inviteToGroup = new ValidatedMethod({
   }
 });
 
+/**
+ * Removes a user from the group. Admins cannot be removed.
+ * @exports
+ * @isMethod true
+ */
 export const removeFromGroup = new ValidatedMethod({
   name: 'groups.remove',
   validate: Schema.GroupUserQuery.validator(),
@@ -496,6 +557,11 @@ export const removeFromGroup = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Clears the pair research pool.
+ * @exports
+ * @isMethod true
+ */
 export const clearGroupPool = new ValidatedMethod({
   name: 'groups.clearPool',
   validate: new SimpleSchema({
@@ -511,6 +577,10 @@ export const clearGroupPool = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Creates a demo pair research group that doesn't require logged in users.
+ * @todo Logged in users can't participate in demo pools at all right now? (unconfirmed, investigate).
+ */
 export const createDemoGroup = new ValidatedMethod({
   name: 'groups.createDemo',
   validate: null,

@@ -5,6 +5,11 @@ import { Tasks } from './tasks.js';
 import { Schema } from '../schema.js';
 import { Auth, AuthMixin } from '../authentication.js';
 
+/**
+ * @summary Updates or sets a user's task info.
+ * @exports
+ * @isMethod true
+ */
 export const updateTask = new ValidatedMethod({
   name: 'tasks.update',
   validate: new SimpleSchema({
@@ -24,7 +29,7 @@ export const updateTask = new ValidatedMethod({
     }
   }).validator(),
   mixins: [AuthMixin],
-  allow: [Auth.GroupSelf],
+  allow: [Auth.GroupSelf, Auth.GroupAdmin],
   run({ name, userId, groupId, task }) {
     Tasks.upsert({
      name: name,
@@ -41,6 +46,11 @@ export const updateTask = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Clears a user's task in a group.
+ * @exports
+ * @isMethod true
+ */
 export const clearTask = new ValidatedMethod({
   name: 'tasks.remove',
   validate: Schema.GroupUserQuery.validator(),

@@ -11,8 +11,22 @@ import { log } from '../logs';
 
 import { DEV_OPTIONS, PAIR_SCRIPT } from '../../startup/config.js';
 
+/**
+ * @summary Placeholder id for group pairings that indicates in progress so the page shows a spinner.
+ * @exports
+ * @const
+ * @type {string}
+ * @todo This might not be triggered properly in the horse race? (investigate! TODO)
+ */
 export const PAIRING_IN_PROGRESS = '22222222222222222';
 
+/**
+ * Pair Research pairing function. The powerhouse of the pair research application. Based on
+ * HQ's Pair Research algorithm; calls the Python matching script after generating the appropriate
+ * graph structure.
+ * @exports
+ * @isMethod true
+ */
 export const makePairings = new ValidatedMethod({
   name: 'pairing.makePairings',
   validate: new SimpleSchema({
@@ -24,6 +38,7 @@ export const makePairings = new ValidatedMethod({
   run({ groupId }) {
     Groups.update(groupId, { $set: { activePairing: PAIRING_IN_PROGRESS }});
 
+    // Simulating lag for the pairing in progress spinner.
     if (Meteor.isDevelopment && !this.isSimulation) {
       log.debug(`Sleeping for ${ DEV_OPTIONS.LATENCY } ms...`);
       Meteor._sleepForMs(DEV_OPTIONS.LATENCY);
@@ -82,7 +97,7 @@ export const makePairings = new ValidatedMethod({
       const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
       log.info(`script results: ${ JSON.stringify(partners) }`);
 
-      // Avoiding duplicates
+      // avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
       let pairings = _.compact(_.concat(
           _.shuffle(

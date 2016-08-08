@@ -163,7 +163,7 @@ Template.pairings.helpers({
     } else {
       const exists = _.findIndex(results, res => res == userId);
       if (exists !== -1) {
-        instance.state.remove('raceResults', exists);
+        instance.state.removeIndex('raceResults', exists);
       }
     }
     return currentCount / totalCount * 100;

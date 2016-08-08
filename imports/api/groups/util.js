@@ -6,12 +6,12 @@ const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^
  * Process a comma-separated list of emails to, filtering out
  * duplicates and invalid email addresses into an array.
  *
- * @param emails
- * @param duplicateCheck
- * @param callback
+ * @param {Array} emails
+ * @param {function(string)} duplicateCheck
+ * @param {function(string} process
  * @returns None
  */
-export const processEmails = (emails, duplicateCheck, callback) => {
+export const processEmails = (emails, duplicateCheck, process) => {
   const emailArray = _.compact(_.map(emails.split(','), email => email.replace(/ /g, '')));
   const invalid = _.filter(emailArray, email => !re.test(email));
   const valid = _.uniq(_.filter(emailArray, email => re.test(email)));
@@ -24,7 +24,7 @@ export const processEmails = (emails, duplicateCheck, callback) => {
     if (duplicateCheck(email)) {
       duplicates.push(email);
     } else {
-      callback(email);
+      process(email);
     }
   });
   if (duplicates.length) {

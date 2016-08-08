@@ -101,6 +101,7 @@ FlowRouter.route('/pair/:groupId', {
   }
 });
 
+// Demo Routes
 FlowRouter.route('/demo', {
   name: 'App.demo',
   action() {

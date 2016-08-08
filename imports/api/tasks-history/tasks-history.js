@@ -6,7 +6,19 @@ import { Schema } from '../schema.js';
 
 const ignoreWords = ['and','the','to','a','of','for','as','i','with','it','is','on','that','this','can','in','be','has','if'];
 const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(true)));
+
+/**
+ * @summary Constructor for the stored history of tasks.
+ * @class
+ */
 class TasksHistoryCollection extends Mongo.Collection {
+  /**
+   * Constructs query based on individual or all. Meant to be passed into `popularTasks`.
+   * @param {string} type - either 'individual' or 'all, depending on set wanted.
+   * @param {string} info - specifier for the selected type (e.g. userId for 'individual')
+   * @returns {Object}
+   * @todo Needs to implement role query. Tough, since role info currently isn't stored in task archive.
+   */
   //noinspection JSMethodCanBeStatic
   constructQuery(type, info) {
     if (type == 'individual' && info) {
@@ -18,7 +30,12 @@ class TasksHistoryCollection extends Mongo.Collection {
     }
   }
 
-
+  /**
+   * Returns the most popular keywords in pairings tasks.
+   * @param {Object} query - Task query. Meant to be either `{}` or `{ userId: 'something' }`
+   * @param {number} count - Number of keywords desired.
+   * @returns {Array}
+   */
   popularTasks(query, count) {
     const tasks = _.map(this.find(query, { task: 1 }).fetch(), task => task.task);
     const frequencies = {};
@@ -42,8 +59,19 @@ class TasksHistoryCollection extends Mongo.Collection {
   }
 }
 
+/**
+ * @summary Collection hold current group tasks.
+ * @exports
+ * @analytics
+ * @see Tasks
+ * @type {TasksHistoryCollection}
+ */
 export const TasksHistory = new TasksHistoryCollection('tasks_history');
 
+/**
+ * @summary Schema for an archived task document.
+ * @type {SimpleSchema}
+ */
 Schema.TaskHistory = new SimpleSchema({
   pairingId: {
     type: String,

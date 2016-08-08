@@ -5,9 +5,19 @@ import { _ } from 'meteor/stevezhu:lodash';
 import { Schema } from '../schema.js';
 import { generateAvatar } from '../util.js';
 
-// TODO: replace with privately loaded admin id?
+/**
+ * @summary Placeholder id for groups created as a demo.
+ * @exports
+ * @const
+ * @type {string}
+ * @todo Replace with site admin userId?
+ */
 export const DEMO_GROUP_CREATOR = '33333333333333333';
 
+/**
+ * @summary Schema for a user's membership in a group. Replicated in groups collection.
+ * @type {SimpleSchema}
+ */
 Schema.UserGroupMembership = new SimpleSchema({
   groupId: {
     type: String,
@@ -27,6 +37,10 @@ Schema.UserGroupMembership = new SimpleSchema({
   }
 });
 
+/**
+ * @summary Schema for publicly exposed user profile.
+ * @type {SimpleSchema}
+ */
 Schema.UserProfile = new SimpleSchema({
   fullName: {
     type: String
@@ -42,6 +56,10 @@ Schema.UserProfile = new SimpleSchema({
   }
 });
 
+/**
+ * @summary Schema for the whole user profile.
+ * @type {SimpleSchema}
+ */
 Schema.User = new SimpleSchema({
   _id: {
     type: String,
@@ -88,6 +106,10 @@ Schema.User = new SimpleSchema({
   }
 });
 
+/**
+ * @summary Schema for a simplified user profile, to be used in the demo pairing group.
+ * @type {SimpleSchema}
+ */
 Schema.SimpleUser = new SimpleSchema({
   _id: {
     type: String,
@@ -104,18 +126,31 @@ Meteor.users.deny({
   update() { return true; }
 });
 
+/**
+ * @summary Returns an array of the groupIds a user is in.
+ * @param {string} userId
+ * @returns {Array}
+ */
 Meteor.users.findUserGroups = (userId) => {
   const user = Meteor.users.findOne(userId);
   return _.map(user.groups, group => group.groupId);
 };
 
 Meteor.users.helpers({
+  /**
+   * @summary Retrieves a user's email.
+   * @return {?string}
+   * @todo Should process the case of multiple emails (e.g. being invited when they already have
+   *       an account under a different email).
+   */
   email() {
-    // TODO: I don't expect this to turn out troublesome ever, but should keep in mind
-    // if people ever have multiple emails (e.g. from being invited when they already
-    // have an account under a different email
     return this.emails.length > 0 && this.emails[0].address
   },
+  /**
+   * @summary Retrieves a user's avatar url or generates a dataURI from their initials if they don't
+   *          have one set.
+   * @returns {string}
+   */
   avatar() {
     if (this.profile.avatar) {
       return this.profile.avatar
@@ -123,11 +158,21 @@ Meteor.users.helpers({
       return generateAvatar(this.profile.fullName);
     }
   },
+  /**
+   * @summary Gets a group's index in the group membership array.
+   * @param {string} groupId
+   * @returns {number}
+   */
   getMembershipIndex(groupId) {
     return _.findIndex(this.groups, group => group.groupId == groupId);
   },
+  /**
+   * @summary Determines if user has set a password.
+   * @locus server
+   * @returns {boolean}
+   * @todo Unclear if this is the best way to check.
+   */
   isActive() {
-    // TODO: in future, this should check for VERIFIED emails
     return !!this.services.password.bcrypt;
   }
 });

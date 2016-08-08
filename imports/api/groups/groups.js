@@ -10,11 +10,22 @@ import { Tasks } from '../tasks/tasks.js';
 import { Affinities } from '../affinities/affinities.js';
 import { log } from '../logs.js';
 
+/**
+ * @summary Constructor for the Groups collection.
+ * @class
+ */
 class GroupCollection extends Mongo.Collection {
   insert(group, callback) {
     return super.insert(group, callback);
   }
 
+  /**
+   * Removes associated memberships, tasks, and affinities on group destruction.
+   * @override
+   * @param selector
+   * @param callback
+   * @returns {any}
+   */
   remove(selector, callback) {
     // destroy all memberships
     this.find(selector).forEach((group) => {
@@ -40,8 +51,17 @@ class GroupCollection extends Mongo.Collection {
   }
 }
 
+/**
+ * @summary Collection containing all user groups.
+ * @exports
+ * @type {GroupCollection}
+ */
 export const Groups = new GroupCollection('groups');
 
+/**
+ * @summary Helper schema for any query for users in a group.
+ * @type {SimpleSchema}
+ */
 Schema.GroupUserQuery = new SimpleSchema({
   groupId: {
     type: String,
@@ -53,6 +73,10 @@ Schema.GroupUserQuery = new SimpleSchema({
   }
 });
 
+/**
+ * @summary Schema for user roles in a group.
+ * @type {SimpleSchema}
+ */
 Schema.GroupRole = new SimpleSchema({
   _id: {
     type: String,
@@ -71,10 +95,19 @@ Schema.GroupRole = new SimpleSchema({
   }
 });
 
+// TODO: should move this elsewhere
 SimpleSchema.messages({
   either: '[label] or its partner field must be included'
 });
 
+/**
+ * Validation method for SimpleSchema for requiring at least one of two keys.
+ * @param context - Schema context (`this` value)
+ * @param {string} partner - partner key to validate
+ * @returns {string} - 'either', indicating the SimpleSchema error message to trigger
+ * @constructor
+ * @see Schema.Member for example
+ */
 Schema.ValidateEither = (context, partner) => {
   let tokens = context.key.split('.');
   tokens[tokens.length - 1] = partner;
@@ -84,7 +117,10 @@ Schema.ValidateEither = (context, partner) => {
   }
 };
 
-// maybe add more fields?
+/**
+ * Schema for membership object in group. Replicated in users collection.
+ * @type {SimpleSchema}
+ */
 Schema.Member = new SimpleSchema({
   fullName: {
     type: String,
@@ -107,7 +143,7 @@ Schema.Member = new SimpleSchema({
     }
   },
   role: {
-    type: Schema.GroupRole // turn this into an id?
+    type: Schema.GroupRole
   },
   isAdmin: {
     type: Boolean
@@ -117,6 +153,11 @@ Schema.Member = new SimpleSchema({
   }
 });
 
+/**
+ * Default roleset for groups on creation. Geared toward academic environment deployment.
+ * @const
+ * @type {{Professor: string, PostDoc: string, Graduate: string, Undergraduate: string}}
+ */
 export const DefaultRoles = {
   Professor: 'Professor',
   PostDoc: 'Post Doc',
@@ -124,6 +165,10 @@ export const DefaultRoles = {
   Undergraduate: 'Undergraduate Student'
 };
 
+/**
+ * @summary Schema for group.
+ * @type {SimpleSchema}
+ */
 Schema.Group = new SimpleSchema({
   _id: {
     type: String,
@@ -187,45 +232,99 @@ Schema.Group = new SimpleSchema({
 
 Groups.attachSchema(Schema.Group);
 
-Groups.allow({
-  insert(userId, doc) {
-    return doc.creatorId == userId;
-  }
-});
-
 Groups.helpers({
+  /**
+   * Gets membership info from a userId.
+   * @param {string} userId
+   * @returns {?Object}
+   */
   getMembership(userId) {
     return _.find(this.members, member => member.userId == userId);
   },
+  /**
+   * Gets user role title from userId.
+   * @param {string} userId
+   * @returns {?string}
+   */
   getUserRole(userId) {
     const membership = this.getMembership(userId);
     return membership && membership.role.title;
   },
+  /**
+   * Gets user's index in group membership array.
+   * @param {string} userId
+   * @returns {number}
+   */
   getMembershipIndex(userId) {
     return _.findIndex(this.members, member => member.userId == userId);
   },
+  /**
+   * Gets role info from title.
+   * @param {string} title
+   * @returns {?Object}
+   */
   getRoleInfo(title) {
     return _.find(this.roles, role => role.title == title);
   },
+  /**
+   * Determines if user is member of group.
+   * @param {string} userId
+   * @returns {boolean}
+   */
   containsMember(userId) {
     return _.some(this.members, { userId: userId });
   },
+  /**
+   * Determines if role is allowed in group.
+   * @param {string} roleTitle
+   * @returns {boolean}
+   */
   containsRole(roleTitle) {
     return _.some(this.roles, { title: roleTitle });
   },
+  /**
+   * Determines if user is admin of group.
+   * @param {string} userId
+   * @returns {boolean}
+   */
   isAdmin(userId) {
     const member = this.getMembership(userId);
     return member.isAdmin;
   },
+  /**
+   * Determines if user is a pending member in the group.
+   * @param {string} userId
+   * @returns {boolean}
+   */
   isPending(userId) {
     const member = this.getMembership(userId);
     return member.isPending;
   },
+  /**
+   * Returns the admins in the group.
+   * @returns {Array}
+   */
   admins() {
     return _.filter(this.members, member => member.isAdmin);
   }
 });
 
+/**
+ * @summary Helper class for bundling changes made to group memberships.
+ * @class
+ * @export
+ * @example
+ * // setting users A, B, and C to be admins
+ * const group = Groups.findOne(groupId);
+ * const users = [ userA, userB, userC]
+ * const operations = new GroupOperationHelper(group) // user argument is optional
+ * users.forEach(user => {
+ *   operations.setUser(user);
+ *   operations.setAdmin(true);
+ *   operations.pushMember();
+ * });
+ * operations.pushGroup();
+ */
 export class GroupOperationHelper {
   constructor(group, user) {
     check(group, Schema.Group);

@@ -4,10 +4,19 @@ import { _ } from 'meteor/stevezhu:lodash';
 
 import { Schema } from '../schema.js';
 
-// For now, expecting this collection to be purely for analytic purposes.
-
+/**
+ * @summary Constructor for the stored history of pairings.
+ * @class
+ */
 class PairsHistoryCollection extends Mongo.Collection {
 
+  /**
+   * Constructs queries based on individual, role, or all.
+   * @param {string} type - either 'individual', 'role', or 'all', depending on set wanted.
+   * @param {string} info - specifier for the selected type (e.g. userId for 'individual')
+   * @returns {Object}
+   * @todo Prob should make param type an enum.
+   */
   //noinspection JSMethodCanBeStatic
   constructQuery(type, info) {
     if (type == 'individual' && info) {
@@ -27,6 +36,15 @@ class PairsHistoryCollection extends Mongo.Collection {
     }
   }
 
+  /**
+   * Constructs a mapping function that retrieves the relevant fields from a pairing document,
+   * based on the type specified.
+   * @private
+   * @param {string} type - 'individual' or 'role', for the source of comparison
+   * @param {string} info - specifier for the selected type
+   * @param {string} field - 'individual' or 'role', for the desired output
+   * @returns {function(string)}
+   */
   constructMap(type, info, field) {
     let compare = '';
     if (type == 'individual') {
@@ -54,11 +72,10 @@ class PairsHistoryCollection extends Mongo.Collection {
 
   /**
    * Returns frequency pairs of the top partners of a given individual or role
-   * @client-only
-   *
-   * @param type 'individual' or 'role', describes the source of comparison
-   * @param info Value to match on
-   * @param field 'individual' or 'role', describes the desired output
+   * @locus client
+   * @param {string} type - 'individual' or 'role', describes the source of comparison
+   * @param {string} info - specifier for the selected type
+   * @param {string} field - 'individual' or 'role', describes the desired output
    * @returns {Array}
    */
   topPartners(type, info, field) {
@@ -68,8 +85,19 @@ class PairsHistoryCollection extends Mongo.Collection {
   }
 }
 
+/**
+ * @summary Collection holding archive of pairing history.
+ * @exports
+ * @analytics
+ * @see Pairings
+ * @type {PairsHistoryCollection}
+ */
 export const PairsHistory = new PairsHistoryCollection('pairs_history');
 
+/**
+ * @summary Schema for an archived pairing history document.
+ * @type {SimpleSchema}
+ */
 Schema.PairHistory = new SimpleSchema({
   groupId: {
     type: String,

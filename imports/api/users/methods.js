@@ -6,6 +6,11 @@ import { _ } from 'meteor/stevezhu:lodash';
 import { Groups } from '../groups/groups.js';
 import { Auth, AuthMixin } from '../authentication.js';
 
+/**
+ * @summary Finds users email from Account enrollment email token.
+ * @exports
+ * @isMethod true
+ */
 export const findEmailFromToken = new ValidatedMethod({
   name: 'users.find.email.token',
   validate: new SimpleSchema({
@@ -25,6 +30,11 @@ export const findEmailFromToken = new ValidatedMethod({
   }
 });
 
+/**
+ * @summary Sets user profile info.
+ * @exports
+ * @isMethod true
+ */
 export const setProfile = new ValidatedMethod({
   name: 'users.update.name',
   validate: new SimpleSchema({

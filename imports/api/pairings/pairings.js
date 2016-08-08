@@ -12,7 +12,20 @@ import { TasksHistory } from '../tasks-history/tasks-history.js';
 
 import { Schema } from '../schema.js';
 
+/**
+ * @summary Constructor for the Pairing collection.
+ * @class
+ */
 class PairingCollection extends Mongo.Collection {
+  /**
+   * Attaches timestamp if missing, updates group's current pairing, and archives pairing info.
+   * @override
+   * @param {Object} pairing
+   * @param {function(string)} callback
+   * @returns {any}
+   * @todo Figure out a better solution on where to attach timestamp. People shouldn't be able to
+   *       specifiy a custom one.
+   */
   insert(pairing, callback) {
     if (!pairing.timestamp) {
       pairing.timestamp = new Date();
@@ -23,7 +36,12 @@ class PairingCollection extends Mongo.Collection {
     this.saveHistory(_id, pairing);
     return _id;
   }
-  
+
+  /**
+   * @summary Archives pairing info history.
+   * @param {string} id
+   * @param {Object} pairing
+   */
   saveHistory(id, pairing) {
     const group = Groups.findOne(pairing.groupId);
     if (group.creatorId == DEMO_GROUP_CREATOR) {
@@ -70,8 +88,18 @@ class PairingCollection extends Mongo.Collection {
   }
 }
 
+/**
+ * @summary Collection containing all pairing history.
+ * @exports
+ * @type {PairingCollection}
+ * @todo Refactor? Redundant with PairsHistory right now, oddly enough.
+ */
 export const Pairings = new PairingCollection('pairings');
 
+/**
+ * @summary Schema for a single pairing.
+ * @type {SimpleSchema}
+ */
 Schema.SinglePairing = new SimpleSchema({
   firstUserId: {
     type: String,
@@ -91,6 +119,10 @@ Schema.SinglePairing = new SimpleSchema({
   }
 });
 
+/**
+ * @summary Schema for a pairing history document.
+ * @type {SimpleSchema}
+ */
 Schema.Pairing = new SimpleSchema({
   groupId: {
     type: String,
@@ -110,6 +142,11 @@ Schema.Pairing = new SimpleSchema({
 Pairings.attachSchema(Schema.Pairing);
 
 Pairings.helpers({
+  /**
+   * @summary Retrieves a users partner in a pairing.
+   * @param userId
+   * @returns {Object}
+   */
   partner(userId) {
     const pairing = _.find(this.pairings, (pairing) => {
       return pairing.firstUserId == userId || pairing.secondUserId == userId;

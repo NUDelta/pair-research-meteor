@@ -144,7 +144,7 @@ Template.groups_create.events({
   'click .members .secondary-content'(event, instance) {
     event.preventDefault();
     const index = $(event.currentTarget).data('index');
-    instance.state.remove('members', index);
+    instance.state.removeIndex('members', index);
   },
   'click .members input[type=checkbox]'(event, instance) {
     const $target = $(event.target);

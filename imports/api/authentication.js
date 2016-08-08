@@ -11,6 +11,8 @@ import { Groups } from './groups/groups.js';
  *  - GroupSelf: is editing own membership in group
  *  - LoggedIn: user is logged in
  * @type {{GroupAdmin: string, GroupMember: string, GroupSelf: string, LoggedIn: string}}
+ * @readonly
+ * @enum {string}
  */
 export const Auth = {
   GroupAdmin: 'GroupAdmin',
@@ -19,6 +21,14 @@ export const Auth = {
   LoggedIn: 'LoggedIn'
 };
 
+/**
+ * ValidatedMethod mixin for authenticating user permissions for actions in groups.
+ * @constructor
+ * @mixin
+ * @export
+ * @param {Object} methodOptions
+ * @returns {*}
+ */
 export const AuthMixin = (methodOptions) => {
   check(methodOptions.allow, Array);
 
@@ -41,6 +51,14 @@ export const AuthMixin = (methodOptions) => {
   return methodOptions;
 };
 
+/**
+ * Checks permissions based on authentication level
+ * @param {string} activeUserId - Passed in as this.userId.
+ * @param {string} editUserId - The user being edited.
+ * @param {string} groupId - The group being edited.
+ * @param {Auth} allowed - The authentication level.
+ * @returns {boolean}
+ */
 function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   const group = Groups.findOne(groupId);
   return _.some(allowed, role => {
@@ -59,6 +77,13 @@ function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   });
 }
 
+/**
+ * Public authenticate function to be called at the beginning of publications.
+ * @param {Auth} allowed
+ * @param {string} userId
+ * @param {string} groupId
+ * @param {string} editUserId
+ */
 export function authenticate(allowed, userId, groupId, editUserId) {
   if (!isAuthorized(userId, editUserId, groupId, allowed)) {
     // throw new AuthError(methodOptions.allow);
@@ -66,6 +91,11 @@ export function authenticate(allowed, userId, groupId, editUserId) {
   }
 };
 
+/**
+ * Verifies the existence of a groupId, returning the group object if found.
+ * @param {string} groupId
+ * @returns {any}
+ */
 export function verifyGroup(groupId) {
   const group = Groups.findOne(groupId);
   if (!group) {
@@ -74,6 +104,11 @@ export function verifyGroup(groupId) {
   return group;
 };
 
+/**
+ * Verifies the existence of a userId, returning the user object if found.
+ * @param {string} userId
+ * @returns {any}
+ */
 export function verifyUser(userId) {
   const user = Meteor.users.findOne(userId);
   if (!user) {
@@ -82,6 +117,10 @@ export function verifyUser(userId) {
   return user;
 };
 
+/**
+ * Custom authentication error + messages
+ * @todo
+ */
 class AuthError extends Meteor.Error {
   constructor(role) {
     const authError = AuthErrors[role];

@@ -72,6 +72,10 @@ export const Conferences = [
   'HCOMP'
 ];
 
+/**
+ * Generates a random task from the possibilities above.
+ * @returns {string}
+ */
 export const getTask = () => {
   let action = _.sample(PotentialActions);
   action = _.replace(action, '[web framework]', _.sample(WebFrameworks));
