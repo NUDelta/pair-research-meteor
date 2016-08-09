@@ -1,4 +1,4 @@
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 export const PotentialActions = [
   'Figure out how to do [web task] in [web framework]', // weighting it

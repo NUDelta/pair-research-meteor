@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { Groups } from '../../api/groups/groups.js';
 

@@ -1,5 +1,5 @@
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 /**
  * Pushes an item to a key-value in the reactive dict.

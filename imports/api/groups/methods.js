@@ -3,7 +3,7 @@ import { Email } from 'meteor/email';
 import { Accounts } from 'meteor/accounts-base';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import {
   Groups,

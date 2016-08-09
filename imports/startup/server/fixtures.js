@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Factory } from 'meteor/dburles:factory';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { Affinities } from '../../api/affinities/affinities.js';
 import {

@@ -1,6 +1,6 @@
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 import { exec } from 'child_process';
 
 import { Pairings } from './pairings.js';

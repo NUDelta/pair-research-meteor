@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import { Accounts } from 'meteor/accounts-base';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { Groups } from '../../api/groups/groups.js';
 import { acceptInvite } from '../../api/groups/methods.js';

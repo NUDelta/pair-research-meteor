@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { DefaultRoles } from '../../api/groups/groups.js';
 import { createGroupWithMembers } from '../../api/groups/methods.js';

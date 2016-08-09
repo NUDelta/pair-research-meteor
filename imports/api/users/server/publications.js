@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { Groups } from '../../groups/groups.js';
 import { ADMIN_ID } from '../../../startup/config.js'

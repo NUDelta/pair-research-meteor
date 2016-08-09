@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { DEMO_GROUP_CREATOR } from '../users/users.js';
 import { Affinities } from '../affinities/affinities.js';

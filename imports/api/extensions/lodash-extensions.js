@@ -1,4 +1,4 @@
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 /**
  * Creates a sorted frequency array that counts the occurrences of elements in an array.
