@@ -2,7 +2,6 @@ import 'meteor/nooitaf:colors';
 
 /**
  * @summary Server log debugging helpers. Colored for each type, automatically stringifies objects.
- * @export
  * @module
  * @param {string} message - Message to print.
  */

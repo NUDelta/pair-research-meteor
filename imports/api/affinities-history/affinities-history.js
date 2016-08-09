@@ -16,7 +16,6 @@ class AffinitiesHistoryCollection extends Mongo.Collection {
 
 /**
  * @summmary Collection holding history of users' ratings how much they can help each other.
- * @exports
  * @analytics
  * @see Affinities
  * @type {AffinitiesHistoryCollection}

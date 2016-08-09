@@ -15,7 +15,6 @@ class AffinityCollection extends Mongo.Collection {
 
 /**
  * @summary Collection holding current users' ratings of how much they can help each other.
- * @exports
  * @type {AffinityCollection}
  */
 export const Affinities = new AffinityCollection('affinities');

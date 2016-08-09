@@ -25,7 +25,6 @@ export const Auth = {
  * ValidatedMethod mixin for authenticating user permissions for actions in groups.
  * @constructor
  * @mixin
- * @export
  * @param {Object} methodOptions
  * @returns {*}
  */

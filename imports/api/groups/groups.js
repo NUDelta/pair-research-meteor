@@ -53,7 +53,6 @@ class GroupCollection extends Mongo.Collection {
 
 /**
  * @summary Collection containing all user groups.
- * @exports
  * @type {GroupCollection}
  */
 export const Groups = new GroupCollection('groups');
@@ -312,7 +311,6 @@ Groups.helpers({
 /**
  * @summary Helper class for bundling changes made to group memberships.
  * @class
- * @export
  * @example
  * // setting users A, B, and C to be admins
  * const group = Groups.findOne(groupId);

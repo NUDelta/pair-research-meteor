@@ -87,7 +87,6 @@ class PairsHistoryCollection extends Mongo.Collection {
 
 /**
  * @summary Collection holding archive of pairing history.
- * @exports
  * @analytics
  * @see Pairings
  * @type {PairsHistoryCollection}

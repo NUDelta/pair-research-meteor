@@ -6,7 +6,6 @@ import { Auth, AuthMixin } from '../authentication.js';
 
 /**
  * @summary Updates or sets a user's rating of another user.
- * @exports
  * @isMethod true
  * @todo This method can't use the auth mixin because the naming of the helperId vs userId. Hmm...
  */
@@ -34,7 +33,6 @@ export const updateAffinity = new ValidatedMethod({
 
 /**
  * @summary Clears a user's affinities in a group.
- * @exports
  * @isMethod true
  */
 export const clearAffinities = new ValidatedMethod({

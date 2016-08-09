@@ -75,7 +75,6 @@ function generate(text, color, size) {
 
 /**
  * Generates a square avatar image data URI a users' initials.
- * @export
  * @locus client
  * @param {string} name
  * @param {number} size
@@ -89,7 +88,6 @@ export const generateAvatar = (name, size = 100) => {
 
 /**
  * Generates a square avatar image data URI containing specified text.
- * @export
  * @locus client
  * @param {string} text
  * @param {string} color

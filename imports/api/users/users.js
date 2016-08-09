@@ -7,7 +7,6 @@ import { generateAvatar } from '../util.js';
 
 /**
  * @summary Placeholder id for groups created as a demo.
- * @exports
  * @const
  * @type {string}
  * @todo Replace with site admin userId?

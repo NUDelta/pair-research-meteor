@@ -7,7 +7,6 @@ import { Auth, AuthMixin } from '../authentication.js';
 
 /**
  * @summary Updates or sets a user's task info.
- * @exports
  * @isMethod true
  */
 export const updateTask = new ValidatedMethod({
@@ -48,7 +47,6 @@ export const updateTask = new ValidatedMethod({
 
 /**
  * @summary Clears a user's task in a group.
- * @exports
  * @isMethod true
  */
 export const clearTask = new ValidatedMethod({

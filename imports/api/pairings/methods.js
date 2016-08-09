@@ -13,7 +13,6 @@ import { DEV_OPTIONS, PAIR_SCRIPT } from '../../startup/config.js';
 
 /**
  * @summary Placeholder id for group pairings that indicates in progress so the page shows a spinner.
- * @exports
  * @const
  * @type {string}
  * @todo This might not be triggered properly in the horse race? (investigate! TODO)
@@ -24,7 +23,6 @@ export const PAIRING_IN_PROGRESS = '22222222222222222';
  * Pair Research pairing function. The powerhouse of the pair research application. Based on
  * HQ's Pair Research algorithm; calls the Python matching script after generating the appropriate
  * graph structure.
- * @exports
  * @isMethod true
  */
 export const makePairings = new ValidatedMethod({

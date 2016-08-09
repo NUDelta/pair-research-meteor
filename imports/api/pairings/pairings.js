@@ -90,7 +90,6 @@ class PairingCollection extends Mongo.Collection {
 
 /**
  * @summary Collection containing all pairing history.
- * @exports
  * @type {PairingCollection}
  * @todo Refactor? Redundant with PairsHistory right now, oddly enough.
  */

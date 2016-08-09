@@ -61,7 +61,6 @@ class TasksHistoryCollection extends Mongo.Collection {
 
 /**
  * @summary Collection hold current group tasks.
- * @exports
  * @analytics
  * @see Tasks
  * @type {TasksHistoryCollection}

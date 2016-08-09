@@ -15,7 +15,6 @@ class TaskCollection extends Mongo.Collection {
 
 /**
  * @summary Collection holding the current tasks that people need to complete.
- * @exports
  * @type {TaskCollection}
  */
 export const Tasks = new TaskCollection('tasks');

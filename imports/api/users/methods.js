@@ -8,7 +8,6 @@ import { Auth, AuthMixin } from '../authentication.js';
 
 /**
  * @summary Finds users email from Account enrollment email token.
- * @exports
  * @isMethod true
  */
 export const findEmailFromToken = new ValidatedMethod({
@@ -32,7 +31,6 @@ export const findEmailFromToken = new ValidatedMethod({
 
 /**
  * @summary Sets user profile info.
- * @exports
  * @isMethod true
  */
 export const setProfile = new ValidatedMethod({
