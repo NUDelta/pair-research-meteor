@@ -1,7 +1,7 @@
 {
   "name": "pair-research",
   "version": "0.0.1",
-  "description": "update me please!",
+  "description": "A Meteor implementation of the Pair Research Tool.",
   "author": {
     "name": "Kevin Chen",
     "email": "kevinjchen94@gmail.com",

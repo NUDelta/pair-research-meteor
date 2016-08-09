@@ -208,11 +208,17 @@ Template.pairings.events({
     }
   },
 
+  /**
+   * Triggers make pairs.
+   * @event
+   * @param event
+   * @param instance
+   * @todo This causes the Group Pairing listener to trigger twice: having no pair and
+   *       having a new pairing, which oddly causes the bottom pairings area to disappear
+   *       and reappear, which can cause confetti to fly down.
+   * @see https://trello.com/c/TWLiuxC2/105-random-confetti
+   */
   'click #makePairs'(event, instance) {
-    // This causes the Group Pairing listener to trigger twice: having no pair and
-    // having a new pairing, which oddly causes the bottom pairings area to disappear
-    // and reappear, which can cause confetti to fly down.
-    // See https://trello.com/c/TWLiuxC2/105-random-confetti for repro steps
     if (confirm('Ready to make pairs?')) {
       makePairings.call({ groupId: instance.state.get('groupId') });
     }
