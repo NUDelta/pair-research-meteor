@@ -60,6 +60,9 @@ export const AuthMixin = (methodOptions) => {
  * @param {string} groupId - The group being edited.
  * @param {Array} allowed - The allowed authentication levels.
  * @returns {boolean}
+ *
+ * @todo Prob allow this on server only
+ * @see https://trello.com/c/GTskNUYb/115-authentication-mixin-requires-subscription-to-group-requiring-leaving
  */
 function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   const group = Groups.findOne(groupId);

@@ -15,6 +15,7 @@ Template.user_settings.onCreated(function() {
     groups: []
   });
   const userHandle = this.subscribe('user.groups');
+  this.subscribe('groups.user'); // removeFromGroup throws an error otherwise without being able to determine membership
 
   this.autorun(() => {
     const avatar = Meteor.user() && Meteor.user().profile.avatar;
