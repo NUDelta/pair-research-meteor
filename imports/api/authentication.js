@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _ } from 'lodash';
 
+import { DEMO_GROUP_CREATOR } from './users/users.js';
 import { Groups } from './groups/groups.js';
 
 /**
@@ -18,7 +19,8 @@ export const Auth = {
   GroupAdmin: 'GroupAdmin',
   GroupMember: 'GroupMember',
   GroupSelf: 'GroupSelf',
-  LoggedIn: 'LoggedIn'
+  LoggedIn: 'LoggedIn',
+  Any: 'Any'
 };
 
 /**
@@ -61,28 +63,32 @@ export const AuthMixin = (methodOptions) => {
  */
 function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   const group = Groups.findOne(groupId);
-  return _.some(allowed, role => {
-    switch(role) {
-      case Auth.GroupAdmin:
-        return activeUserId && group && group.isAdmin(activeUserId);
-      case Auth.GroupMember:
-        return activeUserId && group && group.containsMember(activeUserId);
-      case Auth.GroupSelf:
-        return activeUserId && group && group.containsMember(activeUserId) && activeUserId == editUserId;
-      case Auth.LoggedIn:
-        return !!activeUserId;
-      default:
-        return true;
-    }
-  });
+  if (group && group.creatorId === DEMO_GROUP_CREATOR) {
+    return true;
+  } else {
+    return _.some(allowed, role => {
+      switch(role) {
+        case Auth.GroupAdmin:
+          return activeUserId && group && group.isAdmin(activeUserId);
+        case Auth.GroupMember:
+          return activeUserId && group && group.containsMember(activeUserId);
+        case Auth.GroupSelf:
+          return activeUserId && group && group.containsMember(activeUserId) && activeUserId == editUserId;
+        case Auth.LoggedIn:
+          return !!activeUserId;
+        default:
+          return true;
+      }
+    });
+  }
 }
 
 /**
  * Public authentication function to be called at the beginning of publications.
- * @param {Auth} allowed
- * @param {string} userId
- * @param {string} groupId
- * @param {string} editUserId
+ * @param {Auth} allowed - The allowed authentication level(s).
+ * @param {string} userId - The current userId (`this.userId`).
+ * @param {string} groupId - The active group.
+ * @param {string} editUserId - The user document being edited.
  */
 export function authenticated(allowed, userId, groupId = '', editUserId = '') {
   let allowedRoles = allowed;

@@ -2,7 +2,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
 import { Affinities } from './affinities.js';
 import { Schema } from '../schema.js';
-import { Auth, AuthMixin } from '../authentication.js';
+import { Auth, AuthMixin, authenticated } from '../authentication.js';
 
 /**
  * @summary Updates or sets a user's rating of another user.
@@ -13,7 +13,7 @@ export const updateAffinity = new ValidatedMethod({
   name: 'affinity.update',
   validate: Schema.Affinity.validator(),
   run({ helperId, helpeeId, groupId, value }) {
-    if (this.userId != helperId) {
+    if (!authenticated(Auth.GroupSelf, this.userId, groupId, helperId)) {
       throw new Meteor.Error('You don\'t have permissions to make this request.');
     }
     return Affinities.upsert({
