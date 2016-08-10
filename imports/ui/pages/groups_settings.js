@@ -7,6 +7,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'lodash';
 
+import { generateAvatar } from '../../api/util.js';
 import { Groups } from '../../api/groups/groups.js';
 import { processEmails } from '../../api/groups/util.js';
 import {
@@ -75,10 +76,10 @@ Template.groups_settings.helpers({
     const instance = Template.instance();
     const group = instance.state.get('group');
     const user = Meteor.users.findOne(member.userId);
+    const avatar = user ? user.avatar() : generateAvatar(member.fullName);
 
     return {
-      member: member,
-      avatar: user && user.avatar(),
+      member, avatar,
       groupId: instance.state.get('groupId'),
       roles: group && group.roles
     };
