@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
 import { Random } from 'meteor/random';
-import { _ } from 'meteor/stevezhu:lodash';
+import { _ } from 'lodash';
 
 import { log } from '../../api/logs.js';
 import { EMAIL_ADDRESS } from '../../api/constants.js';
