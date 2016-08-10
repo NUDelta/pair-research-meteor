@@ -3,7 +3,7 @@ import { check, Match } from 'meteor/check';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Pairings } from '../pairings.js';
-import { Auth, authenticate } from '../../authentication.js';
+import { Auth, authenticated } from '../../authentication.js';
 
 Meteor.publish('pairings.forGroup', function(activePairing) {
   check(activePairing, Match.Where(a => SimpleSchema.RegEx.Id.test(activePairing)));
@@ -15,6 +15,9 @@ Meteor.publish('pairings.forGroup', function(activePairing) {
 });
 
 Meteor.publish('pairings.all.byGroup', function(groupId) {
-  authenticate(Auth.GroupMember, this.userId, groupId);
-  return Pairings.find({ groupId });
+  if (authenticated(Auth.GroupMember, this.userId, groupId)) {
+    return Pairings.find({ groupId });
+  } else {
+    this.ready();
+  }
 });

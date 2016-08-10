@@ -400,7 +400,9 @@ export const createGroup = new ValidatedMethod({
 
     const group = Groups.findOne(groupId);
     const roleTitle = creatorRole || group.roles[0].title;
-    addToGroup.run.call(this, { groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
+
+    // TODO: beware of this being insecure? necessary to create group
+    addToGroup.runTrusted({ groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
     return groupId;
   }
 });

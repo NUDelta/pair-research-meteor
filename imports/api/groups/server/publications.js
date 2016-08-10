@@ -2,18 +2,24 @@ import { Meteor } from 'meteor/meteor';
 
 import { Groups } from '../groups.js';
 import { DEMO_GROUP_CREATOR } from '../../users/users.js';
-import { Auth, authenticate } from '../../authentication.js';
+import { Auth, authenticated } from '../../authentication.js';
 
 Meteor.publish('group.byId', function(groupId) {
-  authenticate(Auth.GroupMember, this.userId, groupId);
-  return Groups.find(groupId);
+  if (authenticated(Auth.GroupMember, this.userId, groupId)) {
+    return Groups.find(groupId);
+  } else {
+    this.ready();
+  }
 });
 
 Meteor.publish('groups.user', function() {
-  authenticate(Auth.LoggedIn, this.userId);
-  return Groups.find({
-    _id: { $in: Meteor.users.findUserGroups(this.userId) }
-  });
+  if (authenticated(Auth.LoggedIn, this.userId)) {
+    return Groups.find({
+      _id: { $in: Meteor.users.findUserGroups(this.userId) }
+    });
+  } else {
+    this.ready();
+  }
 });
 
 Meteor.publish('groups.demo.byId', function(groupId) {

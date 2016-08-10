@@ -79,4 +79,26 @@
     }
 
   }
+
+  @media #{$small-and-down} {
+    .banner {
+      padding-top: 5em;
+      height: auto;
+      text-align: center;
+
+      .header {
+        position: static;
+        text-align: center;
+        transform: none;
+      }
+
+      .actions {
+        margin-top: 2em;
+        text-align: center;
+        position: static;
+        transform: none;
+      }
+    }
+  }
+
 }

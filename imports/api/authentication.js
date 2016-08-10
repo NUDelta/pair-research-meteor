@@ -55,7 +55,7 @@ export const AuthMixin = (methodOptions) => {
  * @param {string} activeUserId - Passed in as this.userId.
  * @param {string} editUserId - The user being edited.
  * @param {string} groupId - The group being edited.
- * @param {Auth} allowed - The authentication level.
+ * @param {Array} allowed - The allowed authentication levels.
  * @returns {boolean}
  */
 function isAuthorized(activeUserId, editUserId, groupId, allowed) {
@@ -77,17 +77,18 @@ function isAuthorized(activeUserId, editUserId, groupId, allowed) {
 }
 
 /**
- * Public authenticate function to be called at the beginning of publications.
+ * Public authentication function to be called at the beginning of publications.
  * @param {Auth} allowed
  * @param {string} userId
  * @param {string} groupId
  * @param {string} editUserId
  */
-export function authenticate(allowed, userId, groupId, editUserId) {
-  if (!isAuthorized(userId, editUserId, groupId, allowed)) {
-    // throw new AuthError(methodOptions.allow);
-    throw new Meteor.Error('You don\'t have the appropriate permissions to make this request.');
+export function authenticated(allowed, userId, groupId = '', editUserId = '') {
+  let allowedRoles = allowed;
+  if (typeof allowed !== Array) {
+    allowedRoles = [allowed];
   }
+  return isAuthorized(userId, editUserId, groupId, allowedRoles);
 };
 
 /**
