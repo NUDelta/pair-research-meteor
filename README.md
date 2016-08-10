@@ -52,9 +52,16 @@ Pair Research actually relies on a Python script to do the matching after we cre
 graph in Javascript (`/imports/api/pairings/methods.js:makePairs`). To run this script,
 we load it as an asset in the `private/` folder and `exec` it.
 
+### Git Setup
+There's two really important branches here: `deploy` and `master`. `master` is the main branch: be sure
+to never force push to master. `deploy` is always expected to be a number of commits ahead of masters
+(e.g. deploy settings, database migrations). In general, migrations consists of two commits: one for the
+actual deployment and one with the migration commented out and timestamped. To keep track of what version
+is live, avoid force pushing `deploy` until it's live. Use `git rebase` to keep the migrations as the latest commit.
+
 ## Deployment
 Pair Research is hosted on [Galaxy](https://galaxy.meteor.com) and [mLab](https://mlab.com).
-You can deploy with the included `./deploy.sh` script. Make sure you've grabbed the `settings.json`
+You can deploy with the included `npm run-script deploy` script. Make sure you've grabbed the `settings.json`
 file located in the DTR Dropbox `/App Builds/Pair Research` folder. Haoqi can add you to the 
 DTR Galaxy account. Yongsung has the database info (it's on his account). In the future,  you
 should probably do a migration to more easily scalable DB since we should be wary of hitting

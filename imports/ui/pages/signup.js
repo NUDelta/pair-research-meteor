@@ -42,7 +42,7 @@ Template.signup.onRendered(function() {
   // this code could probably be generalized
   const animateIn = 'animated fast rollIn';
   const animateOut = 'animated fast rollOut';
-  $('.col.s8.offset-s2').get(0)._uihooks = {
+  $('.col.m8.offset-m2').get(0)._uihooks = {
     insertElement(node, next) {
       const $node = $(node);
       $node.addClass(animateIn).insertBefore(next);

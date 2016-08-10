@@ -4,7 +4,7 @@
   }
 
   #member {
-    width: 80%;
+    width: calc(100% - 100px);
   }
 
   #create-group {
@@ -14,5 +14,4 @@
   .right {
     margin-right: 3em;
   }
-
 }

@@ -1,5 +1,5 @@
 #signup {
-  .col.s8.offset-s2 {
+  .col.m8.offset-m2 {
     position: relative;
   }
   .step {
@@ -43,6 +43,24 @@
   .pair-form {
     button {
       margin-right: 1em;
+    }
+  }
+
+  @media #{$small-and-down} {
+    .step {
+      left: 15px;
+      right: 15px;
+      .input-field {
+        width: 100%;
+      }
+
+      .avatar-input {
+        position: static;
+
+        img {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }
