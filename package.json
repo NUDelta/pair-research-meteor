@@ -14,7 +14,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings.json"
   },
   "dependencies": {
     "lodash": "4.14.2",
