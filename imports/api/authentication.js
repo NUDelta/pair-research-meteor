@@ -33,12 +33,13 @@ export const AuthMixin = (methodOptions) => {
 
   const runFunc = methodOptions.run;
   methodOptions.run = function() {
+    // TODO: not sure if this argument extraction is best practice
     const args = arguments[0];
     const groupId = args.groupId;
     const userId = args.userId;
 
     if (this.isTrusted || isAuthorized(this.userId, userId, groupId, methodOptions.allow)) {
-      return runFunc.apply(this, arguments); // TODO: extract groupId from arguments?
+      return runFunc.apply(this, arguments);
     } else {
       // throw new AuthError(methodOptions.allow);
       throw new Meteor.Error('You don\'t have the appropriate permissions to make this request.');
@@ -63,11 +64,11 @@ function isAuthorized(activeUserId, editUserId, groupId, allowed) {
   return _.some(allowed, role => {
     switch(role) {
       case Auth.GroupAdmin:
-        return activeUserId && group.isAdmin(activeUserId);
+        return activeUserId && group && group.isAdmin(activeUserId);
       case Auth.GroupMember:
-        return activeUserId && group.containsMember(activeUserId);
+        return activeUserId && group && group.containsMember(activeUserId);
       case Auth.GroupSelf:
-        return activeUserId && group.containsMember(activeUserId) && activeUserId == editUserId;
+        return activeUserId && group && group.containsMember(activeUserId) && activeUserId == editUserId;
       case Auth.LoggedIn:
         return !!activeUserId;
       default:

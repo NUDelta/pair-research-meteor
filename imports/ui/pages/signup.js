@@ -111,8 +111,7 @@ Template.signup.events({
           setProfile.call({ profile: user.profile }, (err) => {
             if (err) {
               // TODO: fix dead end
-              // if this triggers the token is consumed anyway
-              // why could this trigger again?
+              // @see https://trello.com/c/5rpyN70S/112-possible-dead-end-when-creating-account-from-eamil
               alert(err);
             }
             instance.state.increment('step');

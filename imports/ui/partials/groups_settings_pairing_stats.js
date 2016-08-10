@@ -46,7 +46,7 @@ Template.groups_settings_pairing_stats.helpers({
     }
   },
   popularTasks() {
-    // TODO: tweak count?
+    // TODO: allow count tweaking
     const instance = Template.instance();
     const selectedInfo = instance.state.get('selectedInfo');
     const selectedTab = instance.state.get('selectedTab');

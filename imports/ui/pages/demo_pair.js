@@ -24,10 +24,6 @@ Template.demo_pair.onCreated(function() {
 
   this.autorun(() => {
     if (groupHandle.ready()) {
-      // (cp from pair.js)
-      // TODO: There's a bit of a delay before this is processed. Continue to use loading?
-      // TODO: people can see all groups with autojoin settings turned on. I think this is fine for
-      // now, but for future...
       const group = Groups.findOne(groupId);
       if (!group) {
         FlowRouter.go('/');

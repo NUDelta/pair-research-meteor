@@ -48,7 +48,8 @@ Template.groups_settings_pairing_history.helpers({
   },
   maxOffset() {
     const instance = Template.instance();
-    // TODO: this might not be scaleabe?
+    // TODO: this isn't scaleable
+    // @see https://trello.com/c/f8LIZoTm/113-pairing-history-pagination-goes-crazy-when-there-s-a-high-number-of-pages
     return instance.state.get('maxOffset');
   },
   offsets() {
