@@ -29,6 +29,8 @@ export const Auth = {
  * @mixin
  * @param {Object} methodOptions
  * @returns {*}
+ *
+ * @todo isolate runTrusted / this.isTrusted pattern to server + dev
  */
 export const AuthMixin = (methodOptions) => {
   check(methodOptions.allow, Array);
@@ -47,9 +49,12 @@ export const AuthMixin = (methodOptions) => {
       throw new Meteor.Error('You don\'t have the appropriate permissions to make this request.');
     }
   };
-  methodOptions.runTrusted = function() {
-    return runFunc.apply({ isTrusted: true }, arguments);
-  };
+
+  if (Meteor.isDevelopment && Meteor.isServer) {
+    methodOptions.runTrusted = function() {
+      return runFunc.apply({ isTrusted: true }, arguments);
+    };
+  }
   return methodOptions;
 };
 

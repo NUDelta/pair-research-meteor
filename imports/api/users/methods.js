@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { check, Match } from 'meteor/check';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'lodash';
@@ -45,13 +46,16 @@ export const setProfile = new ValidatedMethod({
     },
     'profile.avatar': {
       type: String,
-      regEx: SimpleSchema.RegEx.Url,
       optional: true
     }
   }).validator(),
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
   run({ profile }) {
+    if (profile.avatar !== '' && !SimpleSchema.RegEx.Url.test(profile.avatar)) {
+      throw new Meteor.Error('Avatar link must be a valid url.');
+    }
+
     const user =  Meteor.users.findOne(this.userId);
     const groupIds = _.map(user.groups, group => group.groupId);
     Groups.find({
