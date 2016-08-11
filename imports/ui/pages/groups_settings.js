@@ -38,7 +38,9 @@ Template.groups_settings.onCreated(function() {
   this.autorun(() => {
     if (groupHandle.ready()) {
       const group = Groups.findOne();
-      if (!group) {
+      if (!(group && group.isAdmin(Meteor.userId()))) {
+        // TODO: come up with a better way to manage pages
+        // that people don't have permissions for
         FlowRouter.go('/');
       } else {
         this.state.set('group', group);

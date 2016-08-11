@@ -57,6 +57,9 @@ Template.groups_home.helpers({
     return {
       group: group
     };
+  },
+  showSettings(group) {
+    return group.isAdmin(Meteor.userId());
   }
 });
 
