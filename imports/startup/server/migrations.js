@@ -15,6 +15,9 @@ Email.send({
   text: 'You should be receiving this in your mail client.'
 });
 
+// 8/12/2016 Setting all groups as active.
+Groups.update({}, { $set: { active: true } }, { multi: true });
+
 // 8/1/2016 This was an incredibly messy migration. Needs a dry run int eh future
 // 7/28/2016 changing role infrastructure / admin privileges
 //           archiving existing pairing info
