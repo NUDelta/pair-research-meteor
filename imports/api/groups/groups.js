@@ -311,6 +311,26 @@ Groups.helpers({
     return _.filter(this.members, member => member.isAdmin);
   },
   /**
+   * Adds a user to the group.
+   * @param {Object} user
+   * @param {String} roleTitle
+   * @param {Boolean} isAdmin
+   * @param {Boolean} isPending
+   */
+  addMember(user, roleTitle, isAdmin, isPending) {
+    if (!this.containsRole(roleTitle)) {
+      throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
+    }
+    if (this.containsMember(user._id)) {
+      throw new Meteor.Error('existing-user', 'The specified user can\'t be invited, since he/she is already in the group.');
+    }
+    const role = this.getRoleInfo(roleTitle);
+    const userMembership = { groupId: this._id, role, groupName: this.groupName, isAdmin, isPending };
+    const groupMembership = { fullName: user.profile.fullName, userId: user._id, role, isAdmin, isPending };
+    Groups.update(this._id, { $addToSet: { members: groupMembership }});
+    Meteor.users.update(user._id, { $addToSet: { groups: userMembership }});
+  },
+  /**
    * Removes membership to a particular group from all members profiles.
    */
   destroyMemberships() {

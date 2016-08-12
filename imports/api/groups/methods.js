@@ -56,14 +56,7 @@ export const addToGroup = new ValidatedMethod({
     const group = verifyGroup(groupId);
     const user = verifyUser(userId);
 
-    if (!group.containsRole(roleTitle)) {
-      throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
-    }
-    if (group.containsMember(user._id)) {
-      throw new Meteor.Error('existing-user', 'The specified user can\'t be invited, since he/she is already in the group.');
-    }
-
-    const role = group.getRoleInfo(roleTitle);
+    group.addMember(user, roleTitle, isAdmin, isPending);
     const taskRecord = Tasks.findOne({ userId, groupId });
     if (!taskRecord) {
       Tasks.insert({
@@ -72,10 +65,6 @@ export const addToGroup = new ValidatedMethod({
         task: ''
       });
     }
-    const userMembership = { groupId, role, groupName: group.groupName, isAdmin, isPending };
-    const groupMembership = { fullName: user.profile.fullName, userId: userId, role, isAdmin, isPending };
-    Groups.update(groupId, { $addToSet: { members: groupMembership }});
-    Meteor.users.update(userId, { $addToSet: { groups: userMembership }});
   }
 });
 
@@ -394,15 +383,14 @@ export const createGroup = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
   run({ groupName, description, creatorId, creatorRole, roleTitles, publicJoin, allowGuests }) {
-    const creatorName = Meteor.users.findOne(creatorId).profile.fullName;
+    const creator = verifyUser(creatorId);
+    const creatorName = creator.profile.fullName;
     const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, publicJoin, allowGuests,
         creationDate: new Date() });
 
     const group = Groups.findOne(groupId);
     const roleTitle = creatorRole || group.roles[0].title;
-
-    // TODO: beware of this being insecure? necessary to create group
-    addToGroup.runTrusted({ groupId, userId: creatorId, roleTitle, isAdmin: true, isPending: false });
+    group.addMember(creator, roleTitle, true, false);
     return groupId;
   }
 });
