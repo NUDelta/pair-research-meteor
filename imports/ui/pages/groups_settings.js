@@ -11,6 +11,7 @@ import { generateAvatar } from '../../api/util.js';
 import { Groups } from '../../api/groups/groups.js';
 import { processEmails } from '../../api/groups/util.js';
 import {
+  deactivateGroup,
   inviteToGroup,
   updateGroupInfo,
   updateMembers
@@ -121,6 +122,20 @@ Template.groups_settings.events({
         alert('Changes saved!');
       }
     });
+  },
+  'click #delete-group'(event, instance) {
+    event.preventDefault();
+    const groupId = instance.state.get('groupId');
+    const group = instance.state.get('group');
+    if (confirm(`Are you sure you want to delete ${ group.groupName }? This action is not reversible.`)) {
+      deactivateGroup.call({ groupId }, err => {
+        if (err) {
+          alert(err);
+        } else {
+          FlowRouter.go('/');
+        }
+      });
+    }
   },
   'submit #groups_settings_members_invite'(event, instance) {
     event.preventDefault();

@@ -6,7 +6,7 @@ import { Auth, authenticated } from '../../authentication.js';
 
 Meteor.publish('group.byId', function(groupId) {
   if (authenticated(Auth.GroupMember, this.userId, groupId)) {
-    return Groups.find(groupId);
+    return Groups.find({ _id: groupId, active: true });
   } else {
     this.ready();
   }
@@ -15,7 +15,8 @@ Meteor.publish('group.byId', function(groupId) {
 Meteor.publish('groups.user', function() {
   if (authenticated(Auth.LoggedIn, this.userId)) {
     return Groups.find({
-      _id: { $in: Meteor.users.findUserGroups(this.userId) }
+      _id: { $in: Meteor.users.findUserGroups(this.userId) },
+      active: true
     });
   } else {
     this.ready();
@@ -25,6 +26,7 @@ Meteor.publish('groups.user', function() {
 Meteor.publish('groups.demo.byId', function(groupId) {
   return Groups.find({
     _id: groupId,
+    active: true,
     creatorId: DEMO_GROUP_CREATOR
   });
 });

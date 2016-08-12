@@ -35,6 +35,12 @@
                 <i class="material-icons">launch</i>
               </a>
             </li>
+          {{else}}
+            <li class="collection-item">
+              <div class="disabled">
+                You don't seem to be in any groups. <a href="{{pathFor 'App.groups.create'}}">Create one?</a>
+              </div>
+            </li>
           {{/each}}
         </ul>
       </div>

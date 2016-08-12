@@ -11,5 +11,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="pair-research-meteor node_modules" level="project" />
+    <orderEntry type="library" name="meteor-packages-auto-import-npm" level="project" />
+    <orderEntry type="library" name="meteor-packages-auto-import-browser" level="project" />
+    <orderEntry type="library" name="meteor-packages-auto-import-npm" level="project" />
   </component>
 </module>

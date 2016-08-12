@@ -226,6 +226,10 @@ Schema.Group = new SimpleSchema({
   },
   allowGuests: {
     type: Boolean
+  },
+  active: {
+    type: Boolean,
+    defaultValue: true
   }
 });
 
@@ -305,6 +309,26 @@ Groups.helpers({
    */
   admins() {
     return _.filter(this.members, member => member.isAdmin);
+  },
+  /**
+   * Removes membership to a particular group from all members profiles.
+   */
+  destroyMemberships() {
+    const memberIds = _.map(this.members, member => member._id);
+    Meteor.users.update({
+      _id: { $in: memberIds }
+    }, {
+      $pull: {
+        groups: {
+          groupId: this._id
+        }
+      }
+    }, {
+      multi: true
+    });
+
+    Tasks.remove({ groupId: this._id });
+    Affinities.remove({ groupId: this._id });
   }
 });
 

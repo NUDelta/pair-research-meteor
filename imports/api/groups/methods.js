@@ -549,6 +549,27 @@ export const removeFromGroup = new ValidatedMethod({
 });
 
 /**
+ * Deactivates a group. Doesn't actually delete for analytics purposes!
+ * @isMethod true
+ */
+export const deactivateGroup = new ValidatedMethod({
+  name: 'group.deactivate',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  mixins: [AuthMixin],
+  allow: [Auth.GroupAdmin],
+  run({ groupId }) {
+    const group = Groups.findOne(groupId);
+    group.destroyMemberships();
+    Groups.update(groupId, { $set: { active: false } });
+  }
+});
+
+/**
  * @summary Clears the pair research pool.
  * @isMethod true
  */
