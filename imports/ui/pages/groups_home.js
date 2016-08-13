@@ -8,6 +8,7 @@ import { _ } from 'lodash';
 
 import { Groups } from '../../api/groups/groups.js';
 
+import '../layout/footer.js';
 import '../partials/groups_home_invite.js';
 
 Template.groups_home.onCreated(function() {

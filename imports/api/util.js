@@ -97,3 +97,4 @@ export const generateAvatar = (name, size = 100) => {
 export const generateCustomAvatar = (name, color, size = 100) => {
   return generate(name, color, size);
 };
+

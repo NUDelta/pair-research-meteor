@@ -9,6 +9,7 @@ import '../../ui/layout/layout-unauthorized-only.js';
 
 import '../../ui/pages/home.js';
 import '../../ui/pages/pair.js';
+import '../../ui/pages/contact.js';
 import '../../ui/pages/signup.js';
 import '../../ui/pages/login.js';
 import '../../ui/pages/user_settings.js';
@@ -58,6 +59,13 @@ FlowRouter.route('/change-password', {
   name: 'App.changePassword',
   action() {
     BlazeLayout.render('change_password');
+  }
+});
+
+FlowRouter.route('/contact', {
+  name: 'App.contact',
+  action() {
+    BlazeLayout.render('layout_authorized', { main: 'contact' });
   }
 });
 

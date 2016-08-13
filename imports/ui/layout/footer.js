@@ -1,0 +1,2 @@
+import './footer.html';
+

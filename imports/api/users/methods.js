@@ -1,11 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
+import { Email } from 'meteor/email';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'lodash';
 
 import { Groups } from '../groups/groups.js';
 import { Auth, AuthMixin } from '../authentication.js';
+import { EMAIL_ADDRESS, CONTACT_EMAILS } from '../constants.js';
 
 /**
  * @summary Finds users email from Account enrollment email token.
@@ -68,5 +70,39 @@ export const setProfile = new ValidatedMethod({
       Groups.update(group._id, { $set: { members: group.members } });
     });
     return Meteor.users.update(this.userId, { $set: { profile } });
+  }
+});
+
+/**
+ * @summary Sends and email to Kevin and Haoqi.
+ * @isMethod true
+ */
+export const sendFeedback = new ValidatedMethod({
+  name: 'users.sendemail',
+  validate: new SimpleSchema({
+    contact: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    content: {
+      type: String
+    }
+  }).validator(),
+  run({ contact, content }) {
+    const user = Meteor.users.findOne(this.userId);
+    if (!this.isSimulation) {
+      Email.send({
+        from: EMAIL_ADDRESS,
+        to: CONTACT_EMAILS,
+        subject: `Feedback from ${ contact }`,
+        text: `
+${ contact } says:
+
+${ content }
+
+User metadata: ${ JSON.stringify(user) }
+`
+      });
+    }
   }
 });
