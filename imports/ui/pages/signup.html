@@ -50,8 +50,9 @@
                     <span class="info">
                       as
                       <select class="browser-default" data-group="{{group.groupId}}">
+                        <option selected="true" disabled>Pick role...</option>
                         {{#each role in (roles group.groupId)}}
-                          <option value="{{role.title}}" selected="{{$eq group.role.title role.title}}">
+                          <option value="{{role.title}}">
                             {{role.title}}
                           </option>
                         {{/each}}

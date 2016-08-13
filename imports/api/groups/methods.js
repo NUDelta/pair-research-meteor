@@ -9,6 +9,7 @@ import {
   Groups,
   GroupOperationHelper,
   DefaultRoles,
+  PendingRole
 } from './groups.js';
 import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
@@ -41,7 +42,8 @@ export const addToGroup = new ValidatedMethod({
       regEx: SimpleSchema.RegEx.Id
     },
     roleTitle: {
-      type: String
+      type: String,
+      optional: true
     },
     isAdmin: {
       type: Boolean
@@ -56,7 +58,7 @@ export const addToGroup = new ValidatedMethod({
     const group = verifyGroup(groupId);
     const user = verifyUser(userId);
 
-    group.addMember(user, roleTitle, isAdmin, isPending);
+    group.addMember(user, isAdmin, isPending, roleTitle);
     const taskRecord = Tasks.findOne({ userId, groupId });
     if (!taskRecord) {
       Tasks.insert({
@@ -390,7 +392,7 @@ export const createGroup = new ValidatedMethod({
 
     const group = Groups.findOne(groupId);
     const roleTitle = creatorRole || group.roles[0].title;
-    group.addMember(creator, roleTitle, true, false);
+    group.addMember(creator, true, false, roleTitle);
     return groupId;
   }
 });
@@ -431,9 +433,6 @@ export const createGroupWithMembers = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Email
     },
-    'members.$.roleTitle': {
-      type: String
-    },
     'members.$.isAdmin': {
       type: Boolean
     },
@@ -445,7 +444,8 @@ export const createGroupWithMembers = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
   run({ groupName, description, roleTitles, publicJoin, allowGuests, members, creatorRole }) {
-    const groupId = createGroup.run.call(this, { groupName, description, creatorId: this.userId, roleTitles, publicJoin, allowGuests, creatorRole });
+    const groupId = createGroup.run.call(this, { groupName, description, creatorId: this.userId, roleTitles, publicJoin,
+      allowGuests, creatorRole });
     members.forEach(member => inviteToGroup.run.call(this, { groupId, member }));
     return groupId;
   }
@@ -468,9 +468,6 @@ export const inviteToGroup = new ValidatedMethod({
       type: String,
       regEx: SimpleSchema.RegEx.Email
     },
-    'member.roleTitle': {
-      type: String
-    },
     'member.isAdmin': {
       type: Boolean
     },
@@ -486,7 +483,7 @@ export const inviteToGroup = new ValidatedMethod({
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
         const group = Groups.findOne(groupId);
-        addToGroup.run.call(this, { groupId: groupId, userId: user._id, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
+        addToGroup.run.call(this, { groupId, userId: user._id, isAdmin: member.isAdmin, isPending: true });
         if (user.isActive()) {
           Email.send({
             from: EMAIL_ADDRESS,
@@ -500,7 +497,7 @@ export const inviteToGroup = new ValidatedMethod({
         }
       } else {
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
-        addToGroup.run.call(this, { groupId: groupId, userId: newUserId, roleTitle: member.roleTitle, isAdmin: member.isAdmin, isPending: true });
+        addToGroup.run.call(this, { groupId, userId: newUserId, isAdmin: member.isAdmin, isPending: true });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
     }

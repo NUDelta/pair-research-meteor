@@ -15,15 +15,6 @@
             <input id="description" name="description" type="text" class="validate" required>
           </div>
 
-          <p>
-            <input type="checkbox" id="publicJoin" name="publicJoin">
-            <label for="publicJoin">Allow anyone to find, view, and join group</label>
-          </p>
-          <p>
-            <input type="checkbox" id="allowGuests" name="allowGuests">
-            <label for="allowGuests">Allow guests to join pool</label>
-          </p>
-
           <h5 class="teal-text">Roles</h5>
           <p class="info">
             You can give your group members different titles here. In the future, you will also be able to add or take
@@ -59,16 +50,6 @@
           </ul>
 
           <div class="input-field col s6">
-            <select name="defaultRole" required>
-              <option value="" selected disabled>Choose...</option>
-              {{#each roleTitle in roleTitles}}
-                <option value="{{roleTitle}}">{{roleTitle}}</option>
-              {{/each}}
-            </select>
-            <label>Default Member Role</label>
-          </div>
-
-          <div class="input-field col s6">
             <select name="creatorRole" required>
               <option value="" selected disabled>Choose...</option>
               {{#each roleTitle in roleTitles}}
@@ -78,7 +59,7 @@
             <label>Your Role</label>
           </div>
 
-          <h5 class="teal-text">Members</h5>
+          <h5 class="teal-text clearfix">Members</h5>
           <p class="info">
             These will be you group members. Already registered email addresses will be sent a notification on this website.
             New email addresses will be sent an email to create an account and join this pair research group.

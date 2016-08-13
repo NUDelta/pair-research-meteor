@@ -161,19 +161,11 @@ Template.groups_create.events({
     event.target.create.innerHTML = 'Creating...';
 
     const roleTitles = _.compact(instance.state.get('roleTitles'));
-    const defaultRole = event.target.defaultRole.value;
-    const members = _.map(instance.state.get('members'), (member) => {
-      return _.extend(member, {
-        roleTitle: defaultRole
-      });
-    });
+    const members = instance.state.get('members');
     const group = {
       groupName: event.target.name.value,
       description: event.target.description.value,
-      roleTitles: roleTitles,
-      publicJoin: event.target.publicJoin.checked,
-      allowGuests: event.target.allowGuests.checked,
-      members: members,
+      roleTitles, members,
       creatorRole: event.target.creatorRole.value
     };
 

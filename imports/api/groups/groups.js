@@ -145,10 +145,12 @@ Schema.Member = new SimpleSchema({
     type: Schema.GroupRole
   },
   isAdmin: {
-    type: Boolean
+    type: Boolean,
+    defaultValue: false
   },
   isPending: {
-    type: Boolean
+    type: Boolean,
+    defaultValue: true
   }
 });
 
@@ -162,6 +164,11 @@ export const DefaultRoles = {
   PostDoc: 'Post Doc',
   Graduate: 'Graduate Student',
   Undergraduate: 'Undergraduate Student'
+};
+
+export const PendingRole = {
+  _id: '55555555555555555',
+  title: 'Pending'
 };
 
 /**
@@ -313,18 +320,24 @@ Groups.helpers({
   /**
    * Adds a user to the group.
    * @param {Object} user
-   * @param {String} roleTitle
    * @param {Boolean} isAdmin
    * @param {Boolean} isPending
+   * @param {?String} roleTitle
    */
-  addMember(user, roleTitle, isAdmin, isPending) {
-    if (!this.containsRole(roleTitle)) {
-      throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
+  addMember(user, isAdmin, isPending, roleTitle) {
+    let role;
+    if (roleTitle) {
+      if (!this.containsRole(roleTitle)) {
+        throw new Meteor.Error('invalid-role', 'The specified role isn\'t allowed for this group.');
+      } else {
+        role = this.getRoleInfo(roleTitle);
+      }
+    } else {
+      role = PendingRole;
     }
     if (this.containsMember(user._id)) {
       throw new Meteor.Error('existing-user', 'The specified user can\'t be invited, since he/she is already in the group.');
     }
-    const role = this.getRoleInfo(roleTitle);
     const userMembership = { groupId: this._id, role, groupName: this.groupName, isAdmin, isPending };
     const groupMembership = { fullName: user.profile.fullName, userId: user._id, role, isAdmin, isPending };
     Groups.update(this._id, { $addToSet: { members: groupMembership }});

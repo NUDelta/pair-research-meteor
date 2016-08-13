@@ -7,8 +7,9 @@
         <span class="info">
           as
           <select class="browser-default">
+            <option selected="true" disabled>Pick role...</option>
             {{#each role in group.roles}}
-              <option value="{{role.title}}" selected="{{$eq (group.getUserRole currentUser._id) role.title}}">
+              <option value="{{role.title}}">
                 {{role.title}}
               </option>
             {{/each}}

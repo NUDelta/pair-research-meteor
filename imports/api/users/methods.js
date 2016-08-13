@@ -52,7 +52,7 @@ export const setProfile = new ValidatedMethod({
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
   run({ profile }) {
-    if (profile.avatar !== '' && !SimpleSchema.RegEx.Url.test(profile.avatar)) {
+    if (profile.avatar && profile.avatar !== '' && !SimpleSchema.RegEx.Url.test(profile.avatar)) {
       throw new Meteor.Error('Avatar link must be a valid url.');
     }
 

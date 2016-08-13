@@ -131,18 +131,23 @@ Template.signup.events({
   'submit #step2 form'(event, instance) {
     event.preventDefault();
     const groups = instance.state.get('groups');
-    groups.forEach((group) => {
-      const roleTitle = $(`select[data-group=${ group.groupId }]`).val();
-      acceptInvite.call({
-        groupId: group.groupId,
-        roleTitle
-      }, (err) => {
-        if (err) {
-          alert(err);
-        }
+
+    if (!_.every(groups, group => $(`select[data-group=${ group.groupId }]`).val())) {
+      alert('Please enter roles for all the groups.');
+    } else {
+      groups.forEach((group) => {
+        const roleTitle = $(`select[data-group=${ group.groupId }]`).val();
+        acceptInvite.call({
+          groupId: group.groupId,
+          roleTitle
+        }, (err) => {
+          if (err) {
+            alert(err);
+          }
+        });
       });
-    });
-    FlowRouter.go('/groups');
+      FlowRouter.go('/groups');
+    }
   }
 });
 
