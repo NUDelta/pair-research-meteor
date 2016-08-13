@@ -140,14 +140,13 @@ Template.groups_settings.events({
   'submit #groups_settings_members_invite'(event, instance) {
     event.preventDefault();
     const members = instance.state.get('members');
-    const roleTitle = event.currentTarget.inviteRole.value;
     processEmails(
       event.currentTarget.addMember.value,
       email => false, // not really a good way to do this, so just alert below
       email => {
         inviteToGroup.call({
           groupId: instance.state.get('groupId'),
-          member: { email, roleTitle: roleTitle, isAdmin: false },
+          member: { email, isAdmin: false },
         }, err => {
           if (err && err.error == 'existing-user') {
             // think about this, alerting for each user could be annoying

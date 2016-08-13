@@ -228,12 +228,6 @@ Schema.Group = new SimpleSchema({
   'members.$': {
     type: Schema.Member
   },
-  publicJoin: {
-    type: Boolean
-  },
-  allowGuests: {
-    type: Boolean
-  },
   active: {
     type: Boolean,
     defaultValue: true

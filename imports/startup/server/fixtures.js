@@ -296,6 +296,7 @@ Meteor.startup(() => {
 
     // restore userData from above
     userData.forEach(user => Tasks.update({ groupId, userId: user.userId }, { $set: { task: user.task } }));
+    Groups.update(groupId, { $unset: { activePairing: '' } });
   }
 });
 

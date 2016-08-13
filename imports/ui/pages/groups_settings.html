@@ -68,17 +68,9 @@
           <h3 class="header">{{group.groupName}} &mdash; Members</h3>
           <form id="groups_settings_members_invite">
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s9">
                 <label for="addMember">Invite user(s) via comma-separated emails</label>
                 <input name="addMember" id="addMember" type="text">
-              </div>
-              <div class="input-field col s3">
-                <select name="inviteRole">
-                  {{#each role in group.roles}}
-                    <option value="{{role.title}}">{{role.title}}</option>
-                  {{/each}}
-                </select>
-                <label>Invite Role</label>
               </div>
               <div class="input-field col s3">
                 <button type="submit" id="enter" class="waves-effect waves-light btn valign">Invite</button>

@@ -374,22 +374,14 @@ export const createGroup = new ValidatedMethod({
     },
     'roleTitles.$': {
       type: String
-    },
-    publicJoin: {
-      type: Boolean
-    },
-    allowGuests: {
-      type: Boolean
     }
   }).validator(),
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
-  run({ groupName, description, creatorId, creatorRole, roleTitles, publicJoin, allowGuests }) {
+  run({ groupName, description, creatorId, creatorRole, roleTitles }) {
     const creator = verifyUser(creatorId);
     const creatorName = creator.profile.fullName;
-    const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, publicJoin, allowGuests,
-        creationDate: new Date() });
-
+    const groupId = Groups.insert({ groupName, description, creatorId, creatorName, roles: roleTitles, creationDate: new Date() });
     const group = Groups.findOne(groupId);
     const roleTitle = creatorRole || group.roles[0].title;
     group.addMember(creator, true, false, roleTitle);
@@ -417,12 +409,6 @@ export const createGroupWithMembers = new ValidatedMethod({
     'roleTitles.$': {
       type: String
     },
-    publicJoin: {
-      type: Boolean
-    },
-    allowGuests: {
-      type: Boolean
-    },
     members: {
       type: Array,
     },
@@ -443,9 +429,8 @@ export const createGroupWithMembers = new ValidatedMethod({
   }).validator(),
   mixins: [AuthMixin],
   allow: [Auth.LoggedIn],
-  run({ groupName, description, roleTitles, publicJoin, allowGuests, members, creatorRole }) {
-    const groupId = createGroup.run.call(this, { groupName, description, creatorId: this.userId, roleTitles, publicJoin,
-      allowGuests, creatorRole });
+  run({ groupName, description, roleTitles, members, creatorRole }) {
+    const groupId = createGroup.run.call(this, { groupName, description, creatorId: this.userId, roleTitles, creatorRole });
     members.forEach(member => inviteToGroup.run.call(this, { groupId, member }));
     return groupId;
   }

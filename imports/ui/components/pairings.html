@@ -27,11 +27,10 @@
             <div class="float-center left">
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
-                <p class="person">{{user.name}}</p>
               {{else}}
                 <input name="task" type="text" class="title browser" value="{{currentTask.task}}">
-                <input name="username" type="text" class="person browser" value="{{user.name}}">
               {{/if}}
+              <p class="person">{{user.name}}</p>
             </div>
             <div class="float-center right hide-on-med-and-down">
               <p class="range-field">

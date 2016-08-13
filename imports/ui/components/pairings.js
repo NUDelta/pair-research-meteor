@@ -229,8 +229,9 @@ Template.pairings.events({
   },
 
   'click #updateTask'(event, instance) {
+    const data = Template.currentData();
     updateTask.call({
-      name: $('input[name=username]').val(),
+      name: data.user.name,
       userId: instance.state.get('userId'),
       groupId: instance.state.get('groupId'),
       task: $('input[name=task]').val()
