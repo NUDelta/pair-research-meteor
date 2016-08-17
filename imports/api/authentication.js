@@ -25,6 +25,8 @@ export const Auth = {
 
 /**
  * ValidatedMethod mixin for authenticating user permissions for actions in groups.
+ * This method requires arguments in the ValidatedMethod called groupId and userId in
+ * order to extract the correct group/user to check membership permissions for.
  * @constructor
  * @mixin
  * @param {Object} methodOptions
@@ -37,7 +39,6 @@ export const AuthMixin = (methodOptions) => {
 
   const runFunc = methodOptions.run;
   methodOptions.run = function() {
-    // TODO: not sure if this argument extraction is best practice
     const args = arguments[0];
     const groupId = args.groupId;
     const userId = args.userId;
