@@ -9,6 +9,7 @@ import { _ } from 'lodash';
 import { Groups } from '../../api/groups/groups.js';
 
 import '../layout/footer.js';
+import '../partials/groups_home_group.js';
 import '../partials/groups_home_invite.js';
 
 Template.groups_home.onCreated(function() {
@@ -55,12 +56,10 @@ Template.groups_home.helpers({
     });
   },
   inviteArgs(group) {
-    return {
-      group: group
-    };
+    return { group };
   },
-  showSettings(group) {
-    return group.isAdmin(Meteor.userId());
+  groupArgs(group) {
+    return { group };
   }
 });
 

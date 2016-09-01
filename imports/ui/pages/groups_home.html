@@ -23,18 +23,7 @@
         <h5>Your Groups</h5>
         <ul class="collection">
           {{#each group in groups}}
-            <li class="collection-item multi-line">
-              <span class="title">{{ group.groupName }}</span>
-              <p>{{$len group.members}} members</p>
-              {{#if (showSettings group)}}
-                <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content hide-on-small-and-down">
-                  <i class="material-icons">settings</i>
-                </a>
-              {{/if}}
-              <a href="{{pathFor 'App.pair' groupId=group._id}}" class="secondary-content">
-                <i class="material-icons">launch</i>
-              </a>
-            </li>
+            {{> groups_home_group (groupArgs group)}}
           {{else}}
             <li class="collection-item">
               <div class="disabled">
