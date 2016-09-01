@@ -260,21 +260,13 @@ export const updateGroupInfo =  new ValidatedMethod({
     },
     description: {
       type: String
-    },
-    publicJoin: {
-      type: Boolean
-    },
-    allowGuests: {
-      type: Boolean
     }
   }).validator(),
   mixins: [AuthMixin],
   allow: [Auth.GroupAdmin],
-  run({ groupId, groupName, description, publicJoin, allowGuests }) {
+  run({ groupId, groupName, description }) {
     return Groups.update(groupId, {
-      $set: {
-        groupName, description, publicJoin, allowGuests
-      }
+      $set: { groupName, description }
     });
   }
 });

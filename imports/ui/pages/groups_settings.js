@@ -111,9 +111,7 @@ Template.groups_settings.events({
     const group = {
       groupId: instance.state.get('groupId'),
       groupName: event.target.name.value,
-      description: event.target.description.value,
-      publicJoin: event.target.publicJoin.checked,
-      allowGuests: event.target.allowGuests.checked
+      description: event.target.description.value
     };
     updateGroupInfo.call(group, (err, res) => {
       if (err) {

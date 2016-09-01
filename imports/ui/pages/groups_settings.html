@@ -44,15 +44,6 @@
               <input id="description" name="description" type="text" class="validate" required value="{{group.description}}">
             </div>
 
-            <p>
-              <input type="checkbox" id="publicJoin" name="publicJoin" {{isChecked 'publicJoin'}}>
-              <label for="publicJoin">Allow anyone to find, view, and join group</label>
-            </p>
-            <p>
-              <input type="checkbox" id="allowGuests" name="allowGuests" {{isChecked 'allowGuests'}}>
-              <label for="allowGuests">Allow guests to join pool</label>
-            </p>
-
             <button class="pair-form-button waves-effect waves-light">Update</button>
           </form>
           <button id="delete-group" class="btn red darken-3 waves-effect waves-light">Delete Group</button>
