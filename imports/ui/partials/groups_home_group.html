@@ -4,12 +4,12 @@
     <p>{{$len group.members}} members</p>
     {{#if (showSettings group)}}
       <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content hide-on-small-and-down tooltipped"
-         data-position="bottom" data-tooltip="Group Settings">
+         data-position="bottom" data-tooltip="Group Settings" data-id="{{group._id}}">
         <i class="material-icons">settings</i>
       </a>
     {{/if}}
     <a href="{{pathFor 'App.pair' groupId=group._id}}" class="secondary-content tooltipped" data-position="bottom"
-       data-tooltip="Launch Pool">
+       data-tooltip="Launch Pool" data-id="{{group._id}}">
       <i class="material-icons">launch</i>
     </a>
   </li>

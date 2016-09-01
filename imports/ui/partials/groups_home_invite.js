@@ -8,6 +8,12 @@ import {
   removeFromGroup
 } from '../../api/groups/methods.js';
 
+Template.groups_home_invite.onRendered(function() {
+  const data = Template.currentData();
+  if (data.group) {
+    $(`.tooltipped[data-id=${ data.group._id }]`).tooltip();
+  }
+});
 
 Template.groups_home_invite.events({
   'click a[href=#accept]'(event, instance) {

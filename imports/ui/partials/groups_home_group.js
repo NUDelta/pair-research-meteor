@@ -4,7 +4,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 Template.groups_home_group.onRendered(function() {
-  $('.tooltipped').tooltip();
+  const data = Template.currentData();
+  if (data.group) {
+    $(`.tooltipped[data-id=${ data.group._id }]`).tooltip();
+  }
 });
 
 Template.groups_home_group.helpers({
