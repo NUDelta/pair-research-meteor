@@ -44,11 +44,11 @@ class TasksHistoryCollection extends Mongo.Collection {
     const frequencies = {};
     _.each(tasks, task => {
       const words = task
-        .replace(/[.,\/#!$\^\*;:{}=\-_`()]/g, '')
+        .replace(/[.,\/#!$\^\*;:{}=\-_`()\[\]]/g, '')
         .replace(/\s{2,}/g, ' ')
         .split(' ');
       _.each(words, word => {
-        if (!ignore[word]) {
+        if (!ignore[word.toLowerCase()]) {
           frequencies[word] = frequencies[word] || 0;
           frequencies[word]++;
         }
