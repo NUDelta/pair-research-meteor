@@ -1,18 +1,18 @@
 import { _ } from 'lodash';
 
 export const PotentialActions = [
-  'Figure out how to do [web task] in [web framework]', // weighting it
-  'Figure out how to do [web task] in [web framework]',
-  'Figure out how to do [web task] in [web framework]',
-  'Figure out how to do [web task] in [web framework]',
-  '[web framework] [web task] is broken again',
-  '[web framework] [web task] is broken again',
-  'Reading the [web framework] tutorial',
-  'Experiment with making a [web framework] app',
-  'User test my [web framework] app',
-  'Writing my paper for [conference]',
-  'Proofread my paper for [conference]',
-  'Reviewing my paper for [conference]',
+  'Figure out how to do [web task] in [web framework].', // weighting it
+  'Figure out how to do [web task] in [web framework] -- I\'m struggling!.',
+  'Figure out how to do [web task] in [web framework] -- I\'m struggling!.',
+  'Figure out how to do [web task] in [web framework].',
+  '[web framework] [web task] is broken again, for real.',
+  '[web framework] [web task] is broken again.',
+  'Reading the [web framework] tutorial.',
+  'Experiment with making a [web framework] app.',
+  'User test my [web framework] app.',
+  'Writing my paper for [conference].',
+  'Proofread my paper for [conference].',
+  'Reviewing my paper for [conference].',
 ];
 
 export const WebFrameworks = [
