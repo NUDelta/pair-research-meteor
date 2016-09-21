@@ -26,13 +26,16 @@
                 <input id="password" name="password" type="password" class="validate" required>
               </div>
 
-              <div class="input-field">
-                <label for="avatar">Link to square image for avatar (optional)</label>
-                <input id="avatar" name="avatar" type="url" class="validate">
-              </div>
+              <div class="avatar-column">
+                <div class="image-wrapper">
+                  <img src="{{avatar}}">
+                  <a class="image-hover modal-trigger" href="#avatar-modal">
+                    <div class="hover-text">
+                      <h5 class="center-align">Choose Profile Picture</h5>
+                    </div>
+                  </a>
+                </div>
 
-              <div class="avatar-input">
-                <img src="{{avatar}}">
                 <button class="pair-form-button waves-effect waves-light">Sign up</button>
               </div>
 
@@ -92,6 +95,22 @@
             </form>
           </div>
         {{/if}}
+      </div>
+    </div>
+    <div id="avatar-modal" class="modal">
+      <div class="modal-content">
+        <h4>Choose Profile Picture</h4>
+        <p class="info">
+          For now, we need you to provide a link to an image (make sure you select "Copy Image Address") from
+          your browser right-click menu). Image upload support will be coming soon!
+        </p>
+        <div class="input-field">
+          <label for="avatar" data-error="must be url">Link to an image</label>
+          <input type="url" id="avatar" name="avatar" class="validate">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Use this image</a>
       </div>
     </div>
   </div>

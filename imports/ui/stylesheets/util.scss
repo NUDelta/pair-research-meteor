@@ -16,6 +16,10 @@
   width: 100%;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .bold {
   font-weight: bold;
 }
@@ -46,4 +50,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.relative {
+  position: relative;
 }

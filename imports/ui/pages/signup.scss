@@ -12,15 +12,11 @@
     margin-top: 2em;
     margin-bottom: 2em;
 
-    button {
-      margin-top: 2em;
-    }
-
     .input-field {
       width: calc(100% - 225px);
     }
 
-    .avatar-input {
+    .avatar-column {
       position: absolute;
       bottom: 5%;
       right: 0;
@@ -30,6 +26,36 @@
       }
       button {
         width: 100%;
+      }
+
+      .image-wrapper {
+        position: relative;
+        cursor: pointer;
+
+        .image-hover {
+          position: absolute;
+          background-color: black;
+          width: 100%;
+          height: 100%;
+          opacity: 0.0;
+          top: 0;
+          color: white;
+
+          &:hover {
+            opacity: 0.4;
+          }
+
+          .hover-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            user-select: none;
+
+            h5 {
+              font-size: 1.4em;
+            }
+          }
+        }
       }
     }
 

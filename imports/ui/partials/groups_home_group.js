@@ -15,3 +15,9 @@ Template.groups_home_group.helpers({
     return group.isAdmin(Meteor.userId());
   }
 });
+
+Template.groups_home_group.events({
+  'click a.tooltipped'(event, instance) {
+    $('.tooltipped').tooltip('remove');
+  }
+});

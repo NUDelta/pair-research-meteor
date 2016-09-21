@@ -53,6 +53,8 @@ Template.signup.onRendered(function() {
       $node.on('transitionend', () => { $node.remove(); });
     }
   };
+
+  $('.modal-trigger').leanModal();
 });
 
 Template.signup.helpers({
@@ -84,8 +86,9 @@ Template.signup.helpers({
 });
 
 Template.signup.events({
-  'change input[type=url]'(event, instance) {
-    instance.state.set('avatar', event.target.value);
+  'click .modal-close'(event, instance) {
+    const avatar = $('#avatar').val();
+    instance.state.set('avatar', avatar);
   },
   'submit #step1 form'(event, instance) {
     event.preventDefault();
@@ -95,7 +98,7 @@ Template.signup.events({
       password: event.target.password.value,
       profile: _.pickBy({ // filter out falsey values
         fullName: event.target.fullName.value,
-        avatar: event.target.avatar.value
+        avatar: instance.state.get('avatar')
       })
     };
 
