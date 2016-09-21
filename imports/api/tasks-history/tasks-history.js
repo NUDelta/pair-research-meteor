@@ -48,7 +48,7 @@ class TasksHistoryCollection extends Mongo.Collection {
         .replace(/\s{2,}/g, ' ')
         .split(' ');
       _.each(words, word => {
-        if (!ignore[word.toLowerCase()]) {
+        if (!ignore[word.toLowerCase()] || !TasksHistoryCollection.wordIsNumber(word)) {
           frequencies[word] = frequencies[word] || 0;
           frequencies[word]++;
         }
@@ -62,6 +62,10 @@ class TasksHistoryCollection extends Mongo.Collection {
         wordf => wordf.frequency
       ),
       0, count);
+  }
+
+  static wordIsNumber(token) {
+    return _.every(token, ch => !Number.isNaN(parseFloat(ch)) && Number.isFinite(ch));
   }
 }
 
