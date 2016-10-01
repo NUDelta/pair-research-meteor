@@ -28,22 +28,22 @@ Template.groups_home_invite.events({
       }, err => {
         if (err) {
           alert(err);
+          $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip();
         } else {
-          $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
         }
       });
     }
   },
   'click a[href=#reject]'(event, instance) {
+    $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
     removeFromGroup.call({
       groupId: instance.data.group._id,
       userId: Meteor.userId()
     }, err => {
       if (err) {
-        // TODO: cannot reject invite if invited as admin lol
         alert(err);
+        $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip();
       } else {
-        $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
       }
     });
   }
