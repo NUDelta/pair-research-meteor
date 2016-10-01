@@ -21,9 +21,16 @@ Template.groups_home_invite.events({
     if (!roleTitle) {
       alert('Please select a role first.');
     } else {
+      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
       acceptInvite.call({
         groupId: instance.data.group._id,
         roleTitle
+      }, err => {
+        if (err) {
+          alert(err);
+        } else {
+          $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
+        }
       });
     }
   },
@@ -31,6 +38,13 @@ Template.groups_home_invite.events({
     removeFromGroup.call({
       groupId: instance.data.group._id,
       userId: Meteor.userId()
+    }, err => {
+      if (err) {
+        // TODO: cannot reject invite if invited as admin lol
+        alert(err);
+      } else {
+        $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
+      }
     });
   }
 });
