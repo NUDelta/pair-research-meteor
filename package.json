@@ -15,6 +15,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
+    "test": "meteor test --driver-package practicalmeteor:mocha",
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings.json"
   },
   "dependencies": {

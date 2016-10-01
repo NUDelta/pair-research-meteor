@@ -12,7 +12,7 @@ const ignore = _.zipObject(ignoreWords, _.times(ignoreWords.length, _.constant(t
  * @summary Constructor for the stored history of tasks.
  * @class
  */
-class TasksHistoryCollection extends Mongo.Collection {
+export class TasksHistoryCollection extends Mongo.Collection {
   /**
    * Constructs query based on individual or all. Meant to be passed into `popularTasks`.
    * @param {string} type - either 'individual' or 'all, depending on set wanted.
@@ -64,6 +64,13 @@ class TasksHistoryCollection extends Mongo.Collection {
       0, count);
   }
 
+  /**
+   * Determines if a token is a purely numeric string.
+   * @param token
+   * @returns {boolean}
+   *
+   * @todo i dont actually work
+   */
   static wordIsNumber(token) {
     return _.every(token, ch => !Number.isNaN(parseFloat(ch)) && Number.isFinite(ch));
   }

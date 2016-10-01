@@ -63,7 +63,8 @@ Template.pairings.onCreated(function() {
       groupId: groupId,
       userId: data.user._id,
       editing: false,
-      raceResults: []
+      raceResults: [],
+      makingPairs: false
     });
 
     this.staticState = {};
@@ -90,6 +91,7 @@ Template.pairings.onRendered(function() {
       if (id && fields.activePairing) {
         if (fields.activePairing == PAIRING_IN_PROGRESS) {
           instance.setSpinnerTimeout();
+          instance.state.set('makingPairs', true);
         } else {
           Tracker.afterFlush(() => {
             $('body, html').animate({
@@ -116,7 +118,6 @@ Template.pairings.helpers({
     return Tasks.find({ userId: { $ne: instance.state.get('userId') }});
   },
   allTasks() {
-    const instance = Template.instance();
     return Tasks.find();
   },
   userCount() {
@@ -191,6 +192,10 @@ Template.pairings.helpers({
   avatar(userId) {
     const user = Meteor.users.findOne(userId);
     return user && user.avatar();
+  },
+  makingPairs() {
+    const instance = Template.instance();
+    return instance.state.get('makingPairs');
   }
 });
 
@@ -223,7 +228,7 @@ Template.pairings.events({
       makePairings.call({ groupId: instance.state.get('groupId') });
     }
   },
-  
+
   'click #editTask'(event, instance) {
     instance.state.set('editing', true);
   },

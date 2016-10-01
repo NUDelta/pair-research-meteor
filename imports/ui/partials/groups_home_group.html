@@ -1,6 +1,8 @@
 <template name="groups_home_group">
   <li class="collection-item multi-line">
-    <span class="title">{{ group.groupName }}</span>
+    <a href="{{pathFor 'App.pair' groupId=group._id}}">
+      <span class="title">{{ group.groupName }}</span>
+    </a>
     <p>{{$len group.members}} members</p>
     {{#if (showSettings group)}}
       <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content hide-on-small-and-down tooltipped"

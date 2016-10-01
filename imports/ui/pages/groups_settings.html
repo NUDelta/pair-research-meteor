@@ -68,9 +68,12 @@
               </div>
             </div>
           </form>
-          <span class="input-label-text">
+          <div class="input-label-text">
             <i class="material-icons">person</i> denotes admins. You can click on each user's name to toggle admin privileges.
-          </span>
+          </div>
+          <div class="input-label-text">
+            Invites are processed as soon as you send the invite, but you'll need to hit save for any other changes.
+          </div>
           <ul class="collection member-select">
             {{#each member in members}}
               {{> groups_settings_member (memberArgs member)}}

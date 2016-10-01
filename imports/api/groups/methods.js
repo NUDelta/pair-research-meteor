@@ -492,7 +492,7 @@ export const removeFromGroup = new ValidatedMethod({
   allow: [Auth.GroupAdmin, Auth.GroupSelf],
   run({ groupId, userId }) {
     const group = verifyGroup(groupId);
-    if (group.isAdmin(userId)) {
+    if (group.isAdmin(userId) && !group.isPending(userId)) {
       throw new Meteor.Error('user-is-admin',
         'The user could not be removed from the group, because he/she is an admin');
     }
@@ -559,7 +559,7 @@ export const createDemoGroup = new ValidatedMethod({
   validate: null,
   run() {
     const randomGroupName = Math.random().toString(36).slice(2);
-    return Groups.insert({ 
+    return Groups.insert({
       groupName: randomGroupName,
       description: 'A demo pair research group',
       creatorId: DEMO_GROUP_CREATOR,
