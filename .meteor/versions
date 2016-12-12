@@ -70,6 +70,7 @@ nooitaf:colors@1.1.2_1
 npm-bcrypt@0.9.1
 npm-mongo@1.5.49
 observe-sequence@1.0.12
+okgrow:analytics@2.0.1
 ordered-dict@1.0.8
 poetic:materialize-scss@1.97.6_1
 practicalmeteor:chai@2.1.0_1
