@@ -53,3 +53,5 @@ Template.registerHelper('$formatDate', (date, format) => {
 });
 
 Template.registerHelper('$index', (array, index) => array[index]);
+
+Template.registerHelper('$currentUrl', () => `${ window.location.href }`);
