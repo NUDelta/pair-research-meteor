@@ -27,7 +27,8 @@ import {
 } from '../../api/pairings/methods.js';
 
 import {
-  clearGroupPool
+  clearGroupPool,
+  undoPairs
 } from '../../api/groups/methods.js';
 
 import {
@@ -208,6 +209,10 @@ Template.pairings.events({
     if (confirm('Are you sure you want to clear this pair research pool?')) {
       clearGroupPool.call({ groupId: instance.state.get('groupId') });
     }
+  },
+
+  'click #cancelPairs'(event, instance) {
+    undoPairs.call({ groupId: instance.state.get('groupId') });
   },
 
   /**

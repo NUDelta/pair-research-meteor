@@ -551,6 +551,25 @@ export const clearGroupPool = new ValidatedMethod({
 });
 
 /**
+ * @summary Undoes a pairing without clearing Affinities or Task entries.
+ * @isMethod true
+ * @todo Examine if can safely delete stored data / history.
+ */
+export const undoPairs = new ValidatedMethod({
+  name: 'groups.undoPair',
+  validate: new SimpleSchema({
+    groupId: {
+      type: String,
+        regEx: SimpleSchema.RegEx.Id
+    }
+  }).validator(),
+  run({ groupId }) {
+    Groups.update(groupId, { $unset: { activePairing: '' } });
+    // TODO: remove from history?
+  }
+});
+
+/**
  * @summary Creates a demo pair research group that doesn't require logged in users.
  * @todo Logged in users can't participate in demo pools at all right now? (unconfirmed, investigate).
  */
