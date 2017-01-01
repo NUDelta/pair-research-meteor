@@ -3,6 +3,8 @@ import './pairings_task.html';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
+import '../components/avatar.js';
+
 import {
   updateAffinity
 } from '../../api/affinities/methods.js';

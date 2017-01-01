@@ -151,8 +151,12 @@ Meteor.users.helpers({
    * @returns {string}
    */
   avatar() {
-    if (this.profile.avatar) {
-      return this.profile.avatar
+    const url = this.profile.avatar;
+    const image = new Image();
+    image.src = url;
+
+    if (image.naturalHeight !== 0 && image.naturalHeight !== 0) {
+      return url;
     } else {
       return generateAvatar(this.profile.fullName);
     }

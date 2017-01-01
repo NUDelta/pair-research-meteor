@@ -23,7 +23,7 @@
         </span>
         <ul class="collection">
           <li class="collection-item avatar row">
-            <img src="{{$avatar user._id user.name}}" alt="{{user.name}}" class="circle">
+            {{> avatar userId=user._id username=user.name}}
             <div class="float-center left">
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
@@ -84,68 +84,67 @@
 
     <div class="row" id="pair_results">
       <div class="col s12">
-        {{#if pairResultCreated}}
-          {{> pairings_results pairResultArgs}}
-        {{else}}
-          {{#if race}}
-            {{#each task in allTasks}}
-              {{#let placing=(place task.userId)}}
-                {{#if placing}}
-                  <div style="top: {{$minus ($times @index 25) 10}}px; left: {{placeLeft (percentage task.userId)}}"
-                       class="prize">
-                    <img src="{{placeAvatar placing}}" class="circle">
-                  </div>
-                {{/if}}
-              {{/let}}
-              <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
-                <img src="{{$avatar task.userId task.name}}" class="circle">
-              </div>
-            {{/each}}
-          {{else}}
-            <div class="spinner-wrapper">
-              <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
+      {{#if race}}
+        {{#each task in allTasks}}
+          {{#let placing=(place task.userId)}}
+            {{#if placing}}
+                <div style="top: {{$minus ($times @index 25) 10}}px; left: {{placeLeft (percentage task.userId)}}"
+                     class="prize">
+                  <img src="{{placeAvatar placing}}" class="circle">
                 </div>
-                </div>
-
-                <div class="spinner-layer spinner-red">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-                </div>
-
-                <div class="spinner-layer spinner-yellow">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-                </div>
-
-                <div class="spinner-layer spinner-green">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-                </div>
-              </div>
+            {{/if}}
+          {{/let}}
+            <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+              {{> avatar userId=task.userId username=task.name}}
             </div>
-          {{/if}}
+        {{/each}}
+      {{/if}}
+      {{#if pairResultCreated}}
+        {{> pairings_results pairResultArgs}}
+      <!--{{else}}-->
+        <!--<div class="spinner-wrapper">-->
+            <!--<div class="preloader-wrapper big active">-->
+              <!--<div class="spinner-layer spinner-blue">-->
+                <!--<div class="circle-clipper left">-->
+                  <!--<div class="circle"></div>-->
+                <!--</div><div class="gap-patch">-->
+                <!--<div class="circle"></div>-->
+              <!--</div><div class="circle-clipper right">-->
+                <!--<div class="circle"></div>-->
+              <!--</div>-->
+              <!--</div>-->
+
+              <!--<div class="spinner-layer spinner-red">-->
+                <!--<div class="circle-clipper left">-->
+                  <!--<div class="circle"></div>-->
+                <!--</div><div class="gap-patch">-->
+                <!--<div class="circle"></div>-->
+              <!--</div><div class="circle-clipper right">-->
+                <!--<div class="circle"></div>-->
+              <!--</div>-->
+              <!--</div>-->
+
+              <!--<div class="spinner-layer spinner-yellow">-->
+                <!--<div class="circle-clipper left">-->
+                  <!--<div class="circle"></div>-->
+                <!--</div><div class="gap-patch">-->
+                <!--<div class="circle"></div>-->
+              <!--</div><div class="circle-clipper right">-->
+                <!--<div class="circle"></div>-->
+              <!--</div>-->
+              <!--</div>-->
+
+              <!--<div class="spinner-layer spinner-green">-->
+                <!--<div class="circle-clipper left">-->
+                  <!--<div class="circle"></div>-->
+                <!--</div><div class="gap-patch">-->
+                <!--<div class="circle"></div>-->
+              <!--</div><div class="circle-clipper right">-->
+                <!--<div class="circle"></div>-->
+              <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
         {{/if}}
       </div>
     </div>

@@ -110,7 +110,7 @@ Meteor.startup(() => {
         password: 'password',
         profile: {
           fullName: 'Yongsung Kim',
-          avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2014/09/yongsung.jpg'
+          avatar: 'http://delta.northwestern.edu/broken-link.jpg'
         },
         task: 'I am a very wordy person who needs help with way too many things, so I will see how long this line can go without making the UI look awful',
         roleTitle: roles.Graduate,

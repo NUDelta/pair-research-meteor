@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor run --settings settings.json",
     "test": "meteor test --driver-package practicalmeteor:mocha",
     "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings.json"
   },

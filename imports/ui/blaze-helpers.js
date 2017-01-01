@@ -38,16 +38,6 @@ Template.registerHelper('$stringify', (obj) => {
 
 Template.registerHelper('$len', arr => arr.length);
 
-Template.registerHelper('$avatar', (userId, username) => {
-  if (userId) {
-    const user = Meteor.users.findOne(userId);
-    if (user && user.profile.avatar) {
-      return user.profile.avatar;
-    }
-  }
-  return generateAvatar(username);
-});
-
 Template.registerHelper('$formatDate', (date, format) => {
   return moment(date).format(format);
 });

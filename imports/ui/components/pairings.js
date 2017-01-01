@@ -14,6 +14,7 @@ import { Schema } from '../../api/schema.js';
 import { generateCustomAvatar } from '../../api/util.js';
 
 import '../components/confetti.js';
+import '../components/avatar.js';
 
 import {
   updateTask,
@@ -188,10 +189,6 @@ Template.pairings.helpers({
       case 3:
         return generateCustomAvatar('3rd', '#CD7F32');
     }
-  },
-  avatar(userId) {
-    const user = Meteor.users.findOne(userId);
-    return user && user.avatar();
   },
   makingPairs() {
     const instance = Template.instance();
