@@ -71,6 +71,7 @@ export const makePairings = new ValidatedMethod({
       _.forEach(_.slice(userPool, i + 1), (_userId, j) => {
         if (scores[userId][_userId] !== -1 && scores[_userId][userId] !== -1) {
           let weight = 1 + 99 *(scores[userId][_userId] + scores[_userId][userId]) / 2;
+          weight = weight !== null ? weight : 0;
 
           // repeat penalty
           _.forEach(recentPairings, (pairing, index) => {
@@ -82,7 +83,6 @@ export const makePairings = new ValidatedMethod({
 
           // random pertubation
           weight += Math.random() * 20;
-
           edges.push([ i, j + i + 1, Math.floor(weight) ]);
         }
       });
@@ -122,6 +122,7 @@ export const makePairings = new ValidatedMethod({
               }
           }))
         ));
+
       log.info(pairings);
       if (pairings.length === 0) {
         pairings = _.map(users, user => {
