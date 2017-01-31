@@ -306,7 +306,7 @@ function generateAffinities(userIds, groupId) {
         helperId: me,
         helpeeId: them,
         groupId: groupId,
-        value: affinityVals[Math.floor(Math.random()*affinityVals.length)]
+        value: _.sample(affinityVals)
       }
     })
   });
