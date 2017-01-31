@@ -41,7 +41,7 @@ Meteor.startup(() => {
       avatar: 'http://delta.northwestern.edu/wordpress/wp-content/uploads/2015/02/kevin1-square.jpg'
     }
   };
-  
+
   admin._id = Accounts.findUserByEmail(admin.email) && Accounts.findUserByEmail(admin.email)._id;
   if (Meteor.isDevelopment && DEV_OPTIONS.CLEAN_DB) {
     log.info(`Clearing database...`);
@@ -80,7 +80,7 @@ Meteor.startup(() => {
     });
     Tasks.update({ userId: admin._id }, { $set: { task: 'everything' } });
 
-    const userData = [
+    const realPeople = [
       {
         email: 'hq@northwestern.edu',
         password: 'password',
@@ -150,61 +150,20 @@ Meteor.startup(() => {
         isAdmin: false,
       }
     ];
-    userData.forEach((user) => {
+
+    const userData = realPeople.concat(generateUsers(25, roles)); // Generate a bunch of toy users
+
+    const userIds = userData.map((user) => {
       const userId = Accounts.createUser(user);
       user.userId = userId;
       addToGroup.runTrusted({ groupId, userId, roleTitle: user.roleTitle, isAdmin: user.isAdmin, isPending: false });
       Tasks.update({ userId: userId }, { $set: { task: user.task }});
+
+      return userId;
     });
 
-    const haoqiId = Accounts.findUserByEmail('hq@northwestern.edu')._id;
-    const joshId = Accounts.findUserByEmail('jh@u.northwestern.edu')._id;
-    const ykId = Accounts.findUserByEmail('yk@u.northwestern.edu')._id;
+    const affinities = generateAffinities(userIds, groupId) // Build affinities for each user pair
 
-    const affinities = [
-      {
-        helperId: admin._id,
-        helpeeId: haoqiId,
-        groupId: groupId,
-        value: 0.66
-      },
-      {
-        helperId: admin._id,
-        helpeeId: joshId,
-        groupId: groupId,
-        value: 1
-      },
-      {
-        helperId: haoqiId,
-        helpeeId: admin._id,
-        groupId: groupId,
-        value: 0.66
-      },
-      {
-        helperId: haoqiId,
-        helpeeId: joshId,
-        groupId: groupId,
-        value: 0
-      },
-      {
-        helperId: joshId,
-        helpeeId: admin._id,
-        groupId: groupId,
-        value: 0.33
-      },
-      {
-        helperId: joshId,
-        helpeeId: haoqiId,
-        groupId: groupId,
-        value: 0
-      },
-      {
-        helperId: admin._id,
-        helpeeId: ykId,
-        groupId: groupId,
-        value: -1
-      }
-    ];
     affinities.forEach(affinity => Affinities.insert(affinity));
 
     // Mocking other groups / users
@@ -318,4 +277,39 @@ function generateRandomPairing(users) {
     });
   }
   return pairing;
+}
+
+/** Generate an array of mocked users */
+function generateUsers(num, roles) {
+  return Array(num).fill().map((_, i) => {
+    var testNum = 'test' + i.toString()
+    return {
+      email: testNum + '@test.com',
+      password: 'password',
+      profile: {
+        fullName: testNum
+      },
+      task: testNum + ' task',
+      roleTitle: roles.Undergrad,
+      isAdmin: false
+    }
+  })
+}
+
+/** Generate random affinities between each pair of users (non-symmetric) */
+function generateAffinities(userIds, groupId) {
+  const affinityVals = [-1, 0, 0.33, 0.66, 1]
+
+  affinitiesPerUser = userIds.map((me) => {
+    return userIds.filter((id) => id !== me).map((them) => {
+      return {
+        helperId: me,
+        helpeeId: them,
+        groupId: groupId,
+        value: affinityVals[Math.floor(Math.random()*affinityVals.length)]
+      }
+    })
+  });
+
+  return [].concat.apply([], affinitiesPerUser)
 }
