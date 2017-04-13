@@ -1,0 +1,495 @@
+{
+    "pairing-history": [{
+    "_id": "pQP96XjkCvJeQuJAZ",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim",
+        "secondUserId": "PavTL8zD9664wvtfB",
+        "secondUserName": "Haoqi Zhang"
+    }, {
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "iwonAbZGTP9j7BFe3",
+        "secondUserName": "Jennie Werner"
+    }, {
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }],
+    "timestamp": {
+        "$date": "2017-01-13T20:42:21.850+0000"
+    }
+}, {
+    "_id": "QrbK5SDrfk75E67qj",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "XjH8WJxEXFgTwdi3o",
+        "firstUserName": "Sameer Srivastava",
+        "secondUserId": "nDHZGzczDWyqvyFhp",
+        "secondUserName": "Sarah Lim"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim",
+        "secondUserId": "Rse39xrxtP6xRHsbK",
+        "secondUserName": "AlainaKafkes2017@u.northwestern.edu"
+    }, {
+        "firstUserId": "TFtNL3sYbSSGykQJE",
+        "firstUserName": "Ryan Madden",
+        "secondUserId": "aupdNzYu8WmNEi4e5",
+        "secondUserName": "Alex Kaldjian"
+    }, {
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "mdhFQ6PNiAhfP7ce2",
+        "secondUserName": "Kapil Garg"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner"
+    }],
+    "timestamp": {
+        "$date": "2016-11-11T20:07:47.946+0000"
+    }
+}, {
+    "_id": "CJEjiJ2v3Wmq7SXnK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "WenRzs2SSx8YmGYsF",
+        "firstUserName": "Sasha Weiss",
+        "secondUserId": "PavTL8zD9664wvtfB",
+        "secondUserName": "Haoqi Zhang"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "cupTmXWNEZ2N7vxPk",
+        "secondUserName": "Katie George"
+    }, {
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner"
+    }],
+    "timestamp": {
+        "$date": "2016-11-11T22:25:13.043+0000"
+    }
+}, {
+    "_id": "4dEvFqkiADYDtSNeR",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }, {
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "nDHZGzczDWyqvyFhp",
+        "secondUserName": "Sarah Lim"
+    }, {
+        "firstUserId": "PavTL8zD9664wvtfB",
+        "firstUserName": "Haoqi Zhang",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim"
+    }, {
+        "firstUserId": "WenRzs2SSx8YmGYsF",
+        "firstUserName": "Sasha Weiss"
+    }],
+    "timestamp": {
+        "$date": "2016-11-30T16:58:24.766+0000"
+    }
+}, {
+    "_id": "o6WCZgE8EM9nXRYJs",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "ytdQbJkTaiR2JahKQ",
+        "firstUserName": "Josh Hibschman",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "aupdNzYu8WmNEi4e5",
+        "secondUserName": "Alex Kaldjian"
+    }, {
+        "firstUserId": "goGr47HDwtfphJ5xK",
+        "firstUserName": "Julian Vicens",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "PavTL8zD9664wvtfB",
+        "firstUserName": "Haoqi Zhang",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim",
+        "secondUserId": "TFtNL3sYbSSGykQJE",
+        "secondUserName": "Ryan Madden"
+    }, {
+        "firstUserId": "mdhFQ6PNiAhfP7ce2",
+        "firstUserName": "Kapil Garg",
+        "secondUserId": "XjH8WJxEXFgTwdi3o",
+        "secondUserName": "Sameer Srivastava"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "6rZbYn3cbQ9KNLRM5",
+        "secondUserName": "Meg Grasse"
+    }],
+    "timestamp": {
+        "$date": "2016-09-30T19:22:31.078+0000"
+    }
+}, {
+    "_id": "gDv9t2asxWRFXvnDe",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "mdhFQ6PNiAhfP7ce2",
+        "secondUserName": "Kapil Garg"
+    }, {
+        "firstUserId": "u6DrqFSvdZnWDgjz8",
+        "firstUserName": "Bomani McClendon",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "yLoAP6fd9WbQQPyhb",
+        "firstUserName": "Josh Shi",
+        "secondUserId": "dZ23LYG2G42mY3NAf",
+        "secondUserName": "Lily Zhang"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim",
+        "secondUserId": "6rZbYn3cbQ9KNLRM5",
+        "secondUserName": "Meg Grasse"
+    }, {
+        "firstUserId": "afyZT6q2HepoCS76m",
+        "firstUserName": "Caroline Grace Alexander",
+        "secondUserId": "Rse39xrxtP6xRHsbK",
+        "secondUserName": "AlainaKafkes2017@u.northwestern.edu"
+    }, {
+        "firstUserId": "9zFPYRJQ5KnGTcnMr",
+        "firstUserName": "Morgan Walker",
+        "secondUserId": "iwonAbZGTP9j7BFe3",
+        "secondUserName": "Jennie Werner"
+    }, {
+        "firstUserId": "XjH8WJxEXFgTwdi3o",
+        "firstUserName": "Sameer Srivastava",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "aupdNzYu8WmNEi4e5",
+        "firstUserName": "Alex Kaldjian",
+        "secondUserId": "nDHZGzczDWyqvyFhp",
+        "secondUserName": "Sarah Lim"
+    }],
+    "timestamp": {
+        "$date": "2017-01-20T20:31:13.981+0000"
+    }
+}, {
+    "_id": "DqMqasxWoy4sK726a",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "XjH8WJxEXFgTwdi3o",
+        "firstUserName": "Sameer Srivastava",
+        "secondUserId": "yLoAP6fd9WbQQPyhb",
+        "secondUserName": "Josh Shi"
+    }, {
+        "firstUserId": "iEHKgJBH7hNSroEjw",
+        "firstUserName": "Greg Kim",
+        "secondUserId": "u6DrqFSvdZnWDgjz8",
+        "secondUserName": "Bomani McClendon"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "mdhFQ6PNiAhfP7ce2",
+        "secondUserName": "Kapil Garg"
+    }, {
+        "firstUserId": "Rse39xrxtP6xRHsbK",
+        "firstUserName": "AlainaKafkes2017@u.northwestern.edu",
+        "secondUserId": "dZ23LYG2G42mY3NAf",
+        "secondUserName": "Lily Zhang"
+    }, {
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "cupTmXWNEZ2N7vxPk",
+        "secondUserName": "Katie George"
+    }, {
+        "firstUserId": "afyZT6q2HepoCS76m",
+        "firstUserName": "Caroline Grace Alexander",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim"
+    }],
+    "timestamp": {
+        "$date": "2017-01-27T20:25:18.607+0000"
+    }
+}, {
+    "_id": "CngjFccDxze7WD9hR",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "iwonAbZGTP9j7BFe3",
+        "secondUserName": "Jennie Werner"
+    }, {
+        "firstUserId": "WenRzs2SSx8YmGYsF",
+        "firstUserName": "Sasha Weiss",
+        "secondUserId": "XjH8WJxEXFgTwdi3o",
+        "secondUserName": "Sameer Srivastava"
+    }, {
+        "firstUserId": "Rse39xrxtP6xRHsbK",
+        "firstUserName": "AlainaKafkes2017@u.northwestern.edu",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }, {
+        "firstUserId": "afyZT6q2HepoCS76m",
+        "firstUserName": "Caroline Grace Alexander",
+        "secondUserId": "mdhFQ6PNiAhfP7ce2",
+        "secondUserName": "Kapil Garg"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "dZ23LYG2G42mY3NAf",
+        "secondUserName": "Lily Zhang"
+    }, {
+        "firstUserId": "u6DrqFSvdZnWDgjz8",
+        "firstUserName": "Bomani McClendon",
+        "secondUserId": "yLoAP6fd9WbQQPyhb",
+        "secondUserName": "Josh Shi"
+    }, {
+        "firstUserId": "iEHKgJBH7hNSroEjw",
+        "firstUserName": "Greg Kim"
+    }],
+    "timestamp": {
+        "$date": "2017-01-30T20:22:08.928+0000"
+    }
+}, {
+    "_id": "twHrFxA7GTQa7ibQv",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "WenRzs2SSx8YmGYsF",
+        "firstUserName": "Sasha Weiss",
+        "secondUserId": "Rse39xrxtP6xRHsbK",
+        "secondUserName": "AlainaKafkes2017@u.northwestern.edu"
+    }, {
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "dZ23LYG2G42mY3NAf",
+        "secondUserName": "Lily Zhang"
+    }, {
+        "firstUserId": "iEHKgJBH7hNSroEjw",
+        "firstUserName": "Greg Kim",
+        "secondUserId": "yLoAP6fd9WbQQPyhb",
+        "secondUserName": "Josh Shi"
+    }, {
+        "firstUserId": "afyZT6q2HepoCS76m",
+        "firstUserName": "Caroline Grace Alexander",
+        "secondUserId": "u6DrqFSvdZnWDgjz8",
+        "secondUserName": "Bomani McClendon"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "9zFPYRJQ5KnGTcnMr",
+        "secondUserName": "Morgan Walker"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "XjH8WJxEXFgTwdi3o",
+        "secondUserName": "Sameer Srivastava"
+    }, {
+        "firstUserId": "mdhFQ6PNiAhfP7ce2",
+        "firstUserName": "Kapil Garg",
+        "secondUserId": "aNdSTecskgeAm2St5",
+        "secondUserName": "Leesha"
+    }, {
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }, {
+        "firstUserId": "aupdNzYu8WmNEi4e5",
+        "firstUserName": "Alex Kaldjian"
+    }],
+    "timestamp": {
+        "$date": "2017-02-03T20:39:04.310+0000"
+    }
+}, {
+    "_id": "Xkpb46Zc4x3NR8whR",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "cupTmXWNEZ2N7vxPk",
+        "firstUserName": "Katie George",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "afyZT6q2HepoCS76m",
+        "secondUserName": "Caroline Grace Alexander"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "aupdNzYu8WmNEi4e5",
+        "secondUserName": "Alex Kaldjian"
+    }, {
+        "firstUserId": "9zFPYRJQ5KnGTcnMr",
+        "firstUserName": "Morgan Walker",
+        "secondUserId": "yLoAP6fd9WbQQPyhb",
+        "secondUserName": "Josh Shi"
+    }, {
+        "firstUserId": "Rse39xrxtP6xRHsbK",
+        "firstUserName": "AlainaKafkes2017@u.northwestern.edu",
+        "secondUserId": "iEHKgJBH7hNSroEjw",
+        "secondUserName": "Greg Kim"
+    }, {
+        "firstUserId": "dZ23LYG2G42mY3NAf",
+        "firstUserName": "Lily Zhang",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }, {
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse"
+    }],
+    "timestamp": {
+        "$date": "2017-02-10T20:15:52.166+0000"
+    }
+}, {
+    "_id": "J7bCBSQ9aRH33N9xM",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "6rZbYn3cbQ9KNLRM5",
+        "firstUserName": "Meg Grasse",
+        "secondUserId": "WenRzs2SSx8YmGYsF",
+        "secondUserName": "Sasha Weiss"
+    }, {
+        "firstUserId": "dZ23LYG2G42mY3NAf",
+        "firstUserName": "Lily Zhang",
+        "secondUserId": "iwonAbZGTP9j7BFe3",
+        "secondUserName": "Jennie Werner"
+    }, {
+        "firstUserId": "aNdSTecskgeAm2St5",
+        "firstUserName": "Leesha",
+        "secondUserId": "aupdNzYu8WmNEi4e5",
+        "secondUserName": "Alex Kaldjian"
+    }, {
+        "firstUserId": "iEHKgJBH7hNSroEjw",
+        "firstUserName": "Greg Kim",
+        "secondUserId": "cupTmXWNEZ2N7vxPk",
+        "secondUserName": "Katie George"
+    }, {
+        "firstUserId": "nDHZGzczDWyqvyFhp",
+        "firstUserName": "Sarah Lim",
+        "secondUserId": "mdhFQ6PNiAhfP7ce2",
+        "secondUserName": "Kapil Garg"
+    }, {
+        "firstUserId": "afyZT6q2HepoCS76m",
+        "firstUserName": "Caroline Grace Alexander",
+        "secondUserId": "N3LsK5NJeKm8PkBx8",
+        "secondUserName": "Allison Sun"
+    }],
+    "timestamp": {
+        "$date": "2017-02-24T20:57:12.351+0000"
+    }
+}, {
+    "_id": "ohb5unaGBWH9dw8iX",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "pairings": [{
+        "firstUserId": "iwonAbZGTP9j7BFe3",
+        "firstUserName": "Jennie Werner",
+        "secondUserId": "CQhpnQnrAQMZhD9tM",
+        "secondUserName": "Nell O'Rourke"
+    }, {
+        "firstUserId": "zn7csxv966BaTnhrg",
+        "firstUserName": "Aaron Leon",
+        "secondUserId": "afyZT6q2HepoCS76m",
+        "secondUserName": "Caroline Grace Alexander"
+    }, {
+        "firstUserId": "dZ23LYG2G42mY3NAf",
+        "firstUserName": "Lily Zhang",
+        "secondUserId": "yLoAP6fd9WbQQPyhb",
+        "secondUserName": "Josh Shi"
+    }, {
+        "firstUserId": "u6DrqFSvdZnWDgjz8",
+        "firstUserName": "Bomani McClendon",
+        "secondUserId": "6Yv3ARWJQMWtFKgnN",
+        "secondUserName": "Eunice Lee"
+    }, {
+        "firstUserId": "aupdNzYu8WmNEi4e5",
+        "firstUserName": "Alex Kaldjian",
+        "secondUserId": "nDHZGzczDWyqvyFhp",
+        "secondUserName": "Sarah Lim"
+    }, {
+        "firstUserId": "EDEFWcagLwCfXP5Jg",
+        "firstUserName": "Yongsung Kim",
+        "secondUserId": "6rZbYn3cbQ9KNLRM5",
+        "secondUserName": "Meg Grasse"
+    }, {
+        "firstUserId": "PavTL8zD9664wvtfB",
+        "firstUserName": "Haoqi Zhang",
+        "secondUserId": "oBkvE34HKoa2MaDme",
+        "secondUserName": "Sehmon Burnam"
+    }, {
+        "firstUserId": "N3LsK5NJeKm8PkBx8",
+        "firstUserName": "Allison Sun",
+        "secondUserId": "XjH8WJxEXFgTwdi3o",
+        "secondUserName": "Sameer Srivastava"
+    }, {
+        "firstUserId": "9gcjpT4daYZmZDi2F",
+        "firstUserName": "Armaan Shah",
+        "secondUserId": "9zFPYRJQ5KnGTcnMr",
+        "secondUserName": "Morgan Walker"
+    }],
+    "timestamp": {
+        "$date": "2017-04-07T19:35:41.978+0000"
+    }
+}]
+
+}

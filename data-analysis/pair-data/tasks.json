@@ -1,0 +1,126 @@
+{
+    "tasks": [{
+    "_id": "rfXK3M7prqXnaBR2A",
+    "name": "AaronLeon2018@u.northwestern.edu",
+    "userId": "zn7csxv966BaTnhrg",
+    "groupId": "sM3z5FkZfsABqcj3g"
+}, {
+    "_id": "x4vZvMT7xLasbQdR3",
+    "name": "armaanshah2018@u.northwestern.edu",
+    "userId": "9gcjpT4daYZmZDi2F",
+    "groupId": "sM3z5FkZfsABqcj3g"
+}, {
+    "_id": "HyWApu4GctWgSemyq",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Read the paper over"
+}, {
+    "_id": "dGXDmYvBBHLsuctQ8",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Qualitative Research Coding"
+}, {
+    "_id": "BZCiF65896nqu3ESk",
+    "name": "eunicelee2018@u.northwestern.edu",
+    "userId": "6Yv3ARWJQMWtFKgnN",
+    "groupId": "sM3z5FkZfsABqcj3g"
+}, {
+    "_id": "nEwL9CpH5QCzQkNhH",
+    "name": "Morgan Walker",
+    "userId": "9zFPYRJQ5KnGTcnMr",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Review user study"
+}, {
+    "_id": "tLt8nCS7PSBiJbnr8",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "let's 1) backup mongodb database, 2) make an easy UI to explore location data (e.g., route pattern)"
+}, {
+    "_id": "JRf7p87wEhpHf3Fcg",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "make slides for the talk i'm going to give in 30 minutes"
+}, {
+    "_id": "EnCgnDK5XPgistu4n",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help with study recording logistics"
+}, {
+    "_id": "JLid3wDJ8L2QNrMCB",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "read the paper I wrote to stoke my ego"
+}, {
+    "_id": "ZxFoM4tHcfEJKdu9F",
+    "name": "Haoqi Zhang",
+    "userId": "PavTL8zD9664wvtfB",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Plan out learning modules for rest of quarter"
+}, {
+    "_id": "smKzsLdxmyepgeqnq",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help abstracting out javascript code (in meteor but not really meteor specific), by the end would like to have a few helper functions that can be used by my original function instead of having one hugggeee function"
+}, {
+    "_id": "kc4vaMA8wXr97syyd",
+    "name": "Eunice Lee",
+    "userId": "6Yv3ARWJQMWtFKgnN",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "refine my design argument(s) and brainstorm my conceptual contribution"
+}, {
+    "_id": "Bprc7hPTLZY7gXJvw",
+    "name": "Bomani McClendon",
+    "userId": "u6DrqFSvdZnWDgjz8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me create a contributions map like the one we just learned about"
+}, {
+    "_id": "kLxYqJb9XAuhDPGcM",
+    "name": "Armaan Shah",
+    "userId": "9gcjpT4daYZmZDi2F",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me learn how to build a code tester online"
+}, {
+    "_id": "moGANSicToBaLcckt",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help make me a documentation framework for research"
+}, {
+    "_id": "FnYfcRRcqo8npPNcG",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me brainstorm affordances of collaboration"
+}, {
+    "_id": "4BkgXNdMLNHAWZDDh",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "abstract out javascript functions, clean up code and structure it so it works more like an api"
+}, {
+    "_id": "NobWiRnnNBritSCro",
+    "name": "Nell O'Rourke",
+    "userId": "CQhpnQnrAQMZhD9tM",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Send emails asking for CRII grant proposals / find proposals online"
+}, {
+    "_id": "gWG5vnyyabkjfpMLn",
+    "name": "Sehmon Burnam",
+    "userId": "oBkvE34HKoa2MaDme",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me think of an efficient representation to model Users and their skills, and an algorithm to build it given a list of help requests"
+}, {
+    "_id": "iRcZYkBGapsay6Luk",
+    "name": "Aaron Leon",
+    "userId": "zn7csxv966BaTnhrg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Brainstorming ways that conceptual graphs can map to exercises for learners (what we talked a little bit about in class) and drawing/writing examples from hypothetical graphs"
+}]
+}

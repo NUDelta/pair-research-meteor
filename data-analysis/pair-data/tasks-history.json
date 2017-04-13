@@ -1,0 +1,892 @@
+{
+    "tasks": [{
+    "_id": "T63oJDR3ZFfe7FFwP",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me plan my sprint by planning evidence I would like to have, and working backwards to the technical goals.",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "uc7FxazDdDQGHChba",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Scaffolding feedback",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "6CcvLeAkiJw4f5rAw",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "finish our sprint plan",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "a35w3zqZmyKqJqQFj",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "finish our sprint plan",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "PHm7ZDxyqXanD9bwk",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "i need help with my fellowship research statement",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "rv8S2mxMDKNGNBP4r",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Finish up scenarios and study design",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "cqaw5pAM6WAeyoD24",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "coming up with prototyping examples for exploratory study",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "m55EmEbtc7G2agW44",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "I need to think through & implement test cases for automated runner tracking.",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "MNSDWKHfpoKSrqckc",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "plan out an app experience to use in a study",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "vy4hkvP4NQqNgqwX6",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "setting up an API with Flask",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "yMysrPZjnzmSe3FuD",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Brainstorming experiences for Collective Experiences",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "Mkjnc8mHRGQwhBivt",
+    "name": "Ryan Madden",
+    "userId": "TFtNL3sYbSSGykQJE",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Brainstorming experiences where people work toward a shared goal",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "xhHyGuRcQsHP54h3n",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Building a Research Canvas digitally",
+    "pairingId": "QrbK5SDrfk75E67qj"
+}, {
+    "_id": "zcZ3ogxBZuyWycvZJ",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "a twillo api that send party parrot gifs and jokes to people, kinda like catfacts",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "2mibW9JTDk54jE6Zo",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "want to make something happy to help me cope with election results (leaving at 5pm)",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "j3KYrwE7eNAXpgY7x",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "delta lab check-in/monitoring system",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "EEe7eLokWvxu8xKt6",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "I want to build something happy with Katie",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "xYTFrTWS6fCbNmCb2",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "?????? anything lol something happy",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "czv4XnGzDKMWBHFCw",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "slackbot to create emojis from people's published photos (fb, instagram, etc)",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "NqxqxhHrRb6Rmgqo9",
+    "name": "Haoqi Zhang",
+    "userId": "PavTL8zD9664wvtfB",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "SprintTeam: Learning how to sprint plan, SpaceTeam style",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "44zdM3etcEG4YeSZJ",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "simple websocket-based app to allow students to anonymously request clarification during lectures",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "msrgANkJ8Q4wE4X6C",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "something pleasant to look at (maybe WebGL???)",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "yCJw7LaX2J6uu8qGQ",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "phone goes into red alert defense mode to act as a distraction during sig when my sprint isn't finished (iOS, datascraping)",
+    "pairingId": "CJEjiJ2v3Wmq7SXnK"
+}, {
+    "_id": "FQiBrjpApkGxkoGTL",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "a twillo api that send party parrot gifs and jokes to people, kinda like catfacts",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "tKuo982kmzM6Nytsz",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "want to make something happy to help me cope with election results (leaving at 5pm)",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "wYWqHT6DMxpBYsZWp",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "delta lab check-in/monitoring system",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "9MiArBC3DK6KLyJDn",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "I want to build something happy with Katie",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "BX8WmKg6Bs4JCwojx",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "?????? anything lol something happy",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "oqHH8JzKv6GsCLrAP",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "slackbot to create emojis from people's published photos (fb, instagram, etc)",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "BmZDtfApTAgQxcCQw",
+    "name": "Haoqi Zhang",
+    "userId": "PavTL8zD9664wvtfB",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "SprintTeam: Learning how to sprint plan, SpaceTeam style",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "gJswS8DogbQNZ2Fq6",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "simple websocket-based app to allow students to anonymously request clarification during lectures",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "jt4m7ipwK7G4DPSMg",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "something pleasant to look at (maybe WebGL???)",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "DKZ7y2MKQzWDSe33H",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "phone goes into red alert defense mode to act as a distraction during sig when my sprint isn't finished (iOS, datascraping)",
+    "pairingId": "4dEvFqkiADYDtSNeR"
+}, {
+    "_id": "jS4zkTdfS9GkD7gHr",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "a twillo api that send party parrot gifs and jokes to people, kinda like catfacts",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "sKdkfkeEJPzEAwxms",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "want to make something happy to help me cope with election results (leaving at 5pm)",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "YtnngQTCQNT3XtKpK",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "delta lab check-in/monitoring system",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "AP5kgg6KPmGyCNKck",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "I want to build something happy with Katie",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "5XzuL5eanc6NNBrZx",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "?????? anything lol something happy",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "uANPMJyr8d4tdkQZP",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "slackbot to create emojis from people's published photos (fb, instagram, etc)",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "nWcToPB7BK65qSgat",
+    "name": "Haoqi Zhang",
+    "userId": "PavTL8zD9664wvtfB",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "SprintTeam: Learning how to sprint plan, SpaceTeam style",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "kgHxwpWFeoqgWyuhu",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "simple websocket-based app to allow students to anonymously request clarification during lectures",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "2bXpayMXPHfDZbaQr",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "something pleasant to look at (maybe WebGL???)",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "thwgST7PMPEddNzZh",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "phone goes into red alert defense mode to act as a distraction during sig when my sprint isn't finished (iOS, datascraping)",
+    "pairingId": "pQP96XjkCvJeQuJAZ"
+}, {
+    "_id": "MLLubinZLn4KDNifQ",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Storyboarding possible interactions with world objects for habitsourcing",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "LBhKNu38TXzjpvd3T",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Decide on what user personae I should focus on",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "dS3H92SBsiL2PCZ96",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Come up with a specific list of criteria and coding platform modules to look into",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "i5z7ZNKXyQpCba87R",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "iOS interface ideas for writing down tasks/reminders",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "ED2zDF4c4z9nP6xNg",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Design arguments for paper prototype features (for web dev)",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "6DGTgLdTqxFNi57BA",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "getting feedback on/brainstorming fun + cool experiences",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "XWSo9cm3woJ9GPYvT",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "pair programming, implementing an opentok stream on our meteor app (maybe bug fixing in iOS), looking at documentation & helping me with meteor",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "e8irkP8Eh773zGRJJ",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Building out a user profile UI on iOS",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "wp8SFkZPthp56bHQr",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me plan my project for the rest of the quarter by giving me feedback on three ideas and helping to brainstorm more",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "vTYgPJA7FKkgoosHk",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Continuing to work on drafting my design argument/problem and helping explain all the questions to me and telling me its okay when I get overwhelmed",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "yekjCyDobLtT8sZFD",
+    "name": "Morgan Walker",
+    "userId": "9zFPYRJQ5KnGTcnMr",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Pros and cons of different IDEs",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "eSEtWwiYedkw4TCme",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "working out design arguments / outlining paper",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "ZbB8dg4JJ6tSqtiDd",
+    "name": "Yongsung Kim",
+    "userId": "EDEFWcagLwCfXP5Jg",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "i need  someone sit next to me and test my swift app with the backend",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "nBvb5foaaXb2Tri67",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Determine good coding habits",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "5qMqPdLvP7YJhfPxA",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Run through research map to understand how to help students through roadblocks",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "6t8SJhQ5bFamNqXWn",
+    "name": "Bomani McClendon",
+    "userId": "u6DrqFSvdZnWDgjz8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Share struggle with your researched (based on research map) and discuss your potential solutions",
+    "pairingId": "gDv9t2asxWRFXvnDe"
+}, {
+    "_id": "hLaj25NR5Ehzw6iBM",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Narrow down brainstormed ideas to three",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "RLECTgMWtn5Wwxshx",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Re-working a design argument to test for sprint 2",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "nbiP3Y43tQ3GYDivr",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Design iOS interface for quickly recording day-to-day reminders",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "oAcLFofqvJw3RCKk5",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Need help writing 1st urg",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "Srz96gMvTgeY8uTNJ",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me start writing my URG",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "mg5Jqu2frHuFLe2fn",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Organize DTR Cubby",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "GoNQJpDxjsRSWu5eL",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me get started with URG",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "fDs7XucyJ3p62zASa",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Usability testing for UI",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "35EaTKag8knzCFySJ",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "problems w learning web design -> interfaces for learning web design",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "2Bwt9QR5Sk8BSfGvW",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "QA with current paper prototype and brainstorm ways to improve (sketching out interface ideas)",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "ycWjT5x8CqQKAG5gi",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Brainstorming ways to find the underlying concepts responsible for DOM changes",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "fW9TgqpQJB6MXBKNP",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Work on interface (sketches etc) for actional feedback system for the research canvas",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "gyCn8hXGqnEvkNGTZ",
+    "name": "Bomani McClendon",
+    "userId": "u6DrqFSvdZnWDgjz8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Design 'Snapshot' (for review by Mentors and Peers) of Research Progress throughout a sprint",
+    "pairingId": "DqMqasxWoy4sK726a"
+}, {
+    "_id": "NapEi3BczzwMk3AGW",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Narrow down brainstormed ideas to three",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "5toT2QKN7i63Mxs5j",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Re-working a design argument to test for sprint 2",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "8KBsv8wFSgWeWfpTX",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Design iOS interface for quickly recording day-to-day reminders",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "Nweoa7vdJQwjwrwS4",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Need help writing 1st urg",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "oAxAqpSAnjfNczCZf",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me start writing my URG",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "xp6Xm2cAafwz5FpPs",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Organize DTR Cubby",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "i8JtymqZjtXLkuze6",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me get started with URG",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "c6kzbMzuWzFhomodj",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Usability testing for UI",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "cn4NKCMP6acByB242",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "problems w learning web design -> interfaces for learning web design",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "wMpMkXTxXSsjMpZcn",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "QA with current paper prototype and brainstorm ways to improve (sketching out interface ideas)",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "ezBXytLY2hMDmLJs8",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Brainstorming ways to find the underlying concepts responsible for DOM changes",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "vkz3u69RQ8cAStEad",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Work on interface (sketches etc) for actional feedback system for the research canvas",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "k3gLvPnjCMCe4Q5gD",
+    "name": "Bomani McClendon",
+    "userId": "u6DrqFSvdZnWDgjz8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Design 'Snapshot' (for review by Mentors and Peers) of Research Progress throughout a sprint",
+    "pairingId": "CngjFccDxze7WD9hR"
+}, {
+    "_id": "yTuTHSpRWTdWdDQbx",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Work on paper prototype ideas/designs/art",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "7FjMx5tMxeDAjT9NT",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "storyboard an interaction to help someone understand complex CSS concepts (pls know CSS)",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "75MfhuBi9ryNWnwWP",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "How do you conduct studies from which you can draw conclusions",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "Z7mowunocLQxyPm8Z",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Fixing flow between ViewControllers on iOS Main.storyboard",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "8kgvAJesPzmjYyC93",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Outline my URG application",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "6feLXkStAL8ZHfv84",
+    "name": "Morgan Walker",
+    "userId": "9zFPYRJQ5KnGTcnMr",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Using machine learning models on collected data from user participants of their use of keystrokes; ideas for labels and features and algorithms",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "kFZs5fzJjDNitm9Ry",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Tracking network traffic and call stack with Chrome dev tools",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "wesDJkth8vg3B7raN",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "digital object overlay using face detection",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "Zg6yrvKmuPxpCQuqj",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me figure out how to budget my URG",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "jnNaYsYuX56SB5RSP",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help me create a post-study survey/in-class interview for a study",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "udx7s4Pt2gd3yoPT3",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "fix app signing issues and get app to download onto an iPhone via diwai",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "6q8cimCBfdytzhbx8",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "having problems getting meteor app to install on iphone (possibly signing certificate problem)",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "GuX4pEaEd5PKXTofp",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Help debugging an issue with ParsePy package on Heroku server",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "GznMuKCretpvdz8S6",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "feature detection in tracking.js (computer vision :P )",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "gqhcgvZkEXyANuL6N",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Do a user test with ~pipe cleaners~ with our latest paper prototype. self-identified beginner to intermediate web developer",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "AwFCY6b2qHYcfQSfg",
+    "name": "Bomani McClendon",
+    "userId": "u6DrqFSvdZnWDgjz8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Begin Writing a URG paper",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "thxGceaNH6ad4A7LL",
+    "name": "Sameer Srivastava",
+    "userId": "XjH8WJxEXFgTwdi3o",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Think of representative tasks for users - what people typically do in their research project process - next steps, previous steps, process",
+    "pairingId": "twHrFxA7GTQa7ibQv"
+}, {
+    "_id": "byYyMEnuGuPGZ6kt9",
+    "name": "Josh Shi",
+    "userId": "yLoAP6fd9WbQQPyhb",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Final edits on my URG",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "XhE7qtRiLdE35GXmN",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "URG!!! for collective experiences. need help with user study section",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "3upeTBE6kvGKRJCSm",
+    "name": "AlainaKafkes2017@u.northwestern.edu",
+    "userId": "Rse39xrxtP6xRHsbK",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Feedback on URG draft -- overall essay organization",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "NZkQMH62BGpYn4nY4",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Revise URG Intro (Brain Points)",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "GmG6P8SgHfHhD6kdm",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "URG on reminder systems/task completion/habits // slimming my related work section into an argument for \"Why my project and why now?\"",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "N5P4HnBKapWwtStcb",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Need someone with 2-4 CSS projects' worth of experience to do a talk-aloud with me",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "22zPuDWRhaft3TLnX",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "integrating dart script with meteor app",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "Jbyb2r6f5pWnppm4P",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "collective experiences, writing up study interview questions",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "9FhokoXEMSCeNq5EH",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "beg to int webdev needed for short fun user test involving xkcd",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "PG36CxvY4kJCQ4KhD",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "beginner-intermediate web developer for user test",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "FBhZQZqbvqhXiBLo3",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Test prototype",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "eHYJuskNEfbb3Gfsv",
+    "name": "Morgan Walker",
+    "userId": "9zFPYRJQ5KnGTcnMr",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "BrainPoints methodology section of URG",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "Gwzfy27KNcnfktzFg",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Transforming pixel values of images in javascript (making things transparent  👻)",
+    "pairingId": "Xkpb46Zc4x3NR8whR"
+}, {
+    "_id": "xjwzmjP7CcpuGNMZK",
+    "name": "Sarah Lim",
+    "userId": "nDHZGzczDWyqvyFhp",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "help me with relational information visualizations",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "G37zm2P6cWaLuTKiZ",
+    "name": "Kapil Garg",
+    "userId": "mdhFQ6PNiAhfP7ce2",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Implementing iOS push notifications in Node",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "raP4mD3GbeKF2J5ey",
+    "name": "Alex Kaldjian",
+    "userId": "aupdNzYu8WmNEi4e5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "topcode schema development",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "o6LX8dEyCuJxph8Wf",
+    "name": "Jennie Werner",
+    "userId": "iwonAbZGTP9j7BFe3",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "getting iPhone motion activity type in Meteor Cordova",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "ysQh73wykS4sWkADi",
+    "name": "Lily Zhang",
+    "userId": "dZ23LYG2G42mY3NAf",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Find ways to log keystrokes and make that data readable",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "E6ReAyPvcyHsRe9rN",
+    "name": "Caroline Grace Alexander",
+    "userId": "afyZT6q2HepoCS76m",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Find and discuss past research done with keylogging",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "5m8mtkNBGkoxXSnwb",
+    "name": "Allison Sun",
+    "userId": "N3LsK5NJeKm8PkBx8",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Create a user flow for what happens after users participate in an experience",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "iDp3F25DBWmtBdbBM",
+    "name": "Sasha Weiss",
+    "userId": "WenRzs2SSx8YmGYsF",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "Planning my final user study, comparing two versions of my app",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "3mkyDt34gQRPFcm3F",
+    "name": "Meg Grasse",
+    "userId": "6rZbYn3cbQ9KNLRM5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "posting image on server + downloading on iOS",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "Pb6T8ARKxGNYQXxMG",
+    "name": "Leesha",
+    "userId": "aNdSTecskgeAm2St5",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "I need feedback on my research arguments and how my work relates to existing HCOMP work",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "KWgnNjuXamYF3Cvk7",
+    "name": "Greg Kim",
+    "userId": "iEHKgJBH7hNSroEjw",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "intermediate web developer for a user test",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}, {
+    "_id": "MrAT3ATwMhGSKTar3",
+    "name": "Katie George",
+    "userId": "cupTmXWNEZ2N7vxPk",
+    "groupId": "sM3z5FkZfsABqcj3g",
+    "task": "User testing for the latest version of our app- need a beginner/ intermediate web developer",
+    "pairingId": "J7bCBSQ9aRH33N9xM"
+}]
+}

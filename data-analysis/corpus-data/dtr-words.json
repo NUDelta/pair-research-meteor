@@ -1,0 +1,33 @@
+{
+  "categories": {
+    "design": [
+      "prototype testing",
+      "needfinding",
+      "brainstorming",
+      "feedback",
+      "interaction design",
+      "ui/ux design",
+      "recruiting",
+      "prototype design"
+    ],
+    "technology": [
+      "web/mobile dev",
+      "system features",
+      "debugging",
+      "pair programming",
+      "architecture",
+      "general",
+      "dev tools",
+      "algorithms"
+    ],
+    "research": [
+      "Research direction",
+      "study design",
+      "paper writing",
+      "data analysis",
+      "grants",
+      "user studies",
+      "related work"
+    ]
+  }
+}
