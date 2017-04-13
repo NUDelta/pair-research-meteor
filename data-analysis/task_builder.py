@@ -2,9 +2,9 @@ import json
 from pprint import pprint
 
 # Open the corresponding data files
-with open('affinities-history.json') as data_file:
+with open('pair-data/affinities-history.json') as data_file:
     affinities = json.load(data_file)
-with open('tasks-history.json') as data_file:
+with open('pair-data/tasks-history.json') as data_file:
     tasks = json.load(data_file)
 
 nodes = []
