@@ -21,8 +21,9 @@ for category_key in corpus:
             if re.search(r'' + keyword, matching_string):
                 category_list = node.get("categories", [])
                 category_list.append(keyword)
-
                 node["categories"] = category_list
 
 print matching_nodes
-            
+
+with open('task-category-graph.json', 'w') as outfile:
+    json.dump(matching_nodes, outfile)
