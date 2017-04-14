@@ -2,3 +2,5 @@
 node_modules/
 .idea/workspace.xml
 settings.json
+data-analysis/*/*.json
+data-analysis/corpus-data/*.json
