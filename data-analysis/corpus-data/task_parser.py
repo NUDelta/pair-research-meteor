@@ -17,13 +17,14 @@ for category_key in corpus:
             # Make more efficient by using DP instead of calculating each time
             matching_string = node["task"][0].lower()
             keyword = keyword.lower()
-            
+
             if re.search(r'' + keyword, matching_string):
                 category_list = node.get("categories", [])
                 category_list.append(keyword)
                 node["categories"] = category_list
 
-print matching_nodes
+json_output = {}
+json_output["data"] = matching_nodes
 
 with open('task-category-graph.json', 'w') as outfile:
-    json.dump(matching_nodes, outfile)
+    json.dump(json_output, outfile)

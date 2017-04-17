@@ -27,6 +27,8 @@ for affinity in affinities:
     new_affinity["userId"] = affinity["helperId"]
     new_affinity["value"] = affinity["value"]
     # Filter to the task field of the given affinity
+    # (This won't work when looking at a set of affinities outside of a single pairing session, make sure to change this when expanding)
+    # The userId of a task item is equal to the helpeeId (the person asking for help) in a given affinity
     new_affinity["task"] = [task["task"] for task in tasks if task["userId"] == affinity["helpeeId"]]
     nodes.append(new_affinity)
 
