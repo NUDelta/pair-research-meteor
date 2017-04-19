@@ -18,10 +18,13 @@ for category_key in corpus:
             matching_string = node["task"][0].lower()
             keyword = keyword.lower()
 
+            # The list of categories associated with a given help request
+            category_list = node.get("categories", [])
+
             if re.search(r'' + keyword, matching_string):
-                category_list = node.get("categories", [])
                 category_list.append(keyword)
-                node["categories"] = category_list
+
+            node["categories"] = category_list
 
 json_output = {}
 json_output["data"] = matching_nodes

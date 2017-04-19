@@ -2,7 +2,7 @@
 import json
 from pprint import pprint
 
-userID = "6rZbYn3cbQ9KNLRM5"
+userID = "u6DrqFSvdZnWDgjz8"
 
 with open('task-category-graph.json') as input_file:
     graph = json.load(input_file)
