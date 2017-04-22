@@ -3,29 +3,45 @@ from pprint import pprint
 
 affinity_history = 'pair-app-data/affinities-history.json'
 task_history = 'pair-app-data/tasks-history.json'
+pairing_history = 'pair-app-data/pair-history.json'
 user_affinities = 'output/user_affinities.json'  # Individual user affinities
-
 
 # Open the corresponding data files
 with open(affinity_history) as data_file:
     affinities = json.load(data_file)
 with open(task_history) as data_file:
     tasks = json.load(data_file)
-
-nodes = []
+with open(pairing_history) as data_file:
+    pairs = json.load(data_file)
 
 affinities = affinities["affinities-history"]
+tasks = tasks["tasks-history"]
+pairs = pairs["pair-history"]
 
-# Filter to the tasks corresponding to the correct pairingId
-tasks = tasks["tasks"]
+# the pairing history is a collection of pairings, its users, and the timestamp
+# we'll use this to find the timestamp of all the pairingIds
+pairingIds = list(set([pair["pairingId"] for pair in pairs]))
+pairingIdDict = {}
+
+for pairingId in pairingIds:
+    timestamp = pairingIdDict.get(pairingId, None);
+    if timestamp:
+        continue
+    pairings_timestamps = [pairing["timestamp"]["$date"] for pairing in pairs if pairing["pairingId"] == pairingId]
+    pairingIdDict[pairingId] = pairings_timestamps[0]
 
 # Build the nodes
+nodes = []
+
 for affinity in affinities:
     new_affinity = {}
-    new_affinity["userId"] = affinity["helperId"]
+    new_affinity["helperId"] = affinity["helperId"]
+    new_affinity["helpeeId"] = affinity["helpeeId"]
     new_affinity["value"] = affinity["value"]
+    new_affinity["pairingId"] = affinity["pairingId"]
+    new_affinity["groupId"] = affinity["groupId"]
+    new_affinity["timestamp"] = pairingIdDict[affinity["pairingId"]];
     # Filter to the task field of the given affinity
-    # (This won't work when looking at a set of affinities outside of a single pairing session, make sure to change this when expanding)
     # The userId of a task item is equal to the helpeeId (the person asking for help) in a given affinity
     pairing_session_tasks = [task for task in tasks if task["pairingId"] == affinity["pairingId"]]
     new_affinity["task"] = [task["task"] for task in pairing_session_tasks if task["userId"] == affinity["helpeeId"]]
