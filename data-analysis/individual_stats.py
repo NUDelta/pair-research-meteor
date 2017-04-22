@@ -4,7 +4,7 @@ from pprint import pprint
 
 userID = "u6DrqFSvdZnWDgjz8"
 
-with open('task-category-graph.json') as input_file:
+with open('output/user_skill_graph.json') as input_file:
     graph = json.load(input_file)
 
 graph = graph['data']

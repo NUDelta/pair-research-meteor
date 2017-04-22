@@ -1,18 +1,18 @@
 import json
 from pprint import pprint
 
+affinity_history = 'pair-app-data/affinities-history.json'
+task_history = 'pair-app-data/tasks-history.json'
+user_affinities = 'output/user_affinities.json'  # Individual user affinities
+
+
 # Open the corresponding data files
-with open('affinities-history.json') as data_file:
+with open(affinity_history) as data_file:
     affinities = json.load(data_file)
-with open('tasks-history.json') as data_file:
+with open(task_history) as data_file:
     tasks = json.load(data_file)
-with open('tasks.json') as data_file:
-    current_tasks = json.load(data_file)
 
 nodes = []
-
-# Hardcoded pairingID of the one Pair Research session we're looking at
-pairingId = "twHrFxA7GTQa7ibQv"
 
 affinities = affinities["affinities-history"]
 
@@ -37,5 +37,5 @@ for affinity in affinities:
         print "Node doesn't have matching task field:"
         print new_affinity
 
-with open('output-data.json', 'w') as outfile:
+with open(user_affinities, 'w') as outfile:
         json.dump(nodes, outfile)

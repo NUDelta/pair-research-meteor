@@ -2,10 +2,14 @@ import json
 import re
 from pprint import pprint
 
-with open('dtr-words.json') as input_file:
-    corpus = json.load(input_file)
+# Filenames
+dtr_words = 'pair-app-data/task-words.json'  # Skill category words
+user_affinities = 'output/user_affinities.json'  # Individual user affinities
+user_skill_graph = 'output/user_skill_graph.json'    # Final skill graph
 
-with open('output-data.json') as input_file:
+with open(dtr_words) as input_file:
+    corpus = json.load(input_file)
+with open(user_affinities) as input_file:
     matching_nodes = json.load(input_file)
 
 corpus = corpus["categories"]
@@ -29,5 +33,5 @@ for category_key in corpus:
 json_output = {}
 json_output["data"] = matching_nodes
 
-with open('task-category-graph.json', 'w') as outfile:
+with open(user_skill_graph, 'w') as outfile:
     json.dump(json_output, outfile)
