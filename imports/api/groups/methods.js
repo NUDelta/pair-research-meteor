@@ -15,6 +15,8 @@ import { Affinities } from '../affinities/affinities.js';
 import { Tasks } from '../tasks/tasks.js';
 import { DEMO_GROUP_CREATOR } from '../users/users.js';
 
+import { SSR } from 'meteor/meteorhacks:ssr';
+
 import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
 import { Auth, AuthMixin, verifyGroup, verifyUser } from '../authentication.js';
@@ -462,11 +464,15 @@ export const inviteToGroup = new ValidatedMethod({
         const group = Groups.findOne(groupId);
         addToGroup.run.call(this, { groupId, userId: user._id, isAdmin: member.isAdmin, isPending: true });
         if (user.isActive()) {
+
+          SSR.compileTemplate('invite_email', Assets.getText('invite_email.html'));
+
           Email.send({
             from: EMAIL_ADDRESS,
             to: member.email,
             subject: `You're invited to join ${ group.groupName } for Pair Research`,
-            html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
+            // html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
+            html: SSR.render('invite_email')
           });
         } else {
           // TODO: replace this with a custom function so as to not overwrite tokens in previous emails
