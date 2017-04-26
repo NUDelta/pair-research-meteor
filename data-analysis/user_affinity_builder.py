@@ -30,6 +30,16 @@ for pairingId in pairingIds:
     pairings_timestamps = [pairing["timestamp"]["$date"] for pairing in pairs if pairing["pairingId"] == pairingId]
     pairingIdDict[pairingId] = pairings_timestamps[0]
 
+# Build a dictionary to convert the Data representation of the values to the UI representation
+# (i.e. -1->1, 0->1, 0.33->2, ...)
+value_mappings = {
+    "-1": 1,
+    "0": 2,
+    "0.33": 3,
+    "0.66": 4,
+    "1": 5
+}
+
 # Build the nodes
 nodes = []
 
@@ -37,7 +47,7 @@ for affinity in affinities:
     new_affinity = {}
     new_affinity["helperId"] = affinity["helperId"]
     new_affinity["helpeeId"] = affinity["helpeeId"]
-    new_affinity["value"] = affinity["value"]
+    new_affinity["value"] = value_mappings[str(affinity["value"])]
     new_affinity["pairingId"] = affinity["pairingId"]
     new_affinity["groupId"] = affinity["groupId"]
     new_affinity["timestamp"] = pairingIdDict[affinity["pairingId"]];

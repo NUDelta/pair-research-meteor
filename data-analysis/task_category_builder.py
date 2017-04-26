@@ -30,8 +30,7 @@ for category_key in corpus:
 
             node["categories"] = category_list
 
-json_output = {}
-json_output["data"] = matching_nodes
+json_output = matching_nodes
 
 with open(user_skill_graph, 'w') as outfile:
     json.dump(json_output, outfile)
