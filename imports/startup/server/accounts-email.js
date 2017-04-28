@@ -1,4 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
+import { SSR } from 'meteor/meteorhacks:ssr';
 
 import {
   SITE_NAME,
@@ -13,12 +14,9 @@ Accounts.emailTemplates.enrollAccount.subject = (user) => {
   return `You're invited to join ${ invitedGroup.groupName } for Pair Research`;
 };
 
-Accounts.emailTemplates.enrollAccount.text = (user, url) => {
-  return `To join this pair research pool, just click the link below:
-
-${ url }
-
-If you've received multiple invitation emails, please be sure to click the link for the most recent one.`;
+Accounts.emailTemplates.enrollAccount.html = (user, url) => {
+	SSR.compileTemplate('invite_email', Assets.getText('invite_email.html'));
+  return SSR.render('invite_email', {url: url});
 };
 
 Accounts.emailTemplates.resetPassword.subject = (user) => {
