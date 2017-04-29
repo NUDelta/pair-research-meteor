@@ -1,10 +1,138 @@
 <html>
+	<head>
+		 <!-- Compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<body>
-    <div id="test-email">
-        <h1>IT WORKED</h1>
-        <p> You're invited <a href="{{url}}">to pair research</a>.</p>
+  	<style>
+  		.banner {
+  			width: 100%;
+		    height: 250px;
+		    color: white;
+		    position: relative;
+  		}
+
+  		.header-group {
+  			position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  transform: translate(50%, -50%);
+  		}
+
+  		.promo {
+			  width: 100%;
+			}
+
+			.promo .material-icons {
+		    font-size: 7rem;
+		    margin: 20px 0;
+		  }
+
+			.promo .promo-caption {
+		    font-size: 1.7rem;
+		    font-weight: 500;
+		    margin-top: 5px;
+		    margin-bottom: 0;
+		  }
+
+		  h3 {
+	      top: 60%;
+	      left: 40%;
+	      transform: translateY(-50%);
+	      font-weight: 300;
+	    }
+
+	    h3.img {
+        vertical-align: bottom;
+        height: 48px
+      }
+
+      .btn-large {
+      	margin: 20px 0px;
+      	width: 100%;
+      }
+  	</style>
+	</head>
+	<body>
+	  <div id="home" class="grey lighten-5">
+    <div class="banner amber darken-2">
+      <div class="row">
+        <div class="col s12 m7 header-group">
+          <h1 class="header">Pair Research</h1>
+          <h3 class="header">
+            from <a class="link hide-on-small-and-down"
+                    href="http://delta.northwestern.edu"> <img
+              src="../public/home/delta.jpg" alt=""> </a>
+          </h3>
+          <a class="link hide-on-med-and-up"
+             href="http://delta.northwestern.edu">
+            <img src="/home/delta.jpg" alt="">
+          </a>
+        </div>
+      </div>
     </div>
-</body>
-    
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h2>
+            Welcome to Pair Research!
+          </h2>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col s12">
+          <h5>
+            Florence Fu has invited you to join SF DFA for Pair Research. Click below to join the group and get started.
+          </h5>
+        </div>
+        <div class="col s4 offset-s4">
+          <a class="waves-effect waves-light btn-large">Join Group</a>	
+        </div>
+        <div class="col s12">
+          <h5>
+            Pair research is a collaborative method from Delta Lab, designed to
+            help group members overcome blockers and build teams.
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="center promo">
+            <i class="material-icons amber-text text-darken-2">call_merge</i>
+            <p class="promo-caption">
+              Overcome Blockers
+            </p>
+            <p class="light">
+              Match together group members with appropriate skills to help each
+              other.
+            </p>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="center promo">
+            <i class="material-icons amber-text text-darken-2">flash_on</i>
+            <p class="promo-caption">
+              Increase Productivity
+            </p>
+            <p class="light">
+              You'll work faster if you can just get past those blockers.
+            </p>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="center promo">
+            <i class="material-icons amber-text text-darken-2">people</i>
+            <p class="promo-caption">
+              Collaborate Effectively
+            </p>
+            <p class="light">
+              Encourage pairings and helping between different sorts of people
+              in your group.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	</body>
 </html>
