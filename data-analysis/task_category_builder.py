@@ -3,9 +3,9 @@ import re
 from pprint import pprint
 
 # Filenames
-dtr_words = 'pair-app-data/task-words.json'  # Skill category words
+dtr_words = 'pair-app-data/skill-words.json'  # Skill category words
 user_affinities = 'output/user_affinities.json'  # Individual user affinities
-user_skill_graph = 'output/user_skill_graph.json'    # Final skill graph
+user_skill_graph = 'output/user_skill_graph-TEST.json'    # Final skill graph
 
 with open(dtr_words) as input_file:
     corpus = json.load(input_file)
@@ -14,8 +14,8 @@ with open(user_affinities) as input_file:
 
 corpus = corpus["categories"]
 
-for category_key in corpus:
-    for keyword in corpus[category_key]:
+for category_key in corpus:  # category_key = "ui/ux design"
+    for keyword in corpus[category_key]:  # keyword = "ui", "ux", ...
         for node in matching_nodes:
             # Perform text search here
             # Make more efficient by using DP instead of calculating each time
@@ -26,9 +26,9 @@ for category_key in corpus:
             category_list = node.get("categories", [])
 
             if re.search(r'' + keyword, matching_string):
-                category_list.append(keyword)
+                category_list.append(category_key)
 
-            node["categories"] = category_list
+            node["categories"] = list(set(category_list))  # Remove duplicates
 
 json_output = matching_nodes
 
