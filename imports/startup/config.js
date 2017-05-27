@@ -11,4 +11,6 @@ export const PAIR_SCRIPT = 'assets/app/scripts/pair_research.py';
 
 export const TEST_SCRIPT = 'assets/app/scripts/test.py'
 
+export const HELPER_SCRIPT = 'assets/app/scripts/get_helpers.py'
+
 export const ADMIN_ID = Meteor.settings.adminId;

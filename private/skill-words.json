@@ -1,0 +1,124 @@
+{
+    "categories": {
+        "prototype testing": [
+            "prototype",
+            "prototype test",
+            "test prototype",
+            "test"
+        ],
+        "needfinding": [
+            "needfind"
+        ],
+        "brainstorming": [
+            "brainstorm",
+            "idea",
+            "come up with"
+        ],
+        "feedback": [
+            "feedback"
+        ],
+        "interaction design": [
+            "interaction design",
+            "design an interaction",
+            "persona",
+            "interaction"
+        ],
+        "ui/ux design": [
+            "ui",
+            "ux",
+            "user interface",
+            "interface",
+            "user experience",
+            "experience",
+            "storyboard"
+        ],
+        "recruiting": [
+            "recruit"
+        ],
+        "prototype design": [
+            "prototype",
+            "prototyping",
+            "design prototype",
+            "design a prototype"
+        ],
+        "web/mobile dev": [
+            "ios",
+            "android",
+            "mobile",
+            "iphone",
+            "windows phone",
+            "html",
+            "css",
+            "api",
+            "app",
+            "websocket",
+            ".js",
+            "javascipt",
+            "visualization"
+        ],
+        "system features": [
+
+        ],
+        "debugging": [
+            "debug"
+        ],
+        "pair programming": [
+            "pair"
+        ],
+        "architecture": [
+            "architecture",
+            "database",
+            "schema"
+        ],
+        "general tech": [
+            "tech",
+            "coding"
+        ],
+        "dev tools": [
+            "meteor",
+            "react",
+            "angular",
+            "gdb",
+            "dev tools",
+            "developer"
+        ],
+        "algorithms": [
+            "algorithm"
+        ],
+        "research direction": [
+            "research direction",
+            "research",
+            "sprint",
+            "scaffolding",
+            "design argument"
+
+        ],
+        "study design": [
+            "design a study",
+            "study design",
+            "conduct stud",
+            "study",
+            "survey"
+        ],
+        "paper writing": [
+            "write paper",
+            "write a paper"
+        ],
+        "data analysis": [
+            "data",
+            "statistic"
+        ],
+        "grants": [
+            "grant",
+            "urg",
+            "proposal"
+        ],
+        "user studies": [
+            "conduct a study"
+        ],
+        "related work": [
+            "related",
+            "research related"
+        ]
+    }
+}

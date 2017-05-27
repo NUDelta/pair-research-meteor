@@ -1,6 +1,7 @@
 import './search.html'
 
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { getHelpers } from '../../api/search/methods.js'
 
 Template.search.onCreated(function() {
     this.state = new ReactiveDict();
@@ -25,8 +26,16 @@ Template.search.helpers({
 });
 
 Template.search.events({
-    'click pair-form-button'(event, instance) {
+    'click .pair-form-button'(event, instance) {
         event.preventDefault();
         console.log(event);
+    },
+    'click .phrase-search'(event, instance) {
+        console.log("Yoooooo");
+        getHelpers.call({phrase: "ayyyyy lmaooooooo"})
+    },
+    'submit form'(event, instance) {
+      event.preventDefault();
+      getHelpers.call({ phrase: event.target.searchText.value})
     }
 })
