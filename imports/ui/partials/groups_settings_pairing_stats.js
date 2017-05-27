@@ -8,6 +8,8 @@ import { PairsHistory } from '../../api/pairs-history/pairs-history.js';
 import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
 import { Schema } from '../../api/schema.js';
 
+import { getStats } from '../../api/stats/methods.js'
+
 Template.groups_settings_pairing_stats.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({
@@ -24,6 +26,8 @@ Template.groups_settings_pairing_stats.onCreated(function() {
       this.subscribe('tasksHistory.byGroup', groupId);
     }
   });
+
+  console.log(getStats.call({ groupId: "sM3z5FkZfsABqcj3g" }));
 });
 
 Template.groups_settings_pairing_stats.onRendered(function() {

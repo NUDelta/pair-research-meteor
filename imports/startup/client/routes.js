@@ -22,6 +22,9 @@ import '../../ui/pages/demo_create.js';
 import '../../ui/pages/under-construction.js';
 import '../../ui/pages/forgot-password.js';
 import '../../ui/pages/change-password.js';
+import '../../ui/pages/stats.js';
+import '../../ui/pages/search.js';
+
 
 FlowRouter.notFound = {
   action() {
@@ -124,4 +127,18 @@ FlowRouter.route('/demo/:groupId', {
   action() {
     BlazeLayout.render('layout', { main: 'demo_pair' });
   }
+});
+
+FlowRouter.route('/stats', {
+    name: 'App.stats',
+    action() {
+        BlazeLayout.render('layout', { main: 'stats'} );
+    }
+});
+
+FlowRouter.route('/search', {
+    name: 'App.search',
+    action() {
+        BlazeLayout.render('layout', { main: 'search'} );
+    }
 });

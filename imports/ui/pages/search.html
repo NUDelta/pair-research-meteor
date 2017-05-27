@@ -1,0 +1,16 @@
+<template name="search">
+    <h1>👍 Search Page 👍</h1>
+    <form name="helpSearch">
+        <label for="searchText">Who can help you?</label>
+        <input type="text" name="searchText" placeholder="What do you need help with?"/>
+        <button class="pair-form-button waves-effect">Yoooooo</button>
+    </form>
+    <hr />
+    {{#each helpingUsers}}
+        <h3>{{name}}</h3>
+        <p>
+            {{task}}
+        </p>
+        <hr />
+    {{/each}}
+</template>
