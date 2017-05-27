@@ -14,4 +14,4 @@ import '../../api/pairings/methods.js';
 import '../../api/pairs-history/server/publications.js';
 import '../../api/affinities-history/server/publications.js';
 import '../../api/tasks-history/server/publications.js';
-
+import '../../api/stats/methods.js';

@@ -1,5 +1,6 @@
-sum = 0
-for i in xrange(20):
-    sum += i
+import sys
 
-print sum
+def testFunc(inputString):
+    return '{ "name": "Test String"}'
+
+print testFunc(eval(sys.stdin.readlines()[0]))

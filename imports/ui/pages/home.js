@@ -4,7 +4,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { createDemoGroup } from '../../api/groups/methods.js';
 
-import { getStats } from '../../api/stats/methods.js'
+// import { getStats } from '../../api/stats/methods.js'
 
 
 Template.home.events({
@@ -20,6 +20,6 @@ Template.home.events({
   }
 });
 
-Template.home.onCreated(function() {
-    console.log(getStats.call({ groupId: "sM3z5FkZfsABqcj3g" }));
-})
+// Template.home.onCreated(function() {
+//     getStats.call({ groupId: "sM3z5FkZfsABqcj3g" });
+// })

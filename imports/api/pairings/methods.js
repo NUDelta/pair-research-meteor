@@ -90,7 +90,9 @@ export const makePairings = new ValidatedMethod({
 
     if (!this.isSimulation) {
       log.info(`running Python script at ${ PAIR_SCRIPT }`);
+      console.log(edges);
       const data = JSON.stringify(edges);
+      console.log(data);
       const cmd = `echo '${ data }' | python ${ PAIR_SCRIPT }`;
       const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
       log.info(`script results: ${ JSON.stringify(partners) }`);
