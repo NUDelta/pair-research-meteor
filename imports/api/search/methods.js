@@ -10,7 +10,7 @@ export const getHelpers = new ValidatedMethod({
     validate: new SimpleSchema({
         phrase: {
             type: String
-        }
+        },
     }).validator(),
     run({phrase}) {
         log.info(`running Python script at ${HELPER_SCRIPT}`);
@@ -19,7 +19,23 @@ export const getHelpers = new ValidatedMethod({
         if (!this.isSimulation) {
             const response = Meteor.wrapAsync(exec)(cmd);
             log.info(`script results: ${JSON.stringify(response)}`);
+            var new_response = JSON.parse(response);
+            log.info(new_response["debugging"]);
             return response;
         }
     }
 });
+
+
+// const methodWithApplyOptions = new ValidatedMethod({
+//   name: 'methodWithApplyOptions',
+//   validate: new SimpleSchema({}).validator(),
+//   applyOptions: {
+//     onResultReceived: function() {
+//       resultReceived = true;
+//     }
+//   },
+//   run() {
+//     return 'result';
+//   }
+// });

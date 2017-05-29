@@ -24,7 +24,7 @@ def parse_phrase_for_categories(input_phrase, category_list):
 def get_top_in_category(category, n, skill_dataframe):
     current_df = skill_dataframe.loc[skill_dataframe['category'] == category]
     top_users_df = current_df.groupby('helperId').mean().sort_values(by='value', ascending=False)
-    return top_users_df.iloc[:min(n, top_users_df.shape[0])]
+    return top_users_df.iloc[:min(n, top_users_df.shape[0])].to_dict();
 
 def parse_phrase_for_people(phrase, n, category_list, skill_dataframe):
     people_category_dictionary = {}
@@ -64,4 +64,4 @@ words = words['categories']
 
 task_categories = parse_phrase_for_categories("debug our meteor app", words)
 
-print parse_phrase_for_people(eval(sys.stdin.readlines()[0]), 5, words, expanded_df)
+print json.dumps(parse_phrase_for_people(eval(sys.stdin.readlines()[0]), 5, words, expanded_df))

@@ -1,12 +1,15 @@
 <template name="search">
     <h1>👍 Search Page 👍</h1>
+    <p>
+        {{ pythonResponse }}
+    </p>
     <form name="helpSearch">
         <label for="searchText">Who can help you?</label>
         <input type="text" name="searchText" placeholder="What do you need help with?"/>
-        <button type="submit" class="waves-effect btn">Yoooooo</button>
+        <button type="submit" class="waves-effect btn">Find Helpers</button>
     </form>
     <hr />
-    <button class="phrase-search">Click to parse phrase</button>
+    <button class="phrase-search">Check State</button>
     {{#each helpingUsers}}
         <h3>{{name}}</h3>
         <p>
