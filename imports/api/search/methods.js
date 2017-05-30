@@ -17,10 +17,8 @@ export const getHelpers = new ValidatedMethod({
         const data = JSON.stringify(phrase);
         const cmd = `echo '${data}' | python ${HELPER_SCRIPT}`;
         if (!this.isSimulation) {
-            const response = Meteor.wrapAsync(exec)(cmd);
+            const response = JSON.parse(Meteor.wrapAsync(exec)(cmd));
             log.info(`script results: ${JSON.stringify(response)}`);
-            var new_response = JSON.parse(response);
-            log.info(new_response["debugging"]);
             return response;
         }
     }

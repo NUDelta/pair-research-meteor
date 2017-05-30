@@ -46,7 +46,16 @@ Template.search.events({
               console.log(err);
           } else {
               console.log(result);
-              instance.state.set('response', result);
+              var category_list = [];
+              for (var key in result){
+                  var category = {}
+                  var people = result[key];
+                  category["category"] = key;
+                  category["people"] = people
+                  category_list.push(category);
+              }
+              console.log(category_list);
+              instance.state.set('response', category_list);
           }
       });
     }

@@ -41,7 +41,7 @@ def look_up_person(userId, group):
         if person["userId"] == userId:
             person_name = person["fullName"]
 
-    print person_name
+    return person_name
 
 
 
@@ -58,10 +58,22 @@ df['categories'] = df['categories'].apply(tuple)
 new_rows = []
 for index, row in df.iterrows():
     new_rows.extend([[row['helperId'], row['timestamp'], row['task'][0], nn, row['value']] for nn in row.categories])
-expanded_df = pd.DataFrame(new_rows,columns=['helperId', 'timestamp', 'task', 'category', 'value'])
 
+expanded_df = pd.DataFrame(new_rows,columns=['helperId', 'timestamp', 'task', 'category', 'value'])
 words = words['categories']
 
-task_categories = parse_phrase_for_categories("debug our meteor app", words)
+people_and_categories = parse_phrase_for_people(eval(sys.stdin.readlines()[0]), 5, words, expanded_df)
+category_dict = {}
 
-print json.dumps(parse_phrase_for_people(eval(sys.stdin.readlines()[0]), 5, words, expanded_df))
+for category, user_dict in people_and_categories.iteritems():
+    people_list = []
+    for userId, score in user_dict["value"].iteritems():
+        person_name = look_up_person(userId, people)
+        person = {}
+        person["name"] = person_name
+        person["userId"] = userId
+        person["score"] = score
+        people_list.append(person);
+    category_dict[category] = people_list;
+
+print json.dumps(category_dict);

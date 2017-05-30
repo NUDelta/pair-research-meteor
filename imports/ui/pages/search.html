@@ -1,8 +1,5 @@
 <template name="search">
     <h1>👍 Search Page 👍</h1>
-    <p>
-        {{ pythonResponse }}
-    </p>
     <form name="helpSearch">
         <label for="searchText">Who can help you?</label>
         <input type="text" name="searchText" placeholder="What do you need help with?"/>
@@ -10,11 +7,19 @@
     </form>
     <hr />
     <button class="phrase-search">Check State</button>
-    {{#each helpingUsers}}
-        <h3>{{name}}</h3>
-        <p>
-            {{task}}
-        </p>
+    {{#each pythonResponse}}
+        <h3>{{category}}</h3>
+        {{#each people}}
+            <p>
+                {{name}}
+            </p>
+            <p>
+                {{userId}}
+            </p>
+            <p>
+                {{score}}
+            </p>
+        {{/each}}
         <hr />
     {{/each}}
 </template>
