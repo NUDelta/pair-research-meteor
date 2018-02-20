@@ -23,17 +23,3 @@ export const getHelpers = new ValidatedMethod({
         }
     }
 });
-
-
-// const methodWithApplyOptions = new ValidatedMethod({
-//   name: 'methodWithApplyOptions',
-//   validate: new SimpleSchema({}).validator(),
-//   applyOptions: {
-//     onResultReceived: function() {
-//       resultReceived = true;
-//     }
-//   },
-//   run() {
-//     return 'result';
-//   }
-// });

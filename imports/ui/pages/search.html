@@ -6,19 +6,18 @@
         <button type="submit" class="waves-effect btn">Find Helpers</button>
     </form>
     <hr />
-    <button class="phrase-search">Check State</button>
     {{#each pythonResponse}}
-        <h3>{{category}}</h3>
+        <h2>{{category}}</h2>
         {{#each people}}
-            <p>
+            <h4>
                 {{name}}
-            </p>
-            <p>
+            </h4>
+            <!-- <p>
                 {{userId}}
             </p>
             <p>
                 {{score}}
-            </p>
+            </p> -->
         {{/each}}
         <hr />
     {{/each}}

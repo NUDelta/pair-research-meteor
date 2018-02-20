@@ -39,13 +39,12 @@ Template.search.events({
     'submit form'(event, instance) {
       event.preventDefault();
 
-      var response = getHelpers.call({
+      getHelpers.call({
           phrase: event.target.searchText.value
       }, (err, result) => {
           if (err) {
               console.log(err);
           } else {
-              console.log(result);
               var category_list = [];
               for (var key in result){
                   var category = {}
