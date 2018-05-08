@@ -55,6 +55,7 @@ mdg:validated-method@1.1.0
 mdg:validation-error@0.5.1
 meteor@1.2.17_1
 meteor-base@1.0.4
+meteorhacks:ssr@2.2.0
 minifier-css@1.2.14_1
 minifier-js@1.2.14_1
 minimongo@1.0.17

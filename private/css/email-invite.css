@@ -1,0 +1,74 @@
+.container {
+  margin-top: 0;
+}
+
+nav {
+  position: absolute;
+  z-index: 2;
+  background: none;
+  box-shadow: none;
+}
+
+.banner {
+  width: 100%;
+  min-height: 450px;
+  height: 40vh;
+  position: relative;
+}
+
+.banner .row, .col {
+    position: relative;
+    height: 100%;
+  }
+
+  .banner .header {
+    margin-top: 0;
+    position: absolute;
+  }
+
+  .banner h1 {
+    top: 40%;
+    left: 25%;
+    transform: translateY(-50%);
+  }
+
+  .banner h3 {
+    top: 60%;
+    left: 40%;
+    transform: translateY(-50%);
+    font-weight: 300;
+  }
+
+  .banner h3 img {
+    vertical-align: bottom;
+    height: 48px
+  }
+
+  .banner .actions {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .banner .actions  a.btn-large {
+      width: 220px;
+      margin-bottom: 1.5em;
+    }
+
+.container {
+  padding-top: 4em;
+}
+
+.container .card {
+  width: 70%;
+  margin: auto;
+}
+
+.container h2 {
+  font-size: 2.2em;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 2em;
+}

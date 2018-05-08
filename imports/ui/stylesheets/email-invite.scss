@@ -1,0 +1,110 @@
+#email-invite {
+  margin-top: 0;
+
+  nav {
+    position: absolute;
+    z-index: 2;
+    background: none;
+    box-shadow: none;
+  }
+
+  .banner {
+    @extend .amber, .darken-2;
+    width: 100%;
+    min-height: 450px;
+    height: 40vh;
+    position: relative;
+
+    .row, .col {
+      position: relative;
+      height: 100%;
+    }
+
+    .header {
+      @extend .white-text;
+      margin-top: 0;
+      position: absolute;
+    }
+
+    h1 {
+      top: 40%;
+      left: 25%;
+      transform: translateY(-50%);
+    }
+
+    h3 {
+      top: 60%;
+      left: 40%;
+      transform: translateY(-50%);
+      font-weight: 300;
+
+      img {
+        vertical-align: bottom;
+        height: 48px
+      }
+    }
+
+    .link {
+      @extend .teal-text;
+    }
+
+    .actions {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+
+      a.btn-large {
+        width: 220px;
+        margin-bottom: 1.5em;
+      }
+    }
+  }
+
+  .container {
+    padding-top: 4em;
+
+    .card {
+      width: 70%;
+      margin: auto;
+    }
+
+    h2 {
+      @extend .amber-text, .text-darken-2;
+      font-size: 2.2em;
+      font-weight: 300;
+      text-align: center;
+      margin-top: 2em;
+    }
+
+  }
+
+  @media #{$small-and-down} {
+    .banner {
+      padding-top: 5em;
+      height: auto;
+      text-align: center;
+
+      .header {
+        position: static;
+        text-align: center;
+        transform: none;
+      }
+
+      .actions {
+        margin-top: 2em;
+        text-align: center;
+        position: static;
+        transform: none;
+      }
+    }
+  }
+
+  #acknowledgements {
+    .info {
+      margin-top: 0;
+      font-size: 1em;
+    }
+  }
+}

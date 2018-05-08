@@ -1,0 +1,197 @@
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Pair Research</title>
+  <style type="text/css">
+    .container {
+      margin-top: 0;
+    }
+
+    nav {
+      position: absolute;
+      z-index: 2;
+      background: none;
+      box-shadow: none;
+    }
+
+    .banner {
+      width: 100%;
+      min-height: 450px;
+      height: 40vh;
+      position: relative;
+    }
+
+    .banner .row, .col {
+        position: relative;
+        height: 100%;
+      }
+
+      .banner .header {
+        margin-top: 0;
+        position: absolute;
+      }
+
+      .banner h1 {
+        top: 40%;
+        left: 25%;
+        transform: translateY(-50%);
+      }
+
+      .banner h3 {
+        top: 60%;
+        left: 40%;
+        transform: translateY(-50%);
+        font-weight: 300;
+      }
+
+      .banner h3 img {
+        vertical-align: bottom;
+        height: 48px
+      }
+
+      .banner .actions {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+
+      .banner .actions  a.btn-large {
+          width: 220px;
+          margin-bottom: 1.5em;
+        }
+
+    .container {
+      padding-top: 4em;
+    }
+
+    .container .card {
+      width: 70%;
+      margin: auto;
+    }
+
+    .container h2 {
+      font-size: 2.2em;
+      font-weight: 300;
+      text-align: center;
+      margin-top: 2em;
+    }
+
+    /* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v33/2fcrYFNaTjcS6g4U3t-Y5UEw0lE80llgEseQY3FEmqw.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+  </style>
+
+  <!-- Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+
+<body>
+  <div id="email-invite" class="grey lighten-5">
+    <div class="banner amber darken-2">
+      <div class="row">
+        <div class="col s12 m7">
+          <h1 class="header white-text">Pair Research</h1>
+          <h3 class="header white-text">
+            from <a class="teal-text"
+                    href="http://delta.northwestern.edu"> <img
+              src="{{delta}}" alt="Delta Lab"> </a>
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="container amber-text text-darken-2">
+      <div class="row">
+        <div class="col s12">
+          <h1>
+            Welcome to Pair Research!
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <h1>
+            You have been invited to join {{group}} for Pair research. Click below to join the group and get started!
+          </h1>
+          <p>
+            If you've received multiple invitation emails, please be sure to click the link for the most recent one.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m5">
+          <div class="actions">
+            <a href="{{path}}" class="waves-effect waves-light btn-large blue">Join Group</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <h1>
+            Pair Research is a collaborative method from Delta Lab, designed to help group members overcome blockers and build teams.
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="center promo">
+             <img src="{{call_merge}}" alt="Overcome Blockers">
+            <p class="promo-caption">
+              Overcome Blockers
+            </p>
+            <p class="light">
+              Match together group members with appropriate skills to help each
+              other.
+            </p>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="center promo">
+            <img src="{{flash_on}}" alt="Increase Productivity">
+            <p class="promo-caption">
+              Increase Productivity
+            </p>
+            <p class="light">
+              You'll work faster if you can just get past those blockers.
+            </p>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="center promo">
+            <img src="{{people}}" alt="=Collaborative Effectively">
+            <p class="promo-caption">
+              Collaborate Effectively
+            </p>
+            <p class="light">
+              Encourage pairings and helping between different sorts of people
+              in your group.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
