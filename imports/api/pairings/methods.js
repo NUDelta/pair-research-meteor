@@ -42,11 +42,12 @@ export const makePairings = new ValidatedMethod({
       Meteor._sleepForMs(DEV_OPTIONS.LATENCY);
     }
 
-    // Form n^2 pool data
+    // Form n^2 pool data with
     const users = Tasks.find({ groupId: groupId, task: { $exists: true} }).fetch()
       .map(task => [ task.userId, task.name ]);
     const userPool = _.map(users, user => user[0]);
 
+    // Initialize n-by-n 0s matrix without diagonal
     const scores = {};
     userPool.forEach((userId) => {
       scores[userId] = {};
@@ -57,23 +58,30 @@ export const makePairings = new ValidatedMethod({
       });
     });
 
+    // Replace 0s with affinities (-1 to 1), if helper has rated helpee
     Affinities.find({ groupId: groupId }).forEach((affinity) => {
-      if (_.has(scores, affinity.helperId) &&
-          _.has(scores[affinity.helperId], affinity.helpeeId)) {
+      if (_.has(scores, affinity.helperId) && _.has(scores[affinity.helperId], affinity.helpeeId)) {
         scores[affinity.helperId][affinity.helpeeId] = affinity.value;
       }
     });
 
+    // Fetch last 3 pairings, ordered by most recent first
     const recentPairings = Pairings.find({ groupId: groupId }, { sort: { timestamp: -1 }, limit: 3 }).fetch();
 
+    // Create graph for maximum weighted matching
     let edges = [];
+    // Loop through upper triangular portion of matrix only (lower is redundant)
     _.forEach(userPool, (userId, i) => {
       _.forEach(_.slice(userPool, i + 1), (_userId, j) => {
+        // Add edge iff at least one user in each pair has rated the other > -1 (rating of 1 in interface)
         if (scores[userId][_userId] !== -1 && scores[_userId][userId] !== -1) {
-          let weight = 1 + 99 *(scores[userId][_userId] + scores[_userId][userId]) / 2;
+          // Initial weighting ranging from 1 - 100
+          let weight = 1 + 99 * (scores[userId][_userId] + scores[_userId][userId]) / 2;
           weight = weight !== null ? weight : 0;
 
-          // repeat penalty
+          // Penalize recent pairings by increasing weight of pairs that have NOT occurred recently for last 3 pairings
+          // ex. If A and B have not paired last time, increase their weight by 80 * 0.5^1
+          // ex. If they also didn't pair time before, further increase their weight by 80 * 0.5^2 and so on (up to 3)
           _.forEach(recentPairings, (pairing, index) => {
             const partner = pairing.partner(userId);
             if (partner && partner.userId != _userId) {
@@ -81,8 +89,10 @@ export const makePairings = new ValidatedMethod({
             }
           });
 
-          // random pertubation
+          // Add a random perturbation, between 0-20, to prevent identical edge weights
           weight += Math.random() * 20;
+
+          // Floor the final weight and add as an edge
           edges.push([ i, j + i + 1, Math.floor(weight) ]);
         }
       });
