@@ -16,7 +16,8 @@
   "scripts": {
     "start": "meteor run --settings settings.json",
     "test": "meteor test --driver-package practicalmeteor:mocha",
-    "deploy": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings.json"
+    "deploy-staging": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair-staging.meteorapp.com --settings settings-staging.json",
+    "deploy-production": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings-production.json"
   },
   "dependencies": {
     "bcrypt": "0.8.7",

@@ -60,9 +60,16 @@ actual deployment and one with the migration commented out and timestamped. To k
 is live, avoid force pushing `deploy` until it's live. Use `git rebase` to keep the migrations as the latest commit.
 
 ## Deployment
-Pair Research is hosted on [Galaxy](https://galaxy.meteor.com) and [mLab](https://mlab.com).
-You can deploy with the included `npm run-script deploy` script. Make sure you've grabbed the `settings.json`
-file located in the DTR Dropbox `/App Builds/Pair Research` folder. Haoqi can add you to the 
-DTR Galaxy account. Yongsung has the database info (it's on his account). In the future,  you
-should probably do a migration to more easily scalable DB since we should be wary of hitting
-rate limits on this application.
+Pair Research is hosted on [Galaxy](https://galaxy.meteor.com) and [mLab](https://mlab.com). We host a production and staging server. It is recommended that all major changes be deployed to the staging server first for testing.
+
+### Setup
+You will need the `settings-staging.json` and `settings-production.json` to deploy to the staging and production servers respectively. These can be found in the DTR Dropbox (`/App Builds/Pair Research` folder).
+
+Additionally, you will need access the the Galaxy and mLab accounts. Ask Haoqi to add you to DTR Galaxy account and ask Yongsung for his mLab credientials since the Pair Research database is under his account (*note: In the future, we should probably do a migration to more easily scalable DB since we should be wary of hitting rate limits on this application*).
+
+### Deploying
+We provide two scripts that allow you to easily deploy to the servers, given you have completed the above steps. 
+
+`npm run-script deploy-staging` will deploy to the staging server at [pair-staging.meteorapp.com](pair-staging.meteorapp.com]). 
+
+`npm run-script deploy-production` will deploy to the production server at [pairresearch.io](pairresearch.io).
