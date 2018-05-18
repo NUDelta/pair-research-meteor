@@ -113,17 +113,20 @@ export const makePairings = new ValidatedMethod({
 
         // Initial weighted ranging from -100 to 100
         let weight = 1 + 99 * scores[userId][_userId];
-        weight = weight !== null ? weight : 0;
+        weight = weight !== null ? weight : 0; // if no rating, give neutral rating of 0
 
         // Penalize recent pairings by increasing weight of pairs that have NOT occurred recently for last 3 pairings
+        // Only give extra weight if rating is not -1
         // ex. If A and B have not paired last time, increase their weight by 80 * 0.5^1
         // ex. If they also didn't pair time before, further increase their weight by 80 * 0.5^2 and so on (up to 3)
-        _.forEach(recentPairings, (pairing, index) => {
-          const partner = pairing.partner(userId);
-          if (partner && partner.userId !== _userId) {
-            weight += 80 * Math.pow(0.5, index + 1);
-          }
-        });
+        if (scores[userId][_userId] !== -1) {
+          _.forEach(recentPairings, (pairing, index) => {
+            const partner = pairing.partner(userId);
+            if (partner && partner.userId !== _userId) {
+              weight += 80 * Math.pow(0.5, index + 1);
+            }
+          });
+        }
 
         // Add a random perturbation, between 0-20, to prevent identical edge weights and handle unrated cases
         weight += Math.random() * 20;
