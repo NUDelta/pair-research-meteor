@@ -28,9 +28,11 @@ def stable_matching_wrapper(preferences, handle_odd_method='remove', remove_all=
         debug (boolean): including print statements
 
     Return:
-        (list): stable matching, if exists. Otherwise, None.
+        (list): stable or partially stable matching, if exists. Otherwise, None.
             If a matching exists, -1 for a person indicates no partner.
             ex: [2, 1, -1] (Person 0 matched with 2, 1 matched with 0, 2 not matched)
+        (boolean): whether matching is fully stable
+        (string): debug result for when matching succeeded/failed
     """
     # validate input
     is_valid, valid_preferences = validate_input(preferences, debug=debug)
@@ -38,7 +40,7 @@ def stable_matching_wrapper(preferences, handle_odd_method='remove', remove_all=
     if not is_valid:
         if debug:
             print('Invalid input. Must be n-by-m (where m = n - 1) list of lists of numbers.')
-        return None, 'Invalid input. Must be n-by-m (where m = n - 1) list of lists of numbers.'
+        return None, False, 'Invalid input. Must be n-by-m (where m = n - 1) list of lists of numbers.'
 
     # handle odd and attempt matching
     output = None
@@ -55,10 +57,10 @@ def stable_matching_wrapper(preferences, handle_odd_method='remove', remove_all=
         }
 
         # create a dict of dicts holding index of each person ranked
-        # person number : {person : rank_index }
+        # person number : {person : rank_index}
         ranks = {index: dict(zip(value, range(len(value)))) for (index, value) in preferences_dict.items()}
 
-        # run stable matching once with added user
+        # run stable matching once with added user and return
         output = stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipulated, debug=debug)
     elif handle_odd_method == 'remove':
         # randomly pick a user to remove
@@ -97,17 +99,19 @@ def stable_matching_wrapper(preferences, handle_odd_method='remove', remove_all=
                 print('Ranks Dict: {}'.format(ranks))
 
             # run stable matching once with added user
-            output = stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipulated, debug=debug)
+            output = stable_matching(preferences_dict, ranks, is_odd,
+                                     person_added, person_manipulated, debug=debug)
 
-            # return output if matching is stable or if no stable matching and even number of users
-            if (output[0] is not None) or (output[0] is None and not is_odd):
+            # return output if matching is fully stable or if no stable matching and even number of users
+            if output[1] or (not output[1] and not is_odd):
                 return output
     else:
         if debug:
             print('Invalid input. handle_odd_method must either be \'add\' or \'remove\'')
-        return None, 'Invalid input. handle_odd_method must either be \'add\' or \'remove\''
+        return None, False, 'Invalid input. handle_odd_method must either be \'add\' or \'remove\''
 
-    # return results
+    # return last results if remove all fails to find a matching
+    # TODO: if using remove all, return the matching with the highest stable cardinality
     return output
 
 
@@ -123,9 +127,11 @@ def stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipu
         person_manipulated (
 
     Return:
-        (list): stable matching, if exists. Otherwise, None.
+        (list): stable or partially stable matching, if exists. Otherwise, None.
             If a matching exists, -1 for a person indicates no partner.
             ex: [2, 1, -1] (Person 0 matched with 2, 1 matched with 0, 2 not matched)
+        (boolean): whether matching is fully stable
+        (string): debug result for when matching succeeded/failed
     """
     # phase 1: initial proposal
     p1_holds = phase_1(preferences_dict, ranks)
@@ -135,7 +141,16 @@ def stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipu
         if p1_holds[hold] is None:
             if debug:
                 print('Stable matching is not possible. Failed at Phase 1: not everyone was proposed to.')
-            return None, 'Failed at Phase 1: not everyone was proposed to.'
+                print(p1_holds)
+
+            # compute partial matching
+            if is_odd:
+                p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
+
+            p1_holds_partial_matching = compute_partially_stable_matching(p1_holds, ranks, debug)
+
+            return format_output(p1_holds_partial_matching), False, \
+                'Failed at Phase 1: not everyone was proposed to.'
 
     # phase 1: reduction
     p1_reduced_preferences = phase_1_reduce(preferences_dict, ranks, p1_holds)
@@ -157,32 +172,38 @@ def stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipu
 
                 # handle odd cases where person may have been added or removed
                 if is_odd:
-                    # person added: delete added person (n + 1) and set their match to -1
-                    if person_added:
-                        person_str = str(len(p1_holds))
-                        person_added_match = p1_holds[person_str]
-
-                        del p1_holds[person_str]
-                        p1_holds[person_added_match] = '-1'
-                    # person removed: add person with -1 as hold value
-                    elif person_manipulated is not None:
-                        person_str = str(person_manipulated)
-                        p1_holds[person_str] = '-1'
+                    p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
 
                 if debug:
                     print(p1_holds)
 
-                return format_output(p1_holds), 'Stable matching found after Phase 1.'
+                return format_output(p1_holds), True, 'Stable matching found after Phase 1.'
             else:
                 if debug:
                     print('Stable matching is not possible. Failed at Verification: matching computed, but not stable.')
                     print(p1_holds)
-                return None, 'Failed at Verification after Phase 1: matching computed, but not stable.'
+
+                # compute partial matching
+                if is_odd:
+                    p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
+
+                p1_holds_partial_matching = compute_partially_stable_matching(p1_holds, ranks, debug)
+
+                return format_output(p1_holds_partial_matching), False, \
+                    'Failed at Verification after Phase 1: matching computed, but not stable.'
         else:
             if debug:
                 print('Stable matching is not possible. Failed at Verification: matching computed, but not valid.')
                 print(p1_holds)
-            return None, 'Failed at Verification after Phase 1: matching computed, but not valid.'
+
+            # compute partial matching
+            if is_odd:
+                p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
+
+            p1_holds_partial_matching = compute_partially_stable_matching(p1_holds, ranks, debug)
+
+            return format_output(p1_holds_partial_matching), False, \
+                'Failed at Verification after Phase 1: matching computed, but not valid.'
 
     # phase 2: find an all-or-nothing cycle
     cycle = find_all_or_nothing_cycle(p1_reduced_preferences)
@@ -191,11 +212,29 @@ def stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipu
     if cycle is None:
         if debug:
             print('Stable matching is not possible. Failed at Phase 2: could not find an all-or-nothing cycle.')
-        return None, 'Failed at Phase 2: could not find an all-or-nothing cycle.'
+
+        # compute partial matching
+        if is_odd:
+            p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
+
+        p1_holds_partial_matching = compute_partially_stable_matching(p1_holds, ranks, debug)
+
+        return format_output(p1_holds_partial_matching), False, \
+            'Failed at Phase 2: could not find an all-or-nothing cycle.'
     elif cycle is not None and len(cycle) == 3:
         if debug:
             print('Stable matching is not possible. Failed at Phase 2: could not find an all-or-nothing cycle len > 3.')
-        return None, 'Failed at Phase 2: could not find an all-or-nothing cycle len > 3.'
+            print(p1_holds)
+            print(p1_reduced_preferences)
+
+        # compute partial matching
+        if is_odd:
+            p1_holds = undo_odd_handling(p1_holds, person_added, person_manipulated)
+
+        p1_holds_partial_matching = compute_partially_stable_matching(p1_holds, ranks, debug)
+
+        return format_output(p1_holds_partial_matching), False, \
+            'Failed at Phase 2: could not find an all-or-nothing cycle len > 3.'
 
     # phase 2: reduction
     final_holds = phase_2_reduce(p1_reduced_preferences, ranks, cycle)
@@ -210,34 +249,50 @@ def stable_matching(preferences_dict, ranks, is_odd, person_added, person_manipu
 
                 # handle odd cases where person may have been added or removed
                 if is_odd:
-                    if person_added:  # person added: delete added person (n + 1) and set their match to -1
-                        person_str = str(len(final_holds))
-                        person_added_match = final_holds[person_str]
-
-                        del final_holds[person_str]
-                        final_holds[person_added_match] = '-1'
-                    elif person_manipulated is not None:  # person removed: add person with -1 as hold value
-                        person_str = str(person_manipulated)
-                        final_holds[person_str] = '-1'
+                    final_holds = undo_odd_handling(final_holds, person_added, person_manipulated)
 
                 if debug:
                     print(final_holds)
 
-                return format_output(final_holds), 'Stable matching found after Phase 2.'
+                return format_output(final_holds), True, 'Stable matching found after Phase 2.'
             else:
                 if debug:
                     print('Stable matching is not possible. Failed at Verification: matching computed, but not stable.')
                     print(final_holds)
-                return None, 'Failed at Verification after Phase 2: matching computed, but not stable.'
+
+                # compute partial matching
+                if is_odd:
+                    final_holds = undo_odd_handling(final_holds, person_added, person_manipulated)
+
+                final_holds_partial_matching = compute_partially_stable_matching(final_holds, ranks, debug)
+
+                return format_output(final_holds_partial_matching), False, \
+                    'Failed at Verification after Phase 2: matching computed, but not stable.'
         else:
             if debug:
                 print('Stable matching is not possible. Failed at Verification: matching computed, but not valid.')
                 print(final_holds)
-            return None, 'Failed at Verification after Phase 2: matching computed, but not valid.'
+
+            # compute partial matching
+            if is_odd:
+                final_holds = undo_odd_handling(final_holds, person_added, person_manipulated)
+
+            final_holds_partial_matching = compute_partially_stable_matching(final_holds, ranks, debug)
+
+            return format_output(final_holds_partial_matching), False, \
+                'Failed at Verification after Phase 2: matching computed, but not valid.'
     else:
         if debug:
             print('Stable matching is not possible. Failed at Phase 2 reduction.')
-        return None, 'Failed at Phase 2 reduction.'
+
+        # compute partial matching
+        if is_odd:
+            final_holds = undo_odd_handling(final_holds, person_added, person_manipulated)
+
+        final_holds_partial_matching = compute_partially_stable_matching(final_holds, ranks, debug)
+
+        return format_output(final_holds_partial_matching), False, \
+            'Failed at Phase 2 reduction.'
 
 
 def phase_1(preferences, ranks, curr_holds=None):
@@ -570,6 +625,35 @@ def handle_odd_users(preference_matrix, method='remove', person_to_remove=None, 
     return output_matrix, is_odd, person_added, person_manipulated
 
 
+def undo_odd_handling(holds, person_added, person_manipulated):
+    """
+    Helper function to undo the effects of adding/removing a person when handing an odd number of users.
+
+    Input:
+        holds (dict): dict containing person:matching pairs.
+        person_added (boolean): whether person was added to handle odd case.
+        person_manipulated (string): person who was removed if person_added is False
+
+    Return:
+        (dict): holds with target person either removed or added back with -1 hold
+    """
+    current_holds = deepcopy(holds)
+
+    # person added: delete added person (n + 1) and set their match to -1
+    if person_added:
+        person_str = str(len(current_holds))
+        person_added_match = current_holds[person_str]
+
+        del current_holds[person_str]
+        current_holds[person_added_match] = '-1'
+    # person removed: add person with -1 as hold value
+    elif person_manipulated is not None:
+        person_str = str(person_manipulated)
+        current_holds[person_str] = '-1'
+
+    return current_holds
+
+
 def verify_matching(matching):
     """
     Checks if a matching is valid.
@@ -635,6 +719,88 @@ def verify_stability(matching, ranks):
     return True
 
 
+def compute_partially_stable_matching(matching, ranks, debug=False):
+    """
+    Given an incomplete matching, checks and returns a partially stable matching with members who are stably matched.
+
+    Input:
+        matching (dict): dict containing person:matching pairs. matching need not be stable.
+        ranks (dict of dict of ranking index): dict of persons with dicts indicating rank of each other person
+        debug (boolean): including print statements
+
+    Output:
+        (dict): partially stable matching, where some are stably matched, with '-1' indicating no partner for a person
+    """
+    partial_matching = deepcopy(matching)
+
+    # validate matching by checking if both people are matched with each other
+    for x in partial_matching:
+        x_partner = partial_matching[x]
+
+        # only check if a partner exists or not -1 already
+        if x_partner is None or x_partner == '-1':
+            partial_matching[x] = '-1'
+            continue
+
+        # unmatch x and x's partner if they are not the same
+        y_partner = partial_matching[x_partner]
+        if y_partner != x:
+            partial_matching[x] = '-1'
+            partial_matching[x_partner] = '-1'
+
+    # remove all unpaired users
+    partially_stable_matching = {key: value for (key, value) in partial_matching.items() if value != '-1'}
+
+    # check which matchings are stable
+    for x in ranks:
+        # check if person x is in the partial matching
+        if x not in partially_stable_matching or partially_stable_matching[x] == '-1':
+            continue
+
+        for y in ranks:
+            # check if person y in in the partial matching
+            if y not in partially_stable_matching or partially_stable_matching[y] == '-1':
+                continue
+
+            # ignore if x, y are the same or x, y are matched
+            if x == y or y == partially_stable_matching[x]:
+                continue
+
+            # get partner under matching for x, y and corresponding ranks of matched partners
+            x_partner = partially_stable_matching[x]
+            y_partner = partially_stable_matching[y]
+
+            x_partner_rank = ranks[x][x_partner]
+            y_partner_rank = ranks[y][y_partner]
+
+            # get ranking of x -> y, y -> x
+            x_y_rank = ranks[x][y]
+            y_x_rank = ranks[y][x]
+
+            # if x prefers y to x's current partner AND y prefers x to y's current partner, unstable
+            # prefer = lower ranking index since ranking is highest at lowest index
+            # if not stable, assign x, y to -1
+            if x_y_rank < x_partner_rank and y_x_rank < y_partner_rank:
+                if debug:
+                    print('{} and {} are unstably matched ({} and {} prefer each other more). Removing pairing.'.
+                          format(x, x_partner, x, y))
+
+                # remove unstable matching and break out of loop since x is now unmatched
+                partially_stable_matching[x] = '-1'
+                partially_stable_matching[x_partner] = '-1'
+                break
+
+    # format output and return
+    partial_matching_output = {}
+    for key, value in partial_matching.items():
+        if key in partially_stable_matching:
+            partial_matching_output[key] = partially_stable_matching[key]
+        else:
+            partial_matching_output[key] = '-1'
+
+    return partial_matching_output
+
+
 def format_output(matching):
     """
     Formats output into list with 0-indexed mapping.
@@ -672,7 +838,7 @@ def create_preference_matrix(weighted_matrix):
         (list of list of numbers): preference matrix where each list is ordered list of person indices.
     """
     # create zipped lists of (index, rating)
-    preference_matrix = [[(i + 1, value) for i, value in enumerate(x)] for x in weighted_matrix]
+    preference_matrix = [[(index + 1, rating) for index, rating in enumerate(x)] for x in weighted_matrix]
 
     # format each row
     for index, curr_person in enumerate(preference_matrix):
@@ -682,6 +848,24 @@ def create_preference_matrix(weighted_matrix):
         preference_matrix[index] = [person_rating[0] for person_rating in curr_person if person_rating[0] - 1 != index]
 
     return preference_matrix
+
+
+def compute_matching_cardinality(matching):
+    """
+    Helper function that computes the number of people who are matched under a stable or partially matching.
+
+    Input:
+        matching (dict or list): mapping of persons and who they are matched to (-1 if unmatched).
+            if list, number refers to index.
+            if dict, string value refers to dict key.
+
+    Output:
+        (number): number of people matched in the matching.
+    """
+    if isinstance(matching, dict):
+        return sum(str(x) != '-1' for x in matching.values())
+    else:
+        return sum(str(x) != '-1' for x in matching)
 
 
 # unit tests
@@ -809,7 +993,6 @@ if __name__ == '__main__':
         [1, 2]
     ]
 
-
     # build and execute test cases
     class StableRoommatesTests(unittest.TestCase):
         handle_odd_method = 'remove'
@@ -823,12 +1006,14 @@ if __name__ == '__main__':
 
             # custom_no_matching_empty should have no matching and fail at input validation
             self.assertEqual(res_custom_no_matching_empty[0], None)
-            self.assertEqual(res_custom_no_matching_empty[1],
+            self.assertEqual(res_custom_no_matching_empty[1], False)
+            self.assertEqual(res_custom_no_matching_empty[2],
                              'Invalid input. Must be n-by-m (where m = n - 1) list of lists of numbers.')
 
             # custom_no_matching_1 should have no matching and fail at input validation
             self.assertEqual(res_custom_no_matching_1[0], None)
-            self.assertEqual(res_custom_no_matching_1[1],
+            self.assertEqual(res_custom_no_matching_1[1], False)
+            self.assertEqual(res_custom_no_matching_1[2],
                              'Invalid input. Must be n-by-m (where m = n - 1) list of lists of numbers.')
 
             print('SUCCESS.')
@@ -837,6 +1022,10 @@ if __name__ == '__main__':
             print('Test cases from Irving\'s paper where matching is possible...', end='')
             res_paper_matching_6 = stable_matching_wrapper(paper_matching_6, handle_odd_method=self.handle_odd_method)
             res_paper_matching_8 = stable_matching_wrapper(paper_matching_8, handle_odd_method=self.handle_odd_method)
+
+            # both should have a fully stable matching
+            self.assertEqual(res_paper_matching_6[1], True)
+            self.assertEqual(res_paper_matching_8[1], True)
 
             # paper_matching_6 should match with length 6 and contain 0-5
             self.assertNotEqual(res_paper_matching_6[0], None)
@@ -857,15 +1046,22 @@ if __name__ == '__main__':
             res_paper_no_matching_6 = stable_matching_wrapper(paper_no_matching_6,
                                                               handle_odd_method=self.handle_odd_method)
 
-            # matching should FAIL for both cases
-            self.assertEqual(res_paper_no_matching_4[0], None)
-            self.assertEqual(res_paper_no_matching_6[0], None)
+            # fully stable matching is NOT possible for both cases
+            self.assertEqual(res_paper_no_matching_4[1], False)
+            self.assertEqual(res_paper_no_matching_6[1], False)
+
+            # no partial matching should exist either
+            self.assertEqual(set(res_paper_no_matching_4[0]), {-1})
+            self.assertEqual(set(res_paper_no_matching_6[0]), {-1})
 
             print('SUCCESS.')
 
         def test3_wiki_matching(self):
             print('Test cases from Stable Roommates Wikipedia article where matching is possible...', end='')
             res_wiki_matching_6 = stable_matching_wrapper(wiki_matching_6, handle_odd_method=self.handle_odd_method)
+
+            # should have a fully stable matching
+            self.assertEqual(res_wiki_matching_6[1], True)
 
             # paper_matching_6 should match with length 6 and contain 0-5
             self.assertNotEqual(res_wiki_matching_6[0], None)
@@ -884,6 +1080,12 @@ if __name__ == '__main__':
                                                                handle_odd_method=self.handle_odd_method)
             res_external_matching_7 = stable_matching_wrapper(external_matching_7,
                                                               handle_odd_method=self.handle_odd_method)
+
+            # all matchings should be fully stable
+            self.assertEqual(res_external_matching_8[1], True)
+            self.assertEqual(res_external_matching_10[1], True)
+            self.assertEqual(res_external_matching_20[1], True)
+            self.assertEqual(res_external_matching_7[1], True)
 
             # paper_matching_8 should match with length 8 and contain 0-7
             self.assertNotEqual(res_external_matching_8[0], None)
@@ -911,6 +1113,10 @@ if __name__ == '__main__':
             print('Custom test cases where matching is possible...', end='')
             res_custom_matching_2 = stable_matching_wrapper(custom_matching_2, handle_odd_method=self.handle_odd_method)
             res_custom_matching_3 = stable_matching_wrapper(custom_matching_3, handle_odd_method=self.handle_odd_method)
+
+            # both matchings should be fully stable
+            self.assertEqual(res_custom_matching_2[1], True)
+            self.assertEqual(res_custom_matching_3[1], True)
 
             # custom_matching_2 should match with length 2 and contain 0-1
             self.assertNotEqual(res_custom_matching_2[0], None)

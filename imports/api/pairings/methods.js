@@ -74,7 +74,7 @@ export const makePairings = new ValidatedMethod({
     _.forEach(userPool, (userId, i) => {
       // Loop through upper triangular portion of matrix only (lower is redundant)
       _.forEach(_.slice(userPool, i + 1), (_userId, j) => {
-        // Add edge iff at least one user in each pair has rated the other > -1 (rating of 1 in interface)
+        // Add edge iff both users have rated each other above a -1
         if (scores[userId][_userId] !== -1 && scores[_userId][userId] !== -1) {
           // Initial weighting ranging from 1 - 100
           let weight = 1 + 99 * (scores[userId][_userId] + scores[_userId][userId]) / 2;
@@ -90,7 +90,7 @@ export const makePairings = new ValidatedMethod({
             }
           });
 
-          // Add a random perturbation, between 0-20, to prevent identical edge weights and handle unrated cases
+          // Add a random perturbation, between 0 and 20, to prevent identical edge weights and handle unrated cases
           weight += Math.random() * 20;
 
           // Floor the final weight and add as an edge
@@ -111,7 +111,7 @@ export const makePairings = new ValidatedMethod({
           return undefined; // Continue in _.forEach
         }
 
-        // Initial weighted ranging from -100 to 100
+        // Initial weighted ranging from -98 to 100
         let weight = 1 + 99 * scores[userId][_userId];
         weight = weight !== null ? weight : 0; // if no rating, give neutral rating of 0
 
@@ -128,7 +128,7 @@ export const makePairings = new ValidatedMethod({
           });
         }
 
-        // Add a random perturbation, between 0-20, to prevent identical edge weights and handle unrated cases
+        // Add a random perturbation, between 0 and 20, to prevent identical edge weights and handle unrated cases
         weight += Math.random() * 20;
 
         // Floor the final weight and update the directed graph
@@ -141,6 +141,7 @@ export const makePairings = new ValidatedMethod({
     if (!this.isSimulation) {
       // execute matching script
       log.info(`running Python script at ${ PAIR_SCRIPT }`);
+      log.info(`users: ${ users }`);
 
       const data = JSON.stringify({'directed_graph': directedGraph, 'undirected_graph': undirectedGraph});
       const cmd = `echo '${ data }' | python ${ PAIR_SCRIPT }`;
@@ -149,15 +150,15 @@ export const makePairings = new ValidatedMethod({
       const matchingResults = JSON.parse(Meteor.wrapAsync(exec)(cmd));
       log.info(`script results: ${ JSON.stringify(matchingResults) }`);
 
-      // check if stable matching was possible and return if so. otherwise, return mwm
-      let partners = [];
-      if (matchingResults['stable_matching'].length > 0) {
-        partners = matchingResults['stable_matching'];
-        log.info('Stable matching FOUND...using stable results.');
+      // check if fully stable matching was possible and print appropriate debug statement
+      if (matchingResults['fully_stable']) {
+        log.info('Fully stable matching FOUND. Returning stable matching.');
       } else {
-        partners = matchingResults['mwm_matching'];
-        log.info('Stable matching NOT FOUND...using MWM results.');
+        log.info('Fully stable matching NOT FOUND. Returning partial stable matching, filled with MWM matching.');
       }
+
+      // fetch partners from matching
+      let partners = matchingResults['matching'];
 
       // avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));
