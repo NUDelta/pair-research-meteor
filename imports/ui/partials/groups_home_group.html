@@ -1,18 +1,14 @@
 <template name="groups_home_group">
   <li class="collection-item multi-line">
-    <a href="{{pathFor 'App.pair' groupId=group._id}}">
+    <a href="{{pathFor 'App.pair' groupId=group._id}}" class="tooltipped" data-position="bottom" data-tooltip="Open Pool" data-id="{{group._id}}">
       <span class="title">{{ group.groupName }}</span>
     </a>
     <p>{{$len group.members}} members</p>
     {{#if (showSettings group)}}
-      <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="tertiary-content hide-on-small-and-down tooltipped"
+      <a href="{{pathFor 'App.groups.settings' groupId=group._id}}" class="secondary-content hide-on-small-and-down tooltipped"
          data-position="bottom" data-tooltip="Group Settings" data-id="{{group._id}}">
         <i class="material-icons">settings</i>
       </a>
     {{/if}}
-    <a href="{{pathFor 'App.pair' groupId=group._id}}" class="secondary-content tooltipped" data-position="bottom"
-       data-tooltip="Launch Pool" data-id="{{group._id}}">
-      <i class="material-icons">launch</i>
-    </a>
   </li>
 </template>
