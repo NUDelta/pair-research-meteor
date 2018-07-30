@@ -2,24 +2,19 @@
   .col.m8.offset-m2 {
     position: relative;
   }
-  .step {
-    position: absolute;
-    left: 0;
-    right: 0;
+
+  .header {
+    margin-left: 0;
   }
+
   form {
     position: relative;
     margin-top: 2em;
     margin-bottom: 2em;
 
-    .input-field {
-      width: calc(100% - 225px);
-    }
-
     .avatar-column {
-      position: absolute;
-      bottom: 5%;
-      right: 0;
+      float: left;
+      width: 150px;
 
       img {
         margin-bottom: 2em;
@@ -56,6 +51,14 @@
             }
           }
         }
+      }
+    }
+
+    .info-column {
+      margin-left: 200px;
+
+      .pair-form-button {
+        margin-top: 1em;
       }
     }
 

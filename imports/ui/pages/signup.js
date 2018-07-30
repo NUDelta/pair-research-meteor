@@ -18,7 +18,7 @@ Template.signup.onCreated(function() {
     groups: [],
     email: FlowRouter.getQueryParam('email'),
     token: FlowRouter.getQueryParam('token'),
-    avatar: 'http://orig12.deviantart.net/8670/f/2016/152/b/6/placeholder_1_by_sketchymouse-da4nvhb.png'
+    avatar: 'https://dl.dropboxusercontent.com/s/5ybsquz1ypcku42/profile.png?dl=0'
   });
 
   let userHandle, groupsHandle;
