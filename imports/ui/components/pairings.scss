@@ -42,6 +42,7 @@
         .title {
           font-size: 1.2em;
           cursor: default;
+          width: 50%;
           @extend .grey-text, .text-darken-3;
         }
 
@@ -115,6 +116,7 @@
 
   #pair_results {
     position: relative;
+
     .avatar-progress {
       position: absolute;
       transition: all 0.5s ease-in-out;
@@ -143,6 +145,12 @@
           padding-left: 20px;
         }
       }
+    }
+  }
+
+  .input-label-text {
+    .text-italics {
+      font-style: italic;
     }
   }
 

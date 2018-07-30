@@ -16,9 +16,9 @@ Template.pair_enter_task.onCreated(function() {
 
 });
 
-Template.pair_enter_task.onRendered(function() {
-  $('.input-tip').inputTooltip();
-});
+// Template.pair_enter_task.onRendered(function() {
+//   $('.input-tip').inputTooltip();
+// });
 
 Template.pair_enter_task.helpers({
   popularTasks() {

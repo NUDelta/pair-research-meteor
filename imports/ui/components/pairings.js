@@ -104,6 +104,9 @@ Template.pairings.onRendered(function() {
       }
     }
   });
+
+  // setup tooltips
+  $('.tooltipped').tooltip();
 });
 
 Template.pairings.helpers({
@@ -249,5 +252,9 @@ Template.pairings.events({
         instance.state.set('editing', false);
       }
     });
+  },
+
+  'click a.tooltipped'(event, instance) {
+    $('.tooltipped').tooltip('remove');
   }
 });
