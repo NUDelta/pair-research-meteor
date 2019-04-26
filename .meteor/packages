@@ -37,6 +37,5 @@ arillo:flow-router-helpers
 archive:jquery-dotdotdot
 shell-server@0.4.0
 practicalmeteor:chai
-okgrow:analytics
 dynamic-import@0.5.1
 underscore

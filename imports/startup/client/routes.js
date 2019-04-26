@@ -1,6 +1,5 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
-import { analytics } from "meteor/okgrow:analytics";
 
 import '../../ui/blaze-helpers.js';
 
