@@ -40,7 +40,7 @@ Template.header.helpers({
 });
 
 Template.header.events({
-  'click a[href=#signout]'(event, instance) {
+  'click .signout'(event, instance) {
     Meteor.logout((err) => {
       if (err) {
         alert(err);
