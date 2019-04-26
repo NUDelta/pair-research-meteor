@@ -14,16 +14,15 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "meteor run --settings settings.json",
+    "start": "meteor run --settings settings-staging.json",
     "test": "meteor test --driver-package practicalmeteor:mocha",
     "deploy-staging": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair-staging.meteorapp.com --settings settings-staging.json",
     "deploy-production": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings-production.json"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.51",
-    "babel-runtime": "^6.26.0",
-    "bcrypt": "2.0.1",
-    "lodash": "4.17.10",
+    "@babel/runtime": "^7.4.3",
+    "bcrypt": "3.0.6",
+    "lodash": "4.17.11",
     "meteor-node-stubs": "0.4.1"
   }
 }

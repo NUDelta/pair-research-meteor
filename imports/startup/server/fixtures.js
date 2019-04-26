@@ -300,7 +300,7 @@ function generateUsers(num, roles) {
 function generateAffinities(userIds, groupId) {
   const affinityVals = [-1, 0, 0.33, 0.66, 1];
 
-  affinitiesPerUser = userIds.map((me) => {
+  const affinitiesPerUser = userIds.map((me) => {
     return userIds.filter((id) => id !== me).map((them) => {
       return {
         helperId: me,
