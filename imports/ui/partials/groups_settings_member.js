@@ -20,7 +20,7 @@ Template.groups_settings_member.helpers({
 });
 
 Template.groups_settings_member.events({
-  'click i.material-icons.delete'(event, instance) {
+  'click a.remove-member-group'(event, instance) {
     if (confirm(`Are you sure you want to remove ${ instance.data.member.fullName } from the group?`)) {
       removeFromGroup.call({
         userId: instance.data.member.userId,

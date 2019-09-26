@@ -67,7 +67,7 @@ Template.user_settings.events({
     const newPassword = event.target.newPassword.value;
     const confirmPassword = event.target.confirmPassword.value;
 
-    if (newPassword != confirmPassword) {
+    if (newPassword !== confirmPassword) {
       event.target.confirmPassword.setCustomValidity('Passwords must match.');
       event.target.change.disabled = false;
     } else {
@@ -83,7 +83,7 @@ Template.user_settings.events({
     }
   },
 
-  'click .groups a[href=#delete]'(event, instance) {
+  'click .groups a.delete-my-group'(event, instance) {
     event.preventDefault();
     const groupId = $(event.currentTarget).data('id');
     // TODO: get name in there, make new component?

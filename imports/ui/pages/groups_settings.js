@@ -146,7 +146,7 @@ Template.groups_settings.events({
           groupId: instance.state.get('groupId'),
           member: { email, isAdmin: false },
         }, err => {
-          if (err && err.error == 'existing-user') {
+          if (err && err.error === 'existing-user') {
             // think about this, alerting for each user could be annoying
             // would be hard to batch too...
             alert(`${ email } is already in the group.`);

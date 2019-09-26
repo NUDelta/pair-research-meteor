@@ -75,7 +75,7 @@ Template.groups_settings_roles.events({
       $(`input[name=${ roles.length }-role-name]`).focus();
     });
   },
-  'click .roles a.secondary-content'(event, instance) {
+  'click .roles a.delete-role'(event, instance) {
     event.preventDefault();
     const index = $(event.currentTarget).data('index');
     instance.removeRole(index);

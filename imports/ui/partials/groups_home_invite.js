@@ -16,7 +16,9 @@ Template.groups_home_invite.onRendered(function() {
 });
 
 Template.groups_home_invite.events({
-  'click a[href=#accept]'(event, instance) {
+  'click a.accept-group-invite'(event, instance) {
+    event.preventDefault();
+
     const roleTitle = $(event.currentTarget).prev('span').find('select').val();
     if (!roleTitle) {
       alert('Please select a role first.');
@@ -34,17 +36,21 @@ Template.groups_home_invite.events({
       });
     }
   },
-  'click a[href=#reject]'(event, instance) {
-    $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
-    removeFromGroup.call({
-      groupId: instance.data.group._id,
-      userId: Meteor.userId()
-    }, err => {
-      if (err) {
-        alert(err);
-        $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip();
-      } else {
-      }
-    });
+  'click a.reject-group-invite'(event, instance) {
+    event.preventDefault();
+
+    if (confirm(`Are you sure you want to delete ${instance.data.group.groupName }'s invitation? This action is not reversible.`)) {
+      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
+      removeFromGroup.call({
+        groupId: instance.data.group._id,
+        userId: Meteor.userId()
+      }, err => {
+        if (err) {
+          alert(err);
+          $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip();
+        } else {
+        }
+      });
+    }
   }
 });
