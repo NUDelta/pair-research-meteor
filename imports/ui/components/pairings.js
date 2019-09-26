@@ -106,7 +106,7 @@ Template.pairings.onRendered(function() {
   });
 
   // setup tooltips
-  $('.tooltipped').tooltip();
+  $('.controls .tooltipped').tooltip();
 });
 
 Template.pairings.helpers({
@@ -220,7 +220,6 @@ Template.pairings.events({
 
   /**
    * Triggers make pairs.
-   * @event
    * @param event
    * @param instance
    * @todo This causes the Group Pairing listener to trigger twice: having no pair and

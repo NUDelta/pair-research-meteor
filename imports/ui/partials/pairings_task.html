@@ -1,6 +1,6 @@
 <template name="pairings_task">
   <li class="collection-item avatar row">
-    {{> avatar userId=task.userId username=task.name}}
+    {{> avatar userId=task.userId username=task.name tooltip=false}}
     <div class="float-center left">
       <a href="#{{task.userId}}-task" class="modal-trigger">
         <span class="title">{{task.task}}</span>

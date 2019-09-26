@@ -23,7 +23,7 @@
         </span>
         <ul class="collection">
           <li class="collection-item avatar row">
-            {{> avatar userId=user._id username=user.name}}
+            {{> avatar userId=user._id username=user.name tooltip=false}}
             <div class="float-center left">
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
@@ -107,9 +107,9 @@
                   </div>
                 {{/if}}
               {{/let}}
-              <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
-                {{> avatar userId=task.userId username=task.name}}
-              </div>
+                <div style="top: {{$times @index 55}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+                  {{> avatar userId=task.userId username=task.name tooltip=true}}
+                </div>
             {{/each}}
           {{else}}
             <div class="spinner-wrapper">
