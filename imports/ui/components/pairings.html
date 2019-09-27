@@ -2,6 +2,8 @@
   {{#if makingPairs}}
     {{> confetti}}
   {{/if}}
+
+  <!-- Session Control Buttons -->
   <div class="pairings">
     <div class="row controls">
       <div class="right">
@@ -11,6 +13,7 @@
       </div>
     </div>
 
+    <!-- User's Task -->
     <div class="row user-preview">
       <div class="col s12">
         <span class="input-label-text">
@@ -28,7 +31,7 @@
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
               {{else}}
-                <input name="task" type="text" class="title browser" value="{{currentTask.task}}">
+                <input name="task" type="text" id="edit-task" class="title browser" value="{{currentTask.task}}">
               {{/if}}
               <p class="person">{{user.name}}</p>
             </div>
@@ -55,6 +58,7 @@
       </div>
     </div>
 
+    <!-- Tasks and Ratings -->
     <div class="row">
       <div class="col s12">
         {{#if $gt userCount 1}}
@@ -77,25 +81,26 @@
               {{> pairings_task (pairTaskArgs task)}}
             {{/each}}
           </ul>
+          <span class="input-label-text">
+            {{userCount}} users have entered {{affinityCount}} affinities.
+          </span>
         {{else}}
-          <p>Hang tight, waiting on others to enter the pair research pool...</p>
+          <span class="input-label-text">
+            Hang tight, waiting on others to enter the pair research pool...
+          </span>
         {{/if}}
       </div>
     </div>
 
-    <div class="row">
-      <div class="col s12">
-        {{userCount}} users have entered {{affinityCount}} affinities.
-      </div>
-    </div>
-
+    <!-- Pairing Progress or Results -->
     <div class="row" id="pair_results">
       <div class="col s12">
         {{#if pairResultCreated}}
+            <h5 class="header">Pairings created!</h5>
+            <span class="input-label-text">
+              Someone in your group accidentally made pairs? <a href="#" id="cancelPairs">Undo that.</a>
+            </span>
           {{> pairings_results pairResultArgs}}
-          <span class="input-label-text">
-            Someone in your group accidentally made pairs? <a href="#" id="cancelPairs">Undo that.</a>
-          </span>
         {{else}}
           {{#if race}}
             {{#each task in allTasks}}

@@ -30,7 +30,7 @@
 
   .collection {
     li.collection-item {
-      height: 84px;
+      height: 90px;
       padding-left: 84px;
 
       img.circle {
@@ -154,4 +154,7 @@
     }
   }
 
+  #edit-task {
+    width: 25em;
+  }
 }
