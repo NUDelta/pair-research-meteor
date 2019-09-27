@@ -7,9 +7,9 @@
   <div class="pairings">
     <div class="row controls">
       <div class="right">
-        <a id="leavePool" class="waves-effect waves-light orange accent-2 btn tooltipped" data-position="bottom" data-tooltip="Exit current pairing session">Leave Session</a>
+        <a id="leave-session" class="waves-effect waves-light orange accent-2 btn tooltipped" data-position="bottom" data-tooltip="Exit current pairing session">Leave Session</a>
         <a id="reset" class="waves-effect waves-light red btn tooltipped" data-position="bottom" data-tooltip="Clear previous pairing results">Reset Pool</a>
-        <a id="makePairs" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Run pairing algorithm">Make Pairs</a>
+        <a id="make-pairs" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Run pairing algorithm">Make Pairs</a>
       </div>
     </div>
 
@@ -19,9 +19,9 @@
         <span class="input-label-text">
           This is how you appear to others.
           {{#if $nt editingTask}}
-            <a id="editTask" href="#">(edit task)</a>
+            <a id="edit-task" href="#">(edit task)</a>
           {{else}}
-            <a id="updateTask" href="#">(update task)</a>
+            <a id="update-task" href="#">(update task)</a>
           {{/if}}
         </span>
         <ul class="collection">
@@ -31,7 +31,7 @@
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
               {{else}}
-                <input name="task" type="text" id="edit-task" class="title browser" value="{{currentTask.task}}">
+                <input name="task" type="text" id="edit-task-text" class="title browser" value="{{currentTask.task}}">
               {{/if}}
               <p class="person">{{user.name}}</p>
             </div>
@@ -98,7 +98,7 @@
         {{#if pairResultCreated}}
             <h5 class="header">Pairings created!</h5>
             <span class="input-label-text">
-              Someone in your group accidentally made pairs? <a href="#" id="cancelPairs">Undo that.</a>
+              Someone in your group accidentally made pairs? <a href="#" id="cancel-pairs">Undo that.</a>
             </span>
           {{> pairings_results pairResultArgs}}
         {{else}}

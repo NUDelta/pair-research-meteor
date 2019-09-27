@@ -201,20 +201,22 @@ Template.pairings.helpers({
 });
 
 Template.pairings.events({
-  'click #leavePool'(event, instance) {
-    const userId = instance.state.get('userId');
-    const groupId = instance.state.get('groupId');
-    clearTask.call({ groupId: groupId, userId: userId });
-    clearAffinities.call({ groupId: groupId, userId: userId });
+  'click #leave-session'(event, instance) {
+    if (confirm('Are you sure you want to leave this pairing session? You can rejoin, but your entered help request and ratings for others in the pool will disappear.')) {
+      const userId = instance.state.get('userId');
+      const groupId = instance.state.get('groupId');
+      clearTask.call({ groupId: groupId, userId: userId });
+      clearAffinities.call({ groupId: groupId, userId: userId });
+    }
   },
 
   'click #reset'(event, instance) {
-    if (confirm('Are you sure you want to clear this pair research pool?')) {
+    if (confirm('Are you sure you want to clear this pair research pool? This action is not reversible.')) {
       clearGroupPool.call({ groupId: instance.state.get('groupId') });
     }
   },
 
-  'click #cancelPairs'(event, instance) {
+  'click #cancel-pairs'(event, instance) {
     undoPairs.call({ groupId: instance.state.get('groupId') });
   },
 
@@ -227,17 +229,17 @@ Template.pairings.events({
    *       and reappear, which can cause confetti to fly down.
    * @see https://trello.com/c/TWLiuxC2/105-random-confetti
    */
-  'click #makePairs'(event, instance) {
+  'click #make-pairs'(event, instance) {
     if (confirm('Ready to make pairs?')) {
       makePairings.call({ groupId: instance.state.get('groupId') });
     }
   },
 
-  'click #editTask'(event, instance) {
+  'click #edit-task'(event, instance) {
     instance.state.set('editing', true);
   },
 
-  'click #updateTask'(event, instance) {
+  'click #update-task'(event, instance) {
     const data = Template.currentData();
     updateTask.call({
       name: data.user.name,
