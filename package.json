@@ -20,9 +20,9 @@
     "deploy-production": "DEPLOY_HOSTNAME=galaxy.meteor.com meteor deploy pair.meteorapp.com --settings settings-production.json"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
-    "bcrypt": "3.0.6",
+    "@babel/runtime": "^7.8.3",
+    "bcrypt": "^3.0.7",
     "lodash": "4.17.15",
-    "meteor-node-stubs": "0.4.1"
+    "meteor-node-stubs": "^1.0.0"
   }
 }
