@@ -151,7 +151,7 @@ Meteor.startup(() => {
       }
     ];
 
-    const userData = realPeople.concat(generateUsers(25, roles)); // Generate a bunch of toy users
+    const userData = realPeople.concat(generateUsers(5, roles)); // Generate a bunch of toy users
 
     const userIds = userData.map((user) => {
       const userId = Accounts.createUser(user);
