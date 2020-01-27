@@ -1,3 +1,5 @@
 <template name="avatar">
-  <img src="{{avatar}}" alt="{{username}}" class="circle">
+  <a id="avatar-{{userId}}" class="tooltipped" data-position="right" data-tooltip="{{username}}">
+    <img src="{{avatar}}" alt="{{username}}" class="circle">
+  </a>
 </template>

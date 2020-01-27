@@ -47,53 +47,118 @@ export const makePairings = new ValidatedMethod({
       .map(task => [ task.userId, task.name ]);
     const userPool = _.map(users, user => user[0]);
 
+    // Initialize n-by-n 0s matrix without diagonal
     const scores = {};
     userPool.forEach((userId) => {
       scores[userId] = {};
       userPool.forEach((_userId) => {
-        if (userId != _userId) {
+        if (userId !== _userId) {
           scores[userId][_userId] = 0;
         }
       });
     });
 
+    // Replace 0s with affinities (-1 to 1), if helper has rated helpee
     Affinities.find({ groupId: groupId }).forEach((affinity) => {
-      if (_.has(scores, affinity.helperId) &&
-          _.has(scores[affinity.helperId], affinity.helpeeId)) {
+      if (_.has(scores, affinity.helperId) && _.has(scores[affinity.helperId], affinity.helpeeId)) {
         scores[affinity.helperId][affinity.helpeeId] = affinity.value;
       }
     });
 
+    // Fetch last 3 pairings, ordered by most recent first
     const recentPairings = Pairings.find({ groupId: groupId }, { sort: { timestamp: -1 }, limit: 3 }).fetch();
 
-    let edges = [];
+    // Create undirected graph for maximum weighted matching
+    let undirectedGraph = [];
+
     _.forEach(userPool, (userId, i) => {
+      // Loop through upper triangular portion of matrix only (lower is redundant)
       _.forEach(_.slice(userPool, i + 1), (_userId, j) => {
+        // Add edge iff both users have rated each other above a -1
         if (scores[userId][_userId] !== -1 && scores[_userId][userId] !== -1) {
-          let weight = 1 + 99 *(scores[userId][_userId] + scores[_userId][userId]) / 2;
+          // Initial weighting ranging from 1 - 100
+          let weight = 1 + 99 * (scores[userId][_userId] + scores[_userId][userId]) / 2;
           weight = weight !== null ? weight : 0;
 
-          // repeat penalty
+          // Penalize recent pairings by increasing weight of pairs that have NOT occurred recently for last 3 pairings
+          // ex. If A and B have not paired last time, increase their weight by 80 * 0.5^1
+          // ex. If they also didn't pair time before, further increase their weight by 80 * 0.5^2 and so on (up to 3)
           _.forEach(recentPairings, (pairing, index) => {
             const partner = pairing.partner(userId);
-            if (partner && partner.userId != _userId) {
+            if (partner && partner.userId !== _userId) {
               weight += 80 * Math.pow(0.5, index + 1);
             }
           });
 
-          // random pertubation
+          // Add a random perturbation, between 0 and 20, to prevent identical edge weights and handle unrated cases
           weight += Math.random() * 20;
-          edges.push([ i, j + i + 1, Math.floor(weight) ]);
+
+          // Floor the final weight and add as an edge
+          undirectedGraph.push([ i, j + i + 1, Math.floor(weight) ]);
         }
       });
     });
 
+    // Create directed graph for stable matching
+    let directedGraph = [];
+
+    _.forEach(userPool, (userId, i) => {
+      let currentRow = [];
+      _.forEach(userPool, (_userId, j) => {
+        // Ignore diagonal
+        if (i === j) {
+          currentRow.push(0);
+          return undefined; // Continue in _.forEach
+        }
+
+        // Initial weighted ranging from -98 to 100
+        let weight = 1 + 99 * scores[userId][_userId];
+        weight = weight !== null ? weight : 0; // if no rating, give neutral rating of 0
+
+        // Penalize recent pairings by increasing weight of pairs that have NOT occurred recently for last 3 pairings
+        // Only give extra weight if rating is not -1
+        // ex. If A and B have not paired last time, increase their weight by 80 * 0.5^1
+        // ex. If they also didn't pair time before, further increase their weight by 80 * 0.5^2 and so on (up to 3)
+        if (scores[userId][_userId] !== -1) {
+          _.forEach(recentPairings, (pairing, index) => {
+            const partner = pairing.partner(userId);
+            if (partner && partner.userId !== _userId) {
+              weight += 80 * Math.pow(0.5, index + 1);
+            }
+          });
+        }
+
+        // Add a random perturbation, between 0 and 20, to prevent identical edge weights and handle unrated cases
+        weight += Math.random() * 20;
+
+        // Floor the final weight and update the directed graph
+        currentRow.push(Math.floor(weight));
+      });
+
+      directedGraph.push(currentRow);
+    });
+
     if (!this.isSimulation) {
+      // execute matching script
       log.info(`running Python script at ${ PAIR_SCRIPT }`);
-      const data = JSON.stringify(edges);
+      log.info(`users: ${ users }`);
+
+      const data = JSON.stringify({'directed_graph': directedGraph, 'undirected_graph': undirectedGraph});
       const cmd = `echo '${ data }' | python ${ PAIR_SCRIPT }`;
-      const partners = JSON.parse(Meteor.wrapAsync(exec)(cmd));
-      log.info(`script results: ${ JSON.stringify(partners) }`);
+      log.info(`command sent to python script: ${ cmd }`);
+
+      const matchingResults = JSON.parse(Meteor.wrapAsync(exec)(cmd));
+      log.info(`script results: ${ JSON.stringify(matchingResults) }`);
+
+      // check if fully stable matching was possible and print appropriate debug statement
+      if (matchingResults['fully_stable']) {
+        log.info('Fully stable matching FOUND. Returning stable matching.');
+      } else {
+        log.info('Fully stable matching NOT FOUND. Returning partial stable matching, filled with MWM matching.');
+      }
+
+      // fetch partners from matching
+      let partners = matchingResults['matching'];
 
       // avoiding duplicates
       const unpairedUsers = _.zipObject(_.range(users.length), _.map(users, user => true));

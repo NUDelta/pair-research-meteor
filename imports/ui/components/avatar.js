@@ -15,7 +15,8 @@ Template.avatar.onCreated(function() {
         type: String,
         regEx: SimpleSchema.RegEx.Id
       },
-      username: { type: String }
+      username: { type: String },
+      tooltip: { type: Boolean }
     }).validate(data);
     this.state.setDefault({
       avatar: generateAvatar(data.username)
@@ -32,6 +33,13 @@ Template.avatar.onCreated(function() {
       }
     };
     image.src = url;
+  }
+});
+
+Template.avatar.onRendered(function() {
+  // render tooltip if specified
+  if (Template.currentData().tooltip) {
+    this.$('.tooltipped').tooltip({ margin: 0 });
   }
 });
 

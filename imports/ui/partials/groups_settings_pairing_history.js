@@ -62,17 +62,20 @@ Template.groups_settings_pairing_history.helpers({
 });
 
 Template.groups_settings_pairing_history.events({
-  'click a[href=#set-page]'(event, instance) {
+  'click a.pair-hist-page-num'(event, instance) {
+    event.preventDefault();
     const pageNumber = $(event.target).data('index');
     instance.state.set('offset', pageNumber);
   },
-  'click a[href=#page-left]'(event, instance) {
+  'click #page-left-button'(event, instance) {
+    event.preventDefault();
     const offset = instance.state.get('offset');
     if (offset > 0) {
       instance.state.decrement('offset');
     }
   },
-  'click a[href=#page-right]'(event, instance) {
+  'click #page-right-button'(event, instance) {
+    event.preventDefault();
     const offset = instance.state.get('offset');
     const max = instance.state.get('maxOffset');
     if (offset < max) {

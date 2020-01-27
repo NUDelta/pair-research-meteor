@@ -71,7 +71,7 @@ Meteor.startup(() => {
     };
 
     const groupId = createGroup.runTrusted({
-      groupName: 'dtr',
+      groupName: 'Design, Technology, and Research',
       description: 'Northwestern Design, Technology, and Research class geared toward undergrads working on research. Visit us at http://dtr.northwestern.edu/',
       creatorId: admin._id,
       publicJoin: false,
@@ -151,7 +151,7 @@ Meteor.startup(() => {
       }
     ];
 
-    const userData = realPeople.concat(generateUsers(25, roles)); // Generate a bunch of toy users
+    const userData = realPeople.concat(generateUsers(5, roles)); // Generate a bunch of toy users
 
     const userIds = userData.map((user) => {
       const userId = Accounts.createUser(user);
@@ -162,7 +162,7 @@ Meteor.startup(() => {
       return userId;
     });
 
-    const affinities = generateAffinities(userIds, groupId) // Build affinities for each user pair
+    const affinities = generateAffinities(userIds, groupId); // Build affinities for each user pair
 
     affinities.forEach(affinity => Affinities.insert(affinity));
 
@@ -185,7 +185,7 @@ Meteor.startup(() => {
     ];
     const otherUserId = Accounts.createUser(miscUsers[0]);
     const otherGroupId = createGroup.runTrusted({
-      groupName: 'otherGroup',
+      groupName: 'Other Group Name',
       description: 'This is a regular group in which Kevin is a regular user.',
       creatorId: otherUserId,
       publicJoin: false,
@@ -282,7 +282,7 @@ function generateRandomPairing(users) {
 /** Generate an array of mocked users */
 function generateUsers(num, roles) {
   return Array(num).fill().map((_, i) => {
-    var testNum = 'test' + i.toString()
+    let testNum = 'test' + i.toString();
     return {
       email: testNum + '@test.com',
       password: 'password',
@@ -298,9 +298,9 @@ function generateUsers(num, roles) {
 
 /** Generate random affinities between each pair of users (non-symmetric) */
 function generateAffinities(userIds, groupId) {
-  const affinityVals = [-1, 0, 0.33, 0.66, 1]
+  const affinityVals = [-1, 0, 0.33, 0.66, 1];
 
-  affinitiesPerUser = userIds.map((me) => {
+  const affinitiesPerUser = userIds.map((me) => {
     return userIds.filter((id) => id !== me).map((them) => {
       return {
         helperId: me,

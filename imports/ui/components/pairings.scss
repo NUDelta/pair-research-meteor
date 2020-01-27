@@ -30,7 +30,7 @@
 
   .collection {
     li.collection-item {
-      height: 84px;
+      height: 90px;
       padding-left: 84px;
 
       img.circle {
@@ -42,11 +42,12 @@
         .title {
           font-size: 1.2em;
           cursor: default;
+          width: 50%;
           @extend .grey-text, .text-darken-3;
         }
 
         .person {
-          font-size: 0.8em;
+          font-size: 1.0em;
           font-style: italic;
         }
       }
@@ -88,7 +89,7 @@
       transform: translateY(-50%);
 
       &.left {
-        max-width: 50%;
+        max-width: 55%;
       }
 
       &.right {
@@ -115,6 +116,7 @@
 
   #pair_results {
     position: relative;
+
     .avatar-progress {
       position: absolute;
       transition: all 0.5s ease-in-out;
@@ -146,4 +148,13 @@
     }
   }
 
+  .input-label-text {
+    .text-italics {
+      font-style: italic;
+    }
+  }
+
+  #edit-task-text {
+    width: 25em;
+  }
 }

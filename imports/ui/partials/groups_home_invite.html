@@ -3,9 +3,8 @@
     <div>
       <!-- TODO: link me to group info page -->
       <span>
-        {{group.groupName}}
+        Join <b>{{group.groupName}}</b> as
         <span class="info">
-          as
           <select class="browser-default">
             <option selected="true" disabled>Pick role...</option>
             {{#each role in group.roles}}
@@ -16,11 +15,11 @@
           </select>
         </span>
       </span>
-      <a href="#accept" class="tertiary-content tooltipped" data-position="bottom" data-tooltip="Accept Invite"
+      <a href="#" class="accept-group-invite tertiary-content tooltipped" data-position="bottom" data-tooltip="Accept Invite"
          data-id="{{group._id}}">
         <i class="material-icons">done</i>
       </a>
-      <a href="#reject" class="secondary-content tooltipped" data-position="bottom" data-tooltip="Reject Invite"
+      <a href="#" class="reject-group-invite secondary-content tooltipped" data-position="bottom" data-tooltip="Reject Invite"
          data-id="{{group._id}}">
         <i class="material-icons">close</i>
       </a>

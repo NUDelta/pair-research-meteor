@@ -2,33 +2,36 @@
   {{#if makingPairs}}
     {{> confetti}}
   {{/if}}
+
+  <!-- Session Control Buttons -->
   <div class="pairings">
     <div class="row controls">
       <div class="right">
-        <a id="leavePool" class="waves-effect waves-light orange accent-2 btn">Leave Pool</a>
-        <a id="reset" class="waves-effect waves-light red btn">Reset Pool</a>
-        <a id="makePairs" class="waves-effect waves-light btn">Make Pairs</a>
+        <a id="leave-session" class="waves-effect waves-light orange accent-2 btn tooltipped" data-position="bottom" data-tooltip="Exit current pairing session">Leave Session</a>
+        <a id="reset" class="waves-effect waves-light red btn tooltipped" data-position="bottom" data-tooltip="Clear previous pairing results">Reset Pool</a>
+        <a id="make-pairs" class="waves-effect waves-light btn tooltipped" data-position="bottom" data-tooltip="Run pairing algorithm">Make Pairs</a>
       </div>
     </div>
 
+    <!-- User's Task -->
     <div class="row user-preview">
       <div class="col s12">
         <span class="input-label-text">
           This is how you appear to others.
           {{#if $nt editingTask}}
-            <a id="editTask" href="#">(edit)</a>
+            <a id="edit-task" href="#">(edit task)</a>
           {{else}}
-            <a id="updateTask" href="#">(update)</a>
+            <a id="update-task" href="#">(update task)</a>
           {{/if}}
         </span>
         <ul class="collection">
           <li class="collection-item avatar row">
-            {{> avatar userId=user._id username=user.name}}
+            {{> avatar userId=user._id username=user.name tooltip=false}}
             <div class="float-center left">
               {{#if $nt editingTask}}
                 <span class="title">{{currentTask.task}}</span>
               {{else}}
-                <input name="task" type="text" class="title browser" value="{{currentTask.task}}">
+                <input name="task" type="text" id="edit-task-text" class="title browser" value="{{currentTask.task}}">
               {{/if}}
               <p class="person">{{user.name}}</p>
             </div>
@@ -55,6 +58,7 @@
       </div>
     </div>
 
+    <!-- Tasks and Ratings -->
     <div class="row">
       <div class="col s12">
         {{#if $gt userCount 1}}
@@ -63,7 +67,12 @@
               How much can you help with each of these tasks?
             </span>
             <span class="float-right">
-              (1: not at all, 5: totally)
+              (1: can't help at all, 5: totally can help)
+            </span>
+          </div>
+          <div class="input-label-text caption full-width">
+            <span>
+              Remember to rate honestly to ensure the best pairs.
             </span>
           </div>
           <br class="hide-on-med-and-up">
@@ -72,37 +81,40 @@
               {{> pairings_task (pairTaskArgs task)}}
             {{/each}}
           </ul>
+          <span class="input-label-text">
+            {{userCount}} users have entered {{affinityCount}} affinities.
+          </span>
         {{else}}
-          <p>Hang tight, waiting on others to enter the pair research pool...</p>
+          <span class="input-label-text">
+            Hang tight, waiting on others to enter the pair research pool...
+          </span>
         {{/if}}
       </div>
     </div>
 
-    <div class="row">
-      {{userCount}} users have entered {{affinityCount}} affinities.
-    </div>
-
+    <!-- Pairing Progress or Results -->
     <div class="row" id="pair_results">
       <div class="col s12">
         {{#if pairResultCreated}}
+            <h5 class="header">Pairings created!</h5>
+            <span class="input-label-text">
+              Someone in your group accidentally made pairs? <a href="#" id="cancel-pairs">Undo that.</a>
+            </span>
           {{> pairings_results pairResultArgs}}
-          <span class="input-label-text">
-            Someone in your group accidentally made pairs? <a href="#" id="cancelPairs">Undo that.</a>
-          </span>
         {{else}}
           {{#if race}}
             {{#each task in allTasks}}
               {{#let placing=(place task.userId)}}
                 {{#if placing}}
-                  <div style="top: {{$minus ($times @index 25) 10}}px; left: {{placeLeft (percentage task.userId)}}"
+                  <div style="top: {{$minus ($times @index 55) 15}}px; left: {{placeLeft (percentage task.userId)}}"
                        class="prize">
                     <img src="{{placeAvatar placing}}" class="circle">
                   </div>
                 {{/if}}
               {{/let}}
-              <div style="top: {{$times @index 25}}px; left: {{percentage task.userId}}%" class="avatar-progress">
-                {{> avatar userId=task.userId username=task.name}}
-              </div>
+                <div style="top: {{$times @index 55}}px; left: {{percentage task.userId}}%" class="avatar-progress">
+                  {{> avatar userId=task.userId username=task.name tooltip=true}}
+                </div>
             {{/each}}
           {{else}}
             <div class="spinner-wrapper">

@@ -18,7 +18,7 @@ Template.signup.onCreated(function() {
     groups: [],
     email: FlowRouter.getQueryParam('email'),
     token: FlowRouter.getQueryParam('token'),
-    avatar: 'http://orig12.deviantart.net/8670/f/2016/152/b/6/placeholder_1_by_sketchymouse-da4nvhb.png'
+    avatar: 'https://dl.dropboxusercontent.com/s/5ybsquz1ypcku42/profile.png?dl=0'
   });
 
   let userHandle, groupsHandle;
@@ -42,7 +42,7 @@ Template.signup.onRendered(function() {
   // this code could probably be generalized
   const animateIn = 'animated fast rollIn';
   const animateOut = 'animated fast rollOut';
-  $('.col.m8.offset-m2').get(0)._uihooks = {
+  $('.signup-content').get(0)._uihooks = {
     insertElement(node, next) {
       const $node = $(node);
       $node.addClass(animateIn).insertBefore(next);

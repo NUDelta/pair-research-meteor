@@ -315,6 +315,7 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/vim,macos,linux,windows,webstorm,meteorjs,python,node
 
 ### User Added ###
-settings.json
+settings-staging.json
+settings-production.json
 data-analysis/*/*.json
 data-analysis/corpus-data/*.json

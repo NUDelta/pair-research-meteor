@@ -1,6 +1,6 @@
 <template name="pairings_task">
   <li class="collection-item avatar row">
-    {{> avatar userId=task.userId username=task.name}}
+    {{> avatar userId=task.userId username=task.name tooltip=false}}
     <div class="float-center left">
       <a href="#{{task.userId}}-task" class="modal-trigger">
         <span class="title">{{task.task}}</span>
@@ -27,6 +27,7 @@
     </div>
     <div class="float-center right hide-on-large-only">
       <select class="browser-default">
+        <option hidden disabled selected value></option>
         <option value="-1" {{isSelected -1}}>1</option>
         <option value="0" {{isSelected 0}}>2</option>
         <option value="0.33" {{isSelected 0.33}}>3</option>

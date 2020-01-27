@@ -1,8 +1,10 @@
 <template name="pair">
   <!--{{#if Template.subscriptionsReady}}-->
-  <blockquote>Welcome to {{pairingArgs.group.groupName}}, {{currentUser.profile.fullName}}.</blockquote>
 
   <div class="container" id="pair">
+    <h3 class="header">{{pairingArgs.group.groupName}}</h3>
+    <h5 class="caption">Hey {{currentUser.profile.fullName}}, welcome back!</h5>
+    <br>
     {{#if currentTask}}
       {{> pairings pairingArgs}}
     {{else}}

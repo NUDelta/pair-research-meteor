@@ -1,3 +1,15 @@
+body {
+  @extend .grey, .lighten-5;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+
 .fill-page {
   height: 100vh;
   width: 100%;

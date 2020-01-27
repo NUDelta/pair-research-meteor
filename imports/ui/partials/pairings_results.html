@@ -1,6 +1,5 @@
 <template name="pairings_results">
   {{#if group.activePairing}}
-    We have pairings! <br/>
     <ul class="collection">
       {{#each pairing in pairings}}
         <li class="collection-item avatar">
@@ -8,7 +7,7 @@
             {{#if pairing.secondUserName}}
               {{pairing.firstUserName}} with {{pairing.secondUserName}}<br/>
             {{else}}
-              {{pairing.firstUserName}} was not matched. He/she will be <a href="https://www.instagram.com/stellystarship/">
+              {{pairing.firstUserName}} was not matched. He/she will be <a href="https://www.instagram.com/stellystarship/" target="_blank">
               looking at pictures of Stella</a>.<br/>
             {{/if}}
           </div>

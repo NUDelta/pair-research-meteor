@@ -4,15 +4,15 @@
       <h3 class="header">{{group.groupName}} &mdash; Pairing History</h3>
       <ul class="pagination">
         <li class="{{$if ($eq offset 0) 'disabled' 'waves-offset'}}">
-          <a href="#page-left"><i class="material-icons">chevron_left</i></a>
+          <a href="#" id="page-left-button"><i class="material-icons">chevron_left</i></a>
         </li>
         {{#each page in offsets}}
           <li class="waves-effect {{$if ($eq offset @index) 'active'}}">
-            <a href="#set-page" data-index="{{@index}}">{{$plus @index 1}}</a>
+            <a href="#" class="pair-hist-page-num" data-index="{{@index}}">{{$plus @index 1}}</a>
           </li>
         {{/each}}
         <li class="{{$if ($eq offset maxOffset) 'disabled' 'waves-offset'}}">
-          <a href="#page-right"><i class="material-icons">chevron_right</i></a>
+          <a href="#" id="page-right-button"><i class="material-icons">chevron_right</i></a>
         </li>
       </ul>
       <ul class="collection">
