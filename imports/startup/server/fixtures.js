@@ -24,12 +24,29 @@ import {
 
 import { getTask } from '../../data/tasks.js';
 import '../../data/factories.js';
+import { EmailGenerator } from "../../api/email-generator";
 
 Meteor.startup(() => {
 
   if (Meteor.isProduction) {
     return;
   }
+
+  // setup email templates
+  EmailGenerator.addTemplates([
+    {
+      name: "newAccount",
+      path: "email-templates/new-account.html"
+    },
+    {
+      name: "joinGroup",
+      path: "email-templates/join-group.html"
+    },
+    {
+      name: "resetPassword",
+      path: "email-templates/reset-password.html"
+    }
+  ]);
 
   const admin = {
     username: 'kc',

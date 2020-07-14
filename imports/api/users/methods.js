@@ -74,7 +74,7 @@ export const setProfile = new ValidatedMethod({
 });
 
 /**
- * @summary Sends and email to Kevin and Haoqi.
+ * @summary Sends and email to Haoqi and current maintainer (Kapil currently).
  * @isMethod true
  */
 export const sendFeedback = new ValidatedMethod({

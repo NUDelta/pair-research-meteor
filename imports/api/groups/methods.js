@@ -19,6 +19,7 @@ import { EMAIL_ADDRESS } from '../constants.js';
 import { Schema } from '../schema.js';
 import { Auth, AuthMixin, verifyGroup, verifyUser } from '../authentication.js';
 import { log } from '../logs.js';
+import { EmailGenerator } from "../email-generator.js";
 
 /*
   TODO: Prob should factor out a new collection "Memberships"
@@ -30,6 +31,7 @@ import { log } from '../logs.js';
  * @summary Adds a user to the group.
  * @isMethod true
  */
+// TODO: store who invited whom to the group so that we can include it in the email
 export const addToGroup = new ValidatedMethod({
   name: 'groups.add',
   validate: new SimpleSchema({
@@ -466,7 +468,11 @@ export const inviteToGroup = new ValidatedMethod({
             from: EMAIL_ADDRESS,
             to: member.email,
             subject: `You're invited to join ${ group.groupName } for Pair Research`,
-            html: `To join this pair research pool, just <a href="${ Meteor.absoluteUrl() }login">log into your Pair Research account.</a> `
+            html: EmailGenerator.generateHtml("joinGroup", {
+              name: user.profile.fullName,
+              group: group.groupName,
+              joinLink: Meteor.absoluteUrl()
+            })
           });
         } else {
           // TODO: replace this with a custom function so as to not overwrite tokens in previous emails

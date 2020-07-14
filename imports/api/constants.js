@@ -18,4 +18,4 @@ export const EMAIL_ADDRESS = 'Pair Research <nudelta2015@gmail.com>';
  * @type {string[]}
  * @const
  */
-export const CONTACT_EMAILS = [ 'kevinjchen94@gmail.com', 'hq@northwestern.edu' ];
+export const CONTACT_EMAILS = [ 'hq@northwestern.edu', 'kgarg@u.northwestern.edu' ];

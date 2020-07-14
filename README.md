@@ -63,9 +63,11 @@ is live, avoid force pushing `deploy` until it's live. Use `git rebase` to keep 
 Pair Research is hosted on [Galaxy](https://galaxy.meteor.com) and [mLab](https://mlab.com). We host a production and staging server. It is recommended that all major changes be deployed to the staging server first for testing.
 
 ### Setup
-You will need the `settings-staging.json` and `settings-production.json` to deploy to the staging and production servers respectively. These can be found in the DTR Dropbox (`/App Builds/Pair Research` folder).
+You will need the `settings-staging.json` and `settings-production.json` to deploy to the staging and production servers respectively. Please contact Kapil for the latest versions of these files. 
 
 Additionally, you will need access the the Galaxy and mLab accounts. Ask Haoqi to add you to DTR Galaxy account and ask Yongsung for his mLab credientials since the Pair Research database is under his account (*note: In the future, we should probably do a migration to more easily scalable DB since we should be wary of hitting rate limits on this application*).
+
+Emails are sent using [SendGrid](https://sendgrid.com/). The details for the SMTP server used to send these emails are included in the `.json` files mentioned above. 
 
 ### Deploying
 We provide two scripts that allow you to easily deploy to the servers, given you have completed the above steps. 
