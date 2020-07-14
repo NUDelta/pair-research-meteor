@@ -8,10 +8,10 @@ export const EmailGenerator = {
     let html = null;
     try {
       html = SSR.render(templateName, data);
-    } catch (e) {
+    } catch (err) {
       console.log(`meteor-template-email: Unable to generate html for template. Error: ${err}`);
     }
 
     return html;
   }
-}
+};

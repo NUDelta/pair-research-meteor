@@ -27,11 +27,6 @@ import '../../data/factories.js';
 import { EmailGenerator } from "../../api/email-generator";
 
 Meteor.startup(() => {
-
-  if (Meteor.isProduction) {
-    return;
-  }
-
   // setup email templates
   EmailGenerator.addTemplates([
     {
@@ -47,6 +42,11 @@ Meteor.startup(() => {
       path: "email-templates/reset-password.html"
     }
   ]);
+
+  // do NOT run anything below this on deployed server
+  if (Meteor.isProduction) {
+    return;
+  }
 
   const admin = {
     username: 'kc',
