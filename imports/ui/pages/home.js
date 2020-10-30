@@ -16,3 +16,4 @@ Template.home.events({
     });
   }
 });
+
