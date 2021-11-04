@@ -54,6 +54,7 @@ launch-screen@1.2.1
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.2.0
+mdg:meteor-apm-agent@3.4.1
 mdg:validated-method@1.2.0
 mdg:validation-error@0.5.1
 meteor@1.9.3
