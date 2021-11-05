@@ -40,4 +40,3 @@ montiapm:agent
 fourseven:scss
 seba:minifiers-autoprefixer
 spacebars-compiler
-mdg:meteor-apm-agent

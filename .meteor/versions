@@ -54,7 +54,6 @@ launch-screen@1.2.1
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.2.0
-mdg:meteor-apm-agent@3.4.1
 mdg:validated-method@1.2.0
 mdg:validation-error@0.5.1
 meteor@1.9.3
@@ -73,7 +72,7 @@ mongo-decimal@0.1.2
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
 mongo-livedata@1.0.12
-montiapm:agent@2.43.1
+montiapm:agent@2.44.2
 montiapm:meteorx@2.2.0
 natestrauser:animate-css@3.5.1
 nooitaf:colors@1.1.2_1
