@@ -25,7 +25,7 @@ Template.groups_create.onCreated(function() {
 
   this.updateSelect = () => {
     Tracker.afterFlush(() => {
-      $('select').material_select();
+      $('select').formSelect();
     })
   };
 

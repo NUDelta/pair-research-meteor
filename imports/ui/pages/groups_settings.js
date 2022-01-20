@@ -52,7 +52,7 @@ Template.groups_settings.onCreated(function() {
 
   this.updateSelect = () => {
     Tracker.afterFlush(() => {
-      $('select').material_select();
+      $('select').formSelect();
     });
   };
 });
@@ -100,7 +100,7 @@ Template.groups_settings.helpers({
 });
 
 Template.groups_settings.events({
-  'click .side-nav a.waves-effect'(event, instance) {
+  'click .sidenav a.waves-effect'(event, instance) {
     event.preventDefault();
     const section = event.target.getAttribute('href').slice(1);
     instance.state.set('section', section);

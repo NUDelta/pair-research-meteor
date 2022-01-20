@@ -21,14 +21,16 @@ Template.header.onCreated(function() {
 
     if (Meteor.userId()) {
       Tracker.afterFlush(() => {
-        $('.dropdown-button').dropdown();
+        $('.dropdown-trigger').dropdown({
+          'coverTrigger': false,
+        });
       });
     }
   });
 });
 
 Template.header.onRendered(function() {
-  $('.button-collapse').sideNav();
+  $('.sidenav').sidenav();
 });
 
 Template.header.helpers({

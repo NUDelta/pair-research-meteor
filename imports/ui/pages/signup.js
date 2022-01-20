@@ -54,7 +54,7 @@ Template.signup.onRendered(function() {
     }
   };
 
-  $('.modal-trigger').leanModal();
+  $('.modal').modal();
 });
 
 Template.signup.helpers({

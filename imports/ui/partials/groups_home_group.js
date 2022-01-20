@@ -18,6 +18,6 @@ Template.groups_home_group.helpers({
 
 Template.groups_home_group.events({
   'click a.tooltipped'(event, instance) {
-    $('.tooltipped').tooltip('remove');
+    $('.tooltipped').tooltip('destroy');
   }
 });

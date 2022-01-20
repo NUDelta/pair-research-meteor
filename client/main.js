@@ -1,4 +1,5 @@
 import '/imports/startup/client';
+import '../node_modules/materialize-css/dist/js/materialize.min';
 
 if (Meteor.isDevelopment) {
   Affinities = require('../imports/api/affinities/affinities.js').Affinities;

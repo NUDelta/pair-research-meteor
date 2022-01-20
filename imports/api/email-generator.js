@@ -1,3 +1,5 @@
+import { SSR } from "./ssr";
+
 export const EmailGenerator = {
   addTemplates(templates) {
     templates.forEach((template) => {
