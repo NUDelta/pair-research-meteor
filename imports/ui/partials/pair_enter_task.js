@@ -3,7 +3,8 @@ import './pair_enter_task.html';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
+// FIXME: This subscription takes up ~500KB on the client
+// import { TasksHistory } from '../../api/tasks-history/tasks-history.js';
 import { updateTask } from '../../api/tasks/methods.js';
 
 Template.pair_enter_task.onCreated(function() {
@@ -12,7 +13,8 @@ Template.pair_enter_task.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.setDefault({ groupId });
 
-  this.subscribe('tasksHistory.byGroup', groupId);
+  // FIXME: This subscription takes up ~500KB on the client
+  // this.subscribe('tasksHistory.byGroup', groupId);
 
 });
 
@@ -21,9 +23,10 @@ Template.pair_enter_task.onCreated(function() {
 // });
 
 Template.pair_enter_task.helpers({
-  popularTasks() {
-    return TasksHistory.popularTasks({}, 20);
-  }
+  // FIXME: Calculating the popular tasks on the client side takes lots of time
+  // popularTasks() {
+  //   return TasksHistory.popularTasks({}, 20);
+  // }
 });
 
 Template.pair_enter_task.events({
