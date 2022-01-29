@@ -13,7 +13,7 @@ Template.groups_settings_member.onCreated(function() {
 });
 
 Template.groups_settings_member.onRendered(function() {
-  $('select').material_select();
+  $('select').formSelect();
 });
 
 Template.groups_settings_member.helpers({

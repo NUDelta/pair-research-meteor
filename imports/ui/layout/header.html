@@ -18,7 +18,7 @@
   </ul>
   <nav class="nav-wrapper amber darken-2">
     <a href="{{pathFor 'App.home'}}" class="brand-logo">Pair Research</a>
-    <a href="#" data-activates="mobile-menu" class="button-collapse">
+    <a href="#" data-target="mobile-menu" class="sidenav-trigger">
       <i class="material-icons">menu</i>
     </a>
    <ul class="right hide-on-small-and-down">
@@ -32,7 +32,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="dropdown-button" data-activates="user_dropdown" data-beloworigin="true">
+        <a href="#" class="dropdown-trigger" data-target="user_dropdown" >
           {{currentUser.profile.fullName}}<i class="material-icons right">arrow_drop_down</i>
         </a>
       </li>
@@ -44,7 +44,7 @@
         </li>
       {{/if}}
     </ul>
-    <ul class="side-nav hide-on-med-and-up" id="mobile-menu">
+    <ul class="sidenav hide-on-med-and-up" id="mobile-menu">
       {{#if currentUser}}
         <li>
           <a href="{{pathFor 'App.groups.home'}}">
@@ -55,7 +55,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="dropdown-button" data-activates="user_dropdown2" data-beloworigin="true">
+          <a href="#" class="dropdown-trigger" data-target="user_dropdown2">
             {{currentUser.profile.fullName}}<i class="material-icons right">arrow_drop_down</i>
           </a>
         </li>

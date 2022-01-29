@@ -23,7 +23,7 @@ Template.groups_home_invite.events({
     if (!roleTitle) {
       alert('Please select a role first.');
     } else {
-      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
+      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('destroy');
       acceptInvite.call({
         groupId: instance.data.group._id,
         roleTitle
@@ -40,7 +40,7 @@ Template.groups_home_invite.events({
     event.preventDefault();
 
     if (confirm(`Are you sure you want to delete ${instance.data.group.groupName }'s invitation? This action is not reversible.`)) {
-      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('remove');
+      $(`.tooltipped[data-id=${ instance.data.group._id }]`).tooltip('destroy');
       removeFromGroup.call({
         groupId: instance.data.group._id,
         userId: Meteor.userId()

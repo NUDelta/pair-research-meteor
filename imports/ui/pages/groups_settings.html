@@ -1,6 +1,7 @@
 <template name="groups_settings">
   <div class="container groups" id="groups_settings">
-    <ul class="side-nav fixed">
+    <!-- group settings layout -->
+    <ul class="sidenav sidenav-fixed">
       <li class="{{$if (isActive 'group_info') 'active'}}">
         <a href="#group_info" class="waves-effect">
           Info
@@ -27,6 +28,7 @@
         </a>
       </li>
     </ul>
+
     <!-- component for opening side nav on small? -->
     {{#if (isActive 'group_info')}}
       <section class="row" id="groups_settings_info">

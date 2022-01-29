@@ -255,7 +255,8 @@ Template.pairings.events({
     });
   },
 
+  // TODO: this gets deinitialized before the tooltip is destroyed
   'click a.tooltipped'(event, instance) {
-    $('.tooltipped').tooltip('remove');
+    $('.tooltipped').tooltip('destroy');
   }
 });

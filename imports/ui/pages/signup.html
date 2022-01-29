@@ -41,8 +41,7 @@
                   <!-- Email -->
                   <div class="input-field">
                     <label for="email" class="{{user.class}}">Email</label>
-                    <input id="email" name="email" type="email" class="validate" required
-                           value="{{user.email}}" {{user.disabled}}>
+                    <input id="email" name="email" type="email" class="validate" required value="{{user.email}}" {{user.disabled}}>
                   </div>
 
                   <!-- Password -->
@@ -118,6 +117,9 @@
         </div>
       </div>
     </div>
+
+    <!-- avatar modal -->
+    <!-- TOOD: broken input validation -->
     <div id="avatar-modal" class="modal">
       <div class="modal-content">
         <h4>Choose Profile Picture</h4>
@@ -127,7 +129,7 @@
         </p>
         <div class="input-field">
           <label for="avatar" data-error="must be url">Link to an image</label>
-          <input type="url" id="avatar" name="avatar" class="validate">
+          <input id="avatar" name="avatar" type="url" class="validate">
         </div>
       </div>
       <div class="modal-footer">
