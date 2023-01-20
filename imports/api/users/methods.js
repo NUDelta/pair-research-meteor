@@ -21,8 +21,21 @@ export const findEmailFromToken = new ValidatedMethod({
     }
   }).validator(),
   run({ token }) {
+    console.log(token);
+
     if (!this.isSimulation) {
+      // TODO: user is undefined
       const user = Meteor.users.findOne({ 'services.password.reset.token': token });
+
+      /*
+        { "address" : "kapil1garg@gmail.com", "verified" : false } ], "profile" : { "fullName" : "kapil1garg@gmail.com" }, "groups" : [ { "groupId" : "jpb4azzbYTPM2Lwuv", "role" : { "_id" : "55555555555555555", "title" : "Pending" }, "groupName" : "Design, Technology, and Research", "isAdmin" : false, "isPending" : true } ] }
+
+        { "_id" : "YmLkzzvnrgBscMtue", "createdAt" : ISODate("2022-02-25T03:47:44.144Z"), "services" : { "password" : { "bcrypt" : "$2b$10$vuWrXyky1Aw.GBL79U3sN.RUmIwhaOKzGNBZ/L4NdgZq4xBU8axT." }, "resume" : { "loginTokens" : [ { "when" : ISODate("2022-06-16T18:33:28.099Z"), "hashedToken" : "WJnDrT8hSsPDe25L+mxEm27yfPo5XK+9hLnf94GzKdM=" }, { "when" : ISODate("2022-10-13T19:53:40.895Z"), "hashedToken" : "wxw97Mhvjy8xaPq8arBYHgzmTqqkSQ9UPSQ6eJIOvQE=" } ] } }, "username" : "kc", "emails" : [ { "address" : "kc@kc.com", "verified" : false } ], "profile" : { "fullName" : "Kevin Chen", "screenName" : "kchen", "avatar" : "http://delta.northwestern.edu/wordpress/wp-content/uploads/2015/02/kevin1-square.jpg" }, "groups" : [ { "groupId" : "jpb4azzbYTPM2Lwuv", "role" : { "title" : "Professor", "_id" : "8WQss7oDbXnp8qaSZ" }, "groupName" : "Design, Technology, and Research", "isAdmin" : true, "isPending" : false }, { "groupId" : "hqyJ93E75TiBbrmgv", "role" : { "title" : "Undergraduate Student", "_id" : "6jahtkTfEZrpeGB63" }, "groupName" : "Other Group Name", "isAdmin" : false, "isPending" : false }, { "groupId" : "9Qswd3xXHG2BFBGuo", "role" : { "_id" : "55555555555555555", "title" : "Pending" }, "groupName" : "invitedGroup", "isAdmin" : true, "isPending" : true } ] }
+       */
+
+      // Case 1: user is not in database, so should create new user and then invite
+      // Case 2: user in database, should just login and be in group
+      console.log(user);
       if (user) {
         return user.services.password.reset.email;
       } else {

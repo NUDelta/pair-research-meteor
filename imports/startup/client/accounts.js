@@ -6,11 +6,16 @@ import { findEmailFromToken } from '../../api/users/methods.js';
 
 export let doneCallback;
 
+// https://docs.meteor.com/api/passwords.html#Accounts-onEnrollmentLink
 Accounts.onEnrollmentLink((token, done) => {
+  console.log(token, done);
+
+  // TODO: the token should be a password reset token
   findEmailFromToken.call({
     token: token
   }, (err, email) => {
     if (err) {
+      console.error(err);
       alert(err.message);
     } else {
       doneCallback = done;

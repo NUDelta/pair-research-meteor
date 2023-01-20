@@ -459,10 +459,12 @@ export const inviteToGroup = new ValidatedMethod({
   allow: [Auth.GroupAdmin],
   run({ member, groupId }) {
     if (!this.isSimulation) {
+      // check if the user already exists
       const user = Accounts.findUserByEmail(member.email);
       if (user) {
         const group = Groups.findOne(groupId);
         addToGroup.run.call(this, { groupId, userId: user._id, isAdmin: member.isAdmin, isPending: true });
+
         if (user.isActive()) {
           Email.send({
             from: EMAIL_ADDRESS,
@@ -478,8 +480,15 @@ export const inviteToGroup = new ValidatedMethod({
           // TODO: replace this with a custom function so as to not overwrite tokens in previous emails
           Accounts.sendEnrollmentEmail(user._id);
         }
-      } else {
+      }
+      // if user account doesn't exist
+      else {
+        // TODO: the user might not be created here properly
+        // https://docs.meteor.com/api/passwords.html#Accounts-createUser
         const newUserId = Accounts.createUser({ email: member.email, profile: { fullName: member.email } });
+
+        console.log("newUserId in groups/method.js", newUserId);
+
         addToGroup.run.call(this, { groupId, userId: newUserId, isAdmin: member.isAdmin, isPending: true });
         Accounts.sendEnrollmentEmail(newUserId, member.email);
       }
